@@ -1,0 +1,12 @@
+<f:layout name="OptionsPage"/>
+<f:section name="Main">
+    <p><wp:translate>With the following button, you can manually start importing sermons from the default feed.</wp:translate></p>
+    <table class="form-table">
+    <f:for each="{options}" as="option">
+        <f:render partial="Form/Field" arguments="{option: option}" />
+    </f:for>
+    </table>
+    <a class="button button-default"><wp:translate>Import</wp:translate></a>
+    <wp:submitButton />
+</f:section>
+

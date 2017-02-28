@@ -1,0 +1,30 @@
+{
+  "name" : "peregrinus/pulpit",
+  "description" : "A sermon plugin for WordPress",
+  "type" : "wordpress-plugin",
+  "keywords" : [ "wordpress" ],
+  "license" : "GPL-3.0+",
+  "authors" : [
+    {
+      "name" : "Christoph Fischer",
+      "email" : "chris@toph.de",
+      "role" : "Lead Developer"
+    }
+  ],
+  "require" : {
+    "composer/installers" : "~1.0.0",
+    "php" : ">=5.6",
+    "typo3fluid/fluid": "2.3.1"
+  },
+  "extra" : {
+    "installer-name" : "peregrinus-pulpit"
+  },
+  "autoload": {
+    "psr-4": {"Peregrinus\\Pulpit\\": "Classes/"}
+  },
+  "homepage" : "http://www.pereginus.de/pulpit",
+  "support": {
+    "issues": "https://github.com/potofcoffee/pulpit/issues",
+    "source": "https://github.com/potofcoffee/pulpit/"
+  }
+}

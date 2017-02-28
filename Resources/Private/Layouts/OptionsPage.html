@@ -1,0 +1,14 @@
+<f:layout name="OptionsPage"/>
+
+<div class="wrap">
+
+    <h1>
+        <wp:translate global="true">Settings</wp:translate>
+        > {pageTitle}
+    </h1>
+    <form method="post" action="options.php">
+        <wp:settingsFields />
+        <wp:doSettingsSections />
+        <f:render section="Main"/>
+    </form>
+</div>
