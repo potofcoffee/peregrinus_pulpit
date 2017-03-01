@@ -42,7 +42,6 @@ class AbstractPostType {
 		$this->configuration['menu_icon'] = PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/' . ucfirst( $this->getKey() ) . '.svg';
 		$this->configuration['slug']      = $this->getSlug();
 		$this->configuration['rewrite']   = [ 'slug' => $this->getSlug(), 'with_front' => false ];
-		__log( $this, 'conf: ', $this->configuration );
 	}
 
 	/**
