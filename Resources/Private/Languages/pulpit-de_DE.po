@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PULPIT\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-01 07:42+0000\n"
-"PO-Revision-Date: 2017-03-01 07:52+0000\n"
+"PO-Revision-Date: 2017-03-01 08:22+0000\n"
 "Last-Translator: Christoph Fischer <chris@toph.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -26,7 +26,7 @@ msgstr "Predigt"
 
 #: Classes/PostTypes/SermonPostType.php:45
 msgid "Add New"
-msgstr "Neu"
+msgstr "Erstellen"
 
 #: Classes/PostTypes/SermonPostType.php:46
 msgid "Add New Sermon"
