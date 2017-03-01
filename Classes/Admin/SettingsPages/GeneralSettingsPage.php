@@ -41,27 +41,38 @@ class GeneralSettingsPage extends AbstractSettingsPage {
 		foreach ( PostTypeFactory::getAll() as $postType ) {
 			$rewriteSettings[] = new Setting(
 				'slug_' . $postType->getKey(),
-				sprintf( __( 'Permalink for %s', 'pulpit' ) , __(ucfirst($postType->getKey()), 'pulpit')),
+				sprintf( __( 'Permalink for %s', 'pulpit' ), __( ucfirst( $postType->getKey() ), 'pulpit' ) ),
 				new InputField( 'slug_' . $postType->getKey(), '', $this->getOptionName() )
 			);
 		}
 		foreach ( TaxonomyFactory::getAll() as $taxonomy ) {
 			$rewriteSettings[] = new Setting(
 				'slug_' . $taxonomy->getKey(),
-				sprintf( __( 'Permalink for %s', 'pulpit' ) , __(ucfirst($taxonomy->getKey()), 'pulpit')),
+				sprintf( __( 'Permalink for %s', 'pulpit' ), __( ucfirst( $taxonomy->getKey() ), 'pulpit' ) ),
 				new InputField( 'slug_' . $taxonomy->getKey(), '', $this->getOptionName() )
 			);
 		}
 
 		$this->setSections( [
-			new SettingsSection( 'sync', __( 'Synchronization', 'pulpit' ), [
-				new Setting(
-					'feed',
-					__( 'Feed url', 'pulpit' ),
-					new InputField( 'feed', '', $this->getOptionName() )
-				),
-			] ),
-			new SettingsSection( 'rewrite', __( 'URL rewriting', 'pulpit' ), $rewriteSettings ),
+			new SettingsSection(
+				'rewrite',
+				__( 'URL rewriting', 'pulpit' ),
+				__( 'Here you can define your own texts for the permalinks created by PULPIT:' ,
+					'pulpit'),
+				$rewriteSettings ),
+			new SettingsSection(
+				'sync',
+				__( 'Synchronization', 'pulpit' ),
+				__( 'PULPIT can automatically import sermons from an external source running TYPO3 with the '
+				    . 'vmfds_sermons plugin. If you want to use this feature, you can setup the sync here:' ,
+					'pulpit'),
+				[
+					new Setting(
+						'feed',
+						__( 'Feed url', 'pulpit' ),
+						new InputField( 'feed', '', $this->getOptionName() )
+					),
+				] ),
 		] );
 	}
 

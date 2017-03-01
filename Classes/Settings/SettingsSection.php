@@ -26,15 +26,29 @@ namespace Peregrinus\Pulpit\Settings;
 
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
 
+/**
+ * Class SettingsSection
+ * @package Peregrinus\Pulpit\Settings
+ */
 class SettingsSection {
 
 	protected $settings = [];
 	protected $id = '';
 	protected $title = '';
+	protected $description = '';
 
-	public function __construct($id, $title, $settings) {
+	/**
+	 * SettingsSection constructor.
+	 *
+	 * @param string $id Id
+	 * @param string $title Title
+	 * @param string $description Description text
+	 * @param array $settings Settings
+	 */
+	public function __construct($id, $title, $description, $settings) {
 		$this->setId(PEREGRINUS_PULPIT.'_section_'.$id);
 		$this->setTitle($title);
+		$this->setDescription($description);
 		$this->setSettings($settings);
 	}
 
@@ -54,8 +68,11 @@ class SettingsSection {
 		}
 	}
 
+	/**
+	 * Render the description paragraph
+	 */
 	public function render() {
-		echo 'This is section "'.$this->getTitle().'"';
+		echo '<p>'.$this->getDescription().'</p>';
 	}
 
 	/**
@@ -99,6 +116,22 @@ class SettingsSection {
 	public function setTitle( $title ) {
 		$this->title = $title;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @param string $description
+	 */
+	public function setDescription( $description ) {
+		$this->description = $description;
+	}
+
+
 
 
 }
