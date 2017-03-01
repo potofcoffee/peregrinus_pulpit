@@ -49,7 +49,7 @@ class AbstractPostType {
 	 * Get the key for this PostType
 	 * @return string
 	 */
-	private function getKey() {
+	public function getKey() {
 		return lcfirst( str_replace( 'PostType', '', array_pop( explode( '\\', get_class( $this ) ) ) ) );
 	}
 
@@ -63,7 +63,7 @@ class AbstractPostType {
 	 */
 	protected function getSlug() {
 		$defaultSlug = $this->getKey();
-		$options     = get_option( PEREGRINUS_PULPIT_OPTIONS );
+		$options     = get_option( PEREGRINUS_PULPIT.'_general' );
 
 		return ( isset( $options[ 'slug_' . $defaultSlug ] ) ? $options[ 'slug_' . $defaultSlug ] : $defaultSlug );
 	}

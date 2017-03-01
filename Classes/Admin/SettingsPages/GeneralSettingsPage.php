@@ -25,27 +25,45 @@ namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
 
 use Peregrinus\Pulpit\Fields\InputField;
+use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 use Peregrinus\Pulpit\Settings\SettingsSection;
 use Peregrinus\Pulpit\Settings\Setting;
+use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
 
 class GeneralSettingsPage extends AbstractSettingsPage {
 
 	public function __construct() {
 		parent::__construct();
-		$this->setPageTitle(__('Sermons', 'pulpit'));
-		$this->setMenuTitle(__('Sermons', 'pulpit'));
+		$this->setPageTitle( __( 'Sermons', 'pulpit' ) );
+		$this->setMenuTitle( __( 'Sermons', 'pulpit' ) );
 
-		$this->setSections([
-			new SettingsSection('sync', __('Synchronization', 'pulpit'), [
+		$rewriteSettings = [];
+		foreach ( PostTypeFactory::getAll() as $postType ) {
+			$rewriteSettings[] = new Setting(
+				'slug_' . $postType->getKey(),
+				sprintf( __( 'Permalink for %s', 'pulpit' ) , __(ucfirst($postType->getKey()), 'pulpit')),
+				new InputField( 'slug_' . $postType->getKey(), '', $this->getOptionName() )
+			);
+		}
+		foreach ( TaxonomyFactory::getAll() as $taxonomy ) {
+			$rewriteSettings[] = new Setting(
+				'slug_' . $taxonomy->getKey(),
+				sprintf( __( 'Permalink for %s', 'pulpit' ) , __(ucfirst($taxonomy->getKey()), 'pulpit')),
+				new InputField( 'slug_' . $taxonomy->getKey(), '', $this->getOptionName() )
+			);
+		}
+
+		$this->setSections( [
+			new SettingsSection( 'sync', __( 'Synchronization', 'pulpit' ), [
 				new Setting(
 					'feed',
-					__('Feed url', 'pulpit'),
-					new InputField('feed', '', $this->getOptionName())
-					),
-			]),
-		]);
+					__( 'Feed url', 'pulpit' ),
+					new InputField( 'feed', '', $this->getOptionName() )
+				),
+			] ),
+			new SettingsSection( 'rewrite', __( 'URL rewriting', 'pulpit' ), $rewriteSettings ),
+		] );
 	}
-
 
 
 }

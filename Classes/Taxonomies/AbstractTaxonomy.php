@@ -49,7 +49,7 @@ class AbstractTaxonomy {
 	 */
 	protected function getSlug() {
 		$defaultSlug = $this->getKey();
-		$options     = get_option( PEREGRINUS_PULPIT_OPTIONS );
+		$options     = get_option( PEREGRINUS_PULPIT.'_general' );
 
 		return ( isset( $options[ 'slug_' . $defaultSlug ] ) ? $options[ 'slug_' . $defaultSlug ] : $defaultSlug );
 	}
@@ -77,7 +77,7 @@ class AbstractTaxonomy {
 	 * Get the key for this object
 	 * @return string
 	 */
-	private function getKey() {
+	public function getKey() {
 		return lcfirst( str_replace('Taxonomy', '', array_pop( explode( '\\', get_class( $this ) ) ) ));
 	}
 
