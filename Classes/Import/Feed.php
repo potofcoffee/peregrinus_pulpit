@@ -31,15 +31,22 @@ namespace Peregrinus\Pulpit\Import;
 class Feed {
 
 	protected $url = '';
+	protected $church = '';
+	protected $churchUrl = '';
 
 	/**
 	 * Feed constructor.
 	 *
 	 * @param string $url Feed url
+	 * @param string $church Church name
+	 * @param string $churchUrl Church URL
 	 */
-	public function __construct( $url ) {
+	public function __construct( $url, $church, $churchUrl ) {
+		__log( $this, 'Constructor', $this );
 		$this->setUrl( $url );
-		__log( $this, 'New feed from ' . $url );
+		$this->setChurch( $church );
+		$this->setChurchUrl( $churchUrl );
+		__log( $this, 'New feed from ' . $url . ' (' . $church . ', ' . $churchUrl . ')' );
 	}
 
 	/**
@@ -56,6 +63,7 @@ class Feed {
 		foreach ( $data['sermons'] as $item ) {
 			$sermon = new \Peregrinus\Pulpit\Import\Sermon( $item, $host );
 			$sermon->convert();
+			$sermon->setChurchData( $this->getChurch(), $this->getChurchUrl() );
 			__log( $this,
 				'Importing sermon (' . $sermon->getData()['preached']->format( 'd.m.Y' ) . ') "' . $sermon->getData()['title'] . '"' );
 			$postId = $sermon->post();
@@ -76,6 +84,34 @@ class Feed {
 	 */
 	public function setUrl( $url ) {
 		$this->url = $url;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getChurch() {
+		return $this->church;
+	}
+
+	/**
+	 * @param string $church
+	 */
+	public function setChurch( $church ) {
+		$this->church = $church;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getChurchUrl() {
+		return $this->churchUrl;
+	}
+
+	/**
+	 * @param string $churchUrl
+	 */
+	public function setChurchUrl( $churchUrl ) {
+		$this->churchUrl = $churchUrl;
 	}
 
 

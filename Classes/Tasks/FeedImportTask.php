@@ -35,17 +35,18 @@ class FeedImportTask extends AbstractTask {
 
 	/**
 	 * Run the FeedImport task
-	 * TODO: replace this stub by real import logic
 	 */
 	public function run() {
-
-		// dummy function: log to /tmp/wp-cron.log
 		__log( $this, 'Runner started' );
-
-		$option = get_option(PEREGRINUS_PULPIT.'_general');
-		$feed = new Feed($option['feed']);
-		$feed->import();
-
+		$option = get_option( PEREGRINUS_PULPIT . '_general' );
+		__log( $this, 'Got option', $option );
+		if ( $option['feed'] ) {
+			$feed = new Feed( $option['feed'], $option['church'], $option['church_url'] );
+			__log( $this, 'Created feed', $feed );
+			$feed->import();
+		} else {
+			__log( $this, 'No feed configured.' );
+		}
 		__log( $this, 'Runner terminated' );
 	}
 

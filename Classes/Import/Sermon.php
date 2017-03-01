@@ -113,6 +113,18 @@ class Sermon {
 	}
 
 	/**
+	 * Set church data for Sermon
+	 * Church data is not supplied in the feed itself, but configured locally
+	 *
+	 * @param string $church Church name
+	 * @param string $churchUrl Church Url
+	 */
+	public function setChurchData( $church, $churchUrl ) {
+		$this->data['church']    = $church;
+		$this->data['churchUrl'] = $churchUrl;
+	}
+
+	/**
 	 * Create a new post for this sermon
 	 * @return int|\WP_Error Post id or WP_Error
 	 */
@@ -175,7 +187,9 @@ class Sermon {
 				'audiorecording' => 'audiorecording',
 				'videorecording' => 'videorecording',
 				'remoteAudio'    => 'remote_audio',
-				'remote_url'     => 'url',
+				'remoteUrl'      => 'remote_url',
+				'church'         => 'church',
+				'churchUrl'     => 'church_url',
 
 			] as $t3Key => $wpKey
 		) {

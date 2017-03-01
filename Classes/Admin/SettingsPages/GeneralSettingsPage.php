@@ -72,6 +72,16 @@ class GeneralSettingsPage extends AbstractSettingsPage {
 						__( 'Feed url', 'pulpit' ),
 						new InputField( 'feed', '', $this->getOptionName() )
 					),
+					new Setting(
+						'church',
+						__( 'Church', 'pulpit' ),
+						new InputField( 'church', '', $this->getOptionName() )
+					),
+					new Setting(
+						'church_url',
+						__( 'Church URL', 'pulpit' ),
+						new InputField( 'church_url', '', $this->getOptionName() )
+					),
 				] ),
 		] );
 	}
