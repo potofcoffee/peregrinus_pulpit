@@ -28,14 +28,14 @@ Version: 1.0
 Author: Christoph Fischer <chris@toph.de>
 Author URI: http://christoph-fischer.org
 License: GPL3
-Text Domain: peregrinus-plugin
-Domain Path: /Resources/Private/Languages
+Text Domain: pulpit
+Domain Path: /Resources/Private/Languages/
 */
 
 error_reporting( E_ERROR );
 ini_set( 'display_errors', 1 );
 
-use Peregrinus\Pulpit\Pulpit;
+use Peregrinus\Pulpit\PulpitPlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -50,10 +50,11 @@ define( 'PEREGRINUS_PULPIT_SLUG', 'pulpit' );
 define( 'PEREGRINUS_PULPIT_ENTRY_SCRIPT', __FILE__ );
 define( 'PEREGRINUS_PULPIT_BASE_PATH', dirname( __FILE__ ) . '/' );
 define( 'PEREGRINUS_PULPIT_CLASS_PATH', dirname( __FILE__ ) . '/Classes/' );
+define( 'PEREGRINUS_PULPIT_DOMAIN_PATH', dirname( plugin_basename( __FILE__ ) ) . '/Resources/Private/Languages/' );
 define( 'PEREGRINUS_PULPIT_BASE_URL',
 	plugin_dir_url( PEREGRINUS_PULPIT_BASE_PATH ) . basename( dirname( __FILE__ ) ) . '/' );
 
-add_action( 'plugins_loaded', [ Peregrinus\Pulpit\PulpitPlugin::class, 'getInstance' ], 9 );
+add_action( 'plugins_loaded', [ PulpitPlugin::class, 'getInstance' ], 9 );
 
 if ( ! function_exists( '__dump' ) ) {
 	function __dump( $v ) {
@@ -66,7 +67,8 @@ if ( ! function_exists( '__log' ) ) {
 		$reflect = new ReflectionClass( $object );
 		$fp      = fopen( '/tmp/wp-cron.log', 'a' );
 		fwrite( $fp,
-			strftime( '%Y-%m-%d %H:%M:%S' ) .' ' .(time()-PEREGRINUS_PULPIT_START). ' ' . basename( $reflect->getShortName() ) . ' ' . $text .($data ? ' --> '.print_r($data, 1) : ''). PHP_EOL );
+			strftime( '%Y-%m-%d %H:%M:%S' ) . ' ' . ( time() - PEREGRINUS_PULPIT_START ) . ' ' . basename( $reflect->getShortName() ) . ' ' . $text . ( $data ? ' --> ' . print_r( $data,
+					1 ) : '' ) . PHP_EOL );
 		fclose( $fp );
 	}
 }
