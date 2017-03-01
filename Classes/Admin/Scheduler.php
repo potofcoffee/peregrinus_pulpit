@@ -59,11 +59,11 @@ class Scheduler {
 		return [
 			'one_minute' => [
 				'interval' => 60,
-				'display'  => __('Every minute', PEREGRINUS_PULPIT),
+				'display'  => __('Every minute', 'pulpit'),
 			],
 			'five_minutes' => [
 				'interval' => 300,
-				'display'  => __('Every five minutes', PEREGRINUS_PULPIT),
+				'display'  => __('Every five minutes', 'pulpit'),
 			]
 		];
 	}

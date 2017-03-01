@@ -59,7 +59,7 @@ class MetaBox {
 		global $wp_meta_boxes;
 		\add_meta_box(
 			$this->key . '_meta',
-			__( $this->label, PEREGRINUS_PULPIT ),
+			__( $this->label, 'pulpit' ),
 			[ $this, 'render' ],
 			$this->screen,
 			$this->position,

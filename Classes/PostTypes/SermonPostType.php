@@ -40,17 +40,17 @@ class SermonPostType extends AbstractPostType {
 	public function __construct() {
 
 		$this->labels = [
-			'name'               => __( 'Sermons', PEREGRINUS_PULPIT_SLUG ),
-			'singular_name'      => __( 'Sermon', PEREGRINUS_PULPIT_SLUG ),
-			'add_new'            => __( 'Add New', PEREGRINUS_PULPIT_SLUG ),
-			'add_new_item'       => __( 'Add New Sermon', PEREGRINUS_PULPIT_SLUG ),
-			'edit_item'          => __( 'Edit Sermon', PEREGRINUS_PULPIT_SLUG ),
-			'new_item'           => __( 'New Sermon', PEREGRINUS_PULPIT_SLUG ),
-			'view_item'          => __( 'View Sermon', PEREGRINUS_PULPIT_SLUG ),
-			'search_items'       => __( 'Search Sermons', PEREGRINUS_PULPIT_SLUG ),
-			'not_found'          => __( 'No sermons found', PEREGRINUS_PULPIT_SLUG ),
-			'not_found_in_trash' => __( 'No sermons found in Trash', PEREGRINUS_PULPIT_SLUG ),
-			'menu_name'          => __( 'Sermons', PEREGRINUS_PULPIT_SLUG ),
+			'name'               => __( 'Sermons', 'pulpit' ),
+			'singular_name'      => __( 'Sermon', 'pulpit' ),
+			'add_new'            => __( 'Add New', 'pulpit' ),
+			'add_new_item'       => __( 'Add New Sermon', 'pulpit' ),
+			'edit_item'          => __( 'Edit Sermon', 'pulpit' ),
+			'new_item'           => __( 'New Sermon', 'pulpit' ),
+			'view_item'          => __( 'View Sermon', 'pulpit' ),
+			'search_items'       => __( 'Search Sermons', 'pulpit' ),
+			'not_found'          => __( 'No sermons found', 'pulpit' ),
+			'not_found_in_trash' => __( 'No sermons found in Trash', 'pulpit' ),
+			'menu_name'          => __( 'Sermons', 'pulpit' ),
 		];
 
 		$this->configuration = [
@@ -85,10 +85,10 @@ class SermonPostType extends AbstractPostType {
 	public function getCustomColumns() {
 		return [
 			'cb' => '<input type="checkbox">',
-			'date' => __('Preached', PEREGRINUS_PULPIT),
-			'title' => __('Title', PEREGRINUS_PULPIT),
-			'series' => __('Series', PEREGRINUS_PULPIT),
-			'preacher' => __('Preacher', PEREGRINUS_PULPIT),
+			'date' => __('Preached', 'pulpit'),
+			'title' => __('Title', 'pulpit'),
+			'series' => __('Series', 'pulpit'),
+			'preacher' => __('Preacher', 'pulpit'),
 		];
 	}
 
@@ -121,38 +121,38 @@ class SermonPostType extends AbstractPostType {
 	 */
 	public function addCustomFields() {
 		return [
-			new MetaBox( 'general', __('General', PEREGRINUS_PULPIT), $this->getTypeName(), 'normal', 'high', [
-					new InputField( 'subtitle', __('Subtitle', PEREGRINUS_PULPIT) ),
+			new MetaBox( 'general', __('General', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+					new InputField( 'subtitle', __('Subtitle', 'pulpit') ),
 				]
 			),
-			new MetaBox( 'study', __('Study Materials', PEREGRINUS_PULPIT), $this->getTypeName(), 'normal', 'high', [
-					new InputField( 'reference', __('Bible reference', PEREGRINUS_PULPIT) ),
-					new TextAreaField('bible_text', __('Bible text', PEREGRINUS_PULPIT), 10),
-					new InputField( 'notes_header', __('Notes header', PEREGRINUS_PULPIT) ),
-					new TextAreaField('key_points', __('Key points', PEREGRINUS_PULPIT), 5),
-					new TextAreaField('questions', __('Small group questions', PEREGRINUS_PULPIT), 5),
-					new RTEField('further_reading', __('Further reading', PEREGRINUS_PULPIT), 5),
+			new MetaBox( 'study', __('Study Materials', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+					new InputField( 'reference', __('Bible reference', 'pulpit') ),
+					new TextAreaField('bible_text', __('Bible text', 'pulpit'), 10),
+					new InputField( 'notes_header', __('Notes header', 'pulpit') ),
+					new TextAreaField('key_points', __('Key points', 'pulpit'), 5),
+					new TextAreaField('questions', __('Small group questions', 'pulpit'), 5),
+					new RTEField('further_reading', __('Further reading', 'pulpit'), 5),
 				]
 			),
-			new MetaBox('prep', __('Preparation', PEREGRINUS_PULPIT) , $this->getTypeName(), 'normal', 'high', [
-				new TextAreaField( 'prep', __('How to prepare for the service', PEREGRINUS_PULPIT), 5 ),
+			new MetaBox('prep', __('Preparation', 'pulpit') , $this->getTypeName(), 'normal', 'high', [
+				new TextAreaField( 'prep', __('How to prepare for the service', 'pulpit'), 5 ),
 			]),
-			new MetaBox('resources', __('Resources', PEREGRINUS_PULPIT) , $this->getTypeName(), 'normal', 'high', [
-				new CheckBoxField( 'cclicense', __('This sermon is released under CC-BY-SA 4.0', PEREGRINUS_PULPIT) ),
-				new InputField( 'handout', __('Handout', PEREGRINUS_PULPIT) ),
-				new CheckBoxField( 'no_handout', __('Don\'t show links to handout', PEREGRINUS_PULPIT) ),
-				new InputField( 'image', __('Title image', PEREGRINUS_PULPIT) ),
-				new InputField( 'preview_image', __('Preview image', PEREGRINUS_PULPIT) ),
-				new InputField( 'image_credits', __('Image credits', PEREGRINUS_PULPIT) ),
-				new InputField( 'audiorecording', __('Audio recording', PEREGRINUS_PULPIT) ),
-				new InputField( 'remote_audio', __('Remote audio file', PEREGRINUS_PULPIT) ),
-				new InputField( 'videorecording', __('Video recording', PEREGRINUS_PULPIT) ),
+			new MetaBox('resources', __('Resources', 'pulpit') , $this->getTypeName(), 'normal', 'high', [
+				new CheckBoxField( 'cclicense', __('This sermon is released under CC-BY-SA 4.0', 'pulpit') ),
+				new InputField( 'handout', __('Handout', 'pulpit') ),
+				new CheckBoxField( 'no_handout', __('Don\'t show links to handout', 'pulpit') ),
+				new InputField( 'image', __('Title image', 'pulpit') ),
+				new InputField( 'preview_image', __('Preview image', 'pulpit') ),
+				new InputField( 'image_credits', __('Image credits', 'pulpit') ),
+				new InputField( 'audiorecording', __('Audio recording', 'pulpit') ),
+				new InputField( 'remote_audio', __('Remote audio file', 'pulpit') ),
+				new InputField( 'videorecording', __('Video recording', 'pulpit') ),
 			]),
-			new MetaBox( 'sync', __('Synchronization', PEREGRINUS_PULPIT), $this->getTypeName(), 'normal', 'high', [
-					new InputField( 'sync_uid', __('Sync ID', PEREGRINUS_PULPIT) ),
-					new InputField( 'remote_url', __('Remote URL', PEREGRINUS_PULPIT) ),
-					new InputField( 'church', __('Church', PEREGRINUS_PULPIT) ),
-					new InputField( 'church_url', __('Church URL', PEREGRINUS_PULPIT) ),
+			new MetaBox( 'sync', __('Synchronization', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+					new InputField( 'sync_uid', __('Sync ID', 'pulpit') ),
+					new InputField( 'remote_url', __('Remote URL', 'pulpit') ),
+					new InputField( 'church', __('Church', 'pulpit') ),
+					new InputField( 'church_url', __('Church URL', 'pulpit') ),
 				]
 			),
 		];

@@ -32,14 +32,14 @@ class GeneralSettingsPage extends AbstractSettingsPage {
 
 	public function __construct() {
 		parent::__construct();
-		$this->setPageTitle(__('Sermons', PEREGRINUS_PULPIT));
-		$this->setMenuTitle(__('Sermons', PEREGRINUS_PULPIT));
+		$this->setPageTitle(__('Sermons', 'pulpit'));
+		$this->setMenuTitle(__('Sermons', 'pulpit'));
 
 		$this->setSections([
-			new SettingsSection('sync', __('Synchronization', PEREGRINUS_PULPIT), [
+			new SettingsSection('sync', __('Synchronization', 'pulpit'), [
 				new Setting(
 					'feed',
-					__('Feed url', PEREGRINUS_PULPIT),
+					__('Feed url', 'pulpit'),
 					new InputField('feed', '', $this->getOptionName())
 					),
 			]),
