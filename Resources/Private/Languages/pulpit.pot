@@ -3,21 +3,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 07:42+0000\n"
+"POT-Creation-Date: 2017-03-01 10:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Loco - https://localise.biz/"
 
 #: Classes/PostTypes/SermonPostType.php:43
 #: Classes/PostTypes/SermonPostType.php:53
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:35
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:36
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:37
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:38
 msgid "Sermons"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgid "Video recording"
 msgstr ""
 
 #: Classes/PostTypes/SermonPostType.php:151
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:39
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:65
 msgid "Synchronization"
 msgstr ""
 
@@ -172,10 +172,12 @@ msgid "Remote URL"
 msgstr ""
 
 #: Classes/PostTypes/SermonPostType.php:154
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:76
 msgid "Church"
 msgstr ""
 
 #: Classes/PostTypes/SermonPostType.php:155
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:81
 msgid "Church URL"
 msgstr ""
 
@@ -278,7 +280,29 @@ msgstr ""
 msgid "Choose from most frequent preachers"
 msgstr ""
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:42
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:44
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:51
+#, php-format
+msgid "Permalink for %s"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:59
+msgid "URL rewriting"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:60
+msgid ""
+"Here you can define your own texts for the permalinks created by PULPIT:"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:66
+msgid ""
+"PULPIT can automatically import sermons from an external source running "
+"TYPO3 with the vmfds_sermons plugin. If you want to use this feature, you "
+"can setup the sync here:"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:71
 msgid "Feed url"
 msgstr ""
 
