@@ -40,14 +40,10 @@ class AbstractPostType {
 	public function __construct() {
 		$this->configuration['labels']    = $this->labels;
 		$this->configuration['menu_icon'] = PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/' . ucfirst( $this->getKey() ) . '.svg';
-		$this->configuration['rewrite']   = $this->getSlug();
-
+		$this->configuration['slug']      = $this->getSlug();
+		$this->configuration['rewrite']   = [ 'slug' => $this->getSlug(), 'with_front' => false ];
+		__log( $this, 'conf: ', $this->configuration );
 	}
-
-	/**
-	 * Register custom columns
-	 */
-	public function registerCustomColumns() {}
 
 	/**
 	 * Get the key for this PostType
@@ -73,6 +69,19 @@ class AbstractPostType {
 	}
 
 	/**
+	 * Register custom columns
+	 */
+	public function registerCustomColumns() {
+	}
+
+	/**
+	 * Register this PostType
+	 */
+	public function register() {
+		$res = register_post_type( $this->getTypeName(), $this->configuration );
+	}
+
+	/**
 	 * Get registered type name
 	 * @return string
 	 */
@@ -81,12 +90,13 @@ class AbstractPostType {
 	}
 
 	/**
-	 * Register this PostType
+	 * Add all meta boxes / custom fields for this type
 	 */
-	public function register() {
-		$res = register_post_type($this->getTypeName() , $this->configuration );
+	public function addMetaBox() {
+		foreach ( $this->addCustomFields() as $metaBox ) {
+			$metaBox->register();
+		}
 	}
-
 
 	/**
 	 * Add the custom fields for this post type
@@ -94,18 +104,6 @@ class AbstractPostType {
 	public function addCustomFields() {
 		return [];
 	}
-
-
-
-	/**
-	 * Add all meta boxes / custom fields for this type
-	 */
-	public function addMetaBox() {
-		foreach ($this->addCustomFields() as $metaBox) {
-			$metaBox->register();
-		}
-	}
-
 
 
 }
