@@ -47,8 +47,8 @@ class PulpitPlugin {
 		\register_deactivation_hook( PEREGRINUS_PULPIT_ENTRY_SCRIPT, [ Installer::class, 'deactivate' ] );
 		\register_uninstall_hook( PEREGRINUS_PULPIT_ENTRY_SCRIPT, [ Installer::class, 'uninstall' ] );
 
-		\load_plugin_textdomain( PEREGRINUS_PULPIT_SLUG, false,
-			PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Languages' );
+		\load_plugin_textdomain( 'pulpit', false,
+			PEREGRINUS_PULPIT_DOMAIN_PATH );
 
 		add_action( 'init', [ $this, 'init' ] );
 		add_action( 'admin_init', [ Admin::class, 'init' ] );
