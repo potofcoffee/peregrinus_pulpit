@@ -62,8 +62,12 @@ class AbstractTask {
 	 */
 	public function register() {
 		$hook = $this->getHookName();
-		if (!\wp_next_scheduled($hook)) {
-			\wp_schedule_event(time(), $this->getSchedule(), $hook);
+		//\wp_clear_scheduled_hook( $hook );
+
+		$time = strtotime('this sunday, 23:59:59');
+
+		if (!($scheduled = \wp_next_scheduled($hook))) {
+			\wp_schedule_event($time, $this->getSchedule(), $hook);
 		}
 	}
 
