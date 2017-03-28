@@ -31,7 +31,7 @@ use Peregrinus\Pulpit\Import\Feed;
  * @package Peregrinus\Pulpit\Tasks
  */
 class FeedImportTask extends AbstractTask {
-	protected $schedule = 'hourly';
+	protected $schedule = 'weekly';
 
 	/**
 	 * Run the FeedImport task
