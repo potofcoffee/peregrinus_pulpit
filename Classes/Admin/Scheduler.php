@@ -43,10 +43,10 @@ class Scheduler {
 	 */
 	public function register() {
 		// register schedules
-		add_filter( 'cron_schedules', [$this, 'registerCustomIntervals']);
+		add_filter( 'cron_schedules', [ $this, 'registerCustomIntervals' ] );
 
 		// register tasks
-		foreach (TaskFactory::getAll() as $task) {
+		foreach ( TaskFactory::getAll() as $task ) {
 			$task->register();
 		}
 	}
@@ -57,14 +57,18 @@ class Scheduler {
 	 */
 	public function registerCustomIntervals() {
 		return [
-			'one_minute' => [
+			'one_minute'   => [
 				'interval' => 60,
-				'display'  => __('Every minute', 'pulpit'),
+				'display'  => __( 'Every minute', 'pulpit' ),
 			],
 			'five_minutes' => [
 				'interval' => 300,
-				'display'  => __('Every five minutes', 'pulpit'),
-			]
+				'display'  => __( 'Every five minutes', 'pulpit' ),
+			],
+			'weekly'       => [
+				'interval' => 604800,
+				'display'  => __( 'Once a week', 'pulpit' ),
+			],
 		];
 	}
 }
