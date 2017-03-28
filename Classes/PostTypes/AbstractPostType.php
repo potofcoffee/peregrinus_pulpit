@@ -49,7 +49,8 @@ class AbstractPostType {
 	 * @return string
 	 */
 	public function getKey() {
-		return lcfirst( str_replace( 'PostType', '', array_pop( explode( '\\', get_class( $this ) ) ) ) );
+		$tmp = explode( '\\', get_class( $this ) );
+		return lcfirst( str_replace( 'PostType', '', array_pop( $tmp ) ) );
 	}
 
 	/**
