@@ -14,13 +14,16 @@
   "require" : {
     "composer/installers" : "~1.0.0",
     "php" : ">=5.6",
-    "typo3fluid/fluid": "2.3.1"
+    "typo3fluid/fluid": "2.3.1",
+    "chillerlan/php-qrcode": "dev-master"
   },
   "extra" : {
     "installer-name" : "peregrinus-pulpit"
   },
   "autoload": {
-    "psr-4": {"Peregrinus\\Pulpit\\": "Classes/"}
+    "psr-4": {
+      "Peregrinus\\Pulpit\\": "Classes/"
+    }
   },
   "homepage" : "http://www.pereginus.de/pulpit",
   "support": {

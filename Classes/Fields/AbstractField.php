@@ -30,7 +30,7 @@ class AbstractField {
 	protected $label = '';
 	protected $context = '';
 
-	public function __construct($key, $label = '', $context) {
+	public function __construct($key, $label = '', $context = '') {
 		$this->setKey($key);
 		$this->setLabel($label);
 		$this->setContext($context);

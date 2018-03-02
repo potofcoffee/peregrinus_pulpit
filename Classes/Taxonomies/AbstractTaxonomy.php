@@ -78,7 +78,7 @@ class AbstractTaxonomy {
 	 * @return string
 	 */
 	public function getKey() {
-		return lcfirst( str_replace('Taxonomy', '', array_pop(  ) ));
+		return lcfirst( str_replace('Taxonomy', '', array_pop( explode('\\', get_class($this)) ) ));
 	}
 
 }

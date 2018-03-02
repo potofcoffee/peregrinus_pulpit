@@ -189,7 +189,7 @@ class Sermon {
 				'remoteAudio'    => 'remote_audio',
 				'remoteUrl'      => 'remote_url',
 				'church'         => 'church',
-				'churchUrl'     => 'church_url',
+				'churchUrl'      => 'church_url',
 
 			] as $t3Key => $wpKey
 		) {
@@ -260,40 +260,45 @@ class Sermon {
 	protected function attachImageFile( $postId, $imageFile ) {
 		$uploadPath = wp_upload_dir();
 		if ( ! file_exists( $uploadPath['path'] . '/' . basename( $imageFile ) ) ) {
-			$imageFile  = $this->downloadFile( $imageFile, $uploadPath['path'] . '/' );
-			$fileType   = wp_check_filetype( $imageFile, null )['type'];
-			$guid       = $uploadPath['url'] . '/' . basename( $imageFile );
-			$attachment = [
-				'guid'           => $guid,
-				'post_status'    => 'inherit',
-				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $imageFile ) ),
-				'post_content'   => $imageFile,
-				'post_mime_type' => $fileType,
-			];
-
-			// check if this attachment already exists:
-			$media        = get_attached_media( 'image', $postId );
-			$attachmentId = 0;
-			foreach ( $media as $item ) {
-				if ( $item->guid == $guid ) {
-					$attachmentId = $item->ID;
-					__log( $this, 'Attachment already exists with ID ', $attachmentId );
-				}
-			}
-			// ..if not, create attachment
-			if ( ! $attachmentId ) {
-				$attachmentId = \wp_insert_attachment( $attachment, $imageFile, $postId );
-				__log( $this, 'Created new attachment: Image ' . $imageFile . ' with attachment ID ' . $attachmentId );
-			}
-
-			// update all attachment data
-			$attachmentData = \wp_generate_attachment_metadata( $attachmentId, $imageFile );
-			\wp_update_attachment_metadata( $attachmentId, $attachmentData );
-			\set_post_thumbnail( $postId, $attachmentId );
-
+			$imageFile = $this->downloadFile( $imageFile, $uploadPath['path'] . '/' );
 		} else {
-			__log( $this, 'Skipped processing existing image.' );
+			$imageFile = $uploadPath['path'] . '/' . basename( $imageFile );
+			__log( $this, 'Skipped downloading existing image.' );
 		}
+		$fileType   = wp_check_filetype( $imageFile, null )['type'];
+		$guid       = $uploadPath['url'] . '/' . basename( $imageFile );
+		$attachment = [
+			'guid'           => $guid,
+			'post_status'    => 'inherit',
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $imageFile ) ),
+			'post_content'   => $imageFile,
+			'post_mime_type' => $fileType,
+		];
+
+		// check if this attachment already exists:
+		$media        = get_attached_media( 'image', $postId );
+		$attachmentId = 0;
+		foreach ( $media as $item ) {
+			if ( $item->guid == $guid ) {
+				$attachmentId = $item->ID;
+				__log( $this, 'Attachment already exists with ID ', $attachmentId );
+			}
+		}
+		if ($attachmentId) {
+			\wp_delete_attachment($attachmentId, true);
+			$attachmentId = 0;
+		}
+		// ..if not, create attachment
+		if ( ! $attachmentId ) {
+			$attachmentId = \wp_insert_attachment( $attachment, $imageFile, $postId );
+			__log( $this, 'Created new attachment: Image ' . $imageFile . ' with attachment ID ' . $attachmentId );
+		}
+
+		// update all attachment data
+		$attachmentData = \wp_generate_attachment_metadata( $attachmentId, $imageFile );
+		\wp_update_attachment_metadata( $attachmentId, $attachmentData );
+		\set_post_thumbnail( $postId, $attachmentId );
+
 	}
 
 	/**
@@ -304,7 +309,7 @@ class Sermon {
 	 */
 	public function downloadFile( $source, $target ) {
 		if ( is_dir( $target ) ) {
-			$target = $target . '/' . pathinfo( $source, PATHINFO_BASENAME );
+			$target = $target . pathinfo( $source, PATHINFO_BASENAME );
 		}
 		file_put_contents( $target, file_get_contents( $source ) );
 

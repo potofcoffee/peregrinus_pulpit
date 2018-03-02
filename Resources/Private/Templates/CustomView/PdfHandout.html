@@ -1,0 +1,117 @@
+<p:output.pdf filename="{post.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf" layout="A5" debug="1" bottommargin="9">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout.css"/>
+    </head>
+    <body>
+    <div class="container">
+        <h1>{post.post_title}
+            <f:if condition="{meta.subtitle.0}"><br/>{meta.subtitle.0}</f:if>
+        </h1>
+        <h2>Begleitzettel zur Predigt von Pastor Christoph Fischer am {post.post_date -> p:format.date(format:
+            '%d.%m.%Y')}</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-8">
+                <f:if condition="{thumbnail}">{thumbnail -> f:format.raw()}</f:if>
+            </div>
+            <div class="col-xs-4">
+                <p:qrcode data="http://toph.de/p{post.post_date -> p:format.date(format: '%y%m%d')}"/>
+                <p>Weitere Informationen und Material zur
+                    Predigt findest du online unter <br/>
+                    <b>http://toph.de/p{post.post_date -> p:format.date(format: '%y%m%d')}</b>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-8">
+                <h3>Darum geht es</h3>
+                {post.post_content}
+                <h3>
+                    <f:if condition="{meta.notes_header.0}">
+                        <f:then>{meta.notes_header.0}</f:then>
+                        <f:else>Notizen zur Predigt</f:else>
+                    </f:if>
+                </h3>
+                <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
+                <p:format.orderedList list="{meta.key_points.0}" underlineMode="{underlineMode}" listStyle="font-size: 12pt;"/>
+            </div>
+            <div class="col-xs-4">
+                <h3>Bibellese</h3>
+                <p>{meta.reference.0}</p>
+                <p class="small">
+                    Wir lesen die Bibel in verschiedenen
+                        Übersetzungen? Das soll dich nicht
+                        verwirren, sondern bereichern! Vielleicht
+                        entdeckst du durch den Vergleich der
+                        Übersetzungen etwas ganz Neues.
+                </p>
+                <p class="small">
+                        Natürlich gibt es die Bibel auch als App für
+                        dein Smartphone. Mit dem folgenden Code
+                        kannst du die oben genannte Stelle in der
+                        "YouVersion"-Bibel-App direkt aufschlagen.
+                </p>
+                <p:qrcode data="{p:youversionLink(reference: meta.reference.0)}"/>
+            </div>
+
+        </div>
+        <div style="page-break-before: always;"></div>
+        <div class="row">
+            <div class="col-xs-8">
+                <f:if condition="{meta.questions.0}">
+                    <h3>Fragen zur Vertiefung</h3>
+                    <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter über das
+                        Gehörte nachzudenken.
+                    </p>
+                    <p:format.orderedList list="{meta.questions.0}" underlineMode="none"/>
+                </f:if>
+                <f:if condition="{meta.further_reading.0}">
+                    <h3>Literaturtipps</h3>
+                    <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir Folgendes weiterhelfen:</p>
+                    {meta.further_reading.0}
+                </f:if>
+            </div>
+            <div class="col-xs-4">
+                <h3>Über Christoph</h3>
+                <p>Christoph Fischer (* 1978) ist Pastor
+                    der Volksmission in Freudenstadt.</p>
+                <p>Christoph ist verheiratet mit Rebecca.
+                    Gemeinsam haben sie drei Töchter,
+                    Ann-Céline (* 2005), Emma (* 2007)
+                    und Pia (*2012).</p>
+                <hr/>
+                <p>Pastor Christoph Fischer<br/>
+                    Volksmission Freudenstadt<br/>
+                    Wallstr. 3-5<br/>
+                    72250 Freudenstadt</p>
+                <p>Tel. (0 74 41) 71 73<br/>
+                    christoph.fischer@volksmission.de<br/>
+                    http://christoph-fischer.org</p>
+                <hr/>
+                <img class="cc" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
+                <p class="small">
+                    Diese Predigt und alle dazu gehörigen
+                        Ressourcen (Predigtzettel, Aufnahme) sind
+                        lizenziert unter einer Creative Commons
+                        Namensnennung - Weitergabe unter
+                        gleichen Bedingungen 4.0 International
+                        Lizenz. Verwendete Bilder stehen eventuell
+                        unter eigenen Lizenzbedingungen.
+                        Ausdrücklich von der Creative Commons-
+                        Lizenz ausgenommen sind die Logos und
+                        Namen der Volksmission Freudenstadt und
+                        ihrer Arbeitsbereiche.
+                </p>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

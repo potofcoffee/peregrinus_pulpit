@@ -54,6 +54,8 @@ class View extends TemplateView {
 			]
 		);
 		$this->assign('plugin_slug', PEREGRINUS_PULPIT);
+		$this->assign('basePath', PEREGRINUS_PULPIT_BASE_PATH);
+		$this->assign('baseUrl', PEREGRINUS_PULPIT_BASE_URL);
 	}
 
 }
