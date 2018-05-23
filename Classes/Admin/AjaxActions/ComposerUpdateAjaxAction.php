@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,43 +21,33 @@
  */
 
 
-namespace Peregrinus\Pulpit\Admin;
+namespace Peregrinus\Pulpit\Admin\AjaxActions;
+
 
 use Peregrinus\Pulpit\Installer\ComposerWrapper;
 
-/**
- * Class Installer
- * @package Peregrinus\Pulpit\Admin
- */
-class Installer {
+class ComposerUpdateAjaxAction extends AbstractAjaxAction
+{
+    public function do()
+    {
+        $updateUrl = get_admin_url(null, 'options-general.php?page=pulpit-settings-general&composerUpdate=1');
 
-	/**
-	 * Activate the plugin
-     * This will perform a composer install/update on plugin activation
-	 */
-	public function activate() {
         $composer = new ComposerWrapper();
-        if (!$composer->isInstalled()) {
-            // do a composer install
-            $composer->install();
+        $composer->do('update --no-interaction');
+        if ($composer->isOutdated()) {
+            $res = [
+                'success' => false,
+                'notice' => __('<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href="'.$updateUrl.'">click here</a> to try again.')
+            ];
         } else {
-            if ($composer->isOutdated()) {
-                $composer->update();
-            }
+            $res = [
+                'success' => true,
+                'notice' => __('Good news! All necessary updates have been installed.')
+            ];
         }
-	}
+        echo json_encode($res);
+        wp_die();
+    }
 
-	/**
-	 * Deactivate the plugin
-	 */
-	public function deactivate() {
 
-	}
-
-	/**
-	 * Uninstall the plugin
-	 */
-	public function uninstall() {
-		\delete_option(PEREGRINUS_PULPIT);
-	}
 }

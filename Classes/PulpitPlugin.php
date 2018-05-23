@@ -24,10 +24,15 @@
 namespace Peregrinus\Pulpit;
 
 use Peregrinus\Pulpit\Admin\Admin;
+use Peregrinus\Pulpit\Admin\AjaxActions\AbstractAjaxAction;
+use Peregrinus\Pulpit\Admin\AjaxActions\AjaxActionFactory;
 use Peregrinus\Pulpit\Admin\Installer;
 use Peregrinus\Pulpit\Admin\Scheduler;
+use Peregrinus\Pulpit\CustomFormats\AbstractCustomFormat;
 use Peregrinus\Pulpit\CustomFormats\CustomFormatFactory;
+use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
+use Peregrinus\Pulpit\Taxonomies\AbstractTaxonomy;
 use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
 
 
@@ -80,15 +85,24 @@ class PulpitPlugin {
 	 * Initialize the plugin's registrations
 	 */
 	public function init() {
-		foreach ( CustomFormatFactory::getAll() as $customFormat ){
+
+	    /** @var AbstractCustomFormat $customFormat */
+        foreach ( CustomFormatFactory::getAll() as $customFormat ){
 			$customFormat->register();
 		}
 
-		foreach ( PostTypeFactory::getAll() as $postType ) {
+		/** @var AbstractPostType $postType */
+        foreach ( PostTypeFactory::getAll() as $postType ) {
 			$postType->register();
 		}
 
-		foreach ( TaxonomyFactory::getAll() as $taxonomy ) {
+		/** @var AbstractAjaxAction $ajaxAction */
+        foreach (AjaxActionFactory::getAll() as $ajaxAction) {
+		    $ajaxAction->register();
+        }
+
+        /** @var AbstractTaxonomy $taxonomy */
+        foreach ( TaxonomyFactory::getAll() as $taxonomy ) {
 			$taxonomy->register();
 		}
 		\flush_rewrite_rules();

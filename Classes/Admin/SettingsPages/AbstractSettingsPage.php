@@ -127,8 +127,9 @@ class AbstractSettingsPage {
 	public function render() {
 		$this->fetchOptions();
 		echo '<div class="wrap">'
-		     .'<h1>'.__('Settings').' > '.$this->getPageTitle().'</h1>'
-		     .'<form method="post" action="options.php">';
+		     .'<h1>'.__('Settings').' > '.$this->getPageTitle().'</h1>';
+		$this->headerFunctions();
+		echo '<form method="post" action="options.php">';
 		settings_fields($this->getOptionGroupName());
 		do_settings_sections($this->getSlug());
 		submit_button();
@@ -216,6 +217,34 @@ class AbstractSettingsPage {
 		$this->sections = $sections;
 	}
 
+    /**
+     * Output additional info in the header
+     */
+    public function headerFunctions() {
+
+    }
+
+    /**
+     * Display a notice
+     * @param string $type Type of the notice: success|warning|error|info
+     * @param string $text Text of the notice
+     * @param bool $isDismissible (optional) True if notice is dismissible
+     * @param string $id (optional) ID string of the notice div
+     */
+    public function notice(string $type, string $text, bool $isDismissible = true, string $id='') {
+        echo '<div '.($id ? 'id="'.$id.'"' : '').' class="notice notice-'.$type.($isDismissible ? ' is-dismissible' : '').'">'
+            .'<p>'.$text.'</p>'
+            .'<button type="button" class="notice-dismiss"><span class="screen-reader-text">Diese Meldung ausblenden.</span></button></div>';
+
+    }
 
 
+    public function getUrl($arguments = []) {
+        $query = [];
+        foreach ($arguments as $key => $val) {
+            $query[] = $key.'='.$val;
+        }
+        $baseUrl = get_admin_url(null, 'options-general.php?page='.$this->getSlug());
+        return $baseUrl.(count($query) ? '&'.join('&', $query) : '');
+    }
 }
