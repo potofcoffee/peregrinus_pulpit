@@ -64,7 +64,8 @@ class PulpitPlugin {
 			$admin->registerSettingsPages();
 		}
 
-
+        add_action('admin_enqueue_scripts', [$this, 'addCSS']);
+        add_action('admin_enqueue_scripts', [$this, 'addJS']);
 	}
 
 	/**
@@ -111,5 +112,16 @@ class PulpitPlugin {
 		$scheduler->register();
 	}
 
+
+	public function addCSS() {
+        wp_enqueue_style('pulpit-admin-styles', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Styles/Admin/Admin.css');
+        wp_enqueue_style('thickbox'); //Provides the styles needed for this window.
+    }
+
+	public function addJS() {
+        wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
+        wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
+        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Scripts/Admin/Uploader.js');
+    }
 
 }

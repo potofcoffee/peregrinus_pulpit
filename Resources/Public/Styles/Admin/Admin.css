@@ -1,0 +1,20 @@
+.pulpit-upload-preview {
+    margin: 3px 0;
+    border: solid 1px #ddd;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.pulpit-upload-preview:hover {
+    border-color: #5b9dd9;
+}
+
+.pulpit-upload-preview button {
+    visibility: hidden;
+    margin-top: -2px !important;
+    float: right;
+}
+
+.pulpit-upload-preview:hover button {
+    visibility: visible;
+}

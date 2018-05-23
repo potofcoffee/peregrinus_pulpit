@@ -26,6 +26,7 @@ namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
+use Peregrinus\Pulpit\Fields\FileRelationField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\RTEField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
@@ -144,6 +145,12 @@ class SermonPostType extends AbstractPostType {
 				new InputField( 'image', __('Title image', 'pulpit') ),
 				new InputField( 'preview_image', __('Preview image', 'pulpit') ),
 				new InputField( 'image_credits', __('Image credits', 'pulpit') ),
+                new FileRelationField( 'audiorecording_relation',
+                    __('Audio recording <b>REL!</b>', 'pulpit'),
+                    'audio/mpeg',
+                    __('Select audio file', 'pulpit'),
+                    __('Select audio file', 'pulpit')
+                ),
 				new InputField( 'audiorecording', __('Audio recording', 'pulpit') ),
 				new InputField( 'remote_audio', __('Remote audio file', 'pulpit') ),
 				new InputField( 'videorecording', __('Video recording', 'pulpit') ),

@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'chillerlan\\Traits\\' => array($vendorDir . '/chillerlan/php-traits/src'),
+    'chillerlan\\QRCode\\' => array($vendorDir . '/chillerlan/php-qrcode/src'),
     'TYPO3Fluid\\Fluid\\' => array($vendorDir . '/typo3fluid/fluid/src'),
     'Peregrinus\\Pulpit\\' => array($baseDir . '/Classes'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
