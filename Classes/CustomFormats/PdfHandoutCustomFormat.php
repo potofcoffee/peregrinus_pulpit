@@ -24,30 +24,8 @@
 namespace Peregrinus\Pulpit\CustomFormats;
 
 
-use Peregrinus\Pulpit\View;
+class PdfHandoutCustomFormat extends AbstractTemplatedCustomFormat {
 
-class PdfHandoutCustomFormat extends AbstractCustomFormat {
-
-	/**
-	 * Render the CustomFormat
-	 */
-	function render() {
-		global $post;
-		$post = get_post();
-		$meta = get_post_meta($post->ID);
-		$thumbnail = \has_post_thumbnail($post->ID) ? \get_the_post_thumbnail($post->ID) : null;
-
-		$view = new View();
-		$context = $view->getRenderingContext();
-		$context->setControllerName('CustomView');
-
-		$view->assign('post', $post);
-		$view->assign('meta', $meta);
-		$view->assign('underlineMode', $_GET['underlineMode'] ? $_GET['underlineMode'] : 'html5');
-		$view->assign('thumbnail', $thumbnail);
-
-		echo $view->render('pdfHandout');
-		die();
-	}
+    protected $viewName = 'pdfHandout';
 
 }

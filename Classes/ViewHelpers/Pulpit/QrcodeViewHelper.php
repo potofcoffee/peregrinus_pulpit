@@ -49,7 +49,9 @@ class QrcodeViewHelper extends AbstractViewHelper {
 
 	protected function render() {
 		$content = ($this->arguments['data'] ? $this->arguments['data'] : $this->renderChildren());
-		return '<img src="'.(new QRCode($content, new QRImage))->output().'" />';
+		if ($content) {
+            return '<img src="'.(new QRCode)->render($content).'" />';
+        }
 	}
 
 

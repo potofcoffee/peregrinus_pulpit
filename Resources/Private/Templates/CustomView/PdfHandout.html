@@ -1,4 +1,4 @@
-<p:output.pdf filename="{post.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf" layout="A5" debug="1" bottommargin="9">
+<p:output.pdf filename="{post.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf" layout="A5" debug="1" bottommargin="5">
     <!DOCTYPE html>
     <html>
     <head>
@@ -7,7 +7,7 @@
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css"
               href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
-        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout.css"/>
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout.css" media="all"/>
     </head>
     <body>
     <div class="container">
@@ -19,7 +19,7 @@
         <hr/>
         <div class="row">
             <div class="col-xs-8">
-                <f:if condition="{thumbnail}">{thumbnail -> f:format.raw()}</f:if>
+                <f:if condition="{thumbnail}">{thumbnail}</f:if>
             </div>
             <div class="col-xs-4">
                 <p:qrcode data="http://toph.de/p{post.post_date -> p:format.date(format: '%y%m%d')}"/>
@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <h3>Darum geht es</h3>
-                {post.post_content}
+                {content.main}
                 <h3>
                     <f:if condition="{meta.notes_header.0}">
                         <f:then>{meta.notes_header.0}</f:then>
@@ -80,19 +80,17 @@
             </div>
             <div class="col-xs-4">
                 <h3>Über Christoph</h3>
-                <p>Christoph Fischer (* 1978) ist Pastor
-                    der Volksmission in Freudenstadt.</p>
+                <p>Christoph Fischer (* 1978) ist seit mehr als 15 Jahren im hauptamtlichen pastoralen Dienst, zuletzt bei der Volksmission Freudenstadt. Ab August 2018 wechselt Christoph in den Pfarrdienst der Evangelischen Landeskirche in Württemberg.</p>
                 <p>Christoph ist verheiratet mit Rebecca.
                     Gemeinsam haben sie drei Töchter,
                     Ann-Céline (* 2005), Emma (* 2007)
                     und Pia (*2012).</p>
                 <hr/>
                 <p>Pastor Christoph Fischer<br/>
-                    Volksmission Freudenstadt<br/>
-                    Wallstr. 3-5<br/>
+                    Gerhart-Hauptmann-Weg 11<br/>
                     72250 Freudenstadt</p>
-                <p>Tel. (0 74 41) 71 73<br/>
-                    christoph.fischer@volksmission.de<br/>
+                <p>Tel. (0 74 41) 95 06 64<br/>
+                    chris@toph.de<br/>
                     http://christoph-fischer.org</p>
                 <hr/>
                 <img class="cc" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
@@ -104,10 +102,6 @@
                         gleichen Bedingungen 4.0 International
                         Lizenz. Verwendete Bilder stehen eventuell
                         unter eigenen Lizenzbedingungen.
-                        Ausdrücklich von der Creative Commons-
-                        Lizenz ausgenommen sind die Logos und
-                        Namen der Volksmission Freudenstadt und
-                        ihrer Arbeitsbereiche.
                 </p>
             </div>
         </div>
