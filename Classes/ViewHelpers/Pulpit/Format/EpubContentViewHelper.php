@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,32 +26,33 @@ namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-class CustomUrlViewHelper extends AbstractViewHelper {
+class EpubContentViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerArgument( 'url', 'string', 'Url string' );
-		$this->registerArgument( 'add', 'array', 'Parameters' );
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+    }
 
-	protected function render() {
-		$args = is_array($this->arguments['add']) ? $this->arguments['add'] : [];
-		$add = [];
-		foreach ($args as $key => $val) {
-			$add[] = $key.'='.$val;
-		}
-		return $this->arguments['url'].((strpos($this->arguments['url'], '?') !== false) ? '&' : '?').join('&', $add);
-	}
+    protected function render() {
+        $content = $this->renderChildren();
+
+        $p = explode("\r\n\r\n", $content);
+        foreach ($p as $key => $text) {
+            $p[$key] = str_replace('<p>', '<p lang="de-DE" class="western" xml:lang="de-DE">', wpautop($text));
+        }
+        return join('', $p);
+    }
 
 }

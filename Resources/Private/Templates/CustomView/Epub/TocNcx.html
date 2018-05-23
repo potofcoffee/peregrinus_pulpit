@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx
+        xmlns="http://www.daisy.org/z3986/2005/ncx/"
+        version="2005-1"
+        xml:lang="de">
+    <head>
+        <!-- Dieselbe Buchidentifikation wie in der OPF-Datei: -->
+        <meta name="dtb:uid" content="{uuid}"/>
+    </head>
+    <docTitle>
+        <text>{post.post_title}<f:if condition="{meta.subtitle.0}">: {meta.subtitle.0}</f:if></text>
+    </docTitle>
+    <docAuthor>
+        <text>{author.display_name}</text>
+    </docAuthor>
+    <navMap>
+        <f:for each="{slides}" as="slide" iteration="i">
+        <navPoint playOrder="{i.cycle}" id="slide{slide.ID}">
+            <navLabel>
+                <text>{slide.post_title}</text>
+            </navLabel>
+            <content src="slide_{slide.ID}.xhtml"/>
+        </navPoint>
+        </f:for>
+        <navPoint playOrder="{p:math.add(base: '{slides -> f:count()}', add: 1)}" id="author_about">
+            <navLabel>
+                <text>Über {author.first_name}</text>
+            </navLabel>
+            <content src="author_about.xhtml"/>
+        </navPoint>
+        <navPoint playOrder="{p:math.add(base: '{slides -> f:count()}', add: 2)}" id="author_contact">
+            <navLabel>
+                <text>Kontakt zu {author.first_name}</text>
+            </navLabel>
+            <content src="author_contact.xhtml"/>
+        </navPoint>
+    </navMap>
+</ncx>

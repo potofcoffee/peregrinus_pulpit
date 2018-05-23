@@ -61,7 +61,7 @@ class SermonPostType extends AbstractPostType {
 			'query_var'          => true,
 			'capability_type'    => 'post',
 			'has_archive'        => true,
-			'hierarchical'       => false,
+			'hierarchical'       => true,
 			'supports'           => [ 'title', 'editor', 'comments', 'thumbnail', 'entry-views' ],
 		];
 
@@ -155,6 +155,10 @@ class SermonPostType extends AbstractPostType {
 					new InputField( 'church_url', __('Church URL', 'pulpit') ),
 				]
 			),
+            new MetaBox('ebook', __('E-book', 'pulpit') , $this->getTypeName(), 'normal', 'high', [
+                new InputField( 'link_amazon', __('Amazon link', 'pulpit') ),
+                new InputField( 'link_smashwords', __('Smashwords link', 'pulpit') ),
+            ]),
 		];
 	}
 

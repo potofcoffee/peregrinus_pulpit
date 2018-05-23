@@ -84,8 +84,9 @@ class OrderedListViewHelper extends AbstractViewHelper {
 				break;
 		}
 		$items = explode("\r", $this->arguments['list']);
+		foreach ($items as $key => $item) if (!trim($item)) unset($items[$key]);
 		if (is_array($items)) {
-			return '<ol ' . ($listStyle ? 'style="' . $listStyle . '"' : '') . '><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>' . join('</li><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>', $items) . ($breakAfter ? '<br />' : '') . '</li></ol>';
+			return str_replace('<li></li>', '', '<ol ' . ($listStyle ? 'style="' . $listStyle . '"' : '') . '><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>' . join('</li><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>', $items) . ($breakAfter ? '<br />' : '') . '</li></ol>');
 		} else {
 			return $this->arguments['list'];
 		}

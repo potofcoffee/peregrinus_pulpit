@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="Christoph Fischer"/>
+    <meta name="Info_2" content=""/>
+    <meta name="Info_3" content=""/>
+    <meta name="Info_4" content=""/>
+    <title>{post.post_title}<f:if condition="{meta.subtitle.0}">: {meta.subtitle.0}</f:if></title>
+    <link href="stylesheet.css" type="text/css" rel="stylesheet"/><style type="text/css">
+    @page { margin-bottom: 5.000000pt; margin-top: 5.000000pt; }</style></head>
+<body dir="ltr" class="calibre">
+<p lang="de-DE" class="c5" xml:lang="de-DE" id="calibre_pb_1"><a id="slide{slide.ID}"></a><span class="c6">{slide.post_title}</span></p>
+<p lang="de-DE" class="western" xml:lang="de-DE"></p>
+{slide.post_content -> p:format.epubContent()}
+<f:if condition="{slide.isLast}"><p lang="de-DE" class="western" xml:lang="de-DE"></p><p lang="de-DE" class="c2" xml:lang="de-DE">###</p></f:if>
+</body>
+</html>

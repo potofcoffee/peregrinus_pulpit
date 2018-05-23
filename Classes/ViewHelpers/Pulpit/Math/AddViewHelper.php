@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,37 +21,36 @@
  */
 
 
-namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
+namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Math;
 
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-class CustomUrlViewHelper extends AbstractViewHelper {
+class AddViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerArgument( 'url', 'string', 'Url string' );
-		$this->registerArgument( 'add', 'array', 'Parameters' );
-	}
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	protected function render() {
-		$args = is_array($this->arguments['add']) ? $this->arguments['add'] : [];
-		$add = [];
-		foreach ($args as $key => $val) {
-			$add[] = $key.'='.$val;
-		}
-		return $this->arguments['url'].((strpos($this->arguments['url'], '?') !== false) ? '&' : '?').join('&', $add);
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('base', 'int', 'base to add to', true, 0);
+        $this->registerArgument('add', 'int', 'summand to add to base', true, 0);
+    }
+
+    protected function render()
+    {
+        return (string)((int)$this->arguments['base'] + (int)$this->arguments['add']);
+    }
 
 }

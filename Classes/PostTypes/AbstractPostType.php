@@ -83,10 +83,11 @@ class AbstractPostType {
 
 	/**
 	 * Get registered type name
+     * @param string alternative Optional: get the type name for another key
 	 * @return string
 	 */
-	public function getTypeName() {
-		return PEREGRINUS_PULPIT . '_' . $this->getKey();
+	public function getTypeName($alternative = '') {
+		return PEREGRINUS_PULPIT . '_' . ($alternative ?: $this->getKey());
 	}
 
 	/**

@@ -325,3 +325,73 @@ msgstr ""
 #. Author URI of the plugin
 msgid "http://christoph-fischer.org"
 msgstr ""
+
+#: SLIDES
+#: Slides
+
+
+#: Slides
+msgid "Slides"
+msgstr ""
+
+
+#: Slide
+msgid "Slide"
+msgstr ""
+
+
+#: Add New
+msgid "Add New"
+msgstr ""
+
+
+#: Add New Slide
+msgid "Add New Slide"
+msgstr ""
+
+
+#: Edit Slide
+msgid "Edit Slide"
+msgstr ""
+
+
+#: New Slide
+msgid "New Slide"
+msgstr ""
+
+
+#: View Slide
+msgid "View Slide"
+msgstr ""
+
+
+#: Search Slides
+msgid "Search Slides"
+msgstr ""
+
+
+#: No slides found
+msgid "No slides found"
+msgstr ""
+
+
+#: No slides found in Trash
+msgid "No slides found in Trash"
+msgstr ""
+
+
+#: Slides
+msgid "Slides"
+msgstr ""
+
+#: No sermon selected.
+msgid "No sermon selected."
+msgstr ""
+
+
+#: Slide options
+msgid "Slide options"
+msgstr ""
+
+
+

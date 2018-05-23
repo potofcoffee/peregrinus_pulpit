@@ -53,6 +53,7 @@ define( 'PEREGRINUS_PULPIT_CLASS_PATH', dirname( __FILE__ ) . '/Classes/' );
 define( 'PEREGRINUS_PULPIT_DOMAIN_PATH', dirname( plugin_basename( __FILE__ ) ) . '/Resources/Private/Languages/' );
 define( 'PEREGRINUS_PULPIT_BASE_URL',
 	plugin_dir_url( PEREGRINUS_PULPIT_BASE_PATH ) . basename( dirname( __FILE__ ) ) . '/' );
+define ('PEREGRINUS_PULPIT_BASE_URL_NO_PROTOCOL', strtr(PEREGRINUS_PULPIT_BASE_URL, ['https:' => '', 'http:' => '']));
 
 add_action( 'plugins_loaded', [ PulpitPlugin::class, 'getInstance' ], 9 );
 

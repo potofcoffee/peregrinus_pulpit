@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package version="3.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:opf="http://www.idpf.org/2007/opf"
+         xmlns="http://www.idpf.org/2007/opf"
+         unique-identifier="Id">
+    <metadata>
+        <dc:description>{content.main}</dc:description>
+        <dc:identifier id="Id">{uuid}</dc:identifier>
+        <meta property="dcterms:modified">{post.post_modified_gmt -> p:format.date(format: '%Y-%m-%dT%H:%M:%SZ')}</meta>
+        <dc:language>de</dc:language>
+        <dc:creator id="{author.user_login}" xml:lang="de">{author.display_name}</dc:creator>
+        <meta refines="#{author.user_login}" property="file-as">{author.last_name}, {author.first_name}</meta>
+        <meta refines="#{author.user_login}" property="role" scheme="marc:relators">aut</meta>
+        <dc:title xml:lang="de">{post.post_title}<f:if condition="{meta.subtitle.0}">: {meta.subtitle.0}</f:if></dc:title>
+        <meta name="cover" content="cover"/>
+        <dc:contributor id="smashwords">Smashwords, Inc.</dc:contributor>
+        <meta refines="#smashwords" property="role" scheme="marc:relators">bkp</meta>
+        <meta property="identifier-type" refines="#Id">UUID</meta>
+        <!-- Zeitraum der Erstellung des Buches -->
+        <meta property="dcterms:created">{post.post_date -> p:format.date(format: '%Y-%m-%d')}</meta>
+        <!-- Zeitpunkt der Veröffentlichung -->
+        <meta property="dcterms:issued">{post.post_date -> p:format.date(format: '%Y-%m-%d')}</meta>
+    </metadata>
+    <manifest>
+        <item href="cover.jpg" id="cover" media-type="image/jpeg"/>
+        <item href="stylesheet.css" id="css" media-type="text/css"/>
+        <item href="titlepage.xhtml" id="titlepage" media-type="application/xhtml+xml"/>
+        <item href="frontmatter.xhtml" id="frontmatter" media-type="application/xhtml+xml"/>
+        <item href="toc.xhtml" id="toc" media-type="application/xhtml+xml"/>
+        <item href="toc.ncx" media-type="application/x-dtbncx+xml" id="ncx"/>
+        <item href="nav.xhtml" media-type="application/xhtml+xml" id="nav" properties="nav"/>
+        <f:for each="{slides}" as="slide" iteration="s">
+            <item href="slide_{slide.ID}.xhtml" id="slide{slide.ID}" media-type="application/xhtml+xml"/>
+        </f:for>
+        <item href="author_about.xhtml" id="author_about" media-type="application/xhtml+xml"/>
+        <item href="author_contact.xhtml" id="author_contact" media-type="application/xhtml+xml"/>
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="titlepage"/>
+        <itemref idref="frontmatter"/>
+        <itemref idref="nav"/>
+        <f:for each="{slides}" as="slide" iteration="s">
+            <itemref idref="slide{slide.ID}"/>
+        </f:for>
+        <itemref idref="author_about"/>
+        <itemref idref="author_contact"/>
+    </spine>
+    <guide>
+        <reference href="titlepage.xhtml" type="cover" title="Cover"/>
+    </guide>
+</package>
