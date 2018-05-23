@@ -63,28 +63,6 @@ class GeneralSettingsPage extends AbstractSettingsPage
                 __('Here you can define your own texts for the permalinks created by PULPIT:',
                     'pulpit'),
                 $rewriteSettings),
-            new SettingsSection(
-                'sync',
-                __('Synchronization', 'pulpit'),
-                __('PULPIT can automatically import sermons from an external source running TYPO3 with the vmfds_sermons plugin. If you want to use this feature, you can setup the sync here:',
-                    'pulpit'),
-                [
-                    new Setting(
-                        'feed',
-                        __('Feed url', 'pulpit'),
-                        new InputField('feed', '', $this->getOptionName())
-                    ),
-                    new Setting(
-                        'church',
-                        __('Church', 'pulpit'),
-                        new InputField('church', '', $this->getOptionName())
-                    ),
-                    new Setting(
-                        'church_url',
-                        __('Church URL', 'pulpit'),
-                        new InputField('church_url', '', $this->getOptionName())
-                    ),
-                ]),
         ]);
     }
 
@@ -96,8 +74,8 @@ class GeneralSettingsPage extends AbstractSettingsPage
         $composer = new ComposerWrapper();
         if ($_REQUEST['composerUpdate']) {
             // composer update requested
-            $this->notice('info', '<div class="spinner"></div> '.__('Updating external components...', 'pulpit'), false, 'composer-update-notice');
-            echo '<script type="text/javascript" src="'.PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Scripts/Admin/Updater.js"></script>';
+            $this->notice('info', '<div class="spinner"></div> ' . __('Updating external components...', 'pulpit'), false, 'composer-update-notice');
+            echo '<script type="text/javascript" src="' . PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Updater.js"></script>';
         } else {
             $updateUrl = $this->getUrl(['composerUpdate' => 1]);
             if ($composer->isOutdated()) {

@@ -56,19 +56,14 @@ class Scheduler {
 	 * Register custom intervals
 	 */
 	public function registerCustomIntervals() {
+        /*
 		return [
 			'one_minute'   => [
 				'interval' => 60,
 				'display'  => __( 'Every minute', 'pulpit' ),
-			],
-			'five_minutes' => [
-				'interval' => 300,
-				'display'  => __( 'Every five minutes', 'pulpit' ),
-			],
-			'weekly'       => [
-				'interval' => 604800,
-				'display'  => __( 'Once a week', 'pulpit' ),
-			],
-		];
+			]
+        ];
+        */
+        return [];
 	}
 }
