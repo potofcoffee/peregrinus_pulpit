@@ -24,7 +24,6 @@
 namespace Peregrinus\Pulpit\Fields;
 
 
-use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
 use Peregrinus\Pulpit\Admin\FieldPreviews\SlidesFieldPreview;
 
 class SlideRelationField extends AbstractField
@@ -38,8 +37,14 @@ class SlideRelationField extends AbstractField
     /** @var string $mimeType Mime type */
     protected $mimeType = '';
 
-    public function __construct($key, string $label = '', string $mimeType='', string $buttonTitle = '', string $dialogTitle='', string $context = '')
-    {
+    public function __construct(
+        $key,
+        string $label = '',
+        string $mimeType = '',
+        string $buttonTitle = '',
+        string $dialogTitle = '',
+        string $context = ''
+    ) {
         parent::__construct($key, $label, $context);
         $this->mimeType = $mimeType;
         $this->buttonTitle = $buttonTitle;
@@ -57,16 +62,21 @@ class SlideRelationField extends AbstractField
     public function render($values)
     {
         $value = $this->getValue($values);
-        if (trim($value)) $slides = explode(',', $value); else $slides = [];
+        if (trim($value)) {
+            $slides = explode(',', $value);
+        } else {
+            $slides = [];
+        }
 
         $o = $this->renderLabel();
-        $o .= '<input type="text" id="'.$this->getKey().'" name="'.$this->getFieldName().'" value="'.htmlentities($this->getValue($values)).'" style="width: 100%"><br />';
+        $o .= '<input type="text" id="' . $this->getKey() . '" name="' . $this->getFieldName() . '" value="' . htmlentities($this->getValue($values)) . '" style="width: 100%"><br />';
         $o .= '<div class="pulpit-slides-preview">';
         foreach ($slides as $slideId) {
             $o .= SlidesFieldPreview::render(get_post($slideId), get_post_meta($slideId));
         }
         $o .= '</div>';
-        $o .= '<input type="button" value="'.__('Add new slide', 'pulpit').'" class="button button-small open-slider-custom-modal"/><br /></div>';
+        $o .= '<input type="button" value="' . __('Add new slide',
+                'pulpit') . '" class="button button-small open-slider-custom-modal"/><br /></div>';
         return $o;
     }
 

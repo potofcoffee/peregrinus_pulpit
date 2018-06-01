@@ -24,45 +24,51 @@
 namespace Peregrinus\Pulpit\CustomFormats;
 
 
-class AbstractCustomFormat {
+class AbstractCustomFormat
+{
 
 
-	/**
-	 * Get the key for this CustomFormat
-	 * @return string
-	 */
-	public function getKey() {
-		$tmp = explode( '\\', get_class( $this ) );
-		return lcfirst( str_replace( 'CustomFormat', '', array_pop( $tmp ) ) );
-	}
+    /**
+     * Register the hook for this CustomFormat
+     */
+    public function register()
+    {
+        \add_action('wp', [$this, 'run']);
+    }
 
-	/**
-	 * Register the hook for this CustomFormat
-	 */
-	public function register() {
-		\add_action('wp', [$this, 'run']);
-	}
+    /**
+     * Check whether this CustomFormat should be output
+     */
+    public function run()
+    {
+        if ($_GET['format'] == PEREGRINUS_PULPIT . '_' . $this->getKey()) {
+            $this->render();
+        }
+    }
 
-	/**
-	 * Check whether this CustomFormat should be output
-	 */
-	public function run() {
-		if ($_GET['format'] == PEREGRINUS_PULPIT.'_'.$this->getKey()) {
-			$this->render();
-		}
-	}
+    /**
+     * Get the key for this CustomFormat
+     * @return string
+     */
+    public function getKey()
+    {
+        $tmp = explode('\\', get_class($this));
+        return lcfirst(str_replace('CustomFormat', '', array_pop($tmp)));
+    }
 
-	/**
-	 * Render the CustomFormat.
-	 * This function must be overridden by any CustomFormat class.
-	 */
-	public function render() {
-		die ('This is the render function for custom format "'.$this->getKey().'"' );
-	}
+    /**
+     * Render the CustomFormat.
+     * This function must be overridden by any CustomFormat class.
+     */
+    public function render()
+    {
+        die ('This is the render function for custom format "' . $this->getKey() . '"');
+    }
 
-	protected function getViewFilePath() {
-		$fileName = PEREGRINUS_PULPIT_BASE_PATH.'Resources/Private/Templates/CustomView/'.ucfirst($this->getKey());
-		return file_exists($fileName.'.php') ? $fileName.'.php' : $fileName.'.html';
-	}
+    protected function getViewFilePath()
+    {
+        $fileName = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/CustomView/' . ucfirst($this->getKey());
+        return file_exists($fileName . '.php') ? $fileName . '.php' : $fileName . '.html';
+    }
 
 }

@@ -41,87 +41,93 @@ use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
  * Provides basic plugin registration
  * @package Peregrinus\Pulpit
  */
-class PulpitPlugin {
+class PulpitPlugin
+{
 
-	private static $instance = null;
+    private static $instance = null;
 
-	/**
-	 * Pulpit constructor.
-	 */
-	public function __construct() {
-		\register_activation_hook( PEREGRINUS_PULPIT_ENTRY_SCRIPT, [ Installer::class, 'activate' ] );
-		\register_deactivation_hook( PEREGRINUS_PULPIT_ENTRY_SCRIPT, [ Installer::class, 'deactivate' ] );
-		\register_uninstall_hook( PEREGRINUS_PULPIT_ENTRY_SCRIPT, [ Installer::class, 'uninstall' ] );
+    /**
+     * Pulpit constructor.
+     */
+    public function __construct()
+    {
+        \register_activation_hook(PEREGRINUS_PULPIT_ENTRY_SCRIPT, [Installer::class, 'activate']);
+        \register_deactivation_hook(PEREGRINUS_PULPIT_ENTRY_SCRIPT, [Installer::class, 'deactivate']);
+        \register_uninstall_hook(PEREGRINUS_PULPIT_ENTRY_SCRIPT, [Installer::class, 'uninstall']);
 
-		\load_plugin_textdomain( 'pulpit', false,
-			PEREGRINUS_PULPIT_DOMAIN_PATH );
+        \load_plugin_textdomain('pulpit', false,
+            PEREGRINUS_PULPIT_DOMAIN_PATH);
 
-		add_action( 'init', [ $this, 'init' ] );
-		add_action( 'admin_init', [ Admin::class, 'init' ] );
+        add_action('init', [$this, 'init']);
+        add_action('admin_init', [Admin::class, 'init']);
 
-		if (is_admin()) {
-			$admin = new Admin();
-			$admin->registerSettingsPages();
-		}
+        if (is_admin()) {
+            $admin = new Admin();
+            $admin->registerSettingsPages();
+        }
 
         add_action('admin_enqueue_scripts', [$this, 'addCSS']);
         add_action('admin_enqueue_scripts', [$this, 'addJS']);
-	}
+    }
 
-	/**
-	 * Creates or returns an instance of this class.
-	 *
-	 * @return  \Peregrinus\Pulpit\Pulpit A single instance of this class.
-	 */
-	public
-	static function getInstance() {
-		if ( null == self::$instance ) {
-			self::$instance = new self;
-		}
+    /**
+     * Creates or returns an instance of this class.
+     *
+     * @return  \Peregrinus\Pulpit\Pulpit A single instance of this class.
+     */
+    public
+    static function getInstance()
+    {
+        if (null == self::$instance) {
+            self::$instance = new self;
+        }
 
-		return self::$instance;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Initialize the plugin's registrations
-	 */
-	public function init() {
+    /**
+     * Initialize the plugin's registrations
+     */
+    public function init()
+    {
 
-	    /** @var AbstractCustomFormat $customFormat */
-        foreach ( CustomFormatFactory::getAll() as $customFormat ){
-			$customFormat->register();
-		}
+        /** @var AbstractCustomFormat $customFormat */
+        foreach (CustomFormatFactory::getAll() as $customFormat) {
+            $customFormat->register();
+        }
 
-		/** @var AbstractPostType $postType */
-        foreach ( PostTypeFactory::getAll() as $postType ) {
-			$postType->register();
-		}
+        /** @var AbstractPostType $postType */
+        foreach (PostTypeFactory::getAll() as $postType) {
+            $postType->register();
+        }
 
-		/** @var AbstractAjaxAction $ajaxAction */
+        /** @var AbstractAjaxAction $ajaxAction */
         foreach (AjaxActionFactory::getAll() as $ajaxAction) {
-		    $ajaxAction->register();
+            $ajaxAction->register();
         }
 
         /** @var AbstractTaxonomy $taxonomy */
-        foreach ( TaxonomyFactory::getAll() as $taxonomy ) {
-			$taxonomy->register();
-		}
-		\flush_rewrite_rules();
+        foreach (TaxonomyFactory::getAll() as $taxonomy) {
+            $taxonomy->register();
+        }
+        \flush_rewrite_rules();
 
-		$scheduler = new Scheduler();
-		$scheduler->register();
-	}
+        $scheduler = new Scheduler();
+        $scheduler->register();
+    }
 
 
-	public function addCSS() {
-        wp_enqueue_style('pulpit-admin-styles', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Styles/Admin/Admin.css');
+    public function addCSS()
+    {
+        wp_enqueue_style('pulpit-admin-styles', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Styles/Admin/Admin.css');
         wp_enqueue_style('thickbox'); //Provides the styles needed for this window.
     }
 
-	public function addJS() {
+    public function addJS()
+    {
         wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
         wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
-        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Scripts/Admin/Uploader.js');
+        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js');
     }
 
 }

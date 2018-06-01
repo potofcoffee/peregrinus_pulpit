@@ -24,76 +24,81 @@
 namespace Peregrinus\Pulpit\Admin;
 
 
-class MetaBox {
+class MetaBox
+{
 
-	protected $key = '';
-	protected $label = '';
-	protected $fields = [];
-	protected $screen = '';
-	protected $position = 'normal';
-	protected $priority = 'default';
+    protected $key = '';
+    protected $label = '';
+    protected $fields = [];
+    protected $screen = '';
+    protected $position = 'normal';
+    protected $priority = 'default';
 
-	/**
-	 * MetaBox constructor.
-	 *
-	 * @param string $key Key
-	 * @param string $label Label
-	 * @param string|array $screen Screen
-	 * @param string $position Position
-	 * @param string $priority Priority
-	 * @param array $fields Fields
-	 */
-	public function __construct( $key, $label, $screen, $position, $priority, $fields) {
-		$this->key    = $key;
-		$this->label  = $label;
-		$this->screen = $screen;
-		$this->position = $position;
-		$this->priority = $priority;
-		$this->fields = $fields;
-	}
+    /**
+     * MetaBox constructor.
+     *
+     * @param string $key Key
+     * @param string $label Label
+     * @param string|array $screen Screen
+     * @param string $position Position
+     * @param string $priority Priority
+     * @param array $fields Fields
+     */
+    public function __construct($key, $label, $screen, $position, $priority, $fields)
+    {
+        $this->key = $key;
+        $this->label = $label;
+        $this->screen = $screen;
+        $this->position = $position;
+        $this->priority = $priority;
+        $this->fields = $fields;
+    }
 
-	/**
-	 * Register this meta box
-	 */
-	public function register() {
-		global $wp_meta_boxes;
-		\add_meta_box(
-			$this->key . '_meta',
-			__( $this->label, 'pulpit' ),
-			[ $this, 'render' ],
-			$this->screen,
-			$this->position,
-			$this->priority
-		);
-		// allow fields to register more stuff
-		foreach ($this->fields as $field) {
-			$field->register();
-		}
-		\add_action('save_post', [$this, 'save']);
-	}
+    /**
+     * Register this meta box
+     */
+    public function register()
+    {
+        global $wp_meta_boxes;
+        \add_meta_box(
+            $this->key . '_meta',
+            __($this->label, 'pulpit'),
+            [$this, 'render'],
+            $this->screen,
+            $this->position,
+            $this->priority
+        );
+        // allow fields to register more stuff
+        foreach ($this->fields as $field) {
+            $field->register();
+        }
+        \add_action('save_post', [$this, 'save']);
+    }
 
-	/**
-	 * Render this meta box
-	 */
-	public function render() {
-		global $post;
+    /**
+     * Render this meta box
+     */
+    public function render()
+    {
+        global $post;
 
-		$customFieldValues = get_post_custom( $post->ID );
+        $customFieldValues = get_post_custom($post->ID);
 
-		foreach ($this->fields as $field) {
-			echo $field->render($customFieldValues);
-		}
+        foreach ($this->fields as $field) {
+            echo $field->render($customFieldValues);
+        }
 
-	}
+    }
 
-	/**
-	 * Save the new meta-data
-	 */
-	public function save() {
-		global $post;
-		foreach ($this->fields as $field) {
-			$field->save($post->ID);
-		}
-	}
+    /**
+     * Save the new meta-data
+     */
+    public function save()
+    {
+        global $post;
+        foreach ($this->fields as $field) {
+            $field->save($post->ID);
+        }
+    }
 
 }

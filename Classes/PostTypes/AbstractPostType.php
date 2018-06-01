@@ -29,82 +29,91 @@ namespace Peregrinus\Pulpit\PostTypes;
  * configuration and functionality.
  * @package Peregrinus\Pulpit\PostTypes
  */
-class AbstractPostType {
+class AbstractPostType
+{
 
-	protected $labels = [];
-	protected $configuration = [];
+    protected $labels = [];
+    protected $configuration = [];
 
-	/**
-	 * AbstractPostType constructor.
-	 */
-	public function __construct() {
-		$this->configuration['labels']    = $this->labels;
-		$this->configuration['menu_icon'] = PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/' . ucfirst( $this->getKey() ) . '.svg';
-		$this->configuration['slug']      = $this->getSlug();
-		$this->configuration['rewrite']   = [ 'slug' => $this->getSlug(), 'with_front' => false ];
-	}
+    /**
+     * AbstractPostType constructor.
+     */
+    public function __construct()
+    {
+        $this->configuration['labels'] = $this->labels;
+        $this->configuration['menu_icon'] = PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/' . ucfirst($this->getKey()) . '.svg';
+        $this->configuration['slug'] = $this->getSlug();
+        $this->configuration['rewrite'] = ['slug' => $this->getSlug(), 'with_front' => false];
+    }
 
-	/**
-	 * Get the key for this PostType
-	 * @return string
-	 */
-	public function getKey() {
-		$tmp = explode( '\\', get_class( $this ) );
-		return lcfirst( str_replace( 'PostType', '', array_pop( $tmp ) ) );
-	}
+    /**
+     * Get the key for this PostType
+     * @return string
+     */
+    public function getKey()
+    {
+        $tmp = explode('\\', get_class($this));
+        return lcfirst(str_replace('PostType', '', array_pop($tmp)));
+    }
 
-	/**
-	 * Get the slug for this PostType
-	 *
-	 * Normally, the slug will be the key for this PostType, but this can be overridden by
-	 * setting the slug_<key> option
-	 *
-	 * @return mixed
-	 */
-	protected function getSlug() {
-		$defaultSlug = $this->getKey();
-		$options     = get_option( PEREGRINUS_PULPIT.'_general' );
+    /**
+     * Get the slug for this PostType
+     *
+     * Normally, the slug will be the key for this PostType, but this can be overridden by
+     * setting the slug_<key> option
+     *
+     * @return mixed
+     */
+    protected function getSlug()
+    {
+        $defaultSlug = $this->getKey();
+        $options = get_option(PEREGRINUS_PULPIT . '_general');
 
-		return ( isset( $options[ 'slug_' . $defaultSlug ] ) ? $options[ 'slug_' . $defaultSlug ] : $defaultSlug );
-	}
+        return (isset($options['slug_' . $defaultSlug]) ? $options['slug_' . $defaultSlug] : $defaultSlug);
+    }
 
-	/**
-	 * Register custom columns
-	 */
-	public function registerCustomColumns() {
-	}
+    /**
+     * Register custom columns
+     */
+    public function registerCustomColumns()
+    {
+    }
 
-	/**
-	 * Register this PostType
-	 */
-	public function register() {
-		$res = register_post_type( $this->getTypeName(), $this->configuration );
-	}
+    /**
+     * Register this PostType
+     */
+    public function register()
+    {
+        $res = register_post_type($this->getTypeName(), $this->configuration);
+    }
 
-	/**
-	 * Get registered type name
+    /**
+     * Get registered type name
      * @param string alternative Optional: get the type name for another key
-	 * @return string
-	 */
-	public function getTypeName($alternative = '') {
-		return PEREGRINUS_PULPIT . '_' . ($alternative ?: $this->getKey());
-	}
+     * @return string
+     */
+    public function getTypeName($alternative = '')
+    {
+        return PEREGRINUS_PULPIT . '_' . ($alternative ?: $this->getKey());
+    }
 
-	/**
-	 * Add all meta boxes / custom fields for this type
-	 */
-	public function addMetaBox() {
-		foreach ( $this->addCustomFields() as $metaBox ) {
-			$metaBox->register();
-		}
-	}
+    /**
+     * Add all meta boxes / custom fields for this type
+     */
+    public function addMetaBox()
+    {
+        foreach ($this->addCustomFields() as $metaBox) {
+            $metaBox->register();
+        }
+    }
 
-	/**
-	 * Add the custom fields for this post type
-	 */
-	public function addCustomFields() {
-		return [];
-	}
+    /**
+     * Add the custom fields for this post type
+     */
+    public function addCustomFields()
+    {
+        return [];
+    }
 
 
 }

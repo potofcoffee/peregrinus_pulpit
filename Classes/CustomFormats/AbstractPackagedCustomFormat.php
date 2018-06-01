@@ -31,7 +31,7 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
 
     protected $tempFolder = '';
     protected $tempKey = '';
-    /** @var \ZipArchive  */
+    /** @var \ZipArchive */
     protected $zip = null;
 
     public function __construct()
@@ -40,25 +40,17 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
         $this->tempFolder = PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $this->tempKey . '/';
     }
 
-    protected function writeToFile(string $fileName, $contents, $addToZip = true)
-    {
-        file_put_contents($this->tempFolder . $fileName, $contents);
-        if ($addToZip) $this->addFile($fileName);
-    }
-
     protected function renderViewToFile(View $view, string $viewName, string $fileName)
     {
         $this->writeToFile($fileName, $view->render($viewName));
     }
 
-    protected function createContainer(string $fileName)
+    protected function writeToFile(string $fileName, $contents, $addToZip = true)
     {
-        if (!is_dir($this->tempFolder)) mkdir($this->tempFolder, 0777, true);
-
-        // Initialize archive object
-        $this->zip = new \ZipArchive();
-        $this->zip->open(PEREGRINUS_PULPIT_BASE_PATH.'Temp/'.$fileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
+        file_put_contents($this->tempFolder . $fileName, $contents);
+        if ($addToZip) {
+            $this->addFile($fileName);
+        }
     }
 
     /**
@@ -67,26 +59,48 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
      * @param bool $absolutePath Optional: true if above path is absolute (by default it is relative to current temp folder
      * @param string $alternativeName Optional: new file name
      */
-    protected function addFile(string $file, bool $absolutePath = false, $alternativeName = '')  {
-        $this->zip->addFile(($absolutePath ? '' : $this->tempFolder).$file, ($alternativeName ?: $file));
+    protected function addFile(string $file, bool $absolutePath = false, $alternativeName = '')
+    {
+        $this->zip->addFile(($absolutePath ? '' : $this->tempFolder) . $file, ($alternativeName ?: $file));
     }
 
-    protected function closeContainer() {
+    protected function createContainer(string $fileName)
+    {
+        if (!is_dir($this->tempFolder)) {
+            mkdir($this->tempFolder, 0777, true);
+        }
+
+        // Initialize archive object
+        $this->zip = new \ZipArchive();
+        $this->zip->open(PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $fileName,
+            \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+    }
+
+    protected function closeContainer()
+    {
         $this->zip->close();
     }
 
-    protected function deleteTempFolder($dir = '') {
-        if ($dir == '') $dir = $this->tempFolder;
+    protected function deleteTempFolder($dir = '')
+    {
+        if ($dir == '') {
+            $dir = $this->tempFolder;
+        }
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != '.' && $object != '..') {
-                    if (filetype($dir.'/'.$object) == 'dir') $this->deleteTempFolder($dir.'/'.$object); else unlink($dir.'/'.$object);
+                    if (filetype($dir . '/' . $object) == 'dir') {
+                        $this->deleteTempFolder($dir . '/' . $object);
+                    } else {
+                        unlink($dir . '/' . $object);
+                    }
                 }
             }
             reset($objects);
             rmdir($dir);
         }
-    }    
-    
+    }
+
 }

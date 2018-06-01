@@ -37,8 +37,14 @@ class FileRelationField extends AbstractField
     /** @var string $mimeType Mime type */
     protected $mimeType = '';
 
-    public function __construct($key, string $label = '', string $mimeType='', string $buttonTitle = '', string $dialogTitle='', string $context = '')
-    {
+    public function __construct(
+        $key,
+        string $label = '',
+        string $mimeType = '',
+        string $buttonTitle = '',
+        string $dialogTitle = '',
+        string $context = ''
+    ) {
         parent::__construct($key, $label, $context);
         $this->mimeType = $mimeType;
         $this->buttonTitle = $buttonTitle;
@@ -63,13 +69,14 @@ class FileRelationField extends AbstractField
         }
 
         $o = $this->renderLabel();
-        $o .= '<div class="pulpit-upload-wrapper" data-attachment-id="'.$this->getValue($values).'" data-button-title="'.$this->buttonTitle.'" data-field="'.$this->getFieldName().'" data-dialog-title="'.$this->dialogTitle.'" data-mime-type="'.$this->mimeType.'">
-        <input type="hidden" name="'.$this->getFieldName().'" class="image_path" value="" id="pulpit-upload-data-'.$this->getFieldName().'">
-        <div class="pulpit-upload-preview '.($preview ? '' : 'pulpit-hide-on-load').'">
-        <span id="pulpit-upload-preview-'.$this->getFieldName().'"><b>'.$preview.'</b></span>
-<button class="button button-small pulpit-upload-clear-button"  data-field="'.$this->getFieldName().'" title="Zuweisung löschen"><span class="dashicons dashicons-trash"></span></button>
+        $o .= '<div class="pulpit-upload-wrapper" data-attachment-id="' . $this->getValue($values) . '" data-button-title="' . $this->buttonTitle . '" data-field="' . $this->getFieldName() . '" data-dialog-title="' . $this->dialogTitle . '" data-mime-type="' . $this->mimeType . '">
+        <input type="hidden" name="' . $this->getFieldName() . '" class="image_path" value="" id="pulpit-upload-data-' . $this->getFieldName() . '">
+        <div class="pulpit-upload-preview ' . ($preview ? '' : 'pulpit-hide-on-load') . '">
+        <span id="pulpit-upload-preview-' . $this->getFieldName() . '"><b>' . $preview . '</b></span>
+<button class="button button-small pulpit-upload-clear-button"  data-field="' . $this->getFieldName() . '" title="Zuweisung löschen"><span class="dashicons dashicons-trash"></span></button>
 </div>
-<input type="button" value="'.__('Aufnahme auswählen', 'pulpit').'" class="button button-small pulpit-upload-button '.($preview ? 'pulpit-hide-on-load' : '').'"/><br /></div>';
+<input type="button" value="' . __('Aufnahme auswählen',
+                'pulpit') . '" class="button button-small pulpit-upload-button ' . ($preview ? 'pulpit-hide-on-load' : '') . '"/><br /></div>';
         return $o;
     }
 

@@ -28,27 +28,30 @@ namespace Peregrinus\Pulpit\Fields;
  * Provides configuration and rendering for a custom checkbox field
  * @package Peregrinus\Pulpit\Fields
  */
-class CheckBoxField extends AbstractField {
+class CheckBoxField extends AbstractField
+{
 
-	/**
-	 * Output this field's form element
-	 *
-	 * @param array $value Custom field values
-	 *
-	 * @return string HTML output
-	 */
-	public function render($values) {
-		return '<input type="checkbox" id="'.$this->getKey().'" name="'.$this->getFieldName().'" '.($this->getValue($values) ? ' checked': '').'>'.$this->renderLabel().'<br />';
-	}
+    /**
+     * Output this field's form element
+     *
+     * @param array $value Custom field values
+     *
+     * @return string HTML output
+     */
+    public function render($values)
+    {
+        return '<input type="checkbox" id="' . $this->getKey() . '" name="' . $this->getFieldName() . '" ' . ($this->getValue($values) ? ' checked' : '') . '>' . $this->renderLabel() . '<br />';
+    }
 
 
-	/**
-	 * Get this field's metadata from POST
-	 * @return mixed Metadata value
-	 */
-	public function getValueFromPOST() {
-		$value = parent::getValueFromPOST();
-		return ($value ? true : false);
-	}
+    /**
+     * Get this field's metadata from POST
+     * @return mixed Metadata value
+     */
+    public function getValueFromPOST()
+    {
+        $value = parent::getValueFromPOST();
+        return ($value ? true : false);
+    }
 
 }

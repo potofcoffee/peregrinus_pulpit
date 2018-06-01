@@ -12,17 +12,17 @@
         stopOnSkipped="false"
         verbose="false">
 
-        <testsuites>
-                <testsuite name="TYPO3.Fluid Unit">
-                        <directory>tests/Unit</directory>
-                </testsuite>
-                <testsuite name="TYPO3.Fluid Functional">
-                        <directory>tests/Functional</directory>
-                </testsuite>
-        </testsuites>
-        <filter>
-                <whitelist>
-                        <directory>src/</directory>
-                </whitelist>
-        </filter>
+    <testsuites>
+        <testsuite name="TYPO3.Fluid Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="TYPO3.Fluid Functional">
+            <directory>tests/Functional</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>src/</directory>
+        </whitelist>
+    </filter>
 </phpunit>

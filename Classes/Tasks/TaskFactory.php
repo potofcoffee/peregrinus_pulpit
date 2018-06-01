@@ -28,22 +28,24 @@ namespace Peregrinus\Pulpit\Tasks;
  * Provides easy access to all custom tasks in this plugin.
  * @package Peregrinus\Pulpit\Tasks
  */
-class TaskFactory {
+class TaskFactory
+{
 
-	/**
-	 * Get all Tasks
-	 * @return array Instances of each Task
-	 */
-	public static function getAll() {
-		foreach ( glob( PEREGRINUS_PULPIT_CLASS_PATH . '/Tasks/*Task.*' ) as $class ) {
-			$baseClass = pathinfo($class, PATHINFO_FILENAME);
-			$class = 'Peregrinus\\Pulpit\\Tasks\\'.$baseClass;
-			if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
-				$objects[] = new $class();
-			}
-		}
-		return $objects;
-	}
+    /**
+     * Get all Tasks
+     * @return array Instances of each Task
+     */
+    public static function getAll()
+    {
+        foreach (glob(PEREGRINUS_PULPIT_CLASS_PATH . '/Tasks/*Task.*') as $class) {
+            $baseClass = pathinfo($class, PATHINFO_FILENAME);
+            $class = 'Peregrinus\\Pulpit\\Tasks\\' . $baseClass;
+            if (substr($baseClass, 0, 8) !== 'Abstract') {
+                $objects[] = new $class();
+            }
+        }
+        return $objects;
+    }
 
 
 }

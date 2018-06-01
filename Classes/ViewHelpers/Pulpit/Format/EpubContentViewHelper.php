@@ -45,7 +45,8 @@ class EpubContentViewHelper extends AbstractViewHelper
     {
     }
 
-    protected function render() {
+    protected function render()
+    {
         $content = $this->renderChildren();
 
         $p = explode("\r\n\r\n", $content);

@@ -37,7 +37,8 @@ class ComposerUpdateAjaxAction extends AbstractAjaxAction
         if ($composer->isOutdated()) {
             $res = [
                 'success' => false,
-                'notice' =>sprintf(__("<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href=\"%s\">click here</a> to try again.", 'pulpit'), $updateUrl)
+                'notice' => sprintf(__("<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href=\"%s\">click here</a> to try again.",
+                    'pulpit'), $updateUrl)
             ];
         } else {
             $res = [

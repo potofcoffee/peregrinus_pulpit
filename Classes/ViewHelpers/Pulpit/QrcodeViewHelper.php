@@ -24,35 +24,36 @@
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit;
 
 
+use chillerlan\QRCode\QRCode;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use \chillerlan\QRCode\QRCode;
-use \chillerlan\QRCode\Output\QRImage;
 
-class QrcodeViewHelper extends AbstractViewHelper {
+class QrcodeViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('data', 'string', 'Data');
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('data', 'string', 'Data');
+    }
 
-	protected function render() {
-		$content = ($this->arguments['data'] ? $this->arguments['data'] : $this->renderChildren());
-		if ($content) {
-            return '<img src="'.(new QRCode)->render($content).'" />';
+    protected function render()
+    {
+        $content = ($this->arguments['data'] ? $this->arguments['data'] : $this->renderChildren());
+        if ($content) {
+            return '<img src="' . (new QRCode)->render($content) . '" />';
         }
-	}
+    }
 
 
 }

@@ -24,31 +24,31 @@
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
 
 
-use \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
-class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('format', 'string', 'Date format');
+    }
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('format', 'string', 'Date format');
-	}
-
-	protected function render() {
-		$content = $this->renderChildren();
-		return \strftime($this->arguments['format'], strtotime($content));
-	}
+    protected function render()
+    {
+        $content = $this->renderChildren();
+        return \strftime($this->arguments['format'], strtotime($content));
+    }
 
 
 }

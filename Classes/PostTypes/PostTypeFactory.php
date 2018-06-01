@@ -24,22 +24,24 @@
 namespace Peregrinus\Pulpit\PostTypes;
 
 
-class PostTypeFactory {
+class PostTypeFactory
+{
 
-	/**
-	 * Get all PostTypes
-	 * @return array Instances of each PostType
-	 */
-	public static function getAll() {
-		foreach ( glob( PEREGRINUS_PULPIT_CLASS_PATH . '/PostTypes/*PostType.*' ) as $class ) {
-			$baseClass = pathinfo($class, PATHINFO_FILENAME);
-			$class = 'Peregrinus\\Pulpit\\PostTypes\\'.$baseClass;
-			if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
-				$objects[] = new $class();
-			}
-		}
-		return $objects;
-	}
+    /**
+     * Get all PostTypes
+     * @return array Instances of each PostType
+     */
+    public static function getAll()
+    {
+        foreach (glob(PEREGRINUS_PULPIT_CLASS_PATH . '/PostTypes/*PostType.*') as $class) {
+            $baseClass = pathinfo($class, PATHINFO_FILENAME);
+            $class = 'Peregrinus\\Pulpit\\PostTypes\\' . $baseClass;
+            if (substr($baseClass, 0, 8) !== 'Abstract') {
+                $objects[] = new $class();
+            }
+        }
+        return $objects;
+    }
 
 
 }

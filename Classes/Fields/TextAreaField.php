@@ -24,39 +24,44 @@
 namespace Peregrinus\Pulpit\Fields;
 
 
-class TextAreaField extends AbstractField {
+class TextAreaField extends AbstractField
+{
 
-	protected $rows = 5;
+    protected $rows = 5;
 
-	public function __construct( $key, $label, $rows = 5 ) {
-		parent::__construct( $key, $label );
-		$this->setRows( $rows );
-	}
+    public function __construct($key, $label, $rows = 5)
+    {
+        parent::__construct($key, $label);
+        $this->setRows($rows);
+    }
 
-	/**
-	 * Output this field's form element
-	 *
-	 * @param array $value Custom field values
-	 *
-	 * @return string HTML output
-	 */
-	public function render( $values ) {
-		return $this->renderLabel() . '<br /><textarea style="width: 100%" rows="'.$this->rows.'" name="' . $this->key . '">' . htmlentities( $values[ $this->key ][0] ) . '</textarea><br />';
-	}
+    /**
+     * Output this field's form element
+     *
+     * @param array $value Custom field values
+     *
+     * @return string HTML output
+     */
+    public function render($values)
+    {
+        return $this->renderLabel() . '<br /><textarea style="width: 100%" rows="' . $this->rows . '" name="' . $this->key . '">' . htmlentities($values[$this->key][0]) . '</textarea><br />';
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getRows() {
-		return $this->rows;
-	}
+    /**
+     * @return int
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
 
-	/**
-	 * @param int $rows
-	 */
-	public function setRows( $rows ) {
-		$this->rows = $rows;
-	}
+    /**
+     * @param int $rows
+     */
+    public function setRows($rows)
+    {
+        $this->rows = $rows;
+    }
 
 
 }

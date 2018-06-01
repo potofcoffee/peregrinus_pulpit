@@ -29,13 +29,15 @@ use Peregrinus\Pulpit\Installer\ComposerWrapper;
  * Class Installer
  * @package Peregrinus\Pulpit\Admin
  */
-class Installer {
+class Installer
+{
 
-	/**
-	 * Activate the plugin
+    /**
+     * Activate the plugin
      * This will perform a composer install/update on plugin activation
-	 */
-	public function activate() {
+     */
+    public function activate()
+    {
         $composer = new ComposerWrapper();
         if (!$composer->isInstalled()) {
             // do a composer install
@@ -45,19 +47,21 @@ class Installer {
                 $composer->update();
             }
         }
-	}
+    }
 
-	/**
-	 * Deactivate the plugin
-	 */
-	public function deactivate() {
+    /**
+     * Deactivate the plugin
+     */
+    public function deactivate()
+    {
 
-	}
+    }
 
-	/**
-	 * Uninstall the plugin
-	 */
-	public function uninstall() {
-		\delete_option(PEREGRINUS_PULPIT);
-	}
+    /**
+     * Uninstall the plugin
+     */
+    public function uninstall()
+    {
+        \delete_option(PEREGRINUS_PULPIT);
+    }
 }

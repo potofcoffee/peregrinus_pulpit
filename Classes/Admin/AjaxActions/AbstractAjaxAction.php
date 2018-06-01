@@ -28,26 +28,28 @@ class AbstractAjaxAction
 {
 
     /**
-     * Get the key for this PostType
-     * @return string
+     * Register this AjaxAction
      */
-    public function getKey() {
-        $tmp = explode( '\\', get_class( $this ) );
-        return lcfirst( str_replace( 'AjaxAction', '', array_pop( $tmp ) ) );
+    public function register()
+    {
+        add_action('wp_ajax_pulpit_' . $this->getKey(), [$this, 'do']);
     }
 
     /**
-     * Register this AjaxAction
+     * Get the key for this PostType
+     * @return string
      */
-    public function register() {
-        add_action('wp_ajax_pulpit_'.$this->getKey(), [$this, 'do']);
+    public function getKey()
+    {
+        $tmp = explode('\\', get_class($this));
+        return lcfirst(str_replace('AjaxAction', '', array_pop($tmp)));
     }
-
 
     /**
      * Execute the action
      */
-    public function do() {
+    public function do()
+    {
 
     }
 

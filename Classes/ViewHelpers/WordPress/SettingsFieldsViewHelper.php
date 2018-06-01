@@ -25,38 +25,38 @@ namespace Peregrinus\Pulpit\ViewHelpers\WordPress;
 
 
 use Peregrinus\Pulpit\ViewHelpers\AbstractBufferedViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Class TranslateViewHelper
  * Exposes WordPress' settings_fields to Fluid
  * @package Peregrinus\Pulpit\ViewHelpers
  */
-class SettingsFieldsViewHelper extends AbstractBufferedViewHelper {
+class SettingsFieldsViewHelper extends AbstractBufferedViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('group', 'string', 'Option group', false, PEREGRINUS_PULPIT.'_options');
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('group', 'string', 'Option group', false, PEREGRINUS_PULPIT . '_options');
+    }
 
-	/**
-	 * Render the output using settings_fields
-	 */
-	protected function renderBuffered()
-	{
-		settings_fields($this->arguments['group']);
-	}
+    /**
+     * Render the output using settings_fields
+     */
+    protected function renderBuffered()
+    {
+        settings_fields($this->arguments['group']);
+    }
 
 }

@@ -27,26 +27,28 @@ namespace Peregrinus\Pulpit\Taxonomies;
  * Class TaxonomyFactory
  * @package Peregrinus\Pulpit\Taxonomies
  */
-class TaxonomyFactory {
+class TaxonomyFactory
+{
 
-	/**
-	 * Get an instance of each taxonomy
-	 * @return array Taxonomy instances
-	 */
-	public static function getAll() {
-		$objects = [];
-		foreach ( glob( PEREGRINUS_PULPIT_BASE_PATH . 'Classes/Taxonomies/*' ) as $folder ) {
-			if ( is_dir( $folder ) ) {
-				foreach ( glob( $folder . '/*Taxonomy.php' ) as $class ) {
-					$baseClass = pathinfo($class, PATHINFO_FILENAME);
-					$class = 'Peregrinus\\Pulpit\\Taxonomies\\'.basename($folder).'\\'.$baseClass;
-					if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
-						$objects[] = new $class();
-					}
-				}
-			}
-		}
-		return $objects;
-	}
+    /**
+     * Get an instance of each taxonomy
+     * @return array Taxonomy instances
+     */
+    public static function getAll()
+    {
+        $objects = [];
+        foreach (glob(PEREGRINUS_PULPIT_BASE_PATH . 'Classes/Taxonomies/*') as $folder) {
+            if (is_dir($folder)) {
+                foreach (glob($folder . '/*Taxonomy.php') as $class) {
+                    $baseClass = pathinfo($class, PATHINFO_FILENAME);
+                    $class = 'Peregrinus\\Pulpit\\Taxonomies\\' . basename($folder) . '\\' . $baseClass;
+                    if (substr($baseClass, 0, 8) !== 'Abstract') {
+                        $objects[] = new $class();
+                    }
+                }
+            }
+        }
+        return $objects;
+    }
 
 }

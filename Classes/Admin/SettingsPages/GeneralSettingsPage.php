@@ -27,8 +27,8 @@ namespace Peregrinus\Pulpit\Admin\SettingsPages;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Installer\ComposerWrapper;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
-use Peregrinus\Pulpit\Settings\SettingsSection;
 use Peregrinus\Pulpit\Settings\Setting;
+use Peregrinus\Pulpit\Settings\SettingsSection;
 use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
 
 class GeneralSettingsPage extends AbstractSettingsPage

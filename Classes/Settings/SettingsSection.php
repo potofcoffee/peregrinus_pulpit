@@ -30,108 +30,118 @@ use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
  * Class SettingsSection
  * @package Peregrinus\Pulpit\Settings
  */
-class SettingsSection {
+class SettingsSection
+{
 
-	protected $settings = [];
-	protected $id = '';
-	protected $title = '';
-	protected $description = '';
+    protected $settings = [];
+    protected $id = '';
+    protected $title = '';
+    protected $description = '';
 
-	/**
-	 * SettingsSection constructor.
-	 *
-	 * @param string $id Id
-	 * @param string $title Title
-	 * @param string $description Description text
-	 * @param array $settings Settings
-	 */
-	public function __construct($id, $title, $description, $settings) {
-		$this->setId(PEREGRINUS_PULPIT.'_section_'.$id);
-		$this->setTitle($title);
-		$this->setDescription($description);
-		$this->setSettings($settings);
-	}
+    /**
+     * SettingsSection constructor.
+     *
+     * @param string $id Id
+     * @param string $title Title
+     * @param string $description Description text
+     * @param array $settings Settings
+     */
+    public function __construct($id, $title, $description, $settings)
+    {
+        $this->setId(PEREGRINUS_PULPIT . '_section_' . $id);
+        $this->setTitle($title);
+        $this->setDescription($description);
+        $this->setSettings($settings);
+    }
 
-	/**
-	 * Add this SettingsSection to a page
-	 * @param AbstractSettingsPage $page
-	 */
-	public function register(AbstractSettingsPage $page) {
-		add_settings_section(
-			$this->getId(),
-			$this->getTitle(),
-			[$this, 'render'],
-			$page->getSlug()
-		);
-		foreach ($this->getSettings() as $setting) {
-			$setting->register($page, $this);
-		}
-	}
+    /**
+     * Add this SettingsSection to a page
+     * @param AbstractSettingsPage $page
+     */
+    public function register(AbstractSettingsPage $page)
+    {
+        add_settings_section(
+            $this->getId(),
+            $this->getTitle(),
+            [$this, 'render'],
+            $page->getSlug()
+        );
+        foreach ($this->getSettings() as $setting) {
+            $setting->register($page, $this);
+        }
+    }
 
-	/**
-	 * Render the description paragraph
-	 */
-	public function render() {
-		echo '<p>'.$this->getDescription().'</p>';
-	}
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getSettings() {
-		return $this->settings;
-	}
+    /**
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	/**
-	 * @param array $settings
-	 */
-	public function setSettings( $settings ) {
-		$this->settings = $settings;
-	}
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getId() {
-		return $this->id;
-	}
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
-	/**
-	 * @param string $id
-	 */
-	public function setId( $id ) {
-		$this->id = $id;
-	}
+    /**
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getTitle() {
-		return $this->title;
-	}
+    /**
+     * @param array $settings
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    }
 
-	/**
-	 * @param string $title
-	 */
-	public function setTitle( $title ) {
-		$this->title = $title;
-	}
+    /**
+     * Render the description paragraph
+     */
+    public function render()
+    {
+        echo '<p>' . $this->getDescription() . '</p>';
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	/**
-	 * @param string $description
-	 */
-	public function setDescription( $description ) {
-		$this->description = $description;
-	}
-
-
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
 
 }

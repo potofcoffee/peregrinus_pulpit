@@ -30,6 +30,24 @@ class AbstractTemplatedCustomFormat extends AbstractCustomFormat
 
     protected $viewName = '';
 
+    /**
+     * Render the CustomFormat
+     */
+    function render()
+    {
+        $post = $this->getPost();
+        $view = new View();
+
+        $this->prepareView($post, $view);
+        echo $view->render($this->viewName);
+        exit();
+    }
+
+    protected function getPost(): \WP_Post
+    {
+        global $post;
+        return $post = get_post();
+    }
 
     /**
      * Assign additional data to the view (to be used in descendant classes)
@@ -62,32 +80,36 @@ class AbstractTemplatedCustomFormat extends AbstractCustomFormat
     protected function getAuthor(\WP_Post $post): array
     {
         $author = ['ID' => $post->post_author];
-        foreach (['user_login', 'user_pass', 'user_nicename', 'user_email', 'user_url', 'user_registered',
-                     'user_activation_key', 'user_status', 'display_name', 'nickname', 'first_name', 'last_name',
-                     'description', 'jabber', 'aim', 'yim', 'user_level', 'user_firstname', 'user_lastname',
-                     'user_description', 'rich_editing', 'comment_shortcuts', 'admin_color', 'plugins_per_page', 'plugins_last_view'] as $field) {
+        foreach ([
+                     'user_login',
+                     'user_pass',
+                     'user_nicename',
+                     'user_email',
+                     'user_url',
+                     'user_registered',
+                     'user_activation_key',
+                     'user_status',
+                     'display_name',
+                     'nickname',
+                     'first_name',
+                     'last_name',
+                     'description',
+                     'jabber',
+                     'aim',
+                     'yim',
+                     'user_level',
+                     'user_firstname',
+                     'user_lastname',
+                     'user_description',
+                     'rich_editing',
+                     'comment_shortcuts',
+                     'admin_color',
+                     'plugins_per_page',
+                     'plugins_last_view'
+                 ] as $field) {
             $author[$field] = get_the_author_meta($field, $post->post_author);
         }
         return $author;
-    }
-
-    protected function getPost(): \WP_Post
-    {
-        global $post;
-        return $post = get_post();
-    }
-
-    /**
-     * Render the CustomFormat
-     */
-    function render()
-    {
-        $post = $this->getPost();
-        $view = new View();
-
-        $this->prepareView($post, $view);
-        echo $view->render($this->viewName);
-        exit();
     }
 
 

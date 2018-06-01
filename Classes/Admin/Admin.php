@@ -25,8 +25,8 @@ namespace Peregrinus\Pulpit\Admin;
 
 
 use Peregrinus\Pulpit\Admin\AdminMenus\AdminMenuFactory;
-use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
 use Peregrinus\Pulpit\Admin\CustomModals\CustomModalFactory;
+use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 
 /**
@@ -34,39 +34,47 @@ use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
  * Contains all basic admin-mode functions
  * @package Peregrinus\Pulpit\Admin
  */
-class Admin {
+class Admin
+{
 
-	/**
-	 * Initialize all functions for admin mode
-	 */
-	public function init() {
+    /**
+     * Initialize all functions for admin mode
+     */
+    public function init()
+    {
 
-		// add meta boxes for all post types
-		foreach ( PostTypeFactory::getAll() as $postType ) {
-			$postType->addMetaBox();
-			$postType->registerCustomColumns();
-		}
-
-		// register CustomModals
-        foreach (CustomModalFactory::getAll() as $customModal) {
-		    $customModal->register();
+        // add meta boxes for all post types
+        foreach (PostTypeFactory::getAll() as $postType) {
+            $postType->addMetaBox();
+            $postType->registerCustomColumns();
         }
 
-		//foreach ( AdminMenuFactory::getAll() as $adminMenu) $adminMenu->adminInit();
-	}
+        // register CustomModals
+        foreach (CustomModalFactory::getAll() as $customModal) {
+            $customModal->register();
+        }
 
-	/**
-	 * Register AdminMenus
-	 */
-	public function registerAdminMenus() {
-		foreach (AdminMenuFactory::getAll() as $adminMenu) $adminMenu->register();
-	}
+        //foreach ( AdminMenuFactory::getAll() as $adminMenu) $adminMenu->adminInit();
+    }
 
-	/**
-	 * Register SettingsPages
-	 */
-	public function registerSettingsPages() {
-		foreach (SettingsPageFactory::getAll() as $settingsPage) $settingsPage->register();
-	}
+    /**
+     * Register AdminMenus
+     */
+    public function registerAdminMenus()
+    {
+        foreach (AdminMenuFactory::getAll() as $adminMenu) {
+            $adminMenu->register();
+        }
+    }
+
+    /**
+     * Register SettingsPages
+     */
+    public function registerSettingsPages()
+    {
+        foreach (SettingsPageFactory::getAll() as $settingsPage) {
+            $settingsPage->register();
+        }
+    }
 
 }

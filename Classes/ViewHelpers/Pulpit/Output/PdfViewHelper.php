@@ -57,7 +57,7 @@ class PdfViewHelper extends AbstractViewHelper
     {
         $slug = str_replace(' ', '_', pathinfo($this->arguments['filename'], PATHINFO_FILENAME) . '.' . md5(time()));
         $tempFileName = $slug . '.html';
-        $commandFile    = PEREGRINUS_PULPIT_BASE_PATH . 'bin/wkhtmltopdf-amd64';
+        $commandFile = PEREGRINUS_PULPIT_BASE_PATH . 'bin/wkhtmltopdf-amd64';
         //$commandFile = '/usr/bin/wkhtmltopdf';
         $debugFile = PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $slug . '.txt';
         $tempFilePath = PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $tempFileName;

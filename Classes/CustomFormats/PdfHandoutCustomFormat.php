@@ -24,7 +24,8 @@
 namespace Peregrinus\Pulpit\CustomFormats;
 
 
-class PdfHandoutCustomFormat extends AbstractTemplatedCustomFormat {
+class PdfHandoutCustomFormat extends AbstractTemplatedCustomFormat
+{
 
     protected $viewName = 'pdfHandout';
 

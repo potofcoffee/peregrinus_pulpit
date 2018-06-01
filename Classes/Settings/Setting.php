@@ -27,103 +27,113 @@ namespace Peregrinus\Pulpit\Settings;
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
 use Peregrinus\Pulpit\Fields\AbstractField;
 
-class Setting {
-	protected $id = '';
-	protected $label = '';
-	protected $field = null;
-	protected $page = null;
+class Setting
+{
+    protected $id = '';
+    protected $label = '';
+    protected $field = null;
+    protected $page = null;
 
-	public function __construct($id, $label, AbstractField $field) {
-		$this->setId($id);
-		$this->setLabel($label);
-		$this->setField($field);
-	}
+    public function __construct($id, $label, AbstractField $field)
+    {
+        $this->setId($id);
+        $this->setLabel($label);
+        $this->setField($field);
+    }
 
-	/**
-	 * Register the setting
-	 * @param AbstractSettingsPage $page SettingsPage
-	 * @param SettingsSection $section SettingsSection
-	 */
-	public function register(AbstractSettingsPage $page, SettingsSection $section) {
-		add_settings_field(
-			$this->getId(),
-			$this->getLabel(),
-			[$this, 'render'],
-			$page->getSlug(),
-			$section->getId()
-		);
-		$this->setPage($page);
-	}
+    /**
+     * Register the setting
+     * @param AbstractSettingsPage $page SettingsPage
+     * @param SettingsSection $section SettingsSection
+     */
+    public function register(AbstractSettingsPage $page, SettingsSection $section)
+    {
+        add_settings_field(
+            $this->getId(),
+            $this->getLabel(),
+            [$this, 'render'],
+            $page->getSlug(),
+            $section->getId()
+        );
+        $this->setPage($page);
+    }
 
-	/**
-	 * Render the setting field
-	 */
-	public function render() {
-		if ($this->getPage()) {
-			$options = $this->getPage()->getOptions();
-		} else {
-			$options = [];
-		}
-		echo $this->field->render($options);
-	}
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getId() {
-		return $this->id;
-	}
+    /**
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	/**
-	 * @param string $id
-	 */
-	public function setId( $id ) {
-		$this->id = $id;
-	}
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getLabel() {
-		return $this->label;
-	}
+    /**
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
 
-	/**
-	 * @param string $label
-	 */
-	public function setLabel( $label ) {
-		$this->label = $label;
-	}
+    /**
+     * Render the setting field
+     */
+    public function render()
+    {
+        if ($this->getPage()) {
+            $options = $this->getPage()->getOptions();
+        } else {
+            $options = [];
+        }
+        echo $this->field->render($options);
+    }
 
-	/**
-	 * @return null
-	 */
-	public function getField() {
-		return $this->field;
-	}
+    /**
+     * @return null
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
 
-	/**
-	 * @param null $field
-	 */
-	public function setField( $field ) {
-		$this->field = $field;
-	}
+    /**
+     * @param null $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+    }
 
-	/**
-	 * @return null
-	 */
-	public function getPage() {
-		return $this->page;
-	}
+    /**
+     * @return null
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
 
-	/**
-	 * @param null $page
-	 */
-	public function setPage( $page ) {
-		$this->page = $page;
-	}
-
-
+    /**
+     * @param null $field
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
 
 
 }

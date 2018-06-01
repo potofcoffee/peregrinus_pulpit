@@ -32,44 +32,46 @@ Text Domain: pulpit
 Domain Path: /Resources/Private/Languages/
 */
 
-error_reporting( E_ERROR );
-ini_set( 'display_errors', 1 );
+error_reporting(E_ERROR);
+ini_set('display_errors', 1);
 
 use Peregrinus\Pulpit\PulpitPlugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 } // Exit if accessed directly
 
-require_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
+require_once(dirname(__FILE__) . '/vendor/autoload.php');
 
-define( 'PEREGRINUS_PULPIT', 'pulpit' );
-define( 'PEREGRINUS_PULPIT_START', time() );
-define( 'PEREGRINUS_PULPIT_OPTIONS', PEREGRINUS_PULPIT . '_options' );
-define( 'PEREGRINUS_PULPIT_SLUG', 'pulpit' );
-define( 'PEREGRINUS_PULPIT_ENTRY_SCRIPT', __FILE__ );
-define( 'PEREGRINUS_PULPIT_BASE_PATH', dirname( __FILE__ ) . '/' );
-define( 'PEREGRINUS_PULPIT_CLASS_PATH', dirname( __FILE__ ) . '/Classes/' );
-define( 'PEREGRINUS_PULPIT_DOMAIN_PATH', dirname( plugin_basename( __FILE__ ) ) . '/Resources/Private/Languages/' );
-define( 'PEREGRINUS_PULPIT_BASE_URL',
-	plugin_dir_url( PEREGRINUS_PULPIT_BASE_PATH ) . basename( dirname( __FILE__ ) ) . '/' );
-define ('PEREGRINUS_PULPIT_BASE_URL_NO_PROTOCOL', strtr(PEREGRINUS_PULPIT_BASE_URL, ['https:' => '', 'http:' => '']));
+define('PEREGRINUS_PULPIT', 'pulpit');
+define('PEREGRINUS_PULPIT_START', time());
+define('PEREGRINUS_PULPIT_OPTIONS', PEREGRINUS_PULPIT . '_options');
+define('PEREGRINUS_PULPIT_SLUG', 'pulpit');
+define('PEREGRINUS_PULPIT_ENTRY_SCRIPT', __FILE__);
+define('PEREGRINUS_PULPIT_BASE_PATH', dirname(__FILE__) . '/');
+define('PEREGRINUS_PULPIT_CLASS_PATH', dirname(__FILE__) . '/Classes/');
+define('PEREGRINUS_PULPIT_DOMAIN_PATH', dirname(plugin_basename(__FILE__)) . '/Resources/Private/Languages/');
+define('PEREGRINUS_PULPIT_BASE_URL',
+    plugin_dir_url(PEREGRINUS_PULPIT_BASE_PATH) . basename(dirname(__FILE__)) . '/');
+define('PEREGRINUS_PULPIT_BASE_URL_NO_PROTOCOL', strtr(PEREGRINUS_PULPIT_BASE_URL, ['https:' => '', 'http:' => '']));
 
-add_action( 'plugins_loaded', [ PulpitPlugin::class, 'getInstance' ], 9 );
+add_action('plugins_loaded', [PulpitPlugin::class, 'getInstance'], 9);
 
-if ( ! function_exists( '__dump' ) ) {
-	function __dump( $v ) {
-		die ( '<pre>' . print_r( $v, 1 ) );
-	}
+if (!function_exists('__dump')) {
+    function __dump($v)
+    {
+        die ('<pre>' . print_r($v, 1));
+    }
 }
 
-if ( ! function_exists( '__log' ) ) {
-	function __log( $object, $text, $data = null ) {
-		$reflect = new ReflectionClass( $object );
-		$fp      = fopen( '/tmp/wp-cron.log', 'a' );
-		fwrite( $fp,
-			strftime( '%Y-%m-%d %H:%M:%S' ) . ' ' . ( time() - PEREGRINUS_PULPIT_START ) . ' ' . basename( $reflect->getShortName() ) . ' ' . $text . ( $data ? ' --> ' . print_r( $data,
-					1 ) : '' ) . PHP_EOL );
-		fclose( $fp );
-	}
+if (!function_exists('__log')) {
+    function __log($object, $text, $data = null)
+    {
+        $reflect = new ReflectionClass($object);
+        $fp = fopen('/tmp/wp-cron.log', 'a');
+        fwrite($fp,
+            strftime('%Y-%m-%d %H:%M:%S') . ' ' . (time() - PEREGRINUS_PULPIT_START) . ' ' . basename($reflect->getShortName()) . ' ' . $text . ($data ? ' --> ' . print_r($data,
+                    1) : '') . PHP_EOL);
+        fclose($fp);
+    }
 }

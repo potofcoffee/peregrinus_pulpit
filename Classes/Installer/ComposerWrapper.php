@@ -41,13 +41,15 @@ class ComposerWrapper
      * Find the path to composer
      * This will download composer.phar locally, if no global composer install is found
      */
-    protected function getComposer() {
+    protected function getComposer()
+    {
         $composerPath = trim(shell_exec('which composer'));
         if ($composerPath) {
             $this->composerCmd = $composerPath;
         } else {
-            if (!file_exists(PEREGRINUS_PULPIT_BASE_PATH.'composer.phar')) {
-                file_put_contents(PEREGRINUS_PULPIT_BASE_PATH.'composer.phar', file_get_contents(self::COMPOSER_DOWNLOAD_URL));
+            if (!file_exists(PEREGRINUS_PULPIT_BASE_PATH . 'composer.phar')) {
+                file_put_contents(PEREGRINUS_PULPIT_BASE_PATH . 'composer.phar',
+                    file_get_contents(self::COMPOSER_DOWNLOAD_URL));
             }
             $this->composerCmd = 'php composer.phar';
         }
@@ -56,8 +58,37 @@ class ComposerWrapper
     /**
      * @return bool True if composer is present
      */
-    public function hasComposer(): bool {
+    public function hasComposer(): bool
+    {
         return ($this->composerCmd != '');
+    }
+
+    /**
+     * Check for outdated packages on this install
+     * @return bool True if outdated packages exist
+     */
+    public function isOutdated(): bool
+    {
+        return (array_sum($this->getTaskStats()) > 0);
+    }
+
+    /**
+     * Get the number of installs/updates/removals needed
+     * @return array Stats for installs/updates/removals needed
+     */
+    public function getTaskStats()
+    {
+        preg_match(
+            '/(\d+) installs, (\d+) updates, (\d+) removals/',
+            $this->do('update --dry-run'),
+            $stats
+        );
+        if (count($stats)) {
+            unset($stats[0]);
+        } else {
+            return [1 => 0, 2 => 0, 3 => 0];
+        }
+        return ['install' => $stats[1], 'update' => $stats[2], 'remove' => $stats[3]];
     }
 
     /**
@@ -65,17 +96,10 @@ class ComposerWrapper
      * @param $commandLine Command line
      * @return string Output
      */
-    public function do($commandLine) {
+    public function do($commandLine)
+    {
         chdir(PEREGRINUS_PULPIT_BASE_PATH);
-        return shell_exec('HOME='.$_SERVER['DOCUMENT_ROOT'].' '.$this->composerCmd.' '.$commandLine.' 2>&1');
-    }
-
-    /**
-     * Check for outdated packages on this install
-     * @return bool True if outdated packages exist
-     */
-    public function isOutdated(): bool {
-        return (array_sum($this->getTaskStats()) > 0);
+        return shell_exec('HOME=' . $_SERVER['DOCUMENT_ROOT'] . ' ' . $this->composerCmd . ' ' . $commandLine . ' 2>&1');
     }
 
     /**
@@ -83,35 +107,24 @@ class ComposerWrapper
      * At the moment, this simply checks whether composer.lock exists
      * @return bool True if install has been run
      */
-    public function isInstalled(): bool {
-        return (file_exists(PEREGRINUS_PULPIT_BASE_PATH.'composer.lock'));
+    public function isInstalled(): bool
+    {
+        return (file_exists(PEREGRINUS_PULPIT_BASE_PATH . 'composer.lock'));
     }
 
     /**
      * Run the initial installer
      */
-    public function install() {
+    public function install()
+    {
         $this->do('install --no-interaction');
     }
 
     /**
      * Run all outstanding updates
      */
-    public function update() {
+    public function update()
+    {
         $this->do('update --no-interaction');
-    }
-
-    /**
-     * Get the number of installs/updates/removals needed
-     * @return array Stats for installs/updates/removals needed
-     */
-    public function getTaskStats() {
-        preg_match(
-            '/(\d+) installs, (\d+) updates, (\d+) removals/',
-            $this->do('update --dry-run'),
-            $stats
-        );
-        if (count($stats)) unset($stats[0]); else return [1 => 0, 2=> 0, 3=> 0];
-        return ['install' => $stats[1], 'update' => $stats[2], 'remove' => $stats[3]];
     }
 }

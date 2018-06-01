@@ -31,24 +31,28 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Provide buffer functions to handle WordPress' habit to directly output using echo()
  * @package Peregrinus\Pulpit\ViewHelpers
  */
-class AbstractBufferedViewHelper extends AbstractViewHelper {
+class AbstractBufferedViewHelper extends AbstractViewHelper
+{
 
 
-	/**
-	 * Render functionality. This function should be overriden.
-	 */
-	protected function renderBuffered() {}
+    /**
+     * Render the ViewHelper
+     * @return string Output
+     */
+    public function render()
+    {
+        ob_start();
+        $this->renderBuffered();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 
-	/**
-	 * Render the ViewHelper
-	 * @return string Output
-	 */
-	public function render() {
-		ob_start();
-		$this->renderBuffered();
-		$output = ob_get_contents();
-		ob_end_clean();
-		return $output;
-	}
+    /**
+     * Render functionality. This function should be overriden.
+     */
+    protected function renderBuffered()
+    {
+    }
 
 }

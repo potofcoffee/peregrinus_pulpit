@@ -31,27 +31,29 @@ use Peregrinus\Pulpit\ViewHelpers\AbstractBufferedViewHelper;
  * Exposes WordPress' do_settings_sections to Fluid
  * @package Peregrinus\Pulpit\ViewHelpers
  */
-class DoSettingsSectionsViewHelper extends AbstractBufferedViewHelper {
+class DoSettingsSectionsViewHelper extends AbstractBufferedViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('group', 'string', 'Option group', false, PEREGRINUS_PULPIT.'_options');
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('group', 'string', 'Option group', false, PEREGRINUS_PULPIT . '_options');
+    }
 
-	protected function renderBuffered() {
-		do_settings_sections($this->arguments['group']);
-	}
+    protected function renderBuffered()
+    {
+        do_settings_sections($this->arguments['group']);
+    }
 
 }

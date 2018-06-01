@@ -24,19 +24,22 @@
 namespace Peregrinus\Pulpit\Fields;
 
 
-class RTEField extends TextAreaField {
+class RTEField extends TextAreaField
+{
 
 
-	public function register() {
-		add_action( 'admin_print_footer_scripts', [ $this, 'script' ], 99 );
-	}
+    public function register()
+    {
+        add_action('admin_print_footer_scripts', [$this, 'script'], 99);
+    }
 
-	public function script() {
-		echo "
+    public function script()
+    {
+        echo "
 			<script type=\"text/javascript\">/* <![CDATA[ */
 				jQuery(function($){
 					var i=1;
-					$('textarea.".PEREGRINUS_PULPIT."_rtefield').each(function(e)
+					$('textarea." . PEREGRINUS_PULPIT . "_rtefield').each(function(e)
 					{
 					  var id = $(this).attr('id');
 					  if (!id)
@@ -50,18 +53,19 @@ class RTEField extends TextAreaField {
 				});
 			/* ]]> */</script>		
 ";
-	}
+    }
 
-	/**
-	 * Output this field's form element
-	 *
-	 * @param array $value Custom field values
-	 *
-	 * @return string HTML output
-	 */
-	public function render( $values ) {
-		return $this->renderLabel() . '<br /><textarea class="' . PEREGRINUS_PULPIT . '_rtefield" id="field_' . $this->key . '" style="width: 100%" rows="'.$this->rows.'" name="' . $this->key . '">' . htmlentities( $values[ $this->key ][0] ) . '</textarea><br />';
-	}
+    /**
+     * Output this field's form element
+     *
+     * @param array $value Custom field values
+     *
+     * @return string HTML output
+     */
+    public function render($values)
+    {
+        return $this->renderLabel() . '<br /><textarea class="' . PEREGRINUS_PULPIT . '_rtefield" id="field_' . $this->key . '" style="width: 100%" rows="' . $this->rows . '" name="' . $this->key . '">' . htmlentities($values[$this->key][0]) . '</textarea><br />';
+    }
 
 
 }

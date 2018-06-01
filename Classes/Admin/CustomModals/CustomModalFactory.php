@@ -24,20 +24,22 @@
 namespace Peregrinus\Pulpit\Admin\CustomModals;
 
 
-class CustomModalFactory {
-	/**
-	 * Get all SettingsPages
-	 * @return array Instances of each SettingsPage
-	 */
-	public static function getAll() {
-		foreach ( glob( PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/CustomModals/*CustomModal.*' ) as $class ) {
-			$baseClass = pathinfo($class, PATHINFO_FILENAME);
-			$class = 'Peregrinus\\Pulpit\\Admin\\CustomModals\\'.$baseClass;
-			if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
-				$objects[] = new $class();
-			}
-		}
-		return $objects;
-	}
+class CustomModalFactory
+{
+    /**
+     * Get all SettingsPages
+     * @return array Instances of each SettingsPage
+     */
+    public static function getAll()
+    {
+        foreach (glob(PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/CustomModals/*CustomModal.*') as $class) {
+            $baseClass = pathinfo($class, PATHINFO_FILENAME);
+            $class = 'Peregrinus\\Pulpit\\Admin\\CustomModals\\' . $baseClass;
+            if (substr($baseClass, 0, 8) !== 'Abstract') {
+                $objects[] = new $class();
+            }
+        }
+        return $objects;
+    }
 
 }

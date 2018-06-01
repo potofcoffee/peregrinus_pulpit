@@ -24,7 +24,6 @@
 namespace Peregrinus\Pulpit;
 
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
 /**
@@ -32,30 +31,32 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  * Extends the Fluid's TemplateView and sets default paths for this plugin
  * @package Peregrinus\Pulpit
  */
-class View extends TemplateView {
+class View extends TemplateView
+{
 
-	/**
-	 * View constructor.
-	 * Call TemplateView constructor and set default paths
-	 *
-	 * @param string prefix Path prefix to use
-	 * @param null $context
-	 */
-	public function __construct( $prefix = '', $context = null ) {
-		parent::__construct( $context );
-		$paths = $this->getTemplatePaths();
-		$paths->setTemplateRootPaths( [ PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/' . $prefix ] );
-		$paths->setLayoutRootPaths( [ PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Layouts/' ] );
-		$paths->setPartialRootPaths( [ PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Partials/' ] );
+    /**
+     * View constructor.
+     * Call TemplateView constructor and set default paths
+     *
+     * @param string prefix Path prefix to use
+     * @param null $context
+     */
+    public function __construct($prefix = '', $context = null)
+    {
+        parent::__construct($context);
+        $paths = $this->getTemplatePaths();
+        $paths->setTemplateRootPaths([PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/' . $prefix]);
+        $paths->setLayoutRootPaths([PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Layouts/']);
+        $paths->setPartialRootPaths([PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Partials/']);
 
-		$this->getRenderingContext()->getViewHelperResolver()->addNamespaces( [
-				'wp' => 'Peregrinus\\Pulpit\\ViewHelpers\\WordPress',
-				'p'  => 'Peregrinus\\Pulpit\\ViewHelpers\\Pulpit',
-			]
-		);
-		$this->assign('plugin_slug', PEREGRINUS_PULPIT);
-		$this->assign('basePath', PEREGRINUS_PULPIT_BASE_PATH);
-		$this->assign('baseUrl', PEREGRINUS_PULPIT_BASE_URL);
-	}
+        $this->getRenderingContext()->getViewHelperResolver()->addNamespaces([
+                'wp' => 'Peregrinus\\Pulpit\\ViewHelpers\\WordPress',
+                'p' => 'Peregrinus\\Pulpit\\ViewHelpers\\Pulpit',
+            ]
+        );
+        $this->assign('plugin_slug', PEREGRINUS_PULPIT);
+        $this->assign('basePath', PEREGRINUS_PULPIT_BASE_PATH);
+        $this->assign('baseUrl', PEREGRINUS_PULPIT_BASE_URL);
+    }
 
 }

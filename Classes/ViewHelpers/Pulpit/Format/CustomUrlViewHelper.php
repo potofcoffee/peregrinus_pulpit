@@ -26,32 +26,36 @@ namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-class CustomUrlViewHelper extends AbstractViewHelper {
+class CustomUrlViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerArgument( 'url', 'string', 'Url string' );
-		$this->registerArgument( 'add', 'array', 'Parameters' );
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('url', 'string', 'Url string');
+        $this->registerArgument('add', 'array', 'Parameters');
+    }
 
-	protected function render() {
-		$args = is_array($this->arguments['add']) ? $this->arguments['add'] : [];
-		$add = [];
-		foreach ($args as $key => $val) {
-			$add[] = $key.'='.$val;
-		}
-		return $this->arguments['url'].((strpos($this->arguments['url'], '?') !== false) ? '&' : '?').join('&', $add);
-	}
+    protected function render()
+    {
+        $args = is_array($this->arguments['add']) ? $this->arguments['add'] : [];
+        $add = [];
+        foreach ($args as $key => $val) {
+            $add[] = $key . '=' . $val;
+        }
+        return $this->arguments['url'] . ((strpos($this->arguments['url'], '?') !== false) ? '&' : '?') . join('&',
+                $add);
+    }
 
 }

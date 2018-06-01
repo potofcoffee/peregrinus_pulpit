@@ -30,32 +30,36 @@ use Peregrinus\Pulpit\Tasks\TaskFactory;
  * Provides all function relating to wp-cron.php
  * @package Peregrinus\Pulpit\Admin
  */
-class Scheduler {
+class Scheduler
+{
 
-	/**
-	 * Scheduler constructor.
-	 */
-	public function __construct() {
-	}
+    /**
+     * Scheduler constructor.
+     */
+    public function __construct()
+    {
+    }
 
-	/**
-	 * register the necessary hooks
-	 */
-	public function register() {
-		// register schedules
-		add_filter( 'cron_schedules', [ $this, 'registerCustomIntervals' ] );
+    /**
+     * register the necessary hooks
+     */
+    public function register()
+    {
+        // register schedules
+        add_filter('cron_schedules', [$this, 'registerCustomIntervals']);
 
-		// register tasks
-		foreach ( TaskFactory::getAll() as $task ) {
-			$task->register();
-		}
-	}
+        // register tasks
+        foreach (TaskFactory::getAll() as $task) {
+            $task->register();
+        }
+    }
 
 
-	/**
-	 * Register custom intervals
-	 */
-	public function registerCustomIntervals() {
+    /**
+     * Register custom intervals
+     */
+    public function registerCustomIntervals()
+    {
         /*
 		return [
 			'one_minute'   => [
@@ -65,5 +69,5 @@ class Scheduler {
         ];
         */
         return [];
-	}
+    }
 }

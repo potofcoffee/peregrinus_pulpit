@@ -26,6 +26,24 @@ namespace Peregrinus\Pulpit\Admin\FieldPreviews;
 
 class SlidesFieldPreview extends AbstractFieldPreview
 {
+    public static function render(\WP_Post $post, $meta): string
+    {
+        $imgUrl = get_the_post_thumbnail_url($post->ID, 'thumbnail');
+
+        $o .= '<div class="sortable-item pulpit-slide-preview pulpit-clearfix"><div class="pulpit-slide-preview-content">'
+            . '<img class="pulpit-slide-preview-image" src="' . $imgUrl . '" float: left;/>'
+            . '<div class="pulpit-slide-preview-textcontainer">'
+            . '<b>' . $post->post_title . '</b>'
+            . '<p>' . self::truncate(strip_tags($post->post_content), 200) . '</p>'
+            . '</div></div>'
+            . '<button class="button button-small open-slider-custom-modal pulpit-slide-delete-button">' . __('Delete',
+                'pulpit') . '</button>'
+            . '<button class="button button-small open-slider-custom-modal pulpit-slide-edit-button">' . __('Edit',
+                'pulpit') . '</button>'
+            . '</div>';
+        return $o;
+    }
+
     private static function truncate($text, $length)
     {
         $length = abs((int)$length);
@@ -33,22 +51,6 @@ class SlidesFieldPreview extends AbstractFieldPreview
             $text = preg_replace("/^(.{1,$length})(\s.*|$)/s", '\\1...', $text);
         }
         return ($text);
-    }
-
-    public static function render(\WP_Post $post, $meta): string
-    {
-        $imgUrl = get_the_post_thumbnail_url($post->ID, 'thumbnail');
-
-        $o .= '<div class="sortable-item pulpit-slide-preview pulpit-clearfix"><div class="pulpit-slide-preview-content">'
-            . '<img class="pulpit-slide-preview-image" src="' . $imgUrl . '" float: left;/>'
-            .'<div class="pulpit-slide-preview-textcontainer">'
-            . '<b>'.$post->post_title.'</b>'
-            .'<p>'.self::truncate(strip_tags($post->post_content), 200).'</p>'
-            . '</div></div>'
-            . '<button class="button button-small open-slider-custom-modal pulpit-slide-delete-button">' . __('Delete', 'pulpit') . '</button>'
-            . '<button class="button button-small open-slider-custom-modal pulpit-slide-edit-button">' . __('Edit', 'pulpit') . '</button>'
-            . '</div>';
-        return $o;
     }
 
 

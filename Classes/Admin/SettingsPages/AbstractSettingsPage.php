@@ -24,204 +24,216 @@
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
 
-class AbstractSettingsPage {
+class AbstractSettingsPage
+{
 
-	protected $options = [];
-	protected $sections = [];
-	protected $menuTitle = '';
-	protected $pageTitle = '';
-	protected $capability = 'manage_options';
+    protected $options = [];
+    protected $sections = [];
+    protected $menuTitle = '';
+    protected $pageTitle = '';
+    protected $capability = 'manage_options';
 
-	/**
-	 * Start up
-	 */
-	public function __construct()
-	{
-	}
+    /**
+     * Start up
+     */
+    public function __construct()
+    {
+    }
 
-	/**
-	 * Register all necessary hooks
-	 */
-	public function register() {
-		add_action( 'admin_menu', array( $this, 'addPluginPage' ) );
-		add_action( 'admin_init', array( $this, 'init' ) );
-	}
+    /**
+     * Register all necessary hooks
+     */
+    public function register()
+    {
+        add_action('admin_menu', array($this, 'addPluginPage'));
+        add_action('admin_init', array($this, 'init'));
+    }
 
-	/**
-	 * Get the key for this SettingsPage
-	 * @return string
-	 */
-	public function getKey() {
-		return lcfirst( str_replace( 'SettingsPage', '', array_pop( explode( '\\', get_class( $this ) ) ) ) );
-	}
+    /**
+     * Register the settings page
+     */
+    public function addPluginPage()
+    {
+        add_options_page(
+            $this->getPageTitle(),
+            $this->getMenuTitle(),
+            $this->getCapability(),
+            $this->getSlug(),
+            [$this, 'render']
+        );
+    }
 
-	/**
-	 * Get the slug for this SettingsPage
-	 * @return mixed
-	 */
-	public function getSlug() {
-		return PEREGRINUS_PULPIT.'-settings-'.$this->getKey();
-	}
+    /**
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        return $this->pageTitle;
+    }
 
+    /**
+     * @param string $pageTitle
+     */
+    public function setPageTitle($pageTitle)
+    {
+        $this->pageTitle = $pageTitle;
+    }
 
-	/**
-	 * Register the settings page
-	 */
-	public function addPluginPage() {
-		add_options_page(
-			$this->getPageTitle(),
-			$this->getMenuTitle(),
-			$this->getCapability(),
-			$this->getSlug(),
-			[$this, 'render']
-		);
-	}
+    /**
+     * @return string
+     */
+    public function getMenuTitle()
+    {
+        return $this->menuTitle;
+    }
 
-	/**
-	 * Configure all settings
-	 */
-	public function init() {
-		register_setting(
-			$this->getOptionGroupName(),
-			$this->getOptionName(),
-			[$this, 'sanitize']
-		);
-		foreach ($this->sections as $section) {
-			$section->register($this);
-		}
-	}
+    /**
+     * @param string $menuTitle
+     */
+    public function setMenuTitle($menuTitle)
+    {
+        $this->menuTitle = $menuTitle;
+    }
 
-	/**
-	 * Get option group name
-	 * @return string Option group name
-	 */
-	protected function getOptionGroupName() {
-		return PEREGRINUS_PULPIT.'_options';
-	}
+    /**
+     * @return string
+     */
+    public function getCapability()
+    {
+        return $this->capability;
+    }
 
-	/**
-	 * Get the option name for this SettingsPage
-	 * @return string Option name
-	 */
-	protected function getOptionName() {
-		return PEREGRINUS_PULPIT.'_'.$this->getKey();
-	}
+    /**
+     * @param string $capability
+     */
+    public function setCapability($capability)
+    {
+        $this->capability = $capability;
+    }
 
-	/**
-	 * Get a field's name
-	 * @param $field Field name
-	 */
-	protected function getFieldName($field) {
-		return $this->getOptionName().'['.$field.']';
-	}
+    /**
+     * Get the slug for this SettingsPage
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return PEREGRINUS_PULPIT . '-settings-' . $this->getKey();
+    }
 
+    /**
+     * Get the key for this SettingsPage
+     * @return string
+     */
+    public function getKey()
+    {
+        return lcfirst(str_replace('SettingsPage', '', array_pop(explode('\\', get_class($this)))));
+    }
 
-	protected function fetchOptions() {
-		$this->options = get_option($this->getOptionName());
-		return $this->options;
-	}
+    /**
+     * Configure all settings
+     */
+    public function init()
+    {
+        register_setting(
+            $this->getOptionGroupName(),
+            $this->getOptionName(),
+            [$this, 'sanitize']
+        );
+        foreach ($this->sections as $section) {
+            $section->register($this);
+        }
+    }
 
-	/**
-	 * Render the settings page
-	 */
-	public function render() {
-		$this->fetchOptions();
-		echo '<div class="wrap">'
-		     .'<h1>'.__('Settings').' > '.$this->getPageTitle().'</h1>';
-		$this->headerFunctions();
-		echo '<form method="post" action="options.php">';
-		settings_fields($this->getOptionGroupName());
-		do_settings_sections($this->getSlug());
-		submit_button();
-		echo '</form>'
-		     .'</div>';
-	}
+    /**
+     * Get option group name
+     * @return string Option group name
+     */
+    protected function getOptionGroupName()
+    {
+        return PEREGRINUS_PULPIT . '_options';
+    }
 
-	/**
-	 * Sanitize input
-	 * @param array $input Input
-	 *
-	 * @return array Sanitized input
-	 */
-	public function sanitize($input) {
-		return $input;
-	}
+    /**
+     * Get the option name for this SettingsPage
+     * @return string Option name
+     */
+    protected function getOptionName()
+    {
+        return PEREGRINUS_PULPIT . '_' . $this->getKey();
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getOptions() {
-		return $this->options;
-	}
+    /**
+     * Render the settings page
+     */
+    public function render()
+    {
+        $this->fetchOptions();
+        echo '<div class="wrap">'
+            . '<h1>' . __('Settings') . ' > ' . $this->getPageTitle() . '</h1>';
+        $this->headerFunctions();
+        echo '<form method="post" action="options.php">';
+        settings_fields($this->getOptionGroupName());
+        do_settings_sections($this->getSlug());
+        submit_button();
+        echo '</form>'
+            . '</div>';
+    }
 
-	/**
-	 * @param array $options
-	 */
-	public function setOptions( $options ) {
-		$this->options = $options;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getMenuTitle() {
-		return $this->menuTitle;
-	}
-
-	/**
-	 * @param string $menuTitle
-	 */
-	public function setMenuTitle( $menuTitle ) {
-		$this->menuTitle = $menuTitle;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPageTitle() {
-		return $this->pageTitle;
-	}
-
-	/**
-	 * @param string $pageTitle
-	 */
-	public function setPageTitle( $pageTitle ) {
-		$this->pageTitle = $pageTitle;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCapability() {
-		return $this->capability;
-	}
-
-	/**
-	 * @param string $capability
-	 */
-	public function setCapability( $capability ) {
-		$this->capability = $capability;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getSections() {
-		return $this->sections;
-	}
-
-	/**
-	 * @param array $sections
-	 */
-	public function setSections( $sections ) {
-		$this->sections = $sections;
-	}
+    protected function fetchOptions()
+    {
+        $this->options = get_option($this->getOptionName());
+        return $this->options;
+    }
 
     /**
      * Output additional info in the header
      */
-    public function headerFunctions() {
+    public function headerFunctions()
+    {
 
+    }
+
+    /**
+     * Sanitize input
+     * @param array $input Input
+     *
+     * @return array Sanitized input
+     */
+    public function sanitize($input)
+    {
+        return $input;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    /**
+     * @param array $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
     }
 
     /**
@@ -231,20 +243,30 @@ class AbstractSettingsPage {
      * @param bool $isDismissible (optional) True if notice is dismissible
      * @param string $id (optional) ID string of the notice div
      */
-    public function notice(string $type, string $text, bool $isDismissible = true, string $id='') {
-        echo '<div '.($id ? 'id="'.$id.'"' : '').' class="notice notice-'.$type.($isDismissible ? ' is-dismissible' : '').'">'
-            .'<p>'.$text.'</p>'
-            .'<button type="button" class="notice-dismiss"><span class="screen-reader-text">Diese Meldung ausblenden.</span></button></div>';
+    public function notice(string $type, string $text, bool $isDismissible = true, string $id = '')
+    {
+        echo '<div ' . ($id ? 'id="' . $id . '"' : '') . ' class="notice notice-' . $type . ($isDismissible ? ' is-dismissible' : '') . '">'
+            . '<p>' . $text . '</p>'
+            . '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Diese Meldung ausblenden.</span></button></div>';
 
     }
 
-
-    public function getUrl($arguments = []) {
+    public function getUrl($arguments = [])
+    {
         $query = [];
         foreach ($arguments as $key => $val) {
-            $query[] = $key.'='.$val;
+            $query[] = $key . '=' . $val;
         }
-        $baseUrl = get_admin_url(null, 'options-general.php?page='.$this->getSlug());
-        return $baseUrl.(count($query) ? '&'.join('&', $query) : '');
+        $baseUrl = get_admin_url(null, 'options-general.php?page=' . $this->getSlug());
+        return $baseUrl . (count($query) ? '&' . join('&', $query) : '');
+    }
+
+    /**
+     * Get a field's name
+     * @param $field Field name
+     */
+    protected function getFieldName($field)
+    {
+        return $this->getOptionName() . '[' . $field . ']';
     }
 }

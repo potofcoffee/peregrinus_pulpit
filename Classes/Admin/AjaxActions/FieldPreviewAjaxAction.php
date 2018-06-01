@@ -25,7 +25,6 @@ namespace Peregrinus\Pulpit\Admin\AjaxActions;
 
 
 use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
-use Peregrinus\Pulpit\Installer\ComposerWrapper;
 
 class FieldPreviewAjaxAction extends AbstractAjaxAction
 {

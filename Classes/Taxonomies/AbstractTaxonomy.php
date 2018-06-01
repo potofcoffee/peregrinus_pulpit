@@ -28,57 +28,63 @@ namespace Peregrinus\Pulpit\Taxonomies;
  * Provides basic functionality for a custom taxonomy. All custom taxonomies should extend this class.
  * @package Peregrinus\Pulpit\Taxonomies
  */
-class AbstractTaxonomy {
+class AbstractTaxonomy
+{
 
-	protected $labels = [];
-	protected $configuration = [];
-	protected $postType = '';
+    protected $labels = [];
+    protected $configuration = [];
+    protected $postType = '';
 
-	public function __construct() {
-		$this->configuration['labels']  = $this->labels;
-		$this->configuration['rewrite'] = $this->getSlug();
-	}
+    public function __construct()
+    {
+        $this->configuration['labels'] = $this->labels;
+        $this->configuration['rewrite'] = $this->getSlug();
+    }
 
-	/**
-	 * Get the slug for this object
-	 *
-	 * Normally, the slug will be the key for this object, but this can be overridden by
-	 * setting the slug_<key> option
-	 *
-	 * @return mixed
-	 */
-	protected function getSlug() {
-		$defaultSlug = $this->getKey();
-		$options     = get_option( PEREGRINUS_PULPIT.'_general' );
+    /**
+     * Get the slug for this object
+     *
+     * Normally, the slug will be the key for this object, but this can be overridden by
+     * setting the slug_<key> option
+     *
+     * @return mixed
+     */
+    protected function getSlug()
+    {
+        $defaultSlug = $this->getKey();
+        $options = get_option(PEREGRINUS_PULPIT . '_general');
 
-		return ( isset( $options[ 'slug_' . $defaultSlug ] ) ? $options[ 'slug_' . $defaultSlug ] : $defaultSlug );
-	}
+        return (isset($options['slug_' . $defaultSlug]) ? $options['slug_' . $defaultSlug] : $defaultSlug);
+    }
 
-	/**
-	 * Get the registered name for this taxonomy
-	 * @return string name
-	 */
-	public function getName() {
-		return PEREGRINUS_PULPIT . '_' . $this->postType . '_' . $this->getKey();
-	}
+    /**
+     * Get the key for this object
+     * @return string
+     */
+    public function getKey()
+    {
+        return lcfirst(str_replace('Taxonomy', '', array_pop(explode('\\', get_class($this)))));
+    }
 
-	/**
-	 * Register this taxonomy
-	 */
-	public function register() {
-		\register_taxonomy(
-			$this->getName(),
-			PEREGRINUS_PULPIT . '_' . $this->postType,
-			$this->configuration
-		);
-	}
+    /**
+     * Register this taxonomy
+     */
+    public function register()
+    {
+        \register_taxonomy(
+            $this->getName(),
+            PEREGRINUS_PULPIT . '_' . $this->postType,
+            $this->configuration
+        );
+    }
 
-	/**
-	 * Get the key for this object
-	 * @return string
-	 */
-	public function getKey() {
-		return lcfirst( str_replace('Taxonomy', '', array_pop( explode('\\', get_class($this)) ) ));
-	}
+    /**
+     * Get the registered name for this taxonomy
+     * @return string name
+     */
+    public function getName()
+    {
+        return PEREGRINUS_PULPIT . '_' . $this->postType . '_' . $this->getKey();
+    }
 
 }

@@ -31,11 +31,12 @@ class AjaxActionFactory
      * Get all AjaxActions
      * @return array Instances of each AjaxAction
      */
-    public static function getAll() {
-        foreach ( glob( PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/AjaxActions/*AjaxAction.*' ) as $class ) {
+    public static function getAll()
+    {
+        foreach (glob(PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/AjaxActions/*AjaxAction.*') as $class) {
             $baseClass = pathinfo($class, PATHINFO_FILENAME);
-            $class = 'Peregrinus\\Pulpit\\Admin\\AjaxActions\\'.$baseClass;
-            if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
+            $class = 'Peregrinus\\Pulpit\\Admin\\AjaxActions\\' . $baseClass;
+            if (substr($baseClass, 0, 8) !== 'Abstract') {
                 $objects[] = new $class();
             }
         }

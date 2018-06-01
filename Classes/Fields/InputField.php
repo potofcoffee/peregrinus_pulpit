@@ -24,23 +24,26 @@
 namespace Peregrinus\Pulpit\Fields;
 
 
-class InputField extends AbstractField {
+class InputField extends AbstractField
+{
 
-	/**
-	 * Output this field's form element
-	 *
-	 * @param array $value Custom field values
-	 *
-	 * @return string HTML output
-	 */
-	public function render($values) {
-		return $this->renderLabel().'<input type="text" id="'.$this->getKey().'" name="'.$this->getFieldName().'" value="'.htmlentities($this->getValue($values)).'" style="width: 100%"><br />';
-	}
+    /**
+     * Output this field's form element
+     *
+     * @param array $value Custom field values
+     *
+     * @return string HTML output
+     */
+    public function render($values)
+    {
+        return $this->renderLabel() . '<input type="text" id="' . $this->getKey() . '" name="' . $this->getFieldName() . '" value="' . htmlentities($this->getValue($values)) . '" style="width: 100%"><br />';
+    }
 
-	public function renderLabel() {
-		$label = parent::renderLabel();
-		return (trim($label) ? $label.'<br />' : '');
-	}
+    public function renderLabel()
+    {
+        $label = parent::renderLabel();
+        return (trim($label) ? $label . '<br />' : '');
+    }
 
 
 }

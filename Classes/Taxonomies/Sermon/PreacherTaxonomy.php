@@ -30,37 +30,39 @@ use Peregrinus\Pulpit\Taxonomies\AbstractTaxonomy;
  * Class SeriesTaxonomy
  * @package Peregrinus\Pulpit\Taxonomies\Sermon
  */
-class PreacherTaxonomy extends AbstractTaxonomy {
+class PreacherTaxonomy extends AbstractTaxonomy
+{
 
-	protected $postType = 'sermon';
+    protected $postType = 'sermon';
 
-	/**
-	 * SeriesTaxonomy constructor.
-	 */
-	public function __construct() {
-		$this->labels        = [
-			'name'                       => __( 'Preachers', 'pulpit' ),
-			'singular_name'              => __( 'Preacher', 'pulpit' ),
-			'menu_name'                  => __( 'Preachers', 'pulpit' ),
-			'search_items'               => __( 'Search preachers', 'pulpit' ),
-			'popular_items'              => __( 'Most frequent preachers', 'pulpit' ),
-			'all_items'                  => __( 'All preachers', 'pulpit' ),
-			'edit_item'                  => __( 'Edit preachers', 'pulpit' ),
-			'update_item'                => __( 'Update preachers', 'pulpit' ),
-			'add_new_item'               => __( 'Add new preacher', 'pulpit' ),
-			'new_item_name'              => __( 'New preacher name', 'pulpit' ),
-			'separate_items_with_commas' => __( 'Separate multiple preachers with commas', 'pulpit' ),
-			'add_or_remove_items'        => __( 'Add or remove preachers', 'pulpit' ),
-			'choose_from_most_used'      => __( 'Choose from most frequent preachers', 'pulpit' ),
-			'parent_item'                => null,
-			'parent_item_colon'          => null,
-		];
-		$this->configuration = [
-			'hierarchical' => false,
-			'show_ui'      => true,
-			'query_var'    => true,
-		];
-		parent::__construct();
-	}
+    /**
+     * SeriesTaxonomy constructor.
+     */
+    public function __construct()
+    {
+        $this->labels = [
+            'name' => __('Preachers', 'pulpit'),
+            'singular_name' => __('Preacher', 'pulpit'),
+            'menu_name' => __('Preachers', 'pulpit'),
+            'search_items' => __('Search preachers', 'pulpit'),
+            'popular_items' => __('Most frequent preachers', 'pulpit'),
+            'all_items' => __('All preachers', 'pulpit'),
+            'edit_item' => __('Edit preachers', 'pulpit'),
+            'update_item' => __('Update preachers', 'pulpit'),
+            'add_new_item' => __('Add new preacher', 'pulpit'),
+            'new_item_name' => __('New preacher name', 'pulpit'),
+            'separate_items_with_commas' => __('Separate multiple preachers with commas', 'pulpit'),
+            'add_or_remove_items' => __('Add or remove preachers', 'pulpit'),
+            'choose_from_most_used' => __('Choose from most frequent preachers', 'pulpit'),
+            'parent_item' => null,
+            'parent_item_colon' => null,
+        ];
+        $this->configuration = [
+            'hierarchical' => false,
+            'show_ui' => true,
+            'query_var' => true,
+        ];
+        parent::__construct();
+    }
 
 }

@@ -26,9 +26,6 @@ namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
-use Peregrinus\Pulpit\Fields\InputField;
-use Peregrinus\Pulpit\Fields\RTEField;
-use Peregrinus\Pulpit\Fields\TextAreaField;
 
 /**
  * Class SlidePostType
@@ -123,8 +120,8 @@ class SlidePostType extends AbstractPostType
     public function addCustomFields()
     {
         return [
-            new MetaBox( 'slide_options', __('Slide options', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
-                    new CheckBoxField( 'suppress_title', __('Suppress title on exported slide', 'pulpit') ),
+            new MetaBox('slide_options', __('Slide options', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new CheckBoxField('suppress_title', __('Suppress title on exported slide', 'pulpit')),
                 ]
             ),
         ];

@@ -31,30 +31,6 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
 {
     protected $viewName = 'epub';
 
-    protected function prepareView(\WP_Post $post, View $view)
-    {
-        parent::prepareView($post, $view);
-
-    }
-
-    protected function getSlides(\WP_Post $post) {
-        $slides = (array)get_posts( [
-            'post_type' => 'pulpit_slide',
-            'post_parent' => $post->ID,
-            'orderby' => 'menu_order',
-            'order' => 'ASC',
-            'numberposts' => -1,
-        ] );
-        foreach ($slides as $key => $slide) {
-            $slides[$key] = (array)$slide;
-            $slides[$key]['isFirst'] = false;
-            $slides[$key]['isLast'] = false;
-        }
-        $slides[0]['isFirst'] = true;
-        $slides[count($slides)-1]['isLast'] = true;
-        return $slides;
-    }
-
     function render()
     {
         $post = $this->getPost();
@@ -67,13 +43,13 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         $view->assign('slides', $slides);
         $view->assign('uuid', $uuid);
 
-        $this->createContainer($this->tempKey.'.epub');
+        $this->createContainer($this->tempKey . '.epub');
 
         // mimetype
         $this->writeToFile('mimetype', 'application/epub+zip');
 
         // write manifest
-        mkdir ($this->tempFolder.'META-INF/');
+        mkdir($this->tempFolder . 'META-INF/');
         $this->renderViewToFile($view, 'Epub/Manifest', 'META-INF/container.xml');
 
         // cover
@@ -100,7 +76,7 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         // chapters
         foreach ($slides as $slide) {
             $view->assign('slide', $slide);
-            $this->renderViewToFile($view, 'Epub/Chapter', 'slide_'.$slide['ID'].'.xhtml');
+            $this->renderViewToFile($view, 'Epub/Chapter', 'slide_' . $slide['ID'] . '.xhtml');
         }
 
         // back matter
@@ -113,15 +89,15 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         $this->closeContainer();
         $this->deleteTempFolder();
 
-        $tempFile = PEREGRINUS_PULPIT_BASE_PATH.'Temp/'.$this->tempKey.'.epub';
-        $targetFile = strftime('%Y%m%d', strtotime($post->post_date)).' '.$post->post_title.'.epub';
+        $tempFile = PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $this->tempKey . '.epub';
+        $targetFile = strftime('%Y%m%d', strtotime($post->post_date)) . ' ' . $post->post_title . '.epub';
 
         header('Content-Type: application/epub+zip');
-        header('Content-Disposition: attachment; filename="'.$targetFile.'"');
+        header('Content-Disposition: attachment; filename="' . $targetFile . '"');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
-        header('Content-Length: '.filesize($tempFile));
+        header('Content-Length: ' . filesize($tempFile));
         ob_clean();
         flush();
         readfile($tempFile);
@@ -129,6 +105,31 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
 
         //Header( 'Location: '.PEREGRINUS_PULPIT_BASE_URL.'Temp/'.$this->tempKey.'.epub');
         //Header( 'Location: '.PEREGRINUS_PULPIT_BASE_URL.'Temp/'.$this->tempKey);
+    }
+
+    protected function prepareView(\WP_Post $post, View $view)
+    {
+        parent::prepareView($post, $view);
+
+    }
+
+    protected function getSlides(\WP_Post $post)
+    {
+        $slides = (array)get_posts([
+            'post_type' => 'pulpit_slide',
+            'post_parent' => $post->ID,
+            'orderby' => 'menu_order',
+            'order' => 'ASC',
+            'numberposts' => -1,
+        ]);
+        foreach ($slides as $key => $slide) {
+            $slides[$key] = (array)$slide;
+            $slides[$key]['isFirst'] = false;
+            $slides[$key]['isLast'] = false;
+        }
+        $slides[0]['isFirst'] = true;
+        $slides[count($slides) - 1]['isLast'] = true;
+        return $slides;
     }
 
 

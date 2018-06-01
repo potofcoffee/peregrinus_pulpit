@@ -31,43 +31,44 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Exposes WordPress' translation function __() to Fluid
  * @package Peregrinus\Pulpit\ViewHelpers
  */
-class TranslateViewHelper extends AbstractViewHelper {
+class TranslateViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var boolean
-	 */
-	protected $escapeChildren = false;
-	/**
-	 * @var boolean
-	 */
-	protected $escapeOutput = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
 
-	/**
-	 * @return void
-	 */
-	public function initializeArguments()
-	{
-		$this->registerArgument('content', 'string', 'Text to translate', false);
-		$this->registerArgument('global', 'bool', 'Use global textdomain', false, false);
-		$this->registerArgument('textdomain', 'string', 'textdomain', false, PEREGRINUS_PULPIT);
-	}
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('content', 'string', 'Text to translate', false);
+        $this->registerArgument('global', 'bool', 'Use global textdomain', false, false);
+        $this->registerArgument('textdomain', 'string', 'textdomain', false, PEREGRINUS_PULPIT);
+    }
 
-	/**
-	 * Render the output using __()
-	 * @return string
-	 */
-	public function render()
-	{
-		if (!isset($this->arguments['content'])) {
-			$content = $this->renderChildren();
-		} else {
-			$content = $this->arguments['content'];
-		}
-		if (($this->arguments['global'])) {
-			return __($content);
-		} else {
-			return __($content, $this->arguments['textdomain']);
-		}
-	}
+    /**
+     * Render the output using __()
+     * @return string
+     */
+    public function render()
+    {
+        if (!isset($this->arguments['content'])) {
+            $content = $this->renderChildren();
+        } else {
+            $content = $this->arguments['content'];
+        }
+        if (($this->arguments['global'])) {
+            return __($content);
+        } else {
+            return __($content, $this->arguments['textdomain']);
+        }
+    }
 
 }

@@ -28,72 +28,80 @@ namespace Peregrinus\Pulpit\Tasks;
  * Contains all basic functionality for custom tasks. Any custom Task should extend this class.
  * @package Peregrinus\Pulpit\Admin\Tasks
  */
-class AbstractTask {
+class AbstractTask
+{
 
-	protected $schedule = '';
+    protected $schedule = '';
 
-	/**
-	 * AbstractTask constructor.
-	 * This will register the run() method as a hook to be used by the scheduler
-	 */
-	public function __construct() {
-		// register the hook
-		\add_action($this->getHookName(), [$this, 'run']);
-	}
+    /**
+     * AbstractTask constructor.
+     * This will register the run() method as a hook to be used by the scheduler
+     */
+    public function __construct()
+    {
+        // register the hook
+        \add_action($this->getHookName(), [$this, 'run']);
+    }
 
-	/**
-	 * Get the key for this Task
-	 * @return string
-	 */
-	private function getKey() {
-		return lcfirst( str_replace( 'Task', '', array_pop( explode( '\\', get_class( $this ) ) ) ) );
-	}
+    /**
+     * Get the hook name
+     * @return string Hook name
+     */
+    private function getHookName()
+    {
+        return PEREGRINUS_PULPIT . '_task_' . $this->getKey();
+    }
 
-	/**
-	 * Get the hook name
-	 * @return string Hook name
-	 */
-	private function getHookName() {
-		return PEREGRINUS_PULPIT.'_task_'.$this->getKey();
-	}
+    /**
+     * Get the key for this Task
+     * @return string
+     */
+    private function getKey()
+    {
+        return lcfirst(str_replace('Task', '', array_pop(explode('\\', get_class($this)))));
+    }
 
-	/**
-	 * Register this task
-	 */
-	public function register() {
-		$hook = $this->getHookName();
-		//\wp_clear_scheduled_hook( $hook );
+    /**
+     * Register this task
+     */
+    public function register()
+    {
+        $hook = $this->getHookName();
+        //\wp_clear_scheduled_hook( $hook );
 
-		$time = strtotime('this sunday, 23:59:59');
+        $time = strtotime('this sunday, 23:59:59');
 
-		if (!($scheduled = \wp_next_scheduled($hook))) {
-			\wp_schedule_event($time, $this->getSchedule(), $hook);
-		}
-	}
+        if (!($scheduled = \wp_next_scheduled($hook))) {
+            \wp_schedule_event($time, $this->getSchedule(), $hook);
+        }
+    }
 
-	/**
-	 * Run the task
-	 * This is the main function that invokes this task's logic
-	 */
-	public function run() {
+    /**
+     * Get this task's schedule
+     * @return string Schedule
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
 
-	}
+    /**
+     * Set this tasks's schedule
+     * @param string $schedule Schedule
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+    }
 
-	/**
-	 * Get this task's schedule
-	 * @return string Schedule
-	 */
-	public function getSchedule() {
-		return $this->schedule;
-	}
+    /**
+     * Run the task
+     * This is the main function that invokes this task's logic
+     */
+    public function run()
+    {
 
-	/**
-	 * Set this tasks's schedule
-	 * @param string $schedule Schedule
-	 */
-	public function setSchedule( $schedule ) {
-		$this->schedule = $schedule;
-	}
+    }
 
 
 }

@@ -29,16 +29,6 @@ class AbstractCustomModal
 
 
     /**
-     * Get the key for this CustomModal
-     * @return string
-     */
-    public function getKey()
-    {
-        $tmp = explode('\\', get_class($this));
-        return lcfirst(str_replace('CustomModal', '', array_pop($tmp)));
-    }
-
-    /**
      * Register hooks
      */
     public function register()
@@ -52,13 +42,26 @@ class AbstractCustomModal
      */
     public function enqueueResources()
     {
-        wp_enqueue_script('custom-modal-' . $this->getKey(), PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/CustomModals/' . ucfirst($this->getKey()) . 'CustomModal.js');
+        wp_enqueue_script('custom-modal-' . $this->getKey(),
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/CustomModals/' . ucfirst($this->getKey()) . 'CustomModal.js');
+    }
+
+    /**
+     * Get the key for this CustomModal
+     * @return string
+     */
+    public function getKey()
+    {
+        $tmp = explode('\\', get_class($this));
+        return lcfirst(str_replace('CustomModal', '', array_pop($tmp)));
     }
 
     public function includeTemplate($template)
     {
-        $templateFile = PEREGRINUS_PULPIT_BASE_PATH.'Resources/Private/Templates/Admin/CustomModals/'.ucfirst($this->getKey()).'.html';
-        echo '<!-- trying to load CustomModal template '.$templateFile.' -->';
-        if (file_exists($templateFile)) echo file_get_contents($templateFile);
+        $templateFile = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/Admin/CustomModals/' . ucfirst($this->getKey()) . '.html';
+        echo '<!-- trying to load CustomModal template ' . $templateFile . ' -->';
+        if (file_exists($templateFile)) {
+            echo file_get_contents($templateFile);
+        }
     }
 }
