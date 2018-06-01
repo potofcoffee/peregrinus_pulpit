@@ -74,12 +74,15 @@ class GeneralSettingsPage extends AbstractSettingsPage
         $composer = new ComposerWrapper();
         if ($_REQUEST['composerUpdate']) {
             // composer update requested
-            $this->notice('info', '<div class="spinner"></div> ' . __('Updating external components...', 'pulpit'), false, 'composer-update-notice');
+            $this->notice('info', '<div class="spinner"></div> ' . __('Updating external components...', 'pulpit'),
+                false, 'composer-update-notice');
             echo '<script type="text/javascript" src="' . PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Updater.js"></script>';
         } else {
             $updateUrl = $this->getUrl(['composerUpdate' => 1]);
             if ($composer->isOutdated()) {
-                $this->notice('warning', __('It looks like some of the external components PULPIT uses need to be updated. <a href="' . $updateUrl . '">Click here</a> to load all necessary updates.', 'pulpit'), false);
+                $this->notice('warning',
+                    sprintf(__("It looks like some of the external components PULPIT uses need to be updated. <a href=\"%s\">Click here</a> to load all necessary updates.",
+                        'pulpit'), $updateUrl), false);
             } else {
                 $this->notice('info', __('Good news: All external components for PULPIT are up to date.', 'pulpit'));
             }
