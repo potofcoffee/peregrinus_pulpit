@@ -26,6 +26,7 @@ namespace Peregrinus\Pulpit\Admin;
 
 use Peregrinus\Pulpit\Admin\AdminMenus\AdminMenuFactory;
 use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
+use Peregrinus\Pulpit\Admin\CustomModals\CustomModalFactory;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 
 /**
@@ -45,6 +46,11 @@ class Admin {
 			$postType->addMetaBox();
 			$postType->registerCustomColumns();
 		}
+
+		// register CustomModals
+        foreach (CustomModalFactory::getAll() as $customModal) {
+		    $customModal->register();
+        }
 
 		//foreach ( AdminMenuFactory::getAll() as $adminMenu) $adminMenu->adminInit();
 	}

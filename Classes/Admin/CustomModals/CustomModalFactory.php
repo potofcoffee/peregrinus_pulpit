@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,14 +21,23 @@
  */
 
 
-namespace Peregrinus\Pulpit\Admin\FieldPreviews;
+namespace Peregrinus\Pulpit\Admin\CustomModals;
 
 
-class AudioFieldPreview extends AbstractFieldPreview
-{
-    public static function render(\WP_Post $post, $meta): string
-    {
-        return '<span class="dashicons dashicons-format-audio"></span> '.basename($post->guid).' ('.$meta['mime_type'].', '.$meta['length_formatted'].', '.self::filesizeHumanReadable($meta['filesize']).')';
-    }
+class CustomModalFactory {
+	/**
+	 * Get all SettingsPages
+	 * @return array Instances of each SettingsPage
+	 */
+	public static function getAll() {
+		foreach ( glob( PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/CustomModals/*CustomModal.*' ) as $class ) {
+			$baseClass = pathinfo($class, PATHINFO_FILENAME);
+			$class = 'Peregrinus\\Pulpit\\Admin\\CustomModals\\'.$baseClass;
+			if ( substr( $baseClass, 0, 8 ) !== 'Abstract' ) {
+				$objects[] = new $class();
+			}
+		}
+		return $objects;
+	}
 
 }

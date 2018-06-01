@@ -209,6 +209,39 @@
         ]
     },
     {
+        "name": "peregrinus/potter",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/potofcoffee/potter.git",
+            "reference": "cc7c229e1bedacacc3cac6f90d4c112f227f935a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/potofcoffee/potter/zipball/cc7c229e1bedacacc3cac6f90d4c112f227f935a",
+            "reference": "cc7c229e1bedacacc3cac6f90d4c112f227f935a",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0"
+        },
+        "time": "2018-05-31T13:17:37+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "gpl-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Christoph Fischer",
+                "email": "chris@toph.de"
+            }
+        ],
+        "description": "Auto-create .pot translation templates for WordPress plugins"
+    },
+    {
         "name": "typo3fluid/fluid",
         "version": "2.3.1",
         "version_normalized": "2.3.1.0",

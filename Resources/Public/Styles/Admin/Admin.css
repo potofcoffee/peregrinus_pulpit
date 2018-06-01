@@ -18,3 +18,40 @@
 .pulpit-upload-preview:hover button {
     visibility: visible;
 }
+
+.pulpit-slides-preview {
+    padding-right: 11px;
+}
+
+
+.pulpit-slides-preview .pulpit-slide-preview {
+    border: solid 1px #ddd;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    padding: 5px;
+    width: 100%;
+    cursor: move;
+}
+
+.pulpit-slides-preview .pulpit-slide-preview button {
+    float: right;
+    margin-top: -2px;
+    cursor: pointer;
+}
+
+.pulpit-clearfix::after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.pulpit-slide-preview-content {
+    float: left;
+    width: 80%;
+}
+
+.pulpit-slide-preview-textcontainer {
+    float: right;
+    width: 80%;
+}

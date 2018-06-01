@@ -29,6 +29,7 @@ use Peregrinus\Pulpit\Fields\CheckBoxField;
 use Peregrinus\Pulpit\Fields\FileRelationField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\RTEField;
+use Peregrinus\Pulpit\Fields\SlideRelationField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
 
 /**
@@ -155,6 +156,14 @@ class SermonPostType extends AbstractPostType {
 				new InputField( 'remote_audio', __('Remote audio file', 'pulpit') ),
 				new InputField( 'videorecording', __('Video recording', 'pulpit') ),
 			]),
+            new MetaBox('slideshow', __('Slideshow', 'pulpit') , $this->getTypeName(), 'normal', 'high', [
+                new SlideRelationField( 'slides',
+                    __('Slides', 'pulpit'),
+                    'audio/mpeg',
+                    __('Select slide', 'pulpit'),
+                    __('Select slide', 'pulpit')
+                ),
+            ]),
 			new MetaBox( 'sync', __('Synchronization', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
 					new InputField( 'sync_uid', __('Sync ID', 'pulpit') ),
 					new InputField( 'remote_url', __('Remote URL', 'pulpit') ),
