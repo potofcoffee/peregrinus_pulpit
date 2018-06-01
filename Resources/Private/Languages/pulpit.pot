@@ -1,397 +1,418 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 10:11+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"Project-Id-Version: PULPIT 1.0\n"
+"Report-Msgid-Bugs-To: http://www.peregrinus.de/pulpit\n"
+"POT-Creation-Date: 2018-05-31 19:27+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco - https://localise.biz/"
+"X-Generator: Potter 1.0"
 
-#: Classes/PostTypes/SermonPostType.php:43
-#: Classes/PostTypes/SermonPostType.php:53
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:37
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:38
-msgid "Sermons"
+# THIS FILE IS AUTOCREATED BY POTTER
+# All changes will be lost with the next run of Potter!
+
+
+
+#: ./Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:40
+msgid "<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href=\"%s\">click here</a> to try again."
 msgstr ""
 
-#: Classes/PostTypes/SermonPostType.php:44
-msgid "Sermon"
+#: ./Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:45
+msgid "Good news! All necessary updates have been installed."
 msgstr ""
 
-#: Classes/PostTypes/SermonPostType.php:45
-msgid "Add New"
+#: ./Classes/Admin/FieldPreviews/SlidesFieldPreview.php:48
+msgid "Delete"
 msgstr ""
 
-#: Classes/PostTypes/SermonPostType.php:46
-msgid "Add New Sermon"
+#: ./Classes/Admin/FieldPreviews/SlidesFieldPreview.php:49
+msgid "Edit"
 msgstr ""
 
-#: Classes/PostTypes/SermonPostType.php:47
-msgid "Edit Sermon"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:48
-msgid "New Sermon"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:49
-msgid "View Sermon"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:50
-msgid "Search Sermons"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:51
-msgid "No sermons found"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:52
-msgid "No sermons found in Trash"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:88
-msgid "Preached"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:89
-msgid "Title"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:90
-msgid "Series"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:91
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:43
-msgid "Preacher"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:124
-msgid "General"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:125
-msgid "Subtitle"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:128
-msgid "Study Materials"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:129
-msgid "Bible reference"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:130
-msgid "Bible text"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:131
-msgid "Notes header"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:132
-msgid "Key points"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:133
-msgid "Small group questions"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:134
-msgid "Further reading"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:137
-msgid "Preparation"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:138
-msgid "How to prepare for the service"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:140
-msgid "Resources"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:141
-msgid "This sermon is released under CC-BY-SA 4.0"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:142
-msgid "Handout"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:143
-msgid "Don't show links to handout"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:144
-msgid "Title image"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:145
-msgid "Preview image"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:146
-msgid "Image credits"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:147
-msgid "Audio recording"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:148
-msgid "Remote audio file"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:149
-msgid "Video recording"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:151
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:65
-msgid "Synchronization"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:152
-msgid "Sync ID"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:153
-msgid "Remote URL"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:154
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:76
-msgid "Church"
-msgstr ""
-
-#: Classes/PostTypes/SermonPostType.php:155
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:81
-msgid "Church URL"
-msgstr ""
-
-#: Classes/Admin/Scheduler.php:62
+#: ./Classes/Admin/Scheduler.php:63
 msgid "Every minute"
 msgstr ""
 
-#: Classes/Admin/Scheduler.php:66
-msgid "Every five minutes"
+#: ./Classes/Admin/SettingsPages/AbstractSettingsPage.php:130
+msgid "Settings"
 msgstr ""
 
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:42
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:43
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:44
-msgid "Sermon Series"
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:40
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:41
+#: ./Classes/PostTypes/SermonPostType.php:45
+#: ./Classes/PostTypes/SermonPostType.php:55
+msgid "Sermons"
 msgstr ""
 
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:45
-msgid "Search sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:46
-msgid "Most frequent sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:47
-msgid "All sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:48
-msgid "Edit sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:49
-msgid "Update sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:50
-msgid "Add new sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:51
-msgid "New sermon series name"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:52
-msgid "Separate sermon series with commas"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:53
-msgid "Add or remove sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:54
-msgid "Choose from most used sermon series"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
-msgid "Preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:45
-msgid "Search preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:46
-msgid "Most frequent preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:47
-msgid "All preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:48
-msgid "Edit preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:49
-msgid "Update preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:50
-msgid "Add new preacher"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:51
-msgid "New preacher name"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:52
-msgid "Separate multiple preachers with commas"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:53
-msgid "Add or remove preachers"
-msgstr ""
-
-#: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:54
-msgid "Choose from most frequent preachers"
-msgstr ""
-
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:44
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:51
-#, php-format
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:47
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:54
 msgid "Permalink for %s"
 msgstr ""
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:59
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:62
 msgid "URL rewriting"
 msgstr ""
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:60
-msgid ""
-"Here you can define your own texts for the permalinks created by PULPIT:"
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:63
+msgid "Here you can define your own texts for the permalinks created by PULPIT:"
 msgstr ""
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:66
-msgid ""
-"PULPIT can automatically import sermons from an external source running "
-"TYPO3 with the vmfds_sermons plugin. If you want to use this feature, you "
-"can setup the sync here:"
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:77
+msgid "Updating external components..."
 msgstr ""
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:71
-msgid "Feed url"
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:82
+msgid "It looks like some of the external components PULPIT uses need to be updated. <a href=""
 msgstr ""
 
-#. Name of the plugin
-msgid "PULPIT"
+#: ./Classes/Admin/SettingsPages/GeneralSettingsPage.php:84
+msgid "Good news: All external components for PULPIT are up to date."
 msgstr ""
 
-#. Description of the plugin
-msgid "PULPIT is a sermon plugin for WordPress"
+#: ./Classes/Admin/SettingsPages/MigrationSettingsPage.php:32
+#: ./Classes/Admin/SettingsPages/MigrationSettingsPage.php:33
+msgid "Sermons: Migrations"
 msgstr ""
 
-#. URI of the plugin
-msgid "http://www.peregrinus.de/pulpit"
+#: ./Classes/Fields/FileRelationField.php:72
+msgid "Aufnahme auswählen"
 msgstr ""
 
-#. Author of the plugin
-msgid "Christoph Fischer, chris@toph.de"
+#: ./Classes/Fields/SlideRelationField.php:69
+msgid "Add new slide"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "http://christoph-fischer.org"
+#: ./Classes/PostTypes/SermonPostType.php:46
+msgid "Sermon"
 msgstr ""
 
-#: SLIDES
-#: Slides
-
-
-#: Slides
-msgid "Slides"
-msgstr ""
-
-
-#: Slide
-msgid "Slide"
-msgstr ""
-
-
-#: Add New
+#: ./Classes/PostTypes/SermonPostType.php:47
+#: ./Classes/PostTypes/SlidePostType.php:47
 msgid "Add New"
 msgstr ""
 
-
-#: Add New Slide
-msgid "Add New Slide"
+#: ./Classes/PostTypes/SermonPostType.php:48
+msgid "Add New Sermon"
 msgstr ""
 
-
-#: Edit Slide
-msgid "Edit Slide"
+#: ./Classes/PostTypes/SermonPostType.php:49
+msgid "Edit Sermon"
 msgstr ""
 
-
-#: New Slide
-msgid "New Slide"
+#: ./Classes/PostTypes/SermonPostType.php:50
+msgid "New Sermon"
 msgstr ""
 
-
-#: View Slide
-msgid "View Slide"
+#: ./Classes/PostTypes/SermonPostType.php:51
+msgid "View Sermon"
 msgstr ""
 
-
-#: Search Slides
-msgid "Search Slides"
+#: ./Classes/PostTypes/SermonPostType.php:52
+msgid "Search Sermons"
 msgstr ""
 
-
-#: No slides found
-msgid "No slides found"
+#: ./Classes/PostTypes/SermonPostType.php:53
+msgid "No sermons found"
 msgstr ""
 
-
-#: No slides found in Trash
-msgid "No slides found in Trash"
+#: ./Classes/PostTypes/SermonPostType.php:54
+msgid "No sermons found in Trash"
 msgstr ""
 
+#: ./Classes/PostTypes/SermonPostType.php:90
+msgid "Preached"
+msgstr ""
 
-#: Slides
+#: ./Classes/PostTypes/SermonPostType.php:91
+msgid "Title"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:92
+msgid "Series"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:93
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:43
+msgid "Preacher"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:126
+msgid "General"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:127
+msgid "Subtitle"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:130
+msgid "Study Materials"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:131
+msgid "Bible reference"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:132
+msgid "Bible text"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:133
+msgid "Notes header"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:134
+msgid "Key points"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:135
+msgid "Small group questions"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:136
+msgid "Further reading"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:139
+msgid "Preparation"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:140
+msgid "How to prepare for the service"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:142
+msgid "Resources"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:143
+msgid "This sermon is released under CC-BY-SA 4.0"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:144
+msgid "Handout"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:145
+msgid "Don\'t show links to handout"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:146
+msgid "Title image"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:147
+msgid "Preview image"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:148
+msgid "Image credits"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:150
+msgid "Audio recording <b>REL!</b>"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:152
+#: ./Classes/PostTypes/SermonPostType.php:153
+msgid "Select audio file"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:155
+msgid "Audio recording"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:156
+msgid "Remote audio file"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:157
+msgid "Video recording"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:159
+msgid "Slideshow"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:161
+#: ./Classes/PostTypes/SlidePostType.php:45
+#: ./Classes/PostTypes/SlidePostType.php:55
 msgid "Slides"
 msgstr ""
 
-#: No sermon selected.
+#: ./Classes/PostTypes/SermonPostType.php:163
+#: ./Classes/PostTypes/SermonPostType.php:164
+msgid "Select slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:167
+msgid "Synchronization"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:168
+msgid "Sync ID"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:169
+msgid "Remote URL"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:170
+msgid "Church"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:171
+msgid "Church URL"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:174
+msgid "E-book"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:175
+msgid "Amazon link"
+msgstr ""
+
+#: ./Classes/PostTypes/SermonPostType.php:176
+msgid "Smashwords link"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:46
+msgid "Slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:48
+msgid "Add New Slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:49
+msgid "Edit Slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:50
+msgid "New Slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:51
+msgid "View Slide"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:52
+msgid "Search Slides"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:53
+msgid "No slides found"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:54
+msgid "No slides found in Trash"
+msgstr ""
+
+#: ./Classes/PostTypes/SlidePostType.php:83
 msgid "No sermon selected."
 msgstr ""
 
-
-#: Slide options
+#: ./Classes/PostTypes/SlidePostType.php:126
 msgid "Slide options"
 msgstr ""
 
+#: ./Classes/PostTypes/SlidePostType.php:127
+msgid "Suppress title on exported slide"
+msgstr ""
 
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
+msgid "Preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:45
+msgid "Search preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:46
+msgid "Most frequent preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:47
+msgid "All preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:48
+msgid "Edit preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:49
+msgid "Update preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:50
+msgid "Add new preacher"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:51
+msgid "New preacher name"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:52
+msgid "Separate multiple preachers with commas"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:53
+msgid "Add or remove preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/PreacherTaxonomy.php:54
+msgid "Choose from most frequent preachers"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:42
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:43
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:44
+msgid "Sermon Series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:45
+msgid "Search sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:46
+msgid "Most frequent sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:47
+msgid "All sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:48
+msgid "Edit sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:49
+msgid "Update sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:50
+msgid "Add new sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:51
+msgid "New sermon series name"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:52
+msgid "Separate sermon series with commas"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:53
+msgid "Add or remove sermon series"
+msgstr ""
+
+#: ./Classes/Taxonomies/Sermon/SeriesTaxonomy.php:54
+msgid "Choose from most used sermon series"
+msgstr ""
+
+#: ./vendor/typo3fluid/fluid/tests/Unit/Core/Parser/Interceptor/EscapeTest.php:39
+msgid "Posts by %s"
+msgstr ""
 
