@@ -20,13 +20,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\CustomFormats;
-
 
 class AbstractCustomFormat
 {
 
+    protected $defaultExtension = 'html';
 
     /**
      * Register the hook for this CustomFormat
@@ -62,13 +61,11 @@ class AbstractCustomFormat
      */
     public function render()
     {
-        die ('This is the render function for custom format "' . $this->getKey() . '"');
     }
 
     protected function getViewFilePath()
     {
         $fileName = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/CustomView/' . ucfirst($this->getKey());
-        return file_exists($fileName . '.php') ? $fileName . '.php' : $fileName . '.html';
+        return file_exists($fileName . '.php') ? $fileName . '.php' : $fileName . '.'.$this->defaultExtension;
     }
-
 }
