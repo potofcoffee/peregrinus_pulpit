@@ -20,19 +20,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 class TextAreaField extends AbstractField
 {
 
     protected $rows = 5;
 
-    public function __construct($key, $label, $rows = 5)
+    public function __construct($key, $label, $rows = 5, $context='')
     {
-        parent::__construct($key, $label);
+        parent::__construct($key, $label, $context);
         $this->setRows($rows);
+    }
+
+    public function renderLabel()
+    {
+        return $this->label ? '<label for="' . $this->key . '">' . $this->label . '</label><br />' : '';
     }
 
     /**
@@ -44,7 +47,7 @@ class TextAreaField extends AbstractField
      */
     public function render($values)
     {
-        return $this->renderLabel() . '<br /><textarea style="width: 100%" rows="' . $this->rows . '" name="' . $this->key . '">' . htmlentities($values[$this->key][0]) . '</textarea><br />';
+        return $this->renderLabel() . '<textarea style="width: 100%" rows="' . $this->rows . '" id="'.$this->getKey().'" name="' . $this->getFieldName() . '">' . htmlentities($this->getValue($values)) . '</textarea><br />';
     }
 
     /**
@@ -62,6 +65,5 @@ class TextAreaField extends AbstractField
     {
         $this->rows = $rows;
     }
-
 
 }
