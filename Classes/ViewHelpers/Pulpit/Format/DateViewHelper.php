@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
-
 
 class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
@@ -47,8 +45,10 @@ class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
     protected function render()
     {
         $content = $this->renderChildren();
-        return \strftime($this->arguments['format'], strtotime($content));
+        if (strpos($this->arguments['format'], '%') !== false) {
+            return \strftime($this->arguments['format'], strtotime($content));
+        } else {
+            return \date($this->arguments['format'], strtotime($content));
+        }
     }
-
-
 }
