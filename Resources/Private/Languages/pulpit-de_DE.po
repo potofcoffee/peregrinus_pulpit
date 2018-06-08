@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PULPIT\n"
 "Report-Msgid-Bugs-To: http://www.peregrinus.de/pulpit\n"
-"POT-Creation-Date: 2018-05-31 19:27+0100\n"
-"PO-Revision-Date: 2018-05-31 21:33+0200\n"
+"POT-Creation-Date: 2018-06-08 09:54+0100\n"
+"PO-Revision-Date: 2018-06-08 11:59+0200\n"
 "Last-Translator: Christoph Fischer <chris@toph.de>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,43 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
-# THIS FILE IS AUTOCREATED BY POTTER
-# All changes will be lost with the next run of Potter!
-#: Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:40
-msgid ""
-"<strong>Oops!</strong> It looks like something went wrong during the update "
-"process. You can <a href=\"%s\">click here</a> to try again."
-msgstr ""
-"<strong>Ups!</strong> So wie es aussieht, ist beim Update etwas schief "
-"gelaufen. Du kannst <a href=\"%s\">hier klicken</a>, um es noch einmal zu "
-"versuchen."
-
-#: Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:45
+#: Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:49
 msgid "Good news! All necessary updates have been installed."
 msgstr "Gute Nachricht! Alle notwendigen Updates wurden installiert."
 
-#: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:48
+#: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:37
 msgid "Delete"
 msgstr "Löschen"
 
-#: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:49
+#: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:39
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: Classes/Admin/Scheduler.php:63
+#: Classes/Admin/Scheduler.php:65
 msgid "Every minute"
 msgstr "Jede Minute"
 
-#: Classes/Admin/SettingsPages/AbstractSettingsPage.php:130
+#: Classes/Admin/SettingsPages/AbstractSettingsPage.php:170
 msgid "Settings"
 msgstr "Einstellungen"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:40
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:41
-#: Classes/PostTypes/SermonPostType.php:45
-#: Classes/PostTypes/SermonPostType.php:55
+#: Classes/PostTypes/SermonPostType.php:44
+#: Classes/PostTypes/SermonPostType.php:54
 msgid "Sermons"
 msgstr "Predigten"
 
@@ -67,17 +56,65 @@ msgstr ""
 "Hier kannst du eigene URL-Abschnitte für die von PULPIT erzeugten Permalinks "
 "definieren:"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:77
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:68
+msgid "Podcast settings"
+msgstr "Einstellungen für den Podcast"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:69
+msgid "Here you can set up the required information for your podcast"
+msgstr "Hier kannst du die nötigen Informationen für deinen Podcast eingeben:"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:73
+msgid "Podcast title"
+msgstr "Titel des Podcasts"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:78
+msgid "Podcast description"
+msgstr "Beschreibung des Podcasts"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:83
+msgid "Podcast title image"
+msgstr "Titelbild des Podcasts"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:88
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:89
+msgid "Select image"
+msgstr "Bild auswählen"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:95
+msgid "Podcast language"
+msgstr "Sprache des Podcasts"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:100
+msgid "Podcast copyright"
+msgstr "Copyrights für den Podcast"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:105
+msgid "Name of the podcast author"
+msgstr "Name des Autors"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:110
+msgid "Email address of the podcast author"
+msgstr "E-Mailadresse des Autors"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:115
+msgid "Content category"
+msgstr "Inhaltskategorie"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:132
 msgid "Updating external components..."
 msgstr "Externe Komponenten werden aktualisiert..."
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:82
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:143
 msgid ""
 "It looks like some of the external components PULPIT uses need to be "
-"updated. <a href=\""
+"updated. <a href=\"%s\">Click here</a> to load all necessary updates."
 msgstr ""
+"Wie es scheint, müssen einige der von PULPIT verwendeten externen "
+"Komponenten aktualisiert werden. <a href=\"%s\">Klicke hier</a>, um alle "
+"Updates zu installieren."
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:84
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:149
 msgid "Good news: All external components for PULPIT are up to date."
 msgstr ""
 "Gute Nachricht: Alle externen Komponenten, die PULPIT nutzt, sind auf dem "
@@ -88,253 +125,253 @@ msgstr ""
 msgid "Sermons: Migrations"
 msgstr "Predigten: Migrationstools"
 
-#: Classes/Fields/FileRelationField.php:72
-msgid "Aufnahme auswählen"
-msgstr ""
-
-#: Classes/Fields/SlideRelationField.php:69
+#: Classes/Fields/SlideRelationField.php:75
 msgid "Add new slide"
 msgstr "Neue Predigtfolie hinzufügen"
 
-#: Classes/PostTypes/SermonPostType.php:46
+#: Classes/PostTypes/SermonPostType.php:45
 msgid "Sermon"
 msgstr "Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:47
-#: Classes/PostTypes/SlidePostType.php:47
+#: Classes/PostTypes/SermonPostType.php:46
+#: Classes/PostTypes/SlidePostType.php:41
 msgid "Add New"
 msgstr "Neue Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:48
+#: Classes/PostTypes/SermonPostType.php:47
 msgid "Add New Sermon"
 msgstr "Predigt hinzufügen"
 
-#: Classes/PostTypes/SermonPostType.php:49
+#: Classes/PostTypes/SermonPostType.php:48
 msgid "Edit Sermon"
 msgstr "Predigt bearbeiten"
 
-#: Classes/PostTypes/SermonPostType.php:50
+#: Classes/PostTypes/SermonPostType.php:49
 msgid "New Sermon"
 msgstr "Neue Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:51
+#: Classes/PostTypes/SermonPostType.php:50
 msgid "View Sermon"
 msgstr "Predigt ansehen"
 
-#: Classes/PostTypes/SermonPostType.php:52
+#: Classes/PostTypes/SermonPostType.php:51
 msgid "Search Sermons"
 msgstr "Predigten durchsuchen"
 
-#: Classes/PostTypes/SermonPostType.php:53
+#: Classes/PostTypes/SermonPostType.php:52
 msgid "No sermons found"
 msgstr "Keine Predigt gefunden."
 
-#: Classes/PostTypes/SermonPostType.php:54
+#: Classes/PostTypes/SermonPostType.php:53
 msgid "No sermons found in Trash"
 msgstr "Im Papierkorb wurden keine Predigten gefunden."
 
-#: Classes/PostTypes/SermonPostType.php:90
+#: Classes/PostTypes/SermonPostType.php:89
 msgid "Preached"
 msgstr "Gepredigt am"
 
-#: Classes/PostTypes/SermonPostType.php:91
+#: Classes/PostTypes/SermonPostType.php:90
 msgid "Title"
 msgstr "Titel"
 
-#: Classes/PostTypes/SermonPostType.php:92
+#: Classes/PostTypes/SermonPostType.php:91
 msgid "Series"
 msgstr "Reihe"
 
-#: Classes/PostTypes/SermonPostType.php:93
+#: Classes/PostTypes/SermonPostType.php:92
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:43
 msgid "Preacher"
 msgstr "Prediger"
 
-#: Classes/PostTypes/SermonPostType.php:126
+#: Classes/PostTypes/SermonPostType.php:127
 msgid "General"
 msgstr "Allgemein"
 
-#: Classes/PostTypes/SermonPostType.php:127
+#: Classes/PostTypes/SermonPostType.php:128
 msgid "Subtitle"
 msgstr "Untertitel"
 
-#: Classes/PostTypes/SermonPostType.php:130
+#: Classes/PostTypes/SermonPostType.php:131
 msgid "Study Materials"
 msgstr "Studienmaterial"
 
-#: Classes/PostTypes/SermonPostType.php:131
+#: Classes/PostTypes/SermonPostType.php:132
 msgid "Bible reference"
 msgstr "Bibelstelle"
 
-#: Classes/PostTypes/SermonPostType.php:132
+#: Classes/PostTypes/SermonPostType.php:133
 msgid "Bible text"
 msgstr "Bibeltext"
 
-#: Classes/PostTypes/SermonPostType.php:133
+#: Classes/PostTypes/SermonPostType.php:134
 msgid "Notes header"
 msgstr "Überschrift für den Notizenteil"
 
-#: Classes/PostTypes/SermonPostType.php:134
+#: Classes/PostTypes/SermonPostType.php:135
 msgid "Key points"
 msgstr "Hauptpunkte"
 
-#: Classes/PostTypes/SermonPostType.php:135
+#: Classes/PostTypes/SermonPostType.php:136
 msgid "Small group questions"
 msgstr "Fragen für Kleingruppen"
 
-#: Classes/PostTypes/SermonPostType.php:136
+#: Classes/PostTypes/SermonPostType.php:137
 msgid "Further reading"
 msgstr "Weiterführende Literatur"
 
-#: Classes/PostTypes/SermonPostType.php:139
+#: Classes/PostTypes/SermonPostType.php:140
 msgid "Preparation"
 msgstr "Vorbereitung"
 
-#: Classes/PostTypes/SermonPostType.php:140
+#: Classes/PostTypes/SermonPostType.php:141
 msgid "How to prepare for the service"
 msgstr "Wie man sich auf den Gottesdienst vorbereiten kann"
 
-#: Classes/PostTypes/SermonPostType.php:142
+#: Classes/PostTypes/SermonPostType.php:143
 msgid "Resources"
 msgstr "Ressourcen"
 
-#: Classes/PostTypes/SermonPostType.php:143
+#: Classes/PostTypes/SermonPostType.php:144
 msgid "This sermon is released under CC-BY-SA 4.0"
 msgstr "Diese Predigt wird unter einer CC-BY-SA 4.0 Lizenz veröffentlicht"
 
-#: Classes/PostTypes/SermonPostType.php:144
+#: Classes/PostTypes/SermonPostType.php:145
 msgid "Handout"
 msgstr "Begleitzettel"
 
-#: Classes/PostTypes/SermonPostType.php:145
+#: Classes/PostTypes/SermonPostType.php:146
 msgid "Don't show links to handout"
 msgstr "Keine Links zum Begleitzettel zeigen"
 
-#: Classes/PostTypes/SermonPostType.php:146
+#: Classes/PostTypes/SermonPostType.php:147
 msgid "Title image"
 msgstr "Titelbild"
 
-#: Classes/PostTypes/SermonPostType.php:147
+#: Classes/PostTypes/SermonPostType.php:148
 msgid "Preview image"
 msgstr "Vorschaubild"
 
-#: Classes/PostTypes/SermonPostType.php:148
+#: Classes/PostTypes/SermonPostType.php:149
 msgid "Image credits"
 msgstr "Bildquelle"
 
-#: Classes/PostTypes/SermonPostType.php:150
+#: Classes/PostTypes/SermonPostType.php:151
 #, fuzzy
 #| msgid "Audio recording"
 msgid "Audio recording <b>REL!</b>"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:152
 #: Classes/PostTypes/SermonPostType.php:153
+#: Classes/PostTypes/SermonPostType.php:154
 msgid "Select audio file"
 msgstr "Audiodatei auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:155
+#: Classes/PostTypes/SermonPostType.php:156
 msgid "Audio recording"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:156
+#: Classes/PostTypes/SermonPostType.php:157
 msgid "Remote audio file"
 msgstr "Externe Aufnahme"
 
-#: Classes/PostTypes/SermonPostType.php:157
+#: Classes/PostTypes/SermonPostType.php:158
 msgid "Video recording"
 msgstr "Video zur Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:159
+#: Classes/PostTypes/SermonPostType.php:160
 msgid "Slideshow"
 msgstr "Präsentation"
 
-#: Classes/PostTypes/SermonPostType.php:161
-#: Classes/PostTypes/SlidePostType.php:45
-#: Classes/PostTypes/SlidePostType.php:55
+#: Classes/PostTypes/SermonPostType.php:162
+#: Classes/PostTypes/SlidePostType.php:39
+#: Classes/PostTypes/SlidePostType.php:49
 msgid "Slides"
 msgstr "Folien"
 
-#: Classes/PostTypes/SermonPostType.php:163
 #: Classes/PostTypes/SermonPostType.php:164
+#: Classes/PostTypes/SermonPostType.php:165
 msgid "Select slide"
 msgstr "Folie auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:167
+#: Classes/PostTypes/SermonPostType.php:168
 msgid "Synchronization"
 msgstr "Synchronisierung"
 
-#: Classes/PostTypes/SermonPostType.php:168
+#: Classes/PostTypes/SermonPostType.php:169
 msgid "Sync ID"
 msgstr "Sync ID"
 
-#: Classes/PostTypes/SermonPostType.php:169
+#: Classes/PostTypes/SermonPostType.php:170
 msgid "Remote URL"
 msgstr "Externe URL"
 
-#: Classes/PostTypes/SermonPostType.php:170
+#: Classes/PostTypes/SermonPostType.php:171
 msgid "Church"
 msgstr "Kirche"
 
-#: Classes/PostTypes/SermonPostType.php:171
+#: Classes/PostTypes/SermonPostType.php:172
 msgid "Church URL"
 msgstr "URL der Kirche"
 
-#: Classes/PostTypes/SermonPostType.php:174
+#: Classes/PostTypes/SermonPostType.php:175
 msgid "E-book"
 msgstr "E-Book"
 
-#: Classes/PostTypes/SermonPostType.php:175
+#: Classes/PostTypes/SermonPostType.php:176
 msgid "Amazon link"
 msgstr "Link zu Amazon"
 
-#: Classes/PostTypes/SermonPostType.php:176
+#: Classes/PostTypes/SermonPostType.php:177
 msgid "Smashwords link"
 msgstr "Link zu Smashwords"
 
-#: Classes/PostTypes/SlidePostType.php:46
+#: Classes/PostTypes/SlidePostType.php:40
 msgid "Slide"
 msgstr "Folie"
 
-#: Classes/PostTypes/SlidePostType.php:48
+#: Classes/PostTypes/SlidePostType.php:42
 msgid "Add New Slide"
 msgstr "Predigtfolie hinzufügen"
 
-#: Classes/PostTypes/SlidePostType.php:49
+#: Classes/PostTypes/SlidePostType.php:43
 msgid "Edit Slide"
 msgstr "Predigtfolie bearbeiten"
 
-#: Classes/PostTypes/SlidePostType.php:50
+#: Classes/PostTypes/SlidePostType.php:44
 msgid "New Slide"
 msgstr "Neue Predigtfolie"
 
-#: Classes/PostTypes/SlidePostType.php:51
+#: Classes/PostTypes/SlidePostType.php:45
 msgid "View Slide"
 msgstr "Predigtfolie anzeigen"
 
-#: Classes/PostTypes/SlidePostType.php:52
+#: Classes/PostTypes/SlidePostType.php:46
 msgid "Search Slides"
 msgstr "Predigtenfolie suchen"
 
-#: Classes/PostTypes/SlidePostType.php:53
+#: Classes/PostTypes/SlidePostType.php:47
 msgid "No slides found"
 msgstr "Keine Predigtfolie gefunden."
 
-#: Classes/PostTypes/SlidePostType.php:54
+#: Classes/PostTypes/SlidePostType.php:48
 msgid "No slides found in Trash"
 msgstr "Im Papierkorb wurden keine Predigtenfolien gefunden."
 
-#: Classes/PostTypes/SlidePostType.php:83
+#: Classes/PostTypes/SlidePostType.php:77
 msgid "No sermon selected."
 msgstr "Keine Predigtfolie ausgewählt"
 
-#: Classes/PostTypes/SlidePostType.php:126
+#: Classes/PostTypes/SlidePostType.php:119
 msgid "Slide options"
 msgstr "Folieneinstellungen"
 
-#: Classes/PostTypes/SlidePostType.php:127
+#: Classes/PostTypes/SlidePostType.php:120
 msgid "Suppress title on exported slide"
 msgstr "Titel auf dieser Folie nicht anzeigen"
+
+#: Classes/PulpitPlugin.php:133
+msgid "Speaking time"
+msgstr "Redezeit"
 
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
@@ -432,6 +469,16 @@ msgstr "Wähle aus den am häufigsten verwendeten Predigtreihen"
 #: vendor/typo3fluid/fluid/tests/Unit/Core/Parser/Interceptor/EscapeTest.php:39
 msgid "Posts by %s"
 msgstr ""
+
+# THIS FILE IS AUTOCREATED BY POTTER
+# All changes will be lost with the next run of Potter!
+#~ msgid ""
+#~ "<strong>Oops!</strong> It looks like something went wrong during the "
+#~ "update process. You can <a href=\"%s\">click here</a> to try again."
+#~ msgstr ""
+#~ "<strong>Ups!</strong> So wie es aussieht, ist beim Update etwas schief "
+#~ "gelaufen. Du kannst <a href=\"%s\">hier klicken</a>, um es noch einmal zu "
+#~ "versuchen."
 
 #~ msgid ""
 #~ "PULPIT can automatically import sermons from an external source running "
