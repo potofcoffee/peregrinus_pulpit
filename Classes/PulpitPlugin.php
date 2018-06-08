@@ -20,7 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit;
 
 use Peregrinus\Pulpit\Admin\Admin;
@@ -34,7 +33,6 @@ use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 use Peregrinus\Pulpit\Taxonomies\AbstractTaxonomy;
 use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
-
 
 /**
  * Class PulpitPlugin
@@ -63,6 +61,7 @@ class PulpitPlugin
 
         if (is_admin()) {
             $admin = new Admin();
+            $admin->registerFilters();
             $admin->registerSettingsPages();
         }
 
@@ -90,12 +89,6 @@ class PulpitPlugin
      */
     public function init()
     {
-
-        /** @var AbstractCustomFormat $customFormat */
-        foreach (CustomFormatFactory::getAll() as $customFormat) {
-            $customFormat->register();
-        }
-
         /** @var AbstractPostType $postType */
         foreach (PostTypeFactory::getAll() as $postType) {
             $postType->register();
@@ -112,10 +105,14 @@ class PulpitPlugin
         }
         \flush_rewrite_rules();
 
+        /** @var AbstractCustomFormat $customFormat */
+        foreach (CustomFormatFactory::getAll() as $customFormat) {
+            $customFormat->register();
+        }
+
         $scheduler = new Scheduler();
         $scheduler->register();
     }
-
 
     public function addCSS()
     {
@@ -128,6 +125,14 @@ class PulpitPlugin
         wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
         wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
         wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js');
+        wp_enqueue_script('pulpit-speech', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Speech.js');
+        wp_localize_script(
+            'pulpit-speech',
+            'pulpit_speech',
+            [
+                'speech_time' => __('Speaking time', 'pulpit')
+            ]
+        );
     }
 
 }
