@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\PostTypes;
-
 
 use Peregrinus\Pulpit\Admin\MetaBox;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
@@ -42,7 +40,6 @@ class SermonPostType extends AbstractPostType
 
     public function __construct()
     {
-
         $this->labels = [
             'name' => __('Sermons', 'pulpit'),
             'singular_name' => __('Sermon', 'pulpit'),
@@ -71,6 +68,7 @@ class SermonPostType extends AbstractPostType
 
         parent::__construct();
 
+        add_action('pre_get_posts', [$this, 'customSortOrder']);
     }
 
     /**
@@ -81,7 +79,6 @@ class SermonPostType extends AbstractPostType
         add_action("manage_posts_custom_column", [$this, 'getCustomColumns']);
         add_filter("manage_edit-portfolio_columns", [$this, 'renderCustomColumn']);
     }
-
 
     /**
      * Custom columns for admin view
@@ -184,5 +181,24 @@ class SermonPostType extends AbstractPostType
         ];
     }
 
+    /**
+     * Custom sort order for get_posts(): newest sermons first
+     * @param $query Query
+     */
+    public function customSortOrder($query)
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        require_once(ABSPATH . 'wp-admin/includes/screen.php');
+        $screen = \get_current_screen();
+        if ('edit' == $screen->base
+            && PEREGRINUS_PULPIT.'_'.$this->getKey() == $screen->post_type
+            && !isset($_GET['orderby'])) {
+            $query->set('orderby', 'publish_date');
+            $query->set('order', 'DESC');
+        }
+    }
 
 }
