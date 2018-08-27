@@ -64,12 +64,12 @@ class PulpitPlugin
             $admin = new Admin();
             $admin->registerFilters();
             $admin->registerSettingsPages();
+
+            add_action('admin_enqueue_scripts', [$this, 'addCSS']);
+            add_action('admin_enqueue_scripts', [$this, 'addJS']);
+            add_action('admin_menu', [$this, 'adminMenu']);
         }
 
-        add_action('admin_enqueue_scripts', [$this, 'addCSS']);
-        add_action('admin_enqueue_scripts', [$this, 'addJS']);
-
-        add_action('admin_menu', [$this, 'adminMenu']);
     }
 
     /**
