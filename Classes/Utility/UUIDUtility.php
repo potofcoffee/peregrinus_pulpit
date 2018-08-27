@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Utility;
-
 
 class UUIDUtility
 {
@@ -33,7 +31,7 @@ class UUIDUtility
         }
 
         // Get hexadecimal components of namespace
-        $nhex = str_replace(array('-', '{', '}'), '', $namespace);
+        $nhex = str_replace(['-', '{', '}'], '', $namespace);
 
         // Binary Value
         $nstr = '';
@@ -105,7 +103,7 @@ class UUIDUtility
         }
 
         // Get hexadecimal components of namespace
-        $nhex = str_replace(array('-', '{', '}'), '', $namespace);
+        $nhex = str_replace(['-', '{', '}'], '', $namespace);
 
         // Binary Value
         $nstr = '';

@@ -20,12 +20,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 class InputField extends AbstractField
 {
+
+    protected $type = 'text';
 
     /**
      * Output this field's form element
@@ -36,7 +36,8 @@ class InputField extends AbstractField
      */
     public function render($values)
     {
-        return $this->renderLabel() . '<input type="text" id="' . $this->getKey() . '" name="' . $this->getFieldName() . '" value="' . htmlentities($this->getValue($values)) . '" style="width: 100%"><br />';
+        return $this->renderLabel() . '<input type="'.$this->type.'" id="' . $this->getKey() . '" name="' . $this->getFieldName()
+            . '" value="' . htmlentities($this->getValue($values)) . '" style="width: 100%"><br />';
     }
 
     public function renderLabel()
@@ -44,6 +45,4 @@ class InputField extends AbstractField
         $label = parent::renderLabel();
         return (trim($label) ? $label . '<br />' : '');
     }
-
-
 }

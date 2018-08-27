@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\CustomFormats;
-
 
 use Peregrinus\Pulpit\View;
 
@@ -56,7 +54,8 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
     /**
      * Add a file to the container
      * @param string $file File path
-     * @param bool $absolutePath Optional: true if above path is absolute (by default it is relative to current temp folder
+     * @param bool $absolutePath Optional: true if above path is absolute (by default it is relative to current
+     *  temp folder
      * @param string $alternativeName Optional: new file name
      */
     protected function addFile(string $file, bool $absolutePath = false, $alternativeName = '')
@@ -72,9 +71,10 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
 
         // Initialize archive object
         $this->zip = new \ZipArchive();
-        $this->zip->open(PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $fileName,
-            \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
+        $this->zip->open(
+            PEREGRINUS_PULPIT_BASE_PATH . 'Temp/' . $fileName,
+            \ZipArchive::CREATE | \ZipArchive::OVERWRITE
+        );
     }
 
     protected function closeContainer()
@@ -102,5 +102,4 @@ class AbstractPackagedCustomFormat extends AbstractTemplatedCustomFormat
             rmdir($dir);
         }
     }
-
 }

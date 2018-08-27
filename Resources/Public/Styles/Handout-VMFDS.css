@@ -1,0 +1,169 @@
+/*
+@package vmfds_sermons
+@copyright Copyright (c) 2012-2016 Volksmission Freudenstadt
+@license http://www.gnu.org/licenses/gpl.html GNU General Public License v3 or later
+@site http://open.vmfds.de
+@author Christoph Fischer <chris@toph.de>
+@date 2016-06-06
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+@font-face { font-family: 'DJBGetDigital'; src: url('/typo3conf/ext/vmfds_sermons/Assets/Fonts/DJBGetDigital.ttf') format('truetype'); }
+
+body {
+	line-height: 1.2em;
+	font-size: 9pt;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+	font-size: 20px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 12px;
+}
+
+h1, h2, h3 {
+    margin: 0;
+	line-height: 1.4em;
+	font-family: 'Open Sans Extra-Bold', sans-serif;
+}
+
+hr {
+	border: 0;
+	height: 1px; background: #333;
+	background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+ul li {
+	list-style-type: square;
+}
+
+div.column {
+	margin: 0; 
+	width: 9.6cm !important;
+	float: left;
+	padding: 1cm;
+	padding-bottom: 0; 
+	min-height: 20cm;
+	height: 20.4cm;
+}
+
+
+h1.sectionheader {
+	font-size: 20pt; 
+	margin: 0;
+	font-weight: normal;
+}
+h1.sectionheader b {
+	font-family: 'Open Sans Extra-Bold', sans-serif;
+}
+
+div.smallprint {
+	font-size: 6pt;
+	line-height: 6pt;
+	font-color: gray;
+}
+
+p.sectionintro {
+	font-style: italic;
+	margin-top: 0;
+	padding-top: 0;
+	font-size: 9pt;
+}
+
+div.sermonnotes {
+	font-size: 14pt; 
+	line-height: 18pt;
+}
+
+.welcome {
+	width: 100%; 
+	margin: 0;
+	text-align: left;
+	
+}
+
+.titlecontainer {
+	width: 100%;
+}
+
+.title {
+	width: 100%; 
+	margin: 0;
+	text-align: left;
+}
+
+.subtitle {
+	width: 100%; 
+	margin: 0;
+	text-align: left;
+}
+
+.titleimage {
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.event-date {
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-size: 49px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    padding-top: 7px;
+    margin-right: 25px;
+    width: 104px;
+    height: 104px;    
+}
+
+.event-date span {
+    font-size: 20px;
+    display: block;
+    text-transform: uppercase;
+    line-height: 1px;
+    position: relative;
+    top: -5px;
+}
+
+.figcaption, .figcaption a {
+    font-size: 7px;
+	color: darkgray;
+	text-decoration: none;
+}
+
+.figcaption a {
+	font-size: 7px;
+	color: darkgray;
+	text-decoration: none;
+}
+
+
+.qrtable {
+	border-top: solid 1px black;
+	border-bottom: solid 1px black;
+}
+
+figcaption.image-copyrights {
+	font-size: 7px;
+}
+

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
-
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -50,7 +48,6 @@ class OrderedListViewHelper extends AbstractViewHelper
         $this->registerArgument('breakAfter', 'string', 'Break after');
     }
 
-
     /**
      * Renders a text as an ordered list (one item per line)
      *
@@ -76,16 +73,25 @@ class OrderedListViewHelper extends AbstractViewHelper
         $this->arguments['list'] = str_replace(['<u>', '</u>'], ['[', ']'], $this->arguments['list']);
         switch ($underlineMode) {
             case 'blank':
-                $this->arguments['list'] = str_replace(['[', ']'],
+                $this->arguments['list'] = str_replace(
+                    ['[', ']'],
                     ['<span style="color: white; border-bottom: solid 1px black">', '</span>'],
-                    $this->arguments['list']);
+                    $this->arguments['list']
+                );
                 break;
             case 'html5':
-                $this->arguments['list'] = str_replace(['[', ']'],
-                    ['<span style="text-decoration: underline;">', '</span>'], $this->arguments['list']);
+                $this->arguments['list'] = str_replace(
+                    ['[', ']'],
+                    ['<span style="text-decoration: underline;">', '</span>'],
+                    $this->arguments['list']
+                );
                 break;
             case 'remove':
-                $this->arguments['list'] = str_replace(['[', ']'], ['', ''], $this->arguments['list']);
+                $this->arguments['list'] = str_replace(
+                    ['[', ']'],
+                    ['', ''],
+                    $this->arguments['list']
+                );
                 break;
         }
         $items = explode("\r", $this->arguments['list']);
@@ -95,13 +101,16 @@ class OrderedListViewHelper extends AbstractViewHelper
             }
         }
         if (is_array($items)) {
-            return str_replace('<li></li>', '',
-                '<ol ' . ($listStyle ? 'style="' . $listStyle . '"' : '') . '><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>' . join('</li><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>',
-                    $items) . ($breakAfter ? '<br />' : '') . '</li></ol>');
+            return str_replace(
+                '<li></li>',
+                '',
+                '<ol ' . ($listStyle ? 'style="' . $listStyle . '"' : '') . '><li ' . ($itemStyle ? 'style="'
+                . $itemStyle . '"' : '') . '>'
+                . join('</li><li ' . ($itemStyle ? 'style="' . $itemStyle . '"' : '') . '>', $items)
+                . ($breakAfter ? '<br />' : '') . '</li></ol>'
+            );
         } else {
             return $this->arguments['list'];
         }
     }
-
-
 }

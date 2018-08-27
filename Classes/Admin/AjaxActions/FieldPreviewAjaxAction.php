@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\AjaxActions;
-
 
 use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
 
@@ -36,10 +34,7 @@ class FieldPreviewAjaxAction extends AbstractAjaxAction
             'preview' => FieldPreviewRenderer::render($_REQUEST['id'])
         ];
 
-
         echo json_encode($res);
         wp_die();
     }
-
-
 }

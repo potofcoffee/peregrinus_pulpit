@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers;
-
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -33,7 +31,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class AbstractBufferedViewHelper extends AbstractViewHelper
 {
-
 
     /**
      * Render the ViewHelper
@@ -54,5 +51,4 @@ class AbstractBufferedViewHelper extends AbstractViewHelper
     protected function renderBuffered()
     {
     }
-
 }

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit;
-
 
 use chillerlan\QRCode\QRCode;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -51,9 +49,10 @@ class QrcodeViewHelper extends AbstractViewHelper
     {
         $content = ($this->arguments['data'] ? $this->arguments['data'] : $this->renderChildren());
         if ($content) {
-            return '<img src="' . (new QRCode)->render($content) . '" />';
+            return '<img class="qrcode img-responsive" src="' . (new QRCode)->render($content) . '" />';
+        } else {
+            return '';
         }
     }
-
 
 }

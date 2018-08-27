@@ -45,7 +45,10 @@ class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
     protected function render()
     {
         $content = $this->renderChildren();
-        if (strpos($this->arguments['format'], '%') !== false) {
+        if (is_a($content, \DateTime::class)) {
+            /** @var \DateTime $content */
+            return $content->format($this->arguments['format']);
+        } elseif (strpos($this->arguments['format'], '%') !== false) {
             return \strftime($this->arguments['format'], strtotime($content));
         } else {
             return \date($this->arguments['format'], strtotime($content));

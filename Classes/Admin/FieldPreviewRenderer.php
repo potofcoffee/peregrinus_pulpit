@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin;
-
 
 use Peregrinus\Pulpit\Admin\FieldPreviews\AbstractFieldPreview;
 
@@ -33,8 +31,8 @@ class FieldPreviewRenderer
     {
         $post = get_post($id);
         $meta = wp_get_attachment_metadata($id);
-        $previewClass = '\\Peregrinus\\Pulpit\\Admin\\FieldPreviews\\' . ucfirst(explode('/',
-                $post->post_mime_type)[0]) . 'FieldPreview';
+        $previewClass = '\\Peregrinus\\Pulpit\\Admin\\FieldPreviews\\'
+            . ucfirst(explode('/', $post->post_mime_type)[0]) . 'FieldPreview';
         if (class_exists($previewClass)) {
             /** @var AbstractFieldPreview $previewClass */
             return $previewClass::render($post, $meta);
@@ -42,6 +40,4 @@ class FieldPreviewRenderer
             return AbstractFieldPreview::render($post, $meta);
         }
     }
-
-
 }

@@ -1,0 +1,163 @@
+/*
+@package vmfds_sermons
+@copyright Copyright (c) 2012-2016 Volksmission Freudenstadt
+@license http://www.gnu.org/licenses/gpl.html GNU General Public License v3 or later
+@site http://open.vmfds.de
+@author Christoph Fischer <chris@toph.de>
+@date 2016-06-06
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+@font-face {
+	font-face-name: 'Helvetica Condensed';
+	src: url(file:///home/peregrinus/wordpress/wp-content/plugins/peregrinus-pulpit/Assets/Fonts/Helvetica_Condensed.ttf);
+}
+
+
+body {
+	line-height: 1.2em;
+	font-size: 12pt;
+	font-family: 'Helvetica Condensed', sans-serif;
+}
+
+h1 {
+	font-size: 20pt;
+	color: #951981;
+}
+
+h2 {
+	font-size: 18pt;
+}
+
+h3 {
+	font-size: 14pt;
+}
+
+h1, h2, h3 {
+    margin: 0;
+	line-height: 1.4em;
+	font-weight: bold;
+}
+
+.subtitle {
+	font-weight: normal;
+}
+
+hr {
+	border: 0;
+	height: 1px; background: #333;
+	background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+ul li {
+	list-style-type: square;
+}
+
+div.column {
+	margin: 0;
+	min-width: 7.5cm;
+	max-width: 7.5cm;
+	width: 7.5cm;
+	float: left;
+	padding: 1cm;
+	padding-bottom: 0;
+	min-height: 19.4cm;
+	height: 19.4cm;
+}
+
+div.column1 {
+	margin: 0;
+	width: 9.5cm;
+	float: left;
+	padding: 0;
+	height: 20.4cm;
+}
+
+.column3 li {
+	line-height: 1.5em;
+}
+
+
+.titlecontainer {
+	width: 100%;
+}
+
+.title {
+	width: 100%; 
+	margin: 0;
+	text-align: left;
+}
+
+.subtitle {
+	width: 100%; 
+	margin: 0;
+	text-align: left;
+}
+
+figcaption.image-copyrights, figcaption.image-copyrights a {
+	text-decoration: none;
+	font-size: 7pt;
+	color: darkgray;
+}
+
+
+img.logo {
+	width: 4cm;
+	float: right;
+	border-left: solid 3px #951981;
+	padding: 0.5cm 0 0 1px;
+}
+
+img.logo-bottom {
+	width: 3cm;
+	padding: 0 0.5cm 0.5cm 0.5cm;
+}
+
+div.column1-container {
+	clear: both;
+	height: 12.8cm;
+	padding: 1cm 0.7cm 1cm 1cm;
+}
+
+figure {
+	margin: 0;
+}
+
+.column1-container figure {
+	margin-top: 1cm;
+}
+
+.column1-container img {
+	max-width:100%;
+	max-height:100%;
+}
+
+.date-and-preacher {
+}
+
+.small {
+	color: darkgray;
+	font-size: 10pt;
+}
+
+.address {
+	text-align: center;
+	font-size: 9pt;
+}
+
+.address img {
+	max-width: 4cm;
+}

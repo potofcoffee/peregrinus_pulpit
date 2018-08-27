@@ -23,7 +23,6 @@
     padding-right: 11px;
 }
 
-
 .pulpit-slides-preview .pulpit-slide-preview {
     border: solid 1px #ddd;
     border-radius: 3px;
@@ -54,4 +53,8 @@
 .pulpit-slide-preview-textcontainer {
     float: right;
     width: 80%;
+}
+
+.pulpit-field-preview-image {
+    max-height: 100px;
 }

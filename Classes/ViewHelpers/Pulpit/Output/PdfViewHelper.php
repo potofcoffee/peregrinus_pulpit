@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Output;
-
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -87,7 +85,6 @@ class PdfViewHelper extends AbstractViewHelper
             $options['page-size'] = $this->arguments['layout'];
         }
 
-
         // create command
         $command = $commandFile;
         foreach ($options as $key => $value) {
@@ -111,6 +108,5 @@ class PdfViewHelper extends AbstractViewHelper
 
         exit();
     }
-
 
 }

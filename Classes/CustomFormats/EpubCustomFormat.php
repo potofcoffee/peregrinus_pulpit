@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\CustomFormats;
-
 
 use Peregrinus\Pulpit\Utility\UUIDUtility;
 use Peregrinus\Pulpit\View;
@@ -31,7 +29,7 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
 {
     protected $viewName = 'epub';
 
-    function render()
+    public function render()
     {
         $post = $this->getPost();
         $view = new View();
@@ -110,7 +108,6 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
     protected function prepareView(\WP_Post $post, View $view)
     {
         parent::prepareView($post, $view);
-
     }
 
     protected function getSlides(\WP_Post $post)
@@ -131,6 +128,4 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         $slides[count($slides) - 1]['isLast'] = true;
         return $slides;
     }
-
-
 }

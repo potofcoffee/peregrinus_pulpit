@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -14,12 +15,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 /**
  * This ViewHelper cycles through the specified values.
  * This can be often used to specify CSS classes for example.
- * **Note:** To achieve the "zebra class" effect in a loop you can also use the "iteration" argument of the **for** ViewHelper.
+ * **Note:** To achieve the "zebra class" effect in a loop you can also use the "iteration" argument of the **for**
+ * ViewHelper.
  *
  * = Examples =
  *
  * <code title="Simple">
- * <f:for each="{0:1, 1:2, 2:3, 3:4}" as="foo"><f:cycle values="{0: 'foo', 1: 'bar', 2: 'baz'}" as="cycle">{cycle}</f:cycle></f:for>
+ * <f:for each="{0:1, 1:2, 2:3, 3:4}" as="foo"><f:cycle values="{0: 'foo', 1: 'bar', 2: 'baz'}"
+ * as="cycle">{cycle}</f:cycle></f:for>
  * </code>
  * <output>
  * foobarbazfoo
@@ -57,23 +60,16 @@ class CycleViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('values', 'array', 'The array or object implementing \ArrayAccess (for example \SplObjectStorage) to iterated over');
-        $this->registerArgument('as', 'strong', 'The name of the iteration variable', true);
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      * @return mixed
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $values = $arguments['values'];
         $as = $arguments['as'];
         if ($values === null) {
@@ -112,7 +108,8 @@ class CycleViewHelper extends AbstractViewHelper
             return iterator_to_array($values, false);
         }
 
-        throw new ViewHelper\Exception('CycleViewHelper only supports arrays and objects implementing \Traversable interface', 1248728393);
+        throw new ViewHelper\Exception('CycleViewHelper only supports arrays and objects implementing \Traversable interface',
+            1248728393);
     }
 
     /**
@@ -128,5 +125,16 @@ class CycleViewHelper extends AbstractViewHelper
         }
 
         return $index;
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('values', 'array',
+            'The array or object implementing \ArrayAccess (for example \SplObjectStorage) to iterated over');
+        $this->registerArgument('as', 'strong', 'The name of the iteration variable', true);
     }
 }

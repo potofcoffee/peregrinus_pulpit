@@ -24,8 +24,11 @@ namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
+use Peregrinus\Pulpit\Fields\EventsRelationField;
 use Peregrinus\Pulpit\Fields\FileRelationField;
+use Peregrinus\Pulpit\Fields\HandoutFormatField;
 use Peregrinus\Pulpit\Fields\InputField;
+use Peregrinus\Pulpit\Fields\LocationRelationField;
 use Peregrinus\Pulpit\Fields\RTEField;
 use Peregrinus\Pulpit\Fields\SlideRelationField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
@@ -43,7 +46,7 @@ class SermonPostType extends AbstractPostType
         $this->labels = [
             'name' => __('Sermons', 'pulpit'),
             'singular_name' => __('Sermon', 'pulpit'),
-            'add_new' => __('Add New', 'pulpit'),
+            'add_new' => _x('Add New', 'pulpit_sermon', 'pulpit'),
             'add_new_item' => __('Add New Sermon', 'pulpit'),
             'edit_item' => __('Edit Sermon', 'pulpit'),
             'new_item' => __('New Sermon', 'pulpit'),
@@ -58,7 +61,7 @@ class SermonPostType extends AbstractPostType
             'public' => true,
             'publicly_queryable' => true,
             'show_ui' => true,
-            'show_in_menu' => true,
+            'show_in_menu' => false,
             'query_var' => true,
             'capability_type' => 'post',
             'has_archive' => true,
@@ -69,6 +72,22 @@ class SermonPostType extends AbstractPostType
         parent::__construct();
 
         add_action('pre_get_posts', [$this, 'customSortOrder']);
+    }
+
+    public function addPostTypeSpecificJS()
+    {
+        parent::addPostTypeSpecificJS();
+        wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
+        wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
+        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js');
+        wp_enqueue_script('pulpit-speech', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Speech.js');
+        wp_localize_script(
+            'pulpit-speech',
+            'pulpit_speech',
+            [
+                'speech_time' => __('Speaking time', 'pulpit')
+            ]
+        );
     }
 
     /**
@@ -146,6 +165,7 @@ class SermonPostType extends AbstractPostType
                 new CheckBoxField('cclicense', __('This sermon is released under CC-BY-SA 4.0', 'pulpit')),
                 new InputField('handout', __('Handout', 'pulpit')),
                 new CheckBoxField('no_handout', __('Don\'t show links to handout', 'pulpit')),
+                new HandoutFormatField('handout_format', __('Handout layout', 'pulpit')),
                 new InputField('image', __('Title image', 'pulpit')),
                 new InputField('preview_image', __('Preview image', 'pulpit')),
                 new InputField('image_credits', __('Image credits', 'pulpit')),
@@ -167,17 +187,18 @@ class SermonPostType extends AbstractPostType
                     __('Select slide', 'pulpit')
                 ),
             ]),
-            new MetaBox('sync', __('Synchronization', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
-                    new InputField('sync_uid', __('Sync ID', 'pulpit')),
-                    new InputField('remote_url', __('Remote URL', 'pulpit')),
-                    new InputField('church', __('Church', 'pulpit')),
-                    new InputField('church_url', __('Church URL', 'pulpit')),
+            new MetaBox('events', __('Associated events', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new EventsRelationField('events', __('Event', pulpit)),
                 ]
             ),
             new MetaBox('ebook', __('E-book', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
                 new InputField('link_amazon', __('Amazon link', 'pulpit')),
                 new InputField('link_smashwords', __('Smashwords link', 'pulpit')),
             ]),
+            new MetaBox('remote', __('Synchronization', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new InputField('remote_url', __('Remote URL', 'pulpit')),
+                ]
+            ),
         ];
     }
 

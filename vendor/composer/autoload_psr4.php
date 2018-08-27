@@ -10,5 +10,6 @@ return array(
     'chillerlan\\QRCode\\' => array($vendorDir . '/chillerlan/php-qrcode/src'),
     'TYPO3Fluid\\Fluid\\' => array($vendorDir . '/typo3fluid/fluid/src'),
     'Peregrinus\\Pulpit\\' => array($baseDir . '/Classes'),
+    'Peregrinus\\Potter\\' => array($vendorDir . '/peregrinus/potter/Classes'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

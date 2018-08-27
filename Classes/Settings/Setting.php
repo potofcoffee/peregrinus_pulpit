@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Settings;
-
 
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
 use Peregrinus\Pulpit\Fields\AbstractField;
@@ -32,7 +30,7 @@ class Setting
     protected $id = '';
     protected $label = '';
     protected $field = null;
-    protected $page = null;
+    protected $tab = null;
 
     public function __construct($id, $label, AbstractField $field)
     {
@@ -46,16 +44,16 @@ class Setting
      * @param AbstractSettingsPage $page SettingsPage
      * @param SettingsSection $section SettingsSection
      */
-    public function register(AbstractSettingsPage $page, SettingsSection $section)
+    public function register(SettingsTab $tab, SettingsSection $section)
     {
         add_settings_field(
             $this->getId(),
             $this->getLabel(),
             [$this, 'render'],
-            $page->getSlug(),
+            $tab->getSlug(),
             $section->getId()
         );
-        $this->setPage($page);
+        $this->setTab($tab);
     }
 
     /**
@@ -95,8 +93,8 @@ class Setting
      */
     public function render()
     {
-        if ($this->getPage()) {
-            $options = $this->getPage()->getOptions();
+        if ($this->getTab()) {
+            $options = $this->getTab()->getPage()->getOptions();
         } else {
             $options = [];
         }
@@ -106,17 +104,17 @@ class Setting
     /**
      * @return null
      */
-    public function getPage()
+    public function getTab(): SettingsTab
     {
-        return $this->page;
+        return $this->tab;
     }
 
     /**
-     * @param null $page
+     * @param SettingsTab $tab
      */
-    public function setPage($page)
+    public function setTab(SettingsTab $tab)
     {
-        $this->page = $page;
+        $this->tab = $tab;
     }
 
     /**
@@ -134,6 +132,5 @@ class Setting
     {
         $this->field = $field;
     }
-
 
 }

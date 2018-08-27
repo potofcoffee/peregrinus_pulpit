@@ -25,8 +25,7 @@ pulpit.admin.uploader = {
             },
             multiple: false	// Set to true to allow multiple files to be selected
         };
-        if (activeUploadField.data('mime-type')) fileFrameOptions.library = { type : activeUploadField.data('mime-type')};
-        if (activeUploadField.data('mime-type')) fileFrameOptions.library = { type : 'audio'};
+        if (activeUploadField.data('mime-type')) fileFrameOptions.library = {type: activeUploadField.data('mime-type')};
         fileFrame = wp.media.frames.fileFrame = wp.media(fileFrameOptions);
         /**
          * Accept chosen media relation
@@ -35,16 +34,19 @@ pulpit.admin.uploader = {
             // We set multiple to false so only get one image from the uploader
             attachment = fileFrame.state().get('selection').first().toJSON();
             // Do something with attachment.id and/or attachment.url here
-            jQuery('#pulpit-upload-data-' + activeUploadField.data('field')).val(attachment.id);
-            jQuery('#pulpit-upload-preview-' + activeUploadField.data('field')).html('<div class="spinner is-active"></div>');
+            var fieldId = pulpit.admin.uploader.sanitizeFieldNameForUseAsId(activeUploadField.data('field'));
+            jQuery('#pulpit-upload-data-' + fieldId).val(attachment.id);
+            jQuery('#pulpit-upload-preview-' + fieldId).html('<div class="spinner is-active"></div>');
             // update preview via ajax
+            console.log(ajaxurl + '?action=pulpit_fieldPreview&id=' + attachment.id + '&field=' + fieldId);
             jQuery.post(ajaxurl, {
                 'action': 'pulpit_fieldPreview',
                 'id': attachment.id,
-                'field': activeUploadField.data('field')
+                'field': fieldId
             }, function (response) {
                 data = JSON.parse(response);
-                jQuery('#pulpit-upload-preview-' + data.field).html(data.preview);
+                jQuery('#pulpit-upload-preview-'
+                    + data.field).html(data.preview);
             });
             pulpit.admin.uploader.checkUploadButtonVisibility();
 
@@ -64,7 +66,8 @@ pulpit.admin.uploader = {
      */
     checkUploadButtonVisibility: function () {
         jQuery('.pulpit-upload-wrapper').each(function () {
-            if (jQuery('#pulpit-upload-data-' + jQuery(this).data('field')).val() == '') {
+            fieldId = pulpit.admin.uploader.sanitizeFieldNameForUseAsId(jQuery(this).data('field'));
+            if (jQuery('#pulpit-upload-data-' + fieldId).val() == '') {
                 jQuery(this).find('.pulpit-upload-button').show();
                 jQuery(this).find('.pulpit-upload-preview').hide();
             } else {
@@ -73,6 +76,15 @@ pulpit.admin.uploader = {
             }
         });
     },
+
+    /**
+     *
+     * @param fieldName Field name
+     * @return Id string
+     */
+    'sanitizeFieldNameForUseAsId': function (fieldName) {
+        return (fieldName.replace('[', '_').replace(']', '_'));
+    }
 };
 
 
@@ -88,8 +100,9 @@ jQuery(document).ready(function () {
     jQuery('.pulpit-upload-clear-button').click(function (event) {
         event.preventDefault();
         event.stopPropagation();
-        jQuery('#pulpit-upload-data-' + jQuery(this).data('field')).val('');
-        jQuery('#pulpit-upload-preview-' + jQuery(this).data('field')).html('');
+        var fieldId = pulpit.admin.uploader.sanitizeFieldNameForUseAsId(jQuery(this).data('field'));
+        jQuery('#pulpit-upload-data-' + fieldId).val('');
+        jQuery('#pulpit-upload-preview-' + fieldId).html('');
         pulpit.admin.uploader.checkUploadButtonVisibility();
         //jQuery(this).parent().find('.pulpit-upload-preview').hide();
         //jQuery(this).parent().find('.pulpit-upload-button').show();

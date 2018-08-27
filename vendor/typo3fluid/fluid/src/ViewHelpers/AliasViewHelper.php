@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -52,22 +53,16 @@ class AliasViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('map', 'array', 'Array that specifies which variables should be mapped to which alias', true);
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      * @return mixed
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $templateVariableContainer = $renderingContext->getVariableProvider();
         $map = $arguments['map'];
         foreach ($map as $aliasName => $value) {
@@ -78,5 +73,15 @@ class AliasViewHelper extends AbstractViewHelper
             $templateVariableContainer->remove($aliasName);
         }
         return $output;
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('map', 'array', 'Array that specifies which variables should be mapped to which alias',
+            true);
     }
 }

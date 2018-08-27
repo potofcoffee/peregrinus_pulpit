@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -6,8 +7,6 @@ namespace TYPO3Fluid\Fluid\ViewHelpers;
  * See LICENSE.txt that was shipped with this package.
  */
 
-use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
-use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -45,7 +44,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <code title="Iteration information">
  * <ul>
  *   <f:for each="{0:1, 1:2, 2:3, 3:4}" as="foo" iteration="fooIterator">
- *     <li>Index: {fooIterator.index} Cycle: {fooIterator.cycle} Total: {fooIterator.total}{f:if(condition: fooIterator.isEven, then: ' Even')}{f:if(condition: fooIterator.isOdd, then: ' Odd')}{f:if(condition: fooIterator.isFirst, then: ' First')}{f:if(condition: fooIterator.isLast, then: ' Last')}</li>
+ *     <li>Index: {fooIterator.index} Cycle: {fooIterator.cycle} Total: {fooIterator.total}{f:if(condition:
+ * fooIterator.isEven, then: ' Even')}{f:if(condition: fooIterator.isOdd, then: ' Odd')}{f:if(condition:
+ * fooIterator.isFirst, then: ' First')}{f:if(condition: fooIterator.isLast, then: ' Last')}</li>
  *   </f:for>
  * </ul>
  * </code>
@@ -64,24 +65,11 @@ class ForViewHelper extends AbstractViewHelper
 {
 
     use CompileWithRenderStatic;
-    
+
     /**
      * @var boolean
      */
     protected $escapeOutput = false;
-
-    /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('each', 'array', 'The array or \SplObjectStorage to iterated over', true);
-        $this->registerArgument('as', 'string', 'The name of the iteration variable', true);
-        $this->registerArgument('key', 'string', 'Variable to assign array key to', false);
-        $this->registerArgument('reverse', 'boolean', 'If TRUE, iterates in reverse', false, false);
-        $this->registerArgument('iteration', 'string', 'The name of the variable to store iteration information (index, cycle, isFirst, isLast, isEven, isOdd)');
-    }
 
     /**
      * @param array $arguments
@@ -90,14 +78,18 @@ class ForViewHelper extends AbstractViewHelper
      * @return string
      * @throws ViewHelper\Exception
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $templateVariableContainer = $renderingContext->getVariableProvider();
         if (!isset($arguments['each'])) {
             return '';
         }
         if (is_object($arguments['each']) && !$arguments['each'] instanceof \Traversable) {
-            throw new ViewHelper\Exception('ForViewHelper only supports arrays and objects implementing \Traversable interface', 1248728393);
+            throw new ViewHelper\Exception('ForViewHelper only supports arrays and objects implementing \Traversable interface',
+                1248728393);
         }
 
         if ($arguments['reverse'] === true) {
@@ -142,5 +134,19 @@ class ForViewHelper extends AbstractViewHelper
             }
         }
         return $output;
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('each', 'array', 'The array or \SplObjectStorage to iterated over', true);
+        $this->registerArgument('as', 'string', 'The name of the iteration variable', true);
+        $this->registerArgument('key', 'string', 'Variable to assign array key to', false);
+        $this->registerArgument('reverse', 'boolean', 'If TRUE, iterates in reverse', false, false);
+        $this->registerArgument('iteration', 'string',
+            'The name of the variable to store iteration information (index, cycle, isFirst, isLast, isEven, isOdd)');
     }
 }

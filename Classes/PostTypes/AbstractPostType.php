@@ -20,8 +20,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\PostTypes;
+
+use Peregrinus\Pulpit\FrontendDispatcher;
 
 /**
  * Class AbstractPostType
@@ -32,7 +33,7 @@ namespace Peregrinus\Pulpit\PostTypes;
 class AbstractPostType
 {
 
-    protected $labels = [];
+    public $labels = [];
     protected $configuration = [];
 
     /**
@@ -44,6 +45,39 @@ class AbstractPostType
         $this->configuration['menu_icon'] = PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/' . ucfirst($this->getKey()) . '.svg';
         $this->configuration['slug'] = $this->getSlug();
         $this->configuration['rewrite'] = ['slug' => $this->getSlug(), 'with_front' => false];
+
+
+        // add some JS to correctly open sidebar menu:
+        add_action('add_meta_boxes_'.$this->getTypeName(), [$this, 'addPostTypeSpecificJS']);
+    }
+
+    public function addPostTypeSpecificJS() {
+        wp_enqueue_script('pulpit_menu_fix', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Scripts/Admin/MenuFix.js');
+    }
+
+    /**
+     * Template loader
+     * Allows overriding WP template loading to provide custom post type templates in this plugin
+     * @param $template
+     */
+    public function templateLoader($template)
+    {
+        /** @var \WP_Post $queriedObject */
+        $queriedObject = get_queried_object();
+
+        foreach ([
+                     \WP_Post::class => 'post_type',
+                     \WP_Post_Type::class => 'name',
+                 ] as $class => $property) {
+            if ((is_a($queriedObject, $class)) && ($queriedObject->$property == $this->getTypeName())) {
+                $frontend = FrontendDispatcher::getInstance();
+                $frontend->setPostType($this->getTypeName());
+                $template = $frontend->resolveTemplate($queriedObject, $template);
+                continue;
+            }
+        }
+
+        return $template;
     }
 
     /**
@@ -84,7 +118,11 @@ class AbstractPostType
      */
     public function register()
     {
+        // register post type
         $res = register_post_type($this->getTypeName(), $this->configuration);
+
+        // register template loader
+        add_filter('template_include', [$this, 'templateLoader']);
     }
 
     /**
@@ -114,6 +152,4 @@ class AbstractPostType
     {
         return [];
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -19,27 +20,18 @@ class OrViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
-     * Initialize
-     *
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument('content', 'mixed', 'Content to check if empty');
-        $this->registerArgument('alternative', 'mixed', 'Alternative if content is empty');
-        $this->registerArgument('arguments', 'array', 'Arguments to be replaced in the resulting string, using sprintf');
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      * @return mixed
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $alternative = $arguments['alternative'];
-        $arguments = (array) $arguments['arguments'];
+        $arguments = (array)$arguments['arguments'];
 
         if (empty($arguments)) {
             $arguments = null;
@@ -56,5 +48,18 @@ class OrViewHelper extends AbstractViewHelper
         }
 
         return $content;
+    }
+
+    /**
+     * Initialize
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('content', 'mixed', 'Content to check if empty');
+        $this->registerArgument('alternative', 'mixed', 'Alternative if content is empty');
+        $this->registerArgument('arguments', 'array',
+            'Arguments to be replaced in the resulting string, using sprintf');
     }
 }

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
-
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -55,5 +53,4 @@ class EpubContentViewHelper extends AbstractViewHelper
         }
         return join('', $p);
     }
-
 }

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\PostTypes;
-
 
 use Peregrinus\Pulpit\Admin\MetaBox;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
@@ -37,11 +35,10 @@ class SlidePostType extends AbstractPostType
 
     public function __construct()
     {
-
         $this->labels = [
             'name' => __('Slides', 'pulpit'),
             'singular_name' => __('Slide', 'pulpit'),
-            'add_new' => __('Add New', 'pulpit'),
+            'add_new' => _x('Add New', 'pulpit_slide', 'pulpit'),
             'add_new_item' => __('Add New Slide', 'pulpit'),
             'edit_item' => __('Edit Slide', 'pulpit'),
             'new_item' => __('New Slide', 'pulpit'),
@@ -56,7 +53,7 @@ class SlidePostType extends AbstractPostType
             'public' => true,
             'publicly_queryable' => true,
             'show_ui' => true,
-            'show_in_menu' => true,
+            'show_in_menu' => false,
             'query_var' => true,
             'has_archive' => true,
             'hierarchical' => true,
@@ -90,7 +87,6 @@ class SlidePostType extends AbstractPostType
         add_action("manage_posts_custom_column", [$this, 'getCustomColumns']);
         add_filter("manage_edit-portfolio_columns", [$this, 'renderCustomColumn']);
     }
-
 
     /**
      * Custom columns for admin view
@@ -126,6 +122,5 @@ class SlidePostType extends AbstractPostType
             ),
         ];
     }
-
 
 }

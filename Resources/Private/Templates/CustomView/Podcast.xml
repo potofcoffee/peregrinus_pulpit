@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>{podcast.podcast_title -> f:format.raw()}</title>
+        <description>{podcast.podcast_description -> f:format.raw()}</description>
+        <link>{podcast.url}</link>
+        <lastBuildDate><p:format.date format="D, d M Y H:i:s O">now</p:format.date></lastBuildDate>
+        <pubDate><p:format.date format="D, d M Y H:i:s O">now</p:format.date></pubDate>
+        <generator>PULPIT Wordpress plugin</generator>
+        <image>
+            <url>{podcast.image.file.guid}</url>
+            <title>{podcast.podcast_title}</title>
+            <link>{podcast.url}</link>
+            <description>{podcast.podcast_description}</description>
+        </image>
+        <language>{podcast.podcast_language}</language>
+        <copyright>{podcast.podcast_copyright}</copyright>
+        <managingEditor>{podcast.podcast_author_email} ({podcast.podcast_author_name})</managingEditor>
+        <category>{podcast.podcast_category.0}<f:if condition="{podcast.podcast_category.1}"> / {podcast.podcast_category.1}</f:if></category>
+
+        <itunes:owner>
+            <itunes:name>{podcast.podcast_author_name}</itunes:name>
+            <itunes:email>{podcast.podcast_author_email}</itunes:email>
+        </itunes:owner>
+        <itunes:author>{podcast.podcast_author_name}</itunes:author>
+        <itunes:summary>{podcast.podcast_description}</itunes:summary>
+        <itunes:category text="{podcast.podcast_category.0}">
+            <itunes:category text="{podcast.podcast_category.1}" />
+        </itunes:category>
+        <itunes:explicit>no</itunes:explicit>
+        <atom:link href="{podcast.url}" rel="self" type="application/rss+xml" />
+
+        <f:for each="{items}" as="item">
+            <item>
+                <title>{item.post.post_title -> f:format.raw()}</title>
+                <f:if condition="{item.meta.subtitle.0}"><itunes:subtitle>{item.meta.subtitle.0}</itunes:subtitle></f:if>
+                <itunes:image href="{item.image}" />
+                <itunes:summary><![CDATA[{item.content.main -> p:format.stripTags()}]]></itunes:summary>
+                <link>{item.url}</link>
+                <guid>{item.url}</guid>
+                <description><![CDATA[{item.content.main -> p:format.stripTags()}]]></description>
+                <enclosure url="{item.audio.file.guid}" {f:if(condition:'{item.audio.meta.filesize}', then:'length="{item.audio.meta.filesize}"')} {f:if(condition:'{item.audio.meta.mime_type}', then:'type="{item.audio.meta.mime_type}"')}></enclosure>
+                <pubDate><p:format.date format="D, d M Y H:i:s O">now</p:format.date></pubDate>
+            </item>
+        </f:for>
+
+    </channel>
+</rss>

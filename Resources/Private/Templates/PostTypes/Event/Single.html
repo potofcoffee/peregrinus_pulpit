@@ -1,0 +1,168 @@
+<f:layout name="Page"/>
+<f:section name="Content">
+    <wp:enqueue handle="font-awesome" style="https://use.fontawesome.com/releases/v5.2.0/css/all.css"/>
+    <div class="page-event-single">
+        <a class="btn btn-default" href="/live">&lt; Zurück zur Veranstaltungsübersicht</a>
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <header class="entry-header">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h1 class="entry-title">{event.title}</h1>
+                        </div>
+                    </div>
+                    <div class="hometa">
+                        <b>
+                            <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                        </b>,
+                        <p:format.date format="H:i">{event.datetime}</p:format.date>
+                        Uhr
+                        <f:if condition="{event.location}">
+                            , {event.location.title}
+                        </f:if>
+
+                    </div>
+                </header>
+            </div>
+        </div>
+        <h2>Der Gottesdienst</h2>
+        <div class="row">
+            <div class="col-sm-2">
+                <wp:postImage post="{event.ID}" size="large"/>
+            </div>
+            <div class="col-sm-10">
+                {event.content.main -> f:format.raw()}
+                {event.content.extended -> f:format.raw()}
+            </div>
+        </div>
+        <f:if condition="{event.sermon}">
+            <h2>Die Predigt </h2>
+            <div class="row">
+                <div class="col-sm-2">
+                    <wp:postImage post="{event.sermon.ID}" size="large"/>
+                </div>
+                <div class="col-sm-10">
+                    <h3>{event.sermon.title}
+                        <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>
+                    </h3>
+                    <p>{event.sermon.reference}</p>
+                    {event.sermon.content.main -> f:format.raw()}
+                    <f:if condition="{event.sermon.prep}">
+                        <h4>So kannst du dich auf den Gottesdienst vorbereiten:</h4>
+                        <p>{event.sermon.prep}</p>
+                    </f:if>
+                    <f:if condition="{event.sermon.noHandout}">
+                        <f:else>
+                            <hr/>
+                            <a class="btn btn-default"
+                               href="{p:format.customUrl(url: event.sermon.ID, add: {format: 'pulpit_pdfHandout', underlineMode: 'blank'})}">
+                                <span class="glyphicon glyphicon-file"> </span> Begleitzettel zur Predigt herunterladen
+                            </a>
+
+                        </f:else>
+                    </f:if>
+                </div>
+            </div>
+            "
+        </f:if>
+        <h2>Die Location</h2>
+        <div class="row">
+            <div class="col-sm-2">
+                <wp:postImage post="{event.location.ID}" size="large"/>
+            </div>
+            <div class="col-sm-6">
+                <h3>{event.location.title}</h3>
+                <p><a href="https://www.google.com/maps?q={event.location.address -> p:format.nl2br(separator: ', ')}"
+                      target="_blank">{event.location.address -> p:format.nl2br(separator: ', ')}</a></p>
+                {event.location.content.main -> f:format.raw()}
+            </div>
+            <div class="col-sm-4">
+                <table class="table">
+                    <f:if condition="{event.location.parking}">
+                        <tr>
+                            <td>
+                                <small><span class="fa fa-parking"></span>
+                            </td>
+                            <td>
+                                <small>{event.location.parking}</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.public_transport}">
+                        <tr>
+                            <td>
+                                <small><span class="fa fa-bus"></span>
+                            </td>
+                            <td>
+                                <small>{event.location.public_transport}</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.accessibility}">
+                        <tr>
+                            <td>
+                                <small><span class="fa fa-wheelchair"></span>
+                            </td>
+                            <td>
+                                <small>{event.location.accessibility}</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.wc}">
+                        <tr>
+                            <td>
+                                <span style="white-space:nowrap;"><span class="fa fa-male"></span>|<span
+                                        class="fa fa-female"></span></span>
+                            </td>
+                            <td>
+                                <small>Ein WC ist vorhanden.</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.small_children}">
+                        <tr>
+                            <td>
+                                <span class="fa fa-child"></span></span>
+                            </td>
+                            <td>
+                                <small>{event.location.small_children}</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.elevator}">
+                        <tr>
+                            <td>
+                                <span class="fa fa-arrows-alt-v"></span></span>
+                            </td>
+                            <td>
+                                <small>Ein Aufzug ist vorhanden.</small>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:if condition="{event.location.phone} || {event.location.org_contact}">
+                        <tr>
+                            <td>
+                                <small><span class="fa fa-phone"></span>
+                            </td>
+                            <td>
+                                <small>
+                                    <f:if condition="{event.location.org_contact}">{event.location.org_contact}<br/>
+                                    </f:if>
+                                    <f:if condition="{event.location.phone}">Fon {event.location.phone}<br/></f:if>
+                                    <f:if condition="{event.location.fax}">Fax {event.location.fax}<br/></f:if>
+                                    <f:if condition="{event.location.email}"><a href="mailto:{event.location.email}">{event.location.email}</a><br/>
+                                    </f:if>
+                                    <f:if condition="{event.location.url}"><a href="{event.location.url}"
+                                                                              target="_blank">Website</a> <br/></f:if>
+                                </small>
+                            </td>
+                        </tr>
+                    </f:if>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</f:section>

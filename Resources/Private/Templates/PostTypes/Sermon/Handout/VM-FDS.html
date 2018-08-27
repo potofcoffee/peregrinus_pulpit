@@ -1,0 +1,195 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf"
+           orientation="landscape" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0"><!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout-VMFDS.css" media="all"/>
+</head>
+<body>
+<div class="column">
+    <h1 class="sectionheader">diese <b>Woche</b></h1>
+    <p>Aus Datenschutzgründen ist diese Seite nicht online verfügbar.</p>
+</div>
+<!-- Spalte: Über den Prediger -->
+<div class="column">
+    <h1 class="sectionheader">über <b>Christoph</b></h1>
+    <b>Christoph Fischer</b><br/>
+    <p>Christoph Fischer (*1978) war von 2006-2017 Pastor der Volksmission Freudenstadt. Seit August 2018 ist er Pfarrer der Evangelischen Landeskirche in Württemberg.</p>
+    <p>Christoph ist verheiratet mit Rebecca. Gemeinsam haben sie 3 Töchter.</p>
+    <ul>
+            <li>Mehr über Christoph findest du auf christoph-fischer.org</li>
+            <li>Du erreichst Christoph per E-Mail unter chris@toph.de</li>
+            <li>Christoph ist auf Facebook: www.facebook.com/christoph.fischer</li>
+    </ul>
+
+    <hr/>
+    <f:if condition="{sermon.cclicense}">
+        <f:then>
+            <img class="cc" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
+            <br/>
+            <div class="smallprint">
+                <br/>Diese Predigt und alle dazu gehörigen Ressourcen (einschließlich der Aufnahme) sind lizenziert
+                unter
+                einer Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International
+                Lizenz (CC-BY-SA 4.0). Verwendete Bilder stehen eventuell unter eigenen Lizenzbedingungen (siehe
+                unten). Ausdrücklich von der Creative Commons-Lizenz ausgenommen sind die Logos und Namen der
+                Volksmission
+                Freudenstadt und ihrer Arbeitsbereiche.<br/><br/>
+            </div>
+        </f:then>
+        <f:else>
+            Begleitzettel zur Gottesdienst am
+            <p:format.date format="d.m.Y">{sermon.preached}</p:format.date>
+            <br/>
+            &copy;
+            <p:format.date format="Y">{sermon.preached}</p:format.date>
+            Volksmission Freudenstadt
+            <br/>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{sermon.imageSource}">
+        <div class="smallprint">
+            Titelbild: {sermon.imageSource}
+        </div>
+    </f:if>
+
+    <br/>Weitere Informationen, Predigten und Termine:<br/>
+    <b>www.volksmission-freudenstadt.de</b>
+</div>
+<!-- Spalte: Titelseite -->
+<div class="column">
+    <table style="margin-bottom: 3cm;" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td valign="top" style="text-align: right; padding-right: 2mm;">
+                <br/>
+                Begleitzettel zur Predigt<br/>am
+                <f:for each="{sermon.events}" as="event">
+                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                </f:for>
+            </td>
+            <td style="text-align:center; width:2.5cm; max-width: 2.5cm" valign="top">
+                <p:qrcode>
+                    <wp:permalink id="{sermon.ID}"/>
+                </p:qrcode>
+            </td>
+        </tr>
+    </table>
+
+    <h1 class="welcome">Herzlich willkommen zum Gottesdienst</h1>
+    <hr/>
+    <wp:postImage post="{sermon.ID}"/>
+    <hr/>
+    <div class="titlecontainer">
+        <h2 class="title">{sermon.title}</h2>
+        <f:if condition="{sermon.subtitle}"><h3 class="subtitle">{sermon.subtitle}</h3></f:if>
+    </div>
+    <hr/>
+    <f:if condition="{sermon.series}">
+        Ein Gottesdienst aus der Reihe
+        <f:for each="{sermon.series}" as="series">"{series.name}"</f:for>
+    </f:if>
+</div>
+
+<!--  2. Seite -->
+<pagebreak/>
+
+
+<!-- Spalte: mitlesen -->
+<div class="column">
+    <!-- 2 -->
+    <h1 class="sectionheader">mit<b>lesen</b></h1>
+    <ul>
+        <li>
+            In Gottes Wort, der Bibel, begegnet uns Gott und spricht uns direkt und persönlich an.
+            Deshalb gehört das Lesen des Bibeltextes zu den wichtigsten Momenten im Gottesdienst.
+            Wir möchten dich gerne herausfordern, regelmäßig deine eigene Bibel (egal ob Buch, Smartphone oder
+            Tablet)
+            mitzubringen,
+            um aktiv mitzulesen, wichtige Stellen anzustreichen und dir Notizen zu machen.
+        </li>
+        <li>Wenn du heute keine Bibel dabei hast, darfst du dir gerne aus unserer Bibliothek hinten rechts im Saal
+            ein
+            Exemplar ausleihen.
+        </li>
+        <li>Die Bibel wurde ursprünglich nicht auf Deutsch geschrieben.
+            Es existieren verschiedene Übersetzungen, so dass unsere Lesung vielleicht anders klingt, als der Text,
+            der
+            in deiner Ausgabe steht.
+            Lass dich davon nicht stören, sondern höre auf die Unterschiede--vielleicht helfen sie dir sogar, den
+            Text
+            besser zu verstehen.
+        </li>
+    </ul>
+    <table border="0" cellspacing="3" cellpadding="0" class="qrtable">
+        <tr>
+            <td colspan="2">Im heutigen Gottesdienst lesen wir Folgendes aus
+                Gottes Wort: <b>{sermon.reference}</b></td>
+        </tr>
+        <tr>
+            <td valign="center">
+                <p:qrcode>{p:youversionLink(reference: sermon.reference)}</p:qrcode>
+            </td>
+            <td valign="top">Scanne diesen Code mit deinem Smartphone, um den Bibeltext in der App "Die Bibel"
+                (youversion.com) aufzuschlagen.
+            </td>
+        </tr>
+    </table>
+
+    <h1 class="sectionheader">mit<b>nehmen</b></h1>
+    <ul>
+        <li><b>Du brauchst Gebet?</b><br/>Bereits während der Anbetungszeit im Anschluss an die Predigt wartet im
+            hinteren Teil des Saals unser Gebetsteam auf dich. Gerne darfst du während der Lieder einfach aufstehen
+            und
+            dort hingehen, damit jemand mit dir betet.
+        </li>
+        <f:if condition="{sermon.hashtags}">
+            <li><b>Du willst online diskutieren?</b><br/>Hier sind die Hashtags zu dieser Predigt:
+                <f:if condition="{settings.hashtags.default}">{settings.hashtags.default}</f:if>
+                <f:for each="{sermon.series}" as="series">
+                    <f:if condition="{series.hashtags}">{series.hashtags}</f:if>
+                </f:for>
+                {sermon.hashtags}
+            </li>
+        </f:if>
+    </ul>
+</div>
+
+<!-- Spalte: Lückentext -->
+<div class="column">
+    <f:if condition="{sermon.key_points}">
+        <h1 class="sectionheader">mit<b>schreiben</b></h1>
+        <p class="sectionintro">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
+        <div class="sermonnotes">
+            <f:if condition="{sermon.notesHeader}"><p>{sermon.notesHeader}</p></f:if>
+            <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
+                                  itemStyle="margin-bottom: 2mm;" breakAfter="1"/>
+        </div>
+    </f:if>
+    <hr/>
+    <h1 class="sectionheader">mit<b>machen</b></h1>
+    <p class="sectionintro">Hier hast du Platz für eigene Notizen. Was spricht dich persönlich an? Was
+        nimmst du mit, um es nächste Woche umzusetzen? Was wird dein erster Schritt sein?</p>
+</div>
+
+<!-- Spalte: Weiterlesen -->
+<div class="column">
+    <h1 class="sectionheader">weiter<b>denken</b></h1>
+    <p class="sectionintro">So könnt ihr in deiner Kleingruppe weiter über das Gehörte nachdenken:</p>
+    <p:format.orderedList list="{sermon.questions}"/>
+
+    <f:if condition="{sermon.further_reading}">
+        <hr/>
+        <h1 class="sectionheader">weiter<b>lesen</b></h1>
+        <p class="sectionintro">Wenn dich das Thema interessiert, findest du hier noch weiteren Lesestoff:</p>
+        <f:format.raw>{sermon.further_reading}</f:format.raw>
+    </f:if>
+</div>
+</body>
+</html>
+</p:output.pdf>

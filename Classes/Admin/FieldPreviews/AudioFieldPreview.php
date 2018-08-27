@@ -20,15 +20,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\FieldPreviews;
-
 
 class AudioFieldPreview extends AbstractFieldPreview
 {
     public static function render(\WP_Post $post, $meta): string
     {
-        return '<span class="dashicons dashicons-format-audio"></span> ' . basename($post->guid) . ' (' . $meta['mime_type'] . ', ' . $meta['length_formatted'] . ', ' . self::filesizeHumanReadable($meta['filesize']) . ')';
+        return '<span class="dashicons dashicons-format-audio"></span> '
+            . basename($post->guid) . ' (' . $meta['mime_type'] . ', '
+            . $meta['length_formatted'] . ', ' . self::filesizeHumanReadable($meta['filesize']) . ')';
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -23,7 +24,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TemplateVariableContainer;
  * <f:render section="someSection" arguments="{foo: someVariable}" />
  * </code>
  * <output>
- * the content of the section "someSection". The content of the variable {someVariable} will be available in the partial as {foo}
+ * the content of the section "someSection". The content of the variable {someVariable} will be available in the
+ * partial as {foo}
  * </output>
  *
  * <code title="Rendering recursive sections">
@@ -64,17 +66,6 @@ class SectionViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * Initialize the arguments.
-     *
-     * @return void
-     * @api
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument('name', 'string', 'Name of the section', true);
-    }
-
-    /**
      * Save the associated ViewHelper node in a static public class variable.
      * called directly after the ViewHelper was built.
      *
@@ -83,14 +74,28 @@ class SectionViewHelper extends AbstractViewHelper
      * @param VariableProviderInterface $variableContainer
      * @return void
      */
-    public static function postParseEvent(ViewHelperNode $node, array $arguments, VariableProviderInterface $variableContainer)
-    {
+    public static function postParseEvent(
+        ViewHelperNode $node,
+        array $arguments,
+        VariableProviderInterface $variableContainer
+    ) {
         /** @var $nameArgument TextNode */
         $nameArgument = $arguments['name'];
         $sectionName = $nameArgument->getText();
         $sections = $variableContainer['1457379500_sections'] ? $variableContainer['1457379500_sections'] : [];
         $sections[$sectionName] = $node;
         $variableContainer['1457379500_sections'] = $sections;
+    }
+
+    /**
+     * Initialize the arguments.
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('name', 'string', 'Name of the section', true);
     }
 
     /**
@@ -119,8 +124,13 @@ class SectionViewHelper extends AbstractViewHelper
      * @param TemplateCompiler $compiler
      * @return string
      */
-    public function compile($argumentsName, $closureName, &$initializationPhpCode, ViewHelperNode $node, TemplateCompiler $compiler)
-    {
+    public function compile(
+        $argumentsName,
+        $closureName,
+        &$initializationPhpCode,
+        ViewHelperNode $node,
+        TemplateCompiler $compiler
+    ) {
         return '\'\'';
     }
 }

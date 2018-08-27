@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
-
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -49,13 +47,13 @@ class CustomUrlViewHelper extends AbstractViewHelper
 
     protected function render()
     {
+        $url = $this->arguments['url'] ?: $this->renderChildren();
+        if (is_numeric($url)) $url = get_the_permalink($url);
         $args = is_array($this->arguments['add']) ? $this->arguments['add'] : [];
         $add = [];
         foreach ($args as $key => $val) {
             $add[] = $key . '=' . $val;
         }
-        return $this->arguments['url'] . ((strpos($this->arguments['url'], '?') !== false) ? '&' : '?') . join('&',
-                $add);
+        return $url.((strpos($url, '?') !== false) ? '&' : '?') . join('&', $add);
     }
-
 }

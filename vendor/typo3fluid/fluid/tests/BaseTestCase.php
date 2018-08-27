@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\Tests;
 
 /*
@@ -37,27 +38,17 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
      * @return \PHPUnit_Framework_MockObject_MockObject
      * @api
      */
-    protected function getAccessibleMock($originalClassName, $methods = [], array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true)
-    {
-        return $this->getMock($this->buildAccessibleProxy($originalClassName), $methods, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload);
-    }
-
-    /**
-     * Returns a mock object which allows for calling protected methods and access
-     * of protected properties.
-     *
-     * @param string $originalClassName Full qualified name of the original class
-     * @param array $arguments
-     * @param string $mockClassName
-     * @param boolean $callOriginalConstructor
-     * @param boolean $callOriginalClone
-     * @param boolean $callAutoload
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     * @api
-     */
-    protected function getAccessibleMockForAbstractClass($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true)
-    {
-        return $this->getMockForAbstractClass($this->buildAccessibleProxy($originalClassName), $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload);
+    protected function getAccessibleMock(
+        $originalClassName,
+        $methods = [],
+        array $arguments = [],
+        $mockClassName = '',
+        $callOriginalConstructor = true,
+        $callOriginalClone = true,
+        $callAutoload = true
+    ) {
+        return $this->getMock($this->buildAccessibleProxy($originalClassName), $methods, $arguments, $mockClassName,
+            $callOriginalConstructor, $callOriginalClone, $callAutoload);
     }
 
     /**
@@ -104,6 +95,31 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 			}
 		');
         return $accessibleClassName;
+    }
+
+    /**
+     * Returns a mock object which allows for calling protected methods and access
+     * of protected properties.
+     *
+     * @param string $originalClassName Full qualified name of the original class
+     * @param array $arguments
+     * @param string $mockClassName
+     * @param boolean $callOriginalConstructor
+     * @param boolean $callOriginalClone
+     * @param boolean $callAutoload
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @api
+     */
+    protected function getAccessibleMockForAbstractClass(
+        $originalClassName,
+        array $arguments = [],
+        $mockClassName = '',
+        $callOriginalConstructor = true,
+        $callOriginalClone = true,
+        $callAutoload = true
+    ) {
+        return $this->getMockForAbstractClass($this->buildAccessibleProxy($originalClassName), $arguments,
+            $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\View;
 
 /*
@@ -33,21 +34,6 @@ abstract class AbstractView implements ViewInterface
     }
 
     /**
-     * Add a variable to $this->variables.
-     * Can be chained, so $this->view->assign(..., ...)->assign(..., ...); is possible
-     *
-     * @param string $key Key of variable
-     * @param mixed $value Value of object
-     * @return $this
-     * @api
-     */
-    public function assign($key, $value)
-    {
-        $this->variables[$key] = $value;
-        return $this;
-    }
-
-    /**
      * Add multiple variables to $this->variables.
      *
      * @param array $values array in the format array(key1 => value1, key2 => value2)
@@ -59,6 +45,21 @@ abstract class AbstractView implements ViewInterface
         foreach ($values as $key => $value) {
             $this->assign($key, $value);
         }
+        return $this;
+    }
+
+    /**
+     * Add a variable to $this->variables.
+     * Can be chained, so $this->view->assign(..., ...)->assign(..., ...); is possible
+     *
+     * @param string $key Key of variable
+     * @param mixed $value Value of object
+     * @return $this
+     * @api
+     */
+    public function assign($key, $value)
+    {
+        $this->variables[$key] = $value;
         return $this;
     }
 }

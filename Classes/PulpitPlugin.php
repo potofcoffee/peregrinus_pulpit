@@ -31,6 +31,7 @@ use Peregrinus\Pulpit\CustomFormats\AbstractCustomFormat;
 use Peregrinus\Pulpit\CustomFormats\CustomFormatFactory;
 use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
+use Peregrinus\Pulpit\ShortCodes\ShortCodeFactory;
 use Peregrinus\Pulpit\Taxonomies\AbstractTaxonomy;
 use Peregrinus\Pulpit\Taxonomies\TaxonomyFactory;
 
@@ -67,6 +68,8 @@ class PulpitPlugin
 
         add_action('admin_enqueue_scripts', [$this, 'addCSS']);
         add_action('admin_enqueue_scripts', [$this, 'addJS']);
+
+        add_action('admin_menu', [$this, 'adminMenu']);
     }
 
     /**
@@ -92,6 +95,7 @@ class PulpitPlugin
         /** @var AbstractPostType $postType */
         foreach (PostTypeFactory::getAll() as $postType) {
             $postType->register();
+
         }
 
         /** @var AbstractAjaxAction $ajaxAction */
@@ -110,6 +114,11 @@ class PulpitPlugin
             $customFormat->register();
         }
 
+        /** @var AbstractCustomFormat $shortcode */
+        foreach (ShortCodeFactory::getAll() as $shortcode) {
+            $shortcode->register();
+        }
+
         $scheduler = new Scheduler();
         $scheduler->register();
     }
@@ -122,17 +131,48 @@ class PulpitPlugin
 
     public function addJS()
     {
-        wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
-        wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
-        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js');
-        wp_enqueue_script('pulpit-speech', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Speech.js');
-        wp_localize_script(
-            'pulpit-speech',
-            'pulpit_speech',
-            [
-                'speech_time' => __('Speaking time', 'pulpit')
-            ]
-        );
     }
 
+
+    public function adminMenu() {
+        add_menu_page(
+            __( 'Sermons', 'pulpit' ),
+            __( 'Sermons', 'pulpit' ),
+            'edit_posts',
+            'edit.php?post_type=pulpit_sermon',
+            '',
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/Sermon.svg',
+            6
+        );
+
+        // https://christoph-fischer.org/wp-admin/edit-tags.php?taxonomy=post_tag
+        /** @var AbstractTaxonomy $taxonomy */
+        foreach (TaxonomyFactory::getAll() as $taxonomy) {
+            add_submenu_page(
+                'edit.php?post_type=pulpit_sermon',
+                $taxonomy->labels['name'],
+                $taxonomy->labels['name'],
+                'edit_posts',
+                'edit-tags.php?taxonomy='.$taxonomy->getName(),
+                '',
+                PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/Taxonomies/'.ucfirst($taxonomy->getKey()).'.svg'
+            );
+        }
+
+        /** @var AbstractPostType $postType */
+        foreach (PostTypeFactory::getAll() as $postType) {
+            if ($postType->getKey() !== 'sermon') {
+                add_submenu_page(
+                    'edit.php?post_type=pulpit_sermon',
+                    $postType->labels['name'],
+                    $postType->labels['name'],
+                    'edit_posts',
+                    'edit.php?post_type='.$postType->getTypeName(),
+                    '',
+                    PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/'.ucfirst($postType->getKey()).'.svg'
+                );
+
+            }
+        }
+    }
 }

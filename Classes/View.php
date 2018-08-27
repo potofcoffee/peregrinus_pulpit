@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit;
-
 
 use TYPO3Fluid\Fluid\View\TemplateView;
 
@@ -57,6 +55,12 @@ class View extends TemplateView
         $this->assign('plugin_slug', PEREGRINUS_PULPIT);
         $this->assign('basePath', PEREGRINUS_PULPIT_BASE_PATH);
         $this->assign('baseUrl', PEREGRINUS_PULPIT_BASE_URL);
+    }
+
+    public function render($actionName = null, $controllerName = null)
+    {
+        if ($controllerName) $this->getRenderingContext()->setControllerName($controllerName);
+        return parent::render($actionName);
     }
 
 }

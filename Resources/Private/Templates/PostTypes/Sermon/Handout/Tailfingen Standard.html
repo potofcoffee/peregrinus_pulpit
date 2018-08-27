@@ -1,0 +1,132 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf"
+        layout="A5" debug="1" bottommargin="5">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout-Tailfingen.css"
+              media="all"/>
+    </head>
+    <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+                <h1>{sermon.post_title}
+                    <f:if condition="{sermon.subtitle}"><br/>{sermon.subtitle}</f:if>
+                </h1>
+                <h2>Predigt von Pfarrer Christoph Fischer<br/>
+                    <f:for each="{sermon.events}" as="event">
+                        <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
+                        Uhr, {event.location.title}<br/>
+                    </f:for>
+                </h2>
+            </div>
+            <div class="col-xs-4 logo">
+                <img class="logo logo-top img-responsive" src="{baseUrl}Assets/Logos/logo_tailfingen.jpg"
+                     style="margin-bottom: 1cm;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <f:if condition="{sermon.thumbnail}">
+                    <wp:postImage post="{sermon.ID}"/>
+                </f:if>
+            </div>
+            <div class="col-xs-4">
+                <div class="sidebar-text">
+                    <p class="small"><b>Evangelische Landeskirche<br />in Württemberg<br/>
+                        Kirchengemeinde Tailfingen<br/><br/>
+                        Pfarrer Christoph Fischer</b><br/>
+                        Pfarramt Erlöserkirche<br/>
+                        Liegnitzer Str. 38<br/>
+                        72461 Albstadt</p>
+                    <p class="small">Fon 07432 3762<br/>
+                        Fax 07432 171760<br/>
+                        christoph.fischer@elkw.de<br/>
+                        http://christoph-fischer.org</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <h3>Predigttext</h3>
+                <p>{sermon.reference}</p>
+                <h3>Darum geht es</h3>
+                {sermon.content.main -> f:format.raw()}
+            </div>
+            <div class="col-xs-4">
+                <div class="sidebar-text">
+                    <p:qrcode data="http://toph.de/p{sermon.post_date -> p:format.date(format: '%y%m%d')}"/>
+                    <p class="small">Weitere Informationen und Material zur
+                        Predigt findest du online unter <br/>
+                        <b>http://toph.de/p{sermon.post_date -> p:format.date(format: '%y%m%d')}</b>
+                    </p>
+                    <div class="logo logo-bottom" style="">
+                        <img class="logo img-responsive" src="{baseUrl}Assets/Logos/logo_elkw.jpg"
+                             style="padding-left: 10px;">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="page-break-before: always;"></div>
+        <div class="row" style="height: 7cm">
+            <div class="col-xs-12">
+                <h3>
+                    <f:if condition="{sermon.notes_header}">
+                        <f:then>{sermon.notes_header}</f:then>
+                        <f:else>Notizen zur Predigt</f:else>
+                    </f:if>
+                </h3>
+                <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
+                <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
+                                      listStyle="font-size: 12pt;"/>
+            </div>
+        </div>
+        <f:if condition="{sermon.questions}">
+            <div class="row" style="height: 7cm">
+                <div class="col-xs-12">
+                    <h3>Fragen zur Vertiefung</h3>
+                    <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter
+                        über das
+                        Gehörte nachzudenken.
+                    </p>
+                    <p:format.orderedList list="{sermon.questions}" underlineMode="none"/>
+                </div>
+            </div>
+        </f:if>
+        <f:if condition="{sermon.further_reading}">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Literaturtipps</h3>
+                    <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir
+                        Folgendes weiterhelfen:</p>
+                    {sermon.further_reading}
+                </div>
+            </div>
+        </f:if>
+        <div class="row" style="margin-top: 0.5cm;">
+            <div class="col-xs-2">
+                <img class="img-responsive" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
+            </div>
+            <div class="col-xs-10">
+                <p class="legal">
+                    Diese Predigt und alle dazu gehörigen
+                    Ressourcen (Predigtzettel, Aufnahme) sind
+                    lizenziert unter einer Creative Commons
+                    Namensnennung - Weitergabe unter
+                    gleichen Bedingungen 4.0 International
+                    Lizenz. Verwendete Bilder stehen eventuell
+                    unter eigenen Lizenzbedingungen.
+                </p>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -6,8 +7,6 @@ namespace TYPO3Fluid\Fluid\ViewHelpers;
  * See LICENSE.txt that was shipped with this package.
  */
 
-use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
-use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
@@ -38,15 +37,6 @@ class VariableViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument('value', 'mixed', 'Value to assign. If not in arguments then taken from tag content');
-        $this->registerArgument('name', 'string', 'Name of variable to create', true);
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
@@ -59,6 +49,15 @@ class VariableViewHelper extends AbstractViewHelper
     ) {
         $value = $renderChildrenClosure();
         $renderingContext->getVariableProvider()->add($arguments['name'], $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('value', 'mixed', 'Value to assign. If not in arguments then taken from tag content');
+        $this->registerArgument('name', 'string', 'Name of variable to create', true);
     }
 
 }

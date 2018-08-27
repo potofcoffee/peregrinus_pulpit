@@ -20,7 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Taxonomies;
 
 /**
@@ -31,7 +30,7 @@ namespace Peregrinus\Pulpit\Taxonomies;
 class AbstractTaxonomy
 {
 
-    protected $labels = [];
+    public $labels = [];
     protected $configuration = [];
     protected $postType = '';
 

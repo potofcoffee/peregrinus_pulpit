@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Settings;
-
 
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
 
@@ -58,18 +56,20 @@ class SettingsSection
      * Add this SettingsSection to a page
      * @param AbstractSettingsPage $page
      */
-    public function register(AbstractSettingsPage $page)
+    public function register(SettingsTab $tab)
     {
         add_settings_section(
             $this->getId(),
             $this->getTitle(),
             [$this, 'render'],
-            $page->getSlug()
+            $tab->getSlug()
         );
+        /** @var Setting $setting */
         foreach ($this->getSettings() as $setting) {
-            $setting->register($page, $this);
+            $setting->register($tab, $this);
         }
     }
+
 
     /**
      * @return string
@@ -142,6 +142,5 @@ class SettingsSection
     {
         $this->description = $description;
     }
-
 
 }

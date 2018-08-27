@@ -20,13 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\CustomModals;
-
 
 class AbstractCustomModal
 {
-
 
     /**
      * Register hooks
@@ -42,8 +39,11 @@ class AbstractCustomModal
      */
     public function enqueueResources()
     {
-        wp_enqueue_script('custom-modal-' . $this->getKey(),
-            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/CustomModals/' . ucfirst($this->getKey()) . 'CustomModal.js');
+        wp_enqueue_script(
+            'custom-modal-' . $this->getKey(),
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/CustomModals/'
+            . ucfirst($this->getKey()) . 'CustomModal.js'
+        );
     }
 
     /**
@@ -58,7 +58,8 @@ class AbstractCustomModal
 
     public function includeTemplate($template)
     {
-        $templateFile = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/Admin/CustomModals/' . ucfirst($this->getKey()) . '.html';
+        $templateFile = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Private/Templates/Admin/CustomModals/'
+            . ucfirst($this->getKey()) . '.html';
         echo '<!-- trying to load CustomModal template ' . $templateFile . ' -->';
         if (file_exists($templateFile)) {
             echo file_get_contents($templateFile);

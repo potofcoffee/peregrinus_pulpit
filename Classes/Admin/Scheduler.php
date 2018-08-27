@@ -20,7 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin;
 
 use Peregrinus\Pulpit\Tasks\TaskFactory;
@@ -53,7 +52,6 @@ class Scheduler
             $task->register();
         }
     }
-
 
     /**
      * Register custom intervals

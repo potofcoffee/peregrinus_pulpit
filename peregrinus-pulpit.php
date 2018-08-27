@@ -67,11 +67,14 @@ if (!function_exists('__dump')) {
 if (!function_exists('__log')) {
     function __log($object, $text, $data = null)
     {
-        $reflect = new ReflectionClass($object);
-        $fp = fopen('/tmp/wp-cron.log', 'a');
-        fwrite($fp,
-            strftime('%Y-%m-%d %H:%M:%S') . ' ' . (time() - PEREGRINUS_PULPIT_START) . ' ' . basename($reflect->getShortName()) . ' ' . $text . ($data ? ' --> ' . print_r($data,
-                    1) : '') . PHP_EOL);
-        fclose($fp);
+        try {
+            $reflect = new ReflectionClass($object);
+            $fp = fopen('/tmp/wp-cron.log', 'a');
+            fwrite($fp,
+                strftime('%Y-%m-%d %H:%M:%S') . ' ' . (time() - PEREGRINUS_PULPIT_START) . ' ' . basename($reflect->getShortName()) . ' ' . $text . ($data ? ' --> ' . print_r($data,
+                        1) : '') . PHP_EOL);
+            fclose($fp);
+        } catch (ReflectionException $e) {
+        }
     }
 }

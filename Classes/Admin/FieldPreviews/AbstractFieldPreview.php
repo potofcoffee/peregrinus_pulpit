@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\FieldPreviews;
-
 
 class AbstractFieldPreview
 {
@@ -44,11 +42,10 @@ class AbstractFieldPreview
      * @param int $decimals
      * @return string
      */
-    protected function filesizeHumanReadable($bytes, $decimals = 0)
+    protected static function filesizeHumanReadable($bytes, $decimals = 0)
     {
         $sz = 'BKMGTP';
         $factor = floor((strlen($bytes) - 1) / 3);
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$sz[$factor];
     }
-
 }

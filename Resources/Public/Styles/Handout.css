@@ -48,3 +48,8 @@ img.cc {
     width: auto;
     margin-bottom: 10px;
 }
+
+figcaption.image-copyrights {
+    font-size: 7px;
+}
+

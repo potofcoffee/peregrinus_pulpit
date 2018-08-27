@@ -20,13 +20,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin;
-
 
 use Peregrinus\Pulpit\Admin\AdminMenus\AdminMenuFactory;
 use Peregrinus\Pulpit\Admin\CustomModals\CustomModalFactory;
 use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 
 /**
@@ -42,7 +41,6 @@ class Admin
      */
     public function init()
     {
-
         // add meta boxes for all post types
         foreach (PostTypeFactory::getAll() as $postType) {
             $postType->addMetaBox();
@@ -53,8 +51,17 @@ class Admin
         foreach (CustomModalFactory::getAll() as $customModal) {
             $customModal->register();
         }
-
         //foreach ( AdminMenuFactory::getAll() as $adminMenu) $adminMenu->adminInit();
+
+    }
+
+    /**
+     * Set up all filters for admin interface
+     */
+    public function registerFilters() {
+        // register TinyMCE plugins
+        add_filter('mce_external_plugins', [$this, 'registerTinyMCEPlugins']);
+
     }
 
     /**
@@ -77,4 +84,9 @@ class Admin
         }
     }
 
+    public function registerTinyMCEPlugins($plugins)
+    {
+//        $plugins[PEREGRINUS_PULPIT . '_speech'] = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Public/Scripts/TinyMCE/Speech.js';
+        return $plugins;
+    }
 }

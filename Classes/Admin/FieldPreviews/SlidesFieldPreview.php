@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\FieldPreviews;
-
 
 class SlidesFieldPreview extends AbstractFieldPreview
 {
@@ -52,6 +50,5 @@ class SlidesFieldPreview extends AbstractFieldPreview
         }
         return ($text);
     }
-
 
 }

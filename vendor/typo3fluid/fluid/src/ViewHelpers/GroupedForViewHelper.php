@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -21,7 +22,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * = Examples =
  *
  * <code title="Simple">
- * <f:groupedFor each="{0: {name: 'apple', color: 'green'}, 1: {name: 'cherry', color: 'red'}, 2: {name: 'banana', color: 'yellow'}, 3: {name: 'strawberry', color: 'red'}}" as="fruitsOfThisColor" groupBy="color">
+ * <f:groupedFor each="{0: {name: 'apple', color: 'green'}, 1: {name: 'cherry', color: 'red'}, 2: {name: 'banana',
+ * color: 'yellow'}, 3: {name: 'strawberry', color: 'red'}}" as="fruitsOfThisColor" groupBy="color">
  *   <f:for each="{fruitsOfThisColor}" as="fruit">
  *     {fruit.name}
  *   </f:for>
@@ -33,7 +35,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  *
  * <code title="Two dimensional list">
  * <ul>
- *   <f:groupedFor each="{0: {name: 'apple', color: 'green'}, 1: {name: 'cherry', color: 'red'}, 2: {name: 'banana', color: 'yellow'}, 3: {name: 'strawberry', color: 'red'}}" as="fruitsOfThisColor" groupBy="color" groupKey="color">
+ *   <f:groupedFor each="{0: {name: 'apple', color: 'green'}, 1: {name: 'cherry', color: 'red'}, 2: {name: 'banana',
+ * color: 'yellow'}, 3: {name: 'strawberry', color: 'red'}}" as="fruitsOfThisColor" groupBy="color" groupKey="color">
  *     <li>
  *       {color} fruits:
  *       <ul>
@@ -84,25 +87,16 @@ class GroupedForViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('each', 'array', 'The array or \SplObjectStorage to iterated over', true);
-        $this->registerArgument('as', 'string', 'The name of the iteration variable', true);
-        $this->registerArgument('groupBy', 'string', 'Group by this property', true);
-        $this->registerArgument('groupKey', 'string', 'The name of the variable to store the current group', false, 'groupKey');
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      * @return mixed
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $each = $arguments['each'];
         $as = $arguments['as'];
         $groupBy = $arguments['groupBy'];
@@ -113,7 +107,8 @@ class GroupedForViewHelper extends AbstractViewHelper
         }
         if (is_object($each)) {
             if (!$each instanceof \Traversable) {
-                throw new ViewHelper\Exception('GroupedForViewHelper only supports arrays and objects implementing \Traversable interface', 1253108907);
+                throw new ViewHelper\Exception('GroupedForViewHelper only supports arrays and objects implementing \Traversable interface',
+                    1253108907);
             }
             $each = iterator_to_array($each);
         }
@@ -131,13 +126,13 @@ class GroupedForViewHelper extends AbstractViewHelper
         return $output;
     }
 
-
     /**
      * Groups the given array by the specified groupBy property.
      *
      * @param array $elements The array / traversable object to be grouped
      * @param string $groupBy Group by this property
-     * @return array The grouped array in the form array('keys' => array('key1' => [key1value], 'key2' => [key2value], ...), 'values' => array('key1' => array([key1value] => [element1]), ...), ...)
+     * @return array The grouped array in the form array('keys' => array('key1' => [key1value], 'key2' => [key2value],
+     *     ...), 'values' => array('key1' => array([key1value] => [element1]), ...), ...)
      * @throws ViewHelper\Exception
      */
     protected static function groupElements(array $elements, $groupBy)
@@ -150,7 +145,8 @@ class GroupedForViewHelper extends AbstractViewHelper
             } elseif (is_object($value)) {
                 $currentGroupIndex = $extractor->getByPath($value, $groupBy);
             } else {
-                throw new ViewHelper\Exception('GroupedForViewHelper only supports multi-dimensional arrays and objects', 1253120365);
+                throw new ViewHelper\Exception('GroupedForViewHelper only supports multi-dimensional arrays and objects',
+                    1253120365);
             }
             $currentGroupKeyValue = $currentGroupIndex;
             if ($currentGroupIndex instanceof \DateTime) {
@@ -162,5 +158,18 @@ class GroupedForViewHelper extends AbstractViewHelper
             $groups['values'][$currentGroupIndex][$key] = $value;
         }
         return $groups;
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('each', 'array', 'The array or \SplObjectStorage to iterated over', true);
+        $this->registerArgument('as', 'string', 'The name of the iteration variable', true);
+        $this->registerArgument('groupBy', 'string', 'Group by this property', true);
+        $this->registerArgument('groupKey', 'string', 'The name of the variable to store the current group', false,
+            'groupKey');
     }
 }

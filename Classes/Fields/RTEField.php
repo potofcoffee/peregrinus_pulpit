@@ -20,39 +20,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 class RTEField extends TextAreaField
 {
 
+    public static $scriptOutput = false;
+    protected $options;
+
+    public function __construct($key, $label, $rows = 5, $options = [], $context = '')
+    {
+        parent::__construct($key, $label, $rows, $context);
+        $this->options = $options;
+    }
 
     public function register()
     {
-        add_action('admin_print_footer_scripts', [$this, 'script'], 99);
+        //add_action('admin_print_footer_scripts', [$this, 'script'], 99);
     }
 
     public function script()
     {
-        echo "
-			<script type=\"text/javascript\">/* <![CDATA[ */
+        if (!$this::$scriptOutput) {
+            echo "
+			<script type=\"text/javascript\">
 				jQuery(function($){
-					var i=1;
-					$('textarea." . PEREGRINUS_PULPIT . "_rtefield').each(function(e)
-					{
-					  var id = $(this).attr('id');
-					  if (!id)
-					  {
-					   id = 'customEditor-' + i++;
-					   $(this).attr('id',id);
-					  }
-					  tinyMCE.execCommand('mceAddControl', false, id);
-					  tinyMCE.execCommand('mceAddControl', false, id);
-					});
+				    $(document).ready(function(){
+                        var i=1;
+                        $('textarea." . PEREGRINUS_PULPIT . "_rtefield').each(function(e)
+                        {
+                          var id = $(this).attr('id');
+                          if (!id)
+                          {
+                           id = 'customEditor-' + i++;
+                           $(this).attr('id',id);
+                          }
+                          tinyMCE.execCommand('mceAddControl', false, id);
+                          tinyMCE.execCommand('mceAddControl', false, id);
+                        });
+                    });
 				});
-			/* ]]> */</script>		
+			</script>		
 ";
+            $this::$scriptOutput = true;
+        }
+    }
+
+    /**
+     * Override renderLabel() in order to suppress final <br />
+     * @return string Label
+     */
+    public function renderLabel()
+    {
+        return $this->label ? '<label style="position:absolute; top: 10px;" for="' . $this->key . '">' . $this->label . '</label>' : '';
     }
 
     /**
@@ -64,8 +84,18 @@ class RTEField extends TextAreaField
      */
     public function render($values)
     {
-        return $this->renderLabel() . '<br /><textarea class="' . PEREGRINUS_PULPIT . '_rtefield" id="field_' . $this->key . '" style="width: 100%" rows="' . $this->rows . '" name="' . $this->key . '">' . htmlentities($values[$this->key][0]) . '</textarea><br />';
-    }
+        ob_start();
+        wp_editor($this->getValue($values), $this->getKey(), array(
+            'wpautop' => $this->options['wpautop'] ?: true,
+            'media_buttons' => $this->options['media_buttons'] ?: false,
+            'textarea_name' => $this->getFieldName(),
+            'textarea_rows' => $this->options['rows'] ?: 5,
+            'teeny' => $this->options['teeny'] ?: true
+        ));
 
+        $o = '<div style="position: relative;">' . $this->renderLabel() . ob_get_contents() . '</div>';
+        ob_end_clean();
+        return $o;
+    }
 
 }

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Taxonomies\Sermon;
-
 
 use Peregrinus\Pulpit\Taxonomies\AbstractTaxonomy;
 

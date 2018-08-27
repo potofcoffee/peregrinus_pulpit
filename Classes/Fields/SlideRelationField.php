@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 use Peregrinus\Pulpit\Admin\FieldPreviews\SlidesFieldPreview;
 
@@ -39,18 +37,17 @@ class SlideRelationField extends AbstractField
 
     public function __construct(
         $key,
-        string $label = '',
-        string $mimeType = '',
-        string $buttonTitle = '',
-        string $dialogTitle = '',
-        string $context = ''
+        string $label = null,
+        string $mimeType = null,
+        string $buttonTitle = null,
+        string $dialogTitle = null,
+        string $context = null
     ) {
         parent::__construct($key, $label, $context);
         $this->mimeType = $mimeType;
         $this->buttonTitle = $buttonTitle;
         $this->dialogTitle = $dialogTitle;
     }
-
 
     /**
      * Output this field's form element
@@ -85,6 +82,5 @@ class SlideRelationField extends AbstractField
         $label = parent::renderLabel();
         return (trim($label) ? $label . '<br />' : '');
     }
-
 
 }

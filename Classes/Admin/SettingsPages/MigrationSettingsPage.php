@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpIncludeInspection */
+/** @noinspection ALL */
+
 /*
  * PULPIT
  * A sermon plugin for WordPress
@@ -20,9 +22,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
+use Peregrinus\Pulpit\Domain\Model\SermonModel;
 
 class MigrationSettingsPage extends AbstractSettingsPage
 {
@@ -35,70 +37,6 @@ class MigrationSettingsPage extends AbstractSettingsPage
 
     public function render()
     {
-        /**
-         * if (!isset($_GET['post'])) $this->redirectToPost(0);
-         *
-         * echo '<div class="wrap">'
-         * . '<h1>DEV: Temporary Migrations Page</h1>';
-         *
-         *
-         * $sermonData = \yaml_parse_file('/home/peregrinus/temp/sermons.yaml');
-         *
-         * $posts = get_posts(['post_type' => 'pulpit_sermon', 'numberposts' => -1]);
-         * $currentPost = $_GET['post'] ?: 0;
-         *
-         * echo 'Processing post ' . ($currentPost + 1) . ' of ' . count($posts) . '... <br /><br />';
-         *
-         * /** @var \WP_Post $post
-         */
-        /*
-                $post = $posts[$currentPost];
-                $meta = get_post_meta($post->ID);
-                $postData = $this->findSermonData($post, $sermonData);
-
-                $this->console($post->post_date . '<br />' . $post->post_title . '<br />');
-                if (!wp_get_attachment_image($post->ID)) {
-                    if ($postData['image']) {
-                        $tmpFile = '/home/peregrinus/temp/images/'.$postData['image'];
-                        if (file_exists($tmpFile)) {
-                            $tmpFile = $this->copyLocalFile($tmpFile, $post);
-                            $this->attachImage($tmpFile, $post, $meta);
-                            $meta = get_post_meta($post->ID);
-                        }
-                    }
-                } else {
-                    $this->console('Post has image --> nothing to do!');
-                }
-
-                $this->redirectToNext($currentPost, $posts);
-
-                echo '<hr />';
-                __dump([$post, $meta]);
-
-        */
-
-        $posts = get_posts(['post_type' => 'pulpit_slide', 'numberposts' => -1]);
-        /** @var \WP_Post $slide */
-        foreach ($posts as $slide) {
-            $meta = get_post_meta($slide->post_parent)['slides'][0];
-            $this->console('Slide list for post ' . $slide->post_parent . ' is: ' . $meta);
-            if (trim($meta)) {
-                $parentSlideList = explode(',', $meta);
-            } else {
-                $parentSlideList = [];
-            }
-            //$parentSlideList[] = $slide->ID;
-            array_unshift($parentSlideList, $slide->ID);
-            update_post_meta($slide->post_parent, 'slides', join(',', $parentSlideList));
-            //update_post_meta($slide->post_parent, 'slides', '');
-
-            $this->console('Setting slide list for post ' . $slide->post_parent . ' to: ' . join(',',
-                    $parentSlideList));
-            $ids[] = $slide->post_parent;
-        }
-
-        __dump($posts);
-
     }
 
     private function console($text, $breaks = 1)
@@ -175,14 +113,14 @@ class MigrationSettingsPage extends AbstractSettingsPage
 
         $filetype = wp_check_filetype(basename($filename), null);
 
-        $attachment = array(
+        $attachment = [
             'guid' => 'https://christoph-fischer.org' . $filename,
             'post_mime_type' => $filetype['type'],
             'post_title' => $post->post_title . ($postMeta['subtitle'][0] ? ': ' . $postMeta['subtitle'][0] : ''),
             'post_content' => '"' . $post->post_title . ($postMeta['subtitle'][0] ? ': ' . $postMeta['subtitle'][0] : '') . '". Titelbild zur Predigt von Christoph Fischer vom ' . strftime('%d.%m.%Y',
                     strtotime($post->post_date)) . ' (' . $postMeta['church'][0] . ')',
             'post_status' => 'inherit'
-        );
+        ];
         $attachmentId = wp_insert_attachment($attachment, $filename, $post->ID);
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         $this->console('Created new attachment with id #' . $attachmentId);
@@ -205,15 +143,14 @@ class MigrationSettingsPage extends AbstractSettingsPage
         $audioMeta['author'] = 'Christoph Fischer';
         $audioMeta['title'] = $post->post_title;
 
-
-        $attachment = array(
+        $attachment = [
             'guid' => 'https://christoph-fischer.org' . $filename,
             'post_mime_type' => $filetype['type'],
             'post_title' => $post->post_title . ($postMeta['subtitle'][0] ? ': ' . $postMeta['subtitle'][0] : ''),
             'post_content' => '"' . $post->post_title . ($postMeta['subtitle'][0] ? ': ' . $postMeta['subtitle'][0] : '') . '". Aufnahme der Predigt von Christoph Fischer vom ' . strftime('%d.%m.%Y',
                     strtotime($post->post_date)) . ' (' . $postMeta['church'][0] . ')',
             'post_status' => 'inherit'
-        );
+        ];
         $attachmentId = wp_insert_attachment($attachment, $filename, $post->ID);
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         $this->console('Created new attachment with id #' . $attachmentId);

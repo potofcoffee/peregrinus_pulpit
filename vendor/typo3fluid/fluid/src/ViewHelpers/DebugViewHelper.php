@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -48,24 +49,16 @@ class DebugViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @return void
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('typeOnly', 'boolean', 'If TRUE, debugs only the type of variables', false, false);
-        $this->registerArgument('levels', 'integer', 'Levels to render when rendering nested objects/arrays', false, 5);
-        $this->registerArgument('html', 'boolean', 'Render HTML. If FALSE, output is indented plaintext', false, false);
-    }
-
-    /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $typeOnly = $arguments['typeOnly'];
         $expressionToExamine = $renderChildrenClosure();
         if ($typeOnly === true) {
@@ -76,7 +69,6 @@ class DebugViewHelper extends AbstractViewHelper
         $levels = $arguments['levels'];
         return static::dumpVariable($expressionToExamine, $html, 1, $levels);
     }
-
 
     /**
      * @param mixed $variable
@@ -145,7 +137,7 @@ class DebugViewHelper extends AbstractViewHelper
     protected static function getValuesOfNonScalarVariable($variable)
     {
         if ($variable instanceof \ArrayObject || is_array($variable)) {
-            return (array) $variable;
+            return (array)$variable;
         } elseif ($variable instanceof \Iterator) {
             return iterator_to_array($variable);
         } elseif (is_resource($variable)) {
@@ -154,7 +146,7 @@ class DebugViewHelper extends AbstractViewHelper
             return [
                 'class' => get_class($variable),
                 'ISO8601' => $variable->format(\DateTime::ISO8601),
-                'UNIXTIME' => (integer) $variable->format('U')
+                'UNIXTIME' => (integer)$variable->format('U')
             ];
         } else {
             $reflection = new \ReflectionObject($variable);
@@ -166,5 +158,16 @@ class DebugViewHelper extends AbstractViewHelper
             }
             return $output;
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('typeOnly', 'boolean', 'If TRUE, debugs only the type of variables', false, false);
+        $this->registerArgument('levels', 'integer', 'Levels to render when rendering nested objects/arrays', false, 5);
+        $this->registerArgument('html', 'boolean', 'Render HTML. If FALSE, output is indented plaintext', false, false);
     }
 }

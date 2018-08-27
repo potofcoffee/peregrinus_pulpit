@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\AjaxActions;
-
 
 use Peregrinus\Pulpit\Installer\ComposerWrapper;
 
@@ -37,8 +35,13 @@ class ComposerUpdateAjaxAction extends AbstractAjaxAction
         if ($composer->isOutdated()) {
             $res = [
                 'success' => false,
-                'notice' => sprintf(__("<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href=\"%s\">click here</a> to try again.",
-                    'pulpit'), $updateUrl)
+                'notice' => sprintf(
+                    __(
+                        "<strong>Oops!</strong> It looks like something went wrong during the update process. You can <a href=\"%s\">click here</a> to try again.",
+                        'pulpit'
+                    ),
+                    $updateUrl
+                )
             ];
         } else {
             $res = [
@@ -49,6 +52,4 @@ class ComposerUpdateAjaxAction extends AbstractAjaxAction
         echo json_encode($res);
         wp_die();
     }
-
-
 }

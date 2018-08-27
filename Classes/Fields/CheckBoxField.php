@@ -20,7 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
 
 /**
@@ -40,9 +39,10 @@ class CheckBoxField extends AbstractField
      */
     public function render($values)
     {
-        return '<input type="checkbox" id="' . $this->getKey() . '" name="' . $this->getFieldName() . '" ' . ($this->getValue($values) ? ' checked' : '') . '>' . $this->renderLabel() . '<br />';
+        return '<input type="checkbox" id="' . $this->getKey() . '" name="'
+            . $this->getFieldName() . '" ' . ($this->getValue($values) ? ' checked' : '') . '>' . $this->renderLabel()
+            . '<br />';
     }
-
 
     /**
      * Get this field's metadata from POST
@@ -53,5 +53,4 @@ class CheckBoxField extends AbstractField
         $value = parent::getValueFromPOST();
         return ($value ? true : false);
     }
-
 }

@@ -1,9 +1,11 @@
 <tr valign="top">
-    <th scope="row"><wp:translate>{option.label}</wp:translate></th>
+    <th scope="row">
+        <wp:translate>{option.label}</wp:translate>
+    </th>
     <td>
         <f:switch expression="{option.type}">
             <f:case value="input">
-                <input type="text" class="regular-text" id="{option.name}" name="{option.name}" value="{option.value}" />
+                <input type="text" class="regular-text" id="{option.name}" name="{option.name}" value="{option.value}"/>
             </f:case>
         </f:switch>
     </td>

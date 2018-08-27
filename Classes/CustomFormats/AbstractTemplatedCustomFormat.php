@@ -20,7 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\CustomFormats;
 
 use Peregrinus\Pulpit\View;
@@ -111,6 +110,5 @@ class AbstractTemplatedCustomFormat extends AbstractCustomFormat
         }
         return $author;
     }
-
 
 }

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PULPIT\n"
 "Report-Msgid-Bugs-To: http://www.peregrinus.de/pulpit\n"
-"POT-Creation-Date: 2018-06-08 09:54+0100\n"
-"PO-Revision-Date: 2018-06-08 11:59+0200\n"
+"POT-Creation-Date: 2018-08-23 17:01+0100\n"
+"PO-Revision-Date: 2018-08-23 19:07+0200\n"
 "Last-Translator: Christoph Fischer <chris@toph.de>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -35,8 +35,9 @@ msgstr "Einstellungen"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:40
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:41
-#: Classes/PostTypes/SermonPostType.php:44
-#: Classes/PostTypes/SermonPostType.php:54
+#: Classes/PostTypes/SermonPostType.php:46
+#: Classes/PostTypes/SermonPostType.php:56 Classes/PulpitPlugin.php:139
+#: Classes/PulpitPlugin.php:140
 msgid "Sermons"
 msgstr "Predigten"
 
@@ -120,210 +121,372 @@ msgstr ""
 "Gute Nachricht: Alle externen Komponenten, die PULPIT nutzt, sind auf dem "
 "aktuellsten Stand."
 
-#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:32
-#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:33
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:34
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:35
 msgid "Sermons: Migrations"
 msgstr "Predigten: Migrationstools"
+
+#: Classes/Fields/EventsRelationField.php:70
+#: Classes/PostTypes/EventPostType.php:47
+#: Classes/PostTypes/SermonPostType.php:189
+msgid "Event"
+msgstr "Veranstaltung"
+
+#: Classes/Fields/EventsRelationField.php:80
+msgid "%Y-%m-%d %H:%M"
+msgstr "%d.%m.%Y, %H:%M"
+
+#: Classes/Fields/EventsRelationField.php:88
+msgid "Remove event"
+msgstr "Veranstaltung entfernen"
+
+#: Classes/Fields/EventsRelationField.php:132
+msgid "Add event"
+msgstr "Neue Veranstaltung"
 
 #: Classes/Fields/SlideRelationField.php:75
 msgid "Add new slide"
 msgstr "Neue Predigtfolie hinzufügen"
 
-#: Classes/PostTypes/SermonPostType.php:45
-msgid "Sermon"
-msgstr "Predigt"
+#: Classes/PostTypes/EventPostType.php:46
+#: Classes/PostTypes/EventPostType.php:56
+msgid "Events"
+msgstr "Veranstaltungen"
 
-#: Classes/PostTypes/SermonPostType.php:46
+#: Classes/PostTypes/EventPostType.php:48
+#: Classes/PostTypes/LocationPostType.php:46
+#: Classes/PostTypes/SermonPostType.php:48
 #: Classes/PostTypes/SlidePostType.php:41
 msgid "Add New"
-msgstr "Neue Predigt"
+msgstr "Neu"
 
-#: Classes/PostTypes/SermonPostType.php:47
-msgid "Add New Sermon"
-msgstr "Predigt hinzufügen"
+#: Classes/PostTypes/EventPostType.php:49
+msgid "Add New Event"
+msgstr "Neue Veranstaltung"
 
-#: Classes/PostTypes/SermonPostType.php:48
-msgid "Edit Sermon"
-msgstr "Predigt bearbeiten"
+#: Classes/PostTypes/EventPostType.php:50
+msgid "Edit Event"
+msgstr "Veranstaltung bearbeiten"
 
-#: Classes/PostTypes/SermonPostType.php:49
-msgid "New Sermon"
-msgstr "Neue Predigt"
+#: Classes/PostTypes/EventPostType.php:51
+msgid "New Event"
+msgstr "Neue Veranstaltung"
 
-#: Classes/PostTypes/SermonPostType.php:50
-msgid "View Sermon"
-msgstr "Predigt ansehen"
+#: Classes/PostTypes/EventPostType.php:52
+msgid "View Event"
+msgstr "Veranstaltung ansehen"
 
-#: Classes/PostTypes/SermonPostType.php:51
-msgid "Search Sermons"
-msgstr "Predigten durchsuchen"
+#: Classes/PostTypes/EventPostType.php:53
+msgid "Search events"
+msgstr "Veranstaltungen durchsuchen"
 
-#: Classes/PostTypes/SermonPostType.php:52
-msgid "No sermons found"
-msgstr "Keine Predigt gefunden."
+#: Classes/PostTypes/EventPostType.php:54
+msgid "No events found"
+msgstr "Keine Veranstaltungen gefunden."
 
-#: Classes/PostTypes/SermonPostType.php:53
-msgid "No sermons found in Trash"
-msgstr "Im Papierkorb wurden keine Predigten gefunden."
+#: Classes/PostTypes/EventPostType.php:55
+msgid "No events found in Trash"
+msgstr "Im Papierkorb wurden keine Veranstaltungen gefunden."
 
-#: Classes/PostTypes/SermonPostType.php:89
-msgid "Preached"
-msgstr "Gepredigt am"
-
-#: Classes/PostTypes/SermonPostType.php:90
+#: Classes/PostTypes/EventPostType.php:96
+#: Classes/PostTypes/LocationPostType.php:91
+#: Classes/PostTypes/SermonPostType.php:110
 msgid "Title"
 msgstr "Titel"
 
-#: Classes/PostTypes/SermonPostType.php:91
+#: Classes/PostTypes/EventPostType.php:97
+#: Classes/PostTypes/EventPostType.php:139
+msgid "Date"
+msgstr "Datum"
+
+#: Classes/PostTypes/EventPostType.php:98
+#: Classes/PostTypes/EventPostType.php:140
+msgid "Time"
+msgstr "Zeit"
+
+#: Classes/PostTypes/EventPostType.php:99
+#: Classes/PostTypes/EventPostType.php:141
+#: Classes/PostTypes/LocationPostType.php:45
+msgid "Location"
+msgstr "Ort"
+
+#: Classes/PostTypes/EventPostType.php:117
+msgid "%Y-%m-%d"
+msgstr "%d.%m.%Y"
+
+#: Classes/PostTypes/EventPostType.php:120
+msgid "%H:%M"
+msgstr "%H:%M Uhr"
+
+#: Classes/PostTypes/EventPostType.php:138
+#: Classes/PostTypes/LocationPostType.php:126
+#: Classes/PostTypes/LocationPostType.php:135
+#: Classes/PostTypes/LocationPostType.php:141
+#: Classes/PostTypes/SermonPostType.php:147
+msgid "General"
+msgstr "Allgemein"
+
+#: Classes/PostTypes/EventPostType.php:172
+msgid "Upcoming events"
+msgstr "Zukünftige Veranstaltungen"
+
+#: Classes/PostTypes/LocationPostType.php:44
+#: Classes/PostTypes/LocationPostType.php:54
+msgid "Locations"
+msgstr "Veranstaltungsorte"
+
+#: Classes/PostTypes/LocationPostType.php:47
+msgid "Add New Location"
+msgstr "Neuer Veranstaltungsort"
+
+#: Classes/PostTypes/LocationPostType.php:48
+msgid "Edit Location"
+msgstr "Veranstaltungsort bearbeiten"
+
+#: Classes/PostTypes/LocationPostType.php:49
+msgid "New Location"
+msgstr "Neuer Veranstaltungsort"
+
+#: Classes/PostTypes/LocationPostType.php:50
+msgid "View Location"
+msgstr "Veranstaltungsort ansehen"
+
+#: Classes/PostTypes/LocationPostType.php:51
+msgid "Search locations"
+msgstr "Veranstaltungsorte durchsuchen"
+
+#: Classes/PostTypes/LocationPostType.php:52
+msgid "No locations found"
+msgstr "Keine Veranstaltungsorte gefunden."
+
+#: Classes/PostTypes/LocationPostType.php:53
+msgid "No locations found in Trash"
+msgstr "Im Papierkorb wurden keine Veranstaltungsorte gefunden."
+
+#: Classes/PostTypes/LocationPostType.php:127
+msgid "Adress"
+msgstr "Adresse"
+
+#: Classes/PostTypes/LocationPostType.php:128
+msgid "Organisational contact"
+msgstr "Organisatorischer Kontakt"
+
+#: Classes/PostTypes/LocationPostType.php:129
+msgid "Phone number"
+msgstr "Telefon"
+
+#: Classes/PostTypes/LocationPostType.php:130
+msgid "Fax number"
+msgstr "Fax"
+
+#: Classes/PostTypes/LocationPostType.php:131
+msgid "Email address"
+msgstr "E-Mailadresse"
+
+#: Classes/PostTypes/LocationPostType.php:132
+msgid "URL"
+msgstr "URL"
+
+#: Classes/PostTypes/LocationPostType.php:136
+msgid "Parking"
+msgstr "Parkplätze"
+
+#: Classes/PostTypes/LocationPostType.php:137
+msgid "Public transport"
+msgstr "Öffentliche Verkehrsmittel"
+
+#: Classes/PostTypes/LocationPostType.php:138
+msgid "Accessibility"
+msgstr "Barrierefreiheit"
+
+#: Classes/PostTypes/LocationPostType.php:142
+msgid "Has restrooms"
+msgstr "WC vorhanden"
+
+#: Classes/PostTypes/LocationPostType.php:143
+msgid "Provisions for parents with small children"
+msgstr "Einrichtungen für Eltern mit kleinen Kindern"
+
+#: Classes/PostTypes/LocationPostType.php:144
+msgid "Has an elevator"
+msgstr "Aufzug vorhanden"
+
+#: Classes/PostTypes/SermonPostType.php:47
+msgid "Sermon"
+msgstr "Predigt"
+
+#: Classes/PostTypes/SermonPostType.php:49
+msgid "Add New Sermon"
+msgstr "Predigt hinzufügen"
+
+#: Classes/PostTypes/SermonPostType.php:50
+msgid "Edit Sermon"
+msgstr "Predigt bearbeiten"
+
+#: Classes/PostTypes/SermonPostType.php:51
+msgid "New Sermon"
+msgstr "Neue Predigt"
+
+#: Classes/PostTypes/SermonPostType.php:52
+msgid "View Sermon"
+msgstr "Predigt ansehen"
+
+#: Classes/PostTypes/SermonPostType.php:53
+msgid "Search Sermons"
+msgstr "Predigten durchsuchen"
+
+#: Classes/PostTypes/SermonPostType.php:54
+msgid "No sermons found"
+msgstr "Keine Predigt gefunden."
+
+#: Classes/PostTypes/SermonPostType.php:55
+msgid "No sermons found in Trash"
+msgstr "Im Papierkorb wurden keine Predigten gefunden."
+
+#: Classes/PostTypes/SermonPostType.php:87
+msgid "Speaking time"
+msgstr "Redezeit"
+
+#: Classes/PostTypes/SermonPostType.php:109
+msgid "Preached"
+msgstr "Gepredigt am"
+
+#: Classes/PostTypes/SermonPostType.php:111
 msgid "Series"
 msgstr "Reihe"
 
-#: Classes/PostTypes/SermonPostType.php:92
+#: Classes/PostTypes/SermonPostType.php:112
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:43
 msgid "Preacher"
 msgstr "Prediger"
 
-#: Classes/PostTypes/SermonPostType.php:127
-msgid "General"
-msgstr "Allgemein"
-
-#: Classes/PostTypes/SermonPostType.php:128
+#: Classes/PostTypes/SermonPostType.php:148
 msgid "Subtitle"
 msgstr "Untertitel"
 
-#: Classes/PostTypes/SermonPostType.php:131
+#: Classes/PostTypes/SermonPostType.php:151
 msgid "Study Materials"
 msgstr "Studienmaterial"
 
-#: Classes/PostTypes/SermonPostType.php:132
+#: Classes/PostTypes/SermonPostType.php:152
 msgid "Bible reference"
 msgstr "Bibelstelle"
 
-#: Classes/PostTypes/SermonPostType.php:133
+#: Classes/PostTypes/SermonPostType.php:153
 msgid "Bible text"
 msgstr "Bibeltext"
 
-#: Classes/PostTypes/SermonPostType.php:134
+#: Classes/PostTypes/SermonPostType.php:154
 msgid "Notes header"
 msgstr "Überschrift für den Notizenteil"
 
-#: Classes/PostTypes/SermonPostType.php:135
+#: Classes/PostTypes/SermonPostType.php:155
 msgid "Key points"
 msgstr "Hauptpunkte"
 
-#: Classes/PostTypes/SermonPostType.php:136
+#: Classes/PostTypes/SermonPostType.php:156
 msgid "Small group questions"
 msgstr "Fragen für Kleingruppen"
 
-#: Classes/PostTypes/SermonPostType.php:137
+#: Classes/PostTypes/SermonPostType.php:157
 msgid "Further reading"
 msgstr "Weiterführende Literatur"
 
-#: Classes/PostTypes/SermonPostType.php:140
+#: Classes/PostTypes/SermonPostType.php:160
 msgid "Preparation"
 msgstr "Vorbereitung"
 
-#: Classes/PostTypes/SermonPostType.php:141
+#: Classes/PostTypes/SermonPostType.php:161
 msgid "How to prepare for the service"
 msgstr "Wie man sich auf den Gottesdienst vorbereiten kann"
 
-#: Classes/PostTypes/SermonPostType.php:143
+#: Classes/PostTypes/SermonPostType.php:163
 msgid "Resources"
 msgstr "Ressourcen"
 
-#: Classes/PostTypes/SermonPostType.php:144
+#: Classes/PostTypes/SermonPostType.php:164
 msgid "This sermon is released under CC-BY-SA 4.0"
 msgstr "Diese Predigt wird unter einer CC-BY-SA 4.0 Lizenz veröffentlicht"
 
-#: Classes/PostTypes/SermonPostType.php:145
+#: Classes/PostTypes/SermonPostType.php:165
 msgid "Handout"
 msgstr "Begleitzettel"
 
-#: Classes/PostTypes/SermonPostType.php:146
+#: Classes/PostTypes/SermonPostType.php:166
 msgid "Don't show links to handout"
 msgstr "Keine Links zum Begleitzettel zeigen"
 
-#: Classes/PostTypes/SermonPostType.php:147
+#: Classes/PostTypes/SermonPostType.php:167
 msgid "Title image"
 msgstr "Titelbild"
 
-#: Classes/PostTypes/SermonPostType.php:148
+#: Classes/PostTypes/SermonPostType.php:168
 msgid "Preview image"
 msgstr "Vorschaubild"
 
-#: Classes/PostTypes/SermonPostType.php:149
+#: Classes/PostTypes/SermonPostType.php:169
 msgid "Image credits"
 msgstr "Bildquelle"
 
-#: Classes/PostTypes/SermonPostType.php:151
-#, fuzzy
-#| msgid "Audio recording"
+#: Classes/PostTypes/SermonPostType.php:171
 msgid "Audio recording <b>REL!</b>"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:153
-#: Classes/PostTypes/SermonPostType.php:154
+#: Classes/PostTypes/SermonPostType.php:173
+#: Classes/PostTypes/SermonPostType.php:174
 msgid "Select audio file"
 msgstr "Audiodatei auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:156
+#: Classes/PostTypes/SermonPostType.php:176
 msgid "Audio recording"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:157
+#: Classes/PostTypes/SermonPostType.php:177
 msgid "Remote audio file"
 msgstr "Externe Aufnahme"
 
-#: Classes/PostTypes/SermonPostType.php:158
+#: Classes/PostTypes/SermonPostType.php:178
 msgid "Video recording"
 msgstr "Video zur Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:160
+#: Classes/PostTypes/SermonPostType.php:180
 msgid "Slideshow"
 msgstr "Präsentation"
 
-#: Classes/PostTypes/SermonPostType.php:162
+#: Classes/PostTypes/SermonPostType.php:182
 #: Classes/PostTypes/SlidePostType.php:39
 #: Classes/PostTypes/SlidePostType.php:49
 msgid "Slides"
 msgstr "Folien"
 
-#: Classes/PostTypes/SermonPostType.php:164
-#: Classes/PostTypes/SermonPostType.php:165
+#: Classes/PostTypes/SermonPostType.php:184
+#: Classes/PostTypes/SermonPostType.php:185
 msgid "Select slide"
 msgstr "Folie auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:168
-msgid "Synchronization"
-msgstr "Synchronisierung"
+#: Classes/PostTypes/SermonPostType.php:188
+msgid "Associated events"
+msgstr "Zugehörige Veranstaltungen"
 
-#: Classes/PostTypes/SermonPostType.php:169
-msgid "Sync ID"
-msgstr "Sync ID"
-
-#: Classes/PostTypes/SermonPostType.php:170
-msgid "Remote URL"
-msgstr "Externe URL"
-
-#: Classes/PostTypes/SermonPostType.php:171
-msgid "Church"
-msgstr "Kirche"
-
-#: Classes/PostTypes/SermonPostType.php:172
-msgid "Church URL"
-msgstr "URL der Kirche"
-
-#: Classes/PostTypes/SermonPostType.php:175
+#: Classes/PostTypes/SermonPostType.php:192
 msgid "E-book"
 msgstr "E-Book"
 
-#: Classes/PostTypes/SermonPostType.php:176
+#: Classes/PostTypes/SermonPostType.php:193
 msgid "Amazon link"
 msgstr "Link zu Amazon"
 
-#: Classes/PostTypes/SermonPostType.php:177
+#: Classes/PostTypes/SermonPostType.php:194
 msgid "Smashwords link"
 msgstr "Link zu Smashwords"
+
+#: Classes/PostTypes/SermonPostType.php:196
+msgid "Synchronization"
+msgstr "Synchronisierung"
+
+#: Classes/PostTypes/SermonPostType.php:197
+msgid "Remote URL"
+msgstr "Externe URL"
 
 #: Classes/PostTypes/SlidePostType.php:40
 msgid "Slide"
@@ -368,10 +531,6 @@ msgstr "Folieneinstellungen"
 #: Classes/PostTypes/SlidePostType.php:120
 msgid "Suppress title on exported slide"
 msgstr "Titel auf dieser Folie nicht anzeigen"
-
-#: Classes/PulpitPlugin.php:133
-msgid "Speaking time"
-msgstr "Redezeit"
 
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
@@ -421,10 +580,8 @@ msgstr "Wähle aus den am häufigsten verwendeten Predigern"
 #: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:43
 #: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:44
-#, fuzzy
-#| msgid "All sermon series"
 msgid "Sermon Series"
-msgstr "Alle Predigtreihen"
+msgstr "Predigtreihen"
 
 #: Classes/Taxonomies/Sermon/SeriesTaxonomy.php:45
 msgid "Search sermon series"
@@ -466,9 +623,31 @@ msgstr "Predigtreihen hinzufügen oder entfernen"
 msgid "Choose from most used sermon series"
 msgstr "Wähle aus den am häufigsten verwendeten Predigtreihen"
 
+#: Classes/Utility/ImageCreditsUtility.php:101
+#: Classes/Utility/ImageCreditsUtility.php:112
+msgid "License"
+msgstr "Lizenz"
+
+#: Classes/Utility/ImageCreditsUtility.php:108
+msgid "See original image"
+msgstr "Zum Originalbild"
+
+#: Classes/ViewHelpers/WordPress/PostImageViewHelper.php:77
+msgid "Image"
+msgstr "Bild"
+
 #: vendor/typo3fluid/fluid/tests/Unit/Core/Parser/Interceptor/EscapeTest.php:39
 msgid "Posts by %s"
-msgstr ""
+msgstr "Posts von %s"
+
+#~ msgid "Sync ID"
+#~ msgstr "Sync ID"
+
+#~ msgid "Church"
+#~ msgstr "Kirche"
+
+#~ msgid "Church URL"
+#~ msgstr "URL der Kirche"
 
 # THIS FILE IS AUTOCREATED BY POTTER
 # All changes will be lost with the next run of Potter!

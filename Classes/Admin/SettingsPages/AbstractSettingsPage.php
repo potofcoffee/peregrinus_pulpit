@@ -20,9 +20,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
+use Peregrinus\Pulpit\Settings\SettingsTab;
 
 class AbstractSettingsPage
 {
@@ -32,6 +32,7 @@ class AbstractSettingsPage
     protected $menuTitle = '';
     protected $pageTitle = '';
     protected $capability = 'manage_options';
+    protected $tabs = [];
 
     /**
      * Start up
@@ -45,8 +46,8 @@ class AbstractSettingsPage
      */
     public function register()
     {
-        add_action('admin_menu', array($this, 'addPluginPage'));
-        add_action('admin_init', array($this, 'init'));
+        add_action('admin_menu', [$this, 'addPluginPage']);
+        add_action('admin_init', [$this, 'init']);
     }
 
     /**
@@ -139,8 +140,9 @@ class AbstractSettingsPage
             $this->getOptionName(),
             [$this, 'sanitize']
         );
-        foreach ($this->sections as $section) {
-            $section->register($this);
+        /** @var SettingsTab $tab */
+        foreach ($this->tabs as $tab) {
+            $tab->register();
         }
     }
 
@@ -148,7 +150,7 @@ class AbstractSettingsPage
      * Get option group name
      * @return string Option group name
      */
-    protected function getOptionGroupName()
+    public function getOptionGroupName()
     {
         return PEREGRINUS_PULPIT . '_options';
     }
@@ -167,14 +169,21 @@ class AbstractSettingsPage
      */
     public function render()
     {
+        /** @var SettingsTab $activeTab */
+        $activeTab = $this->tabs[$_GET['tab']] ?: array_values($this->tabs)[0];
+
         $this->fetchOptions();
         echo '<div class="wrap">'
             . '<h1>' . __('Settings') . ' > ' . $this->getPageTitle() . '</h1>';
         $this->headerFunctions();
+        echo '<h2 class="nav-tab-wrapper">';
+        /** @var SettingsTab $tab */
+        foreach ($this->tabs as $tab) {
+            echo $tab->renderTabTitle($tab->getKey()==$activeTab->getKey());
+        }
+        echo '</h2>';
         echo '<form method="post" action="options.php">';
-        settings_fields($this->getOptionGroupName());
-        do_settings_sections($this->getSlug());
-        submit_button();
+        $activeTab->render();
         echo '</form>'
             . '</div>';
     }
@@ -190,7 +199,6 @@ class AbstractSettingsPage
      */
     public function headerFunctions()
     {
-
     }
 
     /**
@@ -248,7 +256,6 @@ class AbstractSettingsPage
         echo '<div ' . ($id ? 'id="' . $id . '"' : '') . ' class="notice notice-' . $type . ($isDismissible ? ' is-dismissible' : '') . '">'
             . '<p>' . $text . '</p>'
             . '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Diese Meldung ausblenden.</span></button></div>';
-
     }
 
     public function getUrl($arguments = [])
@@ -263,10 +270,19 @@ class AbstractSettingsPage
 
     /**
      * Get a field's name
-     * @param $field Field name
+     * @param $field Field key
+     * @return string Field name
      */
     protected function getFieldName($field)
     {
         return $this->getOptionName() . '[' . $field . ']';
+    }
+
+    /**
+     * Add a tab to the settings page
+     * @param SettingsTab $tab
+     */
+    protected function addTab(SettingsTab $tab) {
+        $this->tabs[$tab->getKey()] = $tab;
     }
 }

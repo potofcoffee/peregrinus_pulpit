@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -92,6 +93,24 @@ class SwitchViewHelper extends AbstractViewHelper
     }
 
     /**
+     * Backups "switch expression" and "break" state of a possible parent switch ViewHelper to support nesting
+     *
+     * @return void
+     */
+    protected function backupSwitchState()
+    {
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists(SwitchViewHelper::class,
+            'switchExpression')) {
+            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get(SwitchViewHelper::class,
+                'switchExpression');
+        }
+        if ($this->renderingContext->getViewHelperVariableContainer()->exists(SwitchViewHelper::class, 'break')) {
+            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get(SwitchViewHelper::class,
+                'break');
+        }
+    }
+
+    /**
      * @param NodeInterface[] $childNodes
      * @return mixed
      */
@@ -138,21 +157,6 @@ class SwitchViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Backups "switch expression" and "break" state of a possible parent switch ViewHelper to support nesting
-     *
-     * @return void
-     */
-    protected function backupSwitchState()
-    {
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists(SwitchViewHelper::class, 'switchExpression')) {
-            $this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get(SwitchViewHelper::class, 'switchExpression');
-        }
-        if ($this->renderingContext->getViewHelperVariableContainer()->exists(SwitchViewHelper::class, 'break')) {
-            $this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get(SwitchViewHelper::class, 'break');
-        }
-    }
-
-    /**
      * Restores "switch expression" and "break" states that might have been backed up in backupSwitchState() before
      *
      * @return void
@@ -160,10 +164,12 @@ class SwitchViewHelper extends AbstractViewHelper
     protected function restoreSwitchState()
     {
         if ($this->backupSwitchExpression !== null) {
-            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(SwitchViewHelper::class, 'switchExpression', $this->backupSwitchExpression);
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(SwitchViewHelper::class,
+                'switchExpression', $this->backupSwitchExpression);
         }
         if ($this->backupBreakState !== false) {
-            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(SwitchViewHelper::class, 'break', true);
+            $this->renderingContext->getViewHelperVariableContainer()->addOrUpdate(SwitchViewHelper::class, 'break',
+                true);
         }
     }
 
@@ -180,8 +186,13 @@ class SwitchViewHelper extends AbstractViewHelper
      * @param TemplateCompiler $compiler
      * @return string
      */
-    public function compile($argumentsName, $closureName, &$initializationPhpCode, ViewHelperNode $node, TemplateCompiler $compiler)
-    {
+    public function compile(
+        $argumentsName,
+        $closureName,
+        &$initializationPhpCode,
+        ViewHelperNode $node,
+        TemplateCompiler $compiler
+    ) {
         $phpCode = 'call_user_func_array(function($arguments) use ($renderingContext, $self) {' . PHP_EOL .
             'switch ($arguments[\'expression\']) {' . PHP_EOL;
         foreach ($node->getChildNodes() as $childNode) {
@@ -193,11 +204,11 @@ class SwitchViewHelper extends AbstractViewHelper
                 $valueClosure = $compiler->wrapViewHelperNodeArgumentEvaluationInClosure($childNode, 'value');
                 $childrenClosure = $compiler->wrapChildNodesInClosure($childNode);
                 $phpCode .= sprintf(
-                    'case call_user_func(%s): return call_user_func(%s);',
-                    $valueClosure,
-                    $childrenClosure,
-                    $compiler->getNodeConverter()->convert($childNode)
-                ) . PHP_EOL;
+                        'case call_user_func(%s): return call_user_func(%s);',
+                        $valueClosure,
+                        $childrenClosure,
+                        $compiler->getNodeConverter()->convert($childNode)
+                    ) . PHP_EOL;
             }
         }
         $phpCode .= '}' . PHP_EOL;

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Installer;
-
 
 class ComposerWrapper
 {
@@ -48,8 +46,10 @@ class ComposerWrapper
             $this->composerCmd = $composerPath;
         } else {
             if (!file_exists(PEREGRINUS_PULPIT_BASE_PATH . 'composer.phar')) {
-                file_put_contents(PEREGRINUS_PULPIT_BASE_PATH . 'composer.phar',
-                    file_get_contents(self::COMPOSER_DOWNLOAD_URL));
+                file_put_contents(
+                    PEREGRINUS_PULPIT_BASE_PATH . 'composer.phar',
+                    file_get_contents(self::COMPOSER_DOWNLOAD_URL)
+                );
             }
             $this->composerCmd = 'php composer.phar';
         }
@@ -99,7 +99,9 @@ class ComposerWrapper
     public function do($commandLine)
     {
         chdir(PEREGRINUS_PULPIT_BASE_PATH);
-        return shell_exec('HOME=' . $_SERVER['DOCUMENT_ROOT'] . ' ' . $this->composerCmd . ' ' . $commandLine . ' 2>&1');
+        return shell_exec(
+            'HOME=' . $_SERVER['DOCUMENT_ROOT'] . ' ' . $this->composerCmd . ' ' . $commandLine . ' 2>&1'
+        );
     }
 
     /**

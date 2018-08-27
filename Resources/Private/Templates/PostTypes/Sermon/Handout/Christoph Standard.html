@@ -1,0 +1,115 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf"
+        layout="A5" debug="1" bottommargin="5">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout.css" media="all"/>
+    </head>
+    <body>
+    <div class="container">
+        <h1>{sermon.post_title}
+            <f:if condition="{sermon.subtitle}"><br/>{sermon.subtitle}</f:if>
+        </h1>
+        <h2>Begleitzettel zur Predigt von Pfarrer Christoph Fischer am {sermon.post_date -> p:format.date(format:
+            '%d.%m.%Y')}</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-8">
+                <f:if condition="{sermon.thumbnail}">
+                    <wp:postImage post="{sermon.ID}"/>
+                </f:if>
+            </div>
+            <div class="col-xs-4">
+                <p:qrcode data="http://toph.de/p{sermon.post_date -> p:format.date(format: '%y%m%d')}"/>
+                <p>Weitere Informationen und Material zur
+                    Predigt findest du online unter <br/>
+                    <b>http://toph.de/p{sermon.post_date -> p:format.date(format: '%y%m%d')}</b>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-8">
+                <h3>Darum geht es</h3>
+                {sermon.content.main}
+                <h3>
+                    <f:if condition="{sermon.notes_header}">
+                        <f:then>{sermon.notes_header}</f:then>
+                        <f:else>Notizen zur Predigt</f:else>
+                    </f:if>
+                </h3>
+                <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
+                <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
+                                      listStyle="font-size: 12pt;"/>
+            </div>
+            <div class="col-xs-4">
+                <h3>Bibellese</h3>
+                <p>{sermon.reference}</p>
+                <p class="small">
+                    Wir lesen die Bibel in verschiedenen
+                    Übersetzungen? Das soll dich nicht
+                    verwirren, sondern bereichern! Vielleicht
+                    entdeckst du durch den Vergleich der
+                    Übersetzungen etwas ganz Neues.
+                </p>
+                <p class="small">
+                    Natürlich gibt es die Bibel auch als App für
+                    dein Smartphone. Mit dem folgenden Code
+                    kannst du die oben genannte Stelle in der
+                    "YouVersion"-Bibel-App direkt aufschlagen.
+                </p>
+                <p:qrcode data="{p:youversionLink(reference: sermon.reference)}"/>
+            </div>
+
+        </div>
+        <div style="page-break-before: always;"></div>
+        <div class="row">
+            <div class="col-xs-8">
+                <f:if condition="{sermon.questions}">
+                    <h3>Fragen zur Vertiefung</h3>
+                    <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter
+                        über das
+                        Gehörte nachzudenken.
+                    </p>
+                    <p:format.orderedList list="{sermon.questions}" underlineMode="none"/>
+                </f:if>
+                <f:if condition="{sermon.further_reading}">
+                    <h3>Literaturtipps</h3>
+                    <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir
+                        Folgendes weiterhelfen:</p>
+                    {sermon.further_reading}
+                </f:if>
+            </div>
+            <div class="col-xs-4">
+                <h3>Über Christoph</h3>
+                <p>Christoph Fischer (* 1978) ist Pfarrer der Evangelischen Landeskirche in Württemberg auf der Pfarrstelle "Erlöserkirche" in Albstadt-Tailfingen.</p>
+                <p>Christoph ist verheiratet mit Rebecca. Gemeinsam haben sie drei Töchter.</p>
+                <hr/>
+                <p>Pfarrer Christoph Fischer<br/>
+                    Liegnitzer Str. 38<br/>
+                    72461 Albstadt</p>
+                <p>Tel. (0 74 32) 37 62<br/>
+                    chris@toph.de<br/>
+                    http://christoph-fischer.org</p>
+                <hr/>
+                <img class="cc" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
+                <p class="small">
+                    Diese Predigt und alle dazu gehörigen
+                    Ressourcen (Predigtzettel, Aufnahme) sind
+                    lizenziert unter einer Creative Commons
+                    Namensnennung - Weitergabe unter
+                    gleichen Bedingungen 4.0 International
+                    Lizenz. Verwendete Bilder stehen eventuell
+                    unter eigenen Lizenzbedingungen.
+                </p>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

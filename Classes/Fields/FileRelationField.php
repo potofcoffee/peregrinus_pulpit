@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
 
@@ -39,18 +37,17 @@ class FileRelationField extends AbstractField
 
     public function __construct(
         $key,
-        string $label = '',
-        string $mimeType = '',
-        string $buttonTitle = '',
-        string $dialogTitle = '',
-        string $context = ''
+        string $label = null,
+        string $mimeType = null,
+        string $buttonTitle = null,
+        string $dialogTitle = null,
+        string $context = null
     ) {
         parent::__construct($key, $label, $context);
         $this->mimeType = $mimeType;
         $this->buttonTitle = $buttonTitle;
         $this->dialogTitle = $dialogTitle;
     }
-
 
     /**
      * Output this field's form element
@@ -69,15 +66,26 @@ class FileRelationField extends AbstractField
         }
 
         $o = $this->renderLabel();
+        // TODO: Replace this ugly code with a template?
         $o .= '<div class="pulpit-upload-wrapper" data-attachment-id="' . $this->getValue($values) . '" data-button-title="' . $this->buttonTitle . '" data-field="' . $this->getFieldName() . '" data-dialog-title="' . $this->dialogTitle . '" data-mime-type="' . $this->mimeType . '">
-        <input type="hidden" name="' . $this->getFieldName() . '" class="image_path" value="" id="pulpit-upload-data-' . $this->getFieldName() . '">
+        <input type="hidden" name="' . $this->getFieldName() . '" class="image_path" value="" id="pulpit-upload-data-' . $this->sanitizeId($this->getFieldName()) . '">
         <div class="pulpit-upload-preview ' . ($preview ? '' : 'pulpit-hide-on-load') . '">
-        <span id="pulpit-upload-preview-' . $this->getFieldName() . '"><b>' . $preview . '</b></span>
+        <span id="pulpit-upload-preview-' . $this->sanitizeId($this->getFieldName()) . '"><b>' . $preview . '</b></span>
 <button class="button button-small pulpit-upload-clear-button"  data-field="' . $this->getFieldName() . '" title="Zuweisung löschen"><span class="dashicons dashicons-trash"></span></button>
 </div>
-<input type="button" value="' . __('Aufnahme auswählen',
-                'pulpit') . '" class="button button-small pulpit-upload-button ' . ($preview ? 'pulpit-hide-on-load' : '') . '"/><br /></div>';
+<input type="button" value="' . $this->buttonTitle . '" class="button button-small pulpit-upload-button ' . ($preview ? 'pulpit-hide-on-load' : '') . '"/><br /></div>';
         return $o;
+    }
+
+    /**
+     * Sanitize string for use as id
+     * This is used so that field names containing brackets [] can be used as id
+     * @param string $name Field name
+     * @return string Id string
+     */
+    protected function sanitizeId(string $name): string
+    {
+        return \strtr($name, ['[' => '_', ']' => '_']);
     }
 
     public function renderLabel()
@@ -85,6 +93,4 @@ class FileRelationField extends AbstractField
         $label = parent::renderLabel();
         return (trim($label) ? $label . '<br />' : '');
     }
-
-
 }

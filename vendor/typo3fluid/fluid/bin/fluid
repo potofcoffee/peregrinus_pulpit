@@ -36,7 +36,8 @@ try {
  * - given STDIN through pipe will render the STDIN
  *   content as a fluid template.
  */
-class FluidCommandLine {
+class FluidCommandLine
+{
 
     const ARGUMENT_HELP = 'help';
     const ARGUMENT_SOCKET = 'socket';
@@ -75,7 +76,8 @@ class FluidCommandLine {
      * @param array $arguments
      * @return string
      */
-    public function handleCommand(array $arguments) {
+    public function handleCommand(array $arguments)
+    {
         $arguments = $this->parseAndValidateInputArguments($arguments);
         if (isset($arguments[self::ARGUMENT_HELP])) {
             return $this->dumpHelpHeader() .
@@ -119,18 +121,18 @@ class FluidCommandLine {
         if (isset($arguments[self::ARGUMENT_VARIABLES])) {
             $variablesReference = trim($arguments[self::ARGUMENT_VARIABLES]);
             if (!preg_match('/[^a-z0-9\\\:\/\.\s]+/i', $variablesReference)) {
-                if (strpos($variablesReference, ':') !== FALSE) {
+                if (strpos($variablesReference, ':') !== false) {
                     list ($variableProviderClassName, $source) = explode(':', $variablesReference, 2);
                 } else {
                     $variableProviderClassName = $variablesReference;
-                    $source = NULL;
+                    $source = null;
                 }
                 /** @var \TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface $variableProvider */
                 $variableProvider = new $variableProviderClassName();
                 $variableProvider->setSource($source);
             } elseif (($variablesReference{0} === '{' && substr($variablesReference, -1) === '}')
                 || file_exists($variablesReference)
-                || strpos($variablesReference, ':/') !== FALSE
+                || strpos($variablesReference, ':/') !== false
             ) {
                 $variableProvider = new \TYPO3Fluid\Fluid\Core\Variables\JSONVariableProvider();
                 $variableProvider->setSource($variablesReference);
@@ -145,168 +147,19 @@ class FluidCommandLine {
         } elseif (isset($arguments[self::ARGUMENT_SOCKET])) {
             $this->listenIndefinitelyOnSocket($arguments[self::ARGUMENT_SOCKET], $view);
         } else {
-            $action = isset($arguments[self::ARGUMENT_CONTROLLERACTION]) ? $arguments[self::ARGUMENT_CONTROLLERACTION] : NULL;
+            $action = isset($arguments[self::ARGUMENT_CONTROLLERACTION]) ? $arguments[self::ARGUMENT_CONTROLLERACTION] : null;
             return $view->render($action);
         }
-    }
-
-    /**
-     * @param \TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult $result
-     * @return string
-     */
-    protected function renderWarmupResult(\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult $result) {
-        $string = PHP_EOL . 'Template cache warmup results' . PHP_EOL . PHP_EOL;
-        foreach ($result->getResults() as $templatePathAndFilename => $aspects) {
-            $string .= sprintf(
-                "%s\n    Compiled? %s\n    Has Layout? %s\n",
-                $templatePathAndFilename,
-                $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILABLE] ? 'YES' : 'NO',
-                $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_HASLAYOUT] ? 'YES' : 'NO'
-            );
-            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILABLE])) {
-                $string .= sprintf(
-                    "    Compiled as: %s\n",
-                    $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILEDCLASS]
-                );
-            }
-            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_FAILURE])) {
-                $string .= sprintf(
-                    "    Compilation failure reason: %s\n",
-                    $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_FAILURE]
-                );
-            }
-            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_MITIGATIONS])) {
-                foreach ($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_MITIGATIONS] as $index => $mitigation) {
-                    $string .= sprintf("    Suggested mitigation #%d: %s\n", $index + 1, $mitigation);
-                }
-            }
-            $string .= PHP_EOL;
-        }
-        $string .= PHP_EOL;
-        return $string;
-    }
-
-    /**
-     * @param string $socketIdentifier
-     * @param ViewInterface $view
-     * @return void
-     */
-    protected function listenIndefinitelyOnSocket($socketIdentifier, \TYPO3Fluid\Fluid\View\ViewInterface $view) {
-        if (file_exists($socketIdentifier)) {
-            unlink($socketIdentifier);
-        }
-        umask(0);
-        if (preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{1,5}/', $socketIdentifier)) {
-            $socketServer = stream_socket_server('tcp://' . $socketIdentifier);
-        } else {
-            $socketServer = stream_socket_server('unix://' . $socketIdentifier);
-        }
-        while ($socket = stream_socket_accept($socketServer, -1)) {
-            $input = stream_socket_recvfrom($socket, 1024);
-            $templatePathAndFilename = $this->parseTemplatePathAndFilenameFromHeaders($input, $view->getTemplatePaths());
-            if (!file_exists($templatePathAndFilename)) {
-                $response = $this->createErrorResponse('Not Found', 404);
-            } else {
-                try {
-                    $rendered = $this->renderSocketRequest($templatePathAndFilename, $view);
-                    $response = $this->createResponse($rendered);
-                } catch (\TYPO3Fluid\Fluid\Exception $error) {
-                    $response = $this->createErrorResponse($error->getMessage(), 500);
-                }
-            }
-            stream_socket_sendto($socket, $response);
-            stream_socket_sendto($socket, "\x0B");
-            stream_socket_shutdown($socket, STREAM_SHUT_WR);
-        }
-    }
-
-    /**
-     * @param string $input
-     * @param \TYPO3Fluid\Fluid\View\TemplatePaths $paths
-     * @return string
-     */
-    protected function parseTemplatePathAndFilenameFromHeaders($input, \TYPO3Fluid\Fluid\View\TemplatePaths $paths) {
-        if (strpos($input, "\000") !== FALSE) {
-            return $this->parseTemplatePathAndFilenameFromScgiHeaders($input);
-        } else {
-            return $this->parseTemplatePathAndFilenameFromProcessedHeaders($input, $paths);
-        }
-    }
-
-    /**
-     * @param string $input
-     * @param \TYPO3Fluid\Fluid\View\TemplatePaths $paths
-     * @return string
-     */
-    protected function parseTemplatePathAndFilenameFromProcessedHeaders($input, \TYPO3Fluid\Fluid\View\TemplatePaths $paths) {
-        $matches = array();
-        preg_match('/^GET ([^\s]+)/', $input, $matches);
-        $uri = $matches[1];
-        if (substr($uri, -1) === '/') {
-            $uri .= 'index.html';
-        }
-        $templateRootPath = reset($paths->getTemplateRootPaths());
-        $templateRootPath = rtrim($templateRootPath, '/');
-        return $templateRootPath . $uri;
-    }
-
-    /**
-     * @param string $input
-     * @return string
-     */
-    protected function parseTemplatePathAndFilenameFromScgiHeaders($input) {
-        $lines = explode("\000", $input);
-        $parameters = array();
-        while ($name = array_shift($lines)) {
-            $parameters[$name] = array_shift($lines);
-        }
-        return $parameters['DOCUMENT_ROOT'] . $parameters['REQUEST_URI'];
-    }
-
-    /**
-     * @param string $response
-     * @param integer $code
-     */
-    protected function createErrorResponse($response, $code) {
-        $headers = array(
-            'HTTP/1.1 ' . $code . ' ' . $response
-        );
-        return implode("\n", $headers) . "\n\n" . $response;
-    }
-
-    /**
-     * @param string $response
-     * @return string
-     */
-    protected function createResponse($response) {
-        $headers = array(
-            'HTTP/1.1 200 OK',
-            'Cache-Control:no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
-            'Connection:keep-alive',
-            'Content-Type:text/html;charset=utf-8',
-            'Content-Length:' . strlen($response),
-            'Pragma:no-cache'
-        );
-        return implode("\n", $headers) . "\n\n" . $response;
-    }
-
-    /**
-     * @param $templatePathAndFilename
-     * @param \TYPO3Fluid\Fluid\View\ViewInterface $view
-     * @return string
-     */
-    protected function renderSocketRequest($templatePathAndFilename, \TYPO3Fluid\Fluid\View\ViewInterface $view) {
-        $view->getTemplatePaths()->setTemplatePathAndFilename($templatePathAndFilename);
-        return $view->render();
     }
 
     /**
      * @param array $arguments
      * @return array
      */
-    protected function parseAndValidateInputArguments(array $arguments) {
+    protected function parseAndValidateInputArguments(array $arguments)
+    {
         $allowed = $this->getAllowedParameterNames();
-        $argumentPointer = FALSE;
+        $argumentPointer = false;
         $parsed = array();
         foreach ($arguments as $argument) {
             if (substr($argument, 0, 2) === '--') {
@@ -314,10 +167,10 @@ class FluidCommandLine {
                 if (!in_array($argument, $allowed)) {
                     throw new InvalidArgumentException('Unsupported argument: ' . $argument);
                 }
-                $parsed[$argument] = FALSE;
+                $parsed[$argument] = false;
                 $argumentPointer = &$parsed[$argument];
             } else {
-                if ($argumentPointer === FALSE) {
+                if ($argumentPointer === false) {
                     $argumentPointer = $argument;
                 } elseif (is_array($argumentPointer)) {
                     $argumentPointer[] = $argument;
@@ -328,13 +181,13 @@ class FluidCommandLine {
             }
         }
         if (isset($parsed[self::ARGUMENT_TEMPLATEROOTPATHS])) {
-            $parsed[self::ARGUMENT_TEMPLATEROOTPATHS] = (array) $parsed[self::ARGUMENT_TEMPLATEROOTPATHS];
+            $parsed[self::ARGUMENT_TEMPLATEROOTPATHS] = (array)$parsed[self::ARGUMENT_TEMPLATEROOTPATHS];
         }
         if (isset($parsed[self::ARGUMENT_LAYOUTROOTPATHS])) {
-            $parsed[self::ARGUMENT_LAYOUTROOTPATHS] = (array) $parsed[self::ARGUMENT_LAYOUTROOTPATHS];
+            $parsed[self::ARGUMENT_LAYOUTROOTPATHS] = (array)$parsed[self::ARGUMENT_LAYOUTROOTPATHS];
         }
         if (isset($parsed[self::ARGUMENT_PARTIALROOTPATHS])) {
-            $parsed[self::ARGUMENT_PARTIALROOTPATHS] = (array) $parsed[self::ARGUMENT_PARTIALROOTPATHS];
+            $parsed[self::ARGUMENT_PARTIALROOTPATHS] = (array)$parsed[self::ARGUMENT_PARTIALROOTPATHS];
         }
         return $parsed;
     }
@@ -342,7 +195,8 @@ class FluidCommandLine {
     /**
      * @return array
      */
-    protected function getAllowedParameterNames() {
+    protected function getAllowedParameterNames()
+    {
         $reflection = new ReflectionClass($this);
         return array_values($reflection->getConstants());
     }
@@ -350,7 +204,8 @@ class FluidCommandLine {
     /**
      * @return string
      */
-    public function dumpHelpHeader() {
+    public function dumpHelpHeader()
+    {
         return PHP_EOL .
             '----------------------------------------------------------------------------------------------' . PHP_EOL .
             '				TYPO3 Fluid CLI: Help text' . PHP_EOL .
@@ -361,11 +216,13 @@ class FluidCommandLine {
     /**
      * @return string
      */
-    public function dumpSupportedParameters() {
+    public function dumpSupportedParameters()
+    {
         $parameters = $this->getAllowedParameterNames();
         $parameterString = 'Supported parameters:' . PHP_EOL . PHP_EOL;
         foreach ($parameters as $parameter) {
-            $parameterString .= "\t" . '--' . str_pad($parameter, 20, ' ') . ' # ' . $this->argumentDescriptions[$parameter] . PHP_EOL;
+            $parameterString .= "\t" . '--' . str_pad($parameter, 20,
+                    ' ') . ' # ' . $this->argumentDescriptions[$parameter] . PHP_EOL;
         }
         return $parameterString . PHP_EOL;
     }
@@ -373,7 +230,8 @@ class FluidCommandLine {
     /**
      * @return string
      */
-    public function dumpusageExample() {
+    public function dumpusageExample()
+    {
         return <<< HELP
 Use the CLI utility in the following modes:
 
@@ -468,6 +326,167 @@ Example SCGI config for Nginx:
 
 End of help text for FLuid CLI.
 HELP;
+    }
+
+    /**
+     * @param \TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult $result
+     * @return string
+     */
+    protected function renderWarmupResult(\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult $result)
+    {
+        $string = PHP_EOL . 'Template cache warmup results' . PHP_EOL . PHP_EOL;
+        foreach ($result->getResults() as $templatePathAndFilename => $aspects) {
+            $string .= sprintf(
+                "%s\n    Compiled? %s\n    Has Layout? %s\n",
+                $templatePathAndFilename,
+                $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILABLE] ? 'YES' : 'NO',
+                $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_HASLAYOUT] ? 'YES' : 'NO'
+            );
+            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILABLE])) {
+                $string .= sprintf(
+                    "    Compiled as: %s\n",
+                    $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_COMPILEDCLASS]
+                );
+            }
+            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_FAILURE])) {
+                $string .= sprintf(
+                    "    Compilation failure reason: %s\n",
+                    $aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_FAILURE]
+                );
+            }
+            if (isset($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_MITIGATIONS])) {
+                foreach ($aspects[\TYPO3Fluid\Fluid\Core\Cache\FluidCacheWarmupResult::RESULT_MITIGATIONS] as $index => $mitigation) {
+                    $string .= sprintf("    Suggested mitigation #%d: %s\n", $index + 1, $mitigation);
+                }
+            }
+            $string .= PHP_EOL;
+        }
+        $string .= PHP_EOL;
+        return $string;
+    }
+
+    /**
+     * @param string $socketIdentifier
+     * @param ViewInterface $view
+     * @return void
+     */
+    protected function listenIndefinitelyOnSocket($socketIdentifier, \TYPO3Fluid\Fluid\View\ViewInterface $view)
+    {
+        if (file_exists($socketIdentifier)) {
+            unlink($socketIdentifier);
+        }
+        umask(0);
+        if (preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{1,5}/', $socketIdentifier)) {
+            $socketServer = stream_socket_server('tcp://' . $socketIdentifier);
+        } else {
+            $socketServer = stream_socket_server('unix://' . $socketIdentifier);
+        }
+        while ($socket = stream_socket_accept($socketServer, -1)) {
+            $input = stream_socket_recvfrom($socket, 1024);
+            $templatePathAndFilename = $this->parseTemplatePathAndFilenameFromHeaders($input,
+                $view->getTemplatePaths());
+            if (!file_exists($templatePathAndFilename)) {
+                $response = $this->createErrorResponse('Not Found', 404);
+            } else {
+                try {
+                    $rendered = $this->renderSocketRequest($templatePathAndFilename, $view);
+                    $response = $this->createResponse($rendered);
+                } catch (\TYPO3Fluid\Fluid\Exception $error) {
+                    $response = $this->createErrorResponse($error->getMessage(), 500);
+                }
+            }
+            stream_socket_sendto($socket, $response);
+            stream_socket_sendto($socket, "\x0B");
+            stream_socket_shutdown($socket, STREAM_SHUT_WR);
+        }
+    }
+
+    /**
+     * @param string $input
+     * @param \TYPO3Fluid\Fluid\View\TemplatePaths $paths
+     * @return string
+     */
+    protected function parseTemplatePathAndFilenameFromHeaders($input, \TYPO3Fluid\Fluid\View\TemplatePaths $paths)
+    {
+        if (strpos($input, "\000") !== false) {
+            return $this->parseTemplatePathAndFilenameFromScgiHeaders($input);
+        } else {
+            return $this->parseTemplatePathAndFilenameFromProcessedHeaders($input, $paths);
+        }
+    }
+
+    /**
+     * @param string $input
+     * @return string
+     */
+    protected function parseTemplatePathAndFilenameFromScgiHeaders($input)
+    {
+        $lines = explode("\000", $input);
+        $parameters = array();
+        while ($name = array_shift($lines)) {
+            $parameters[$name] = array_shift($lines);
+        }
+        return $parameters['DOCUMENT_ROOT'] . $parameters['REQUEST_URI'];
+    }
+
+    /**
+     * @param string $input
+     * @param \TYPO3Fluid\Fluid\View\TemplatePaths $paths
+     * @return string
+     */
+    protected function parseTemplatePathAndFilenameFromProcessedHeaders(
+        $input,
+        \TYPO3Fluid\Fluid\View\TemplatePaths $paths
+    ) {
+        $matches = array();
+        preg_match('/^GET ([^\s]+)/', $input, $matches);
+        $uri = $matches[1];
+        if (substr($uri, -1) === '/') {
+            $uri .= 'index.html';
+        }
+        $templateRootPath = reset($paths->getTemplateRootPaths());
+        $templateRootPath = rtrim($templateRootPath, '/');
+        return $templateRootPath . $uri;
+    }
+
+    /**
+     * @param string $response
+     * @param integer $code
+     */
+    protected function createErrorResponse($response, $code)
+    {
+        $headers = array(
+            'HTTP/1.1 ' . $code . ' ' . $response
+        );
+        return implode("\n", $headers) . "\n\n" . $response;
+    }
+
+    /**
+     * @param $templatePathAndFilename
+     * @param \TYPO3Fluid\Fluid\View\ViewInterface $view
+     * @return string
+     */
+    protected function renderSocketRequest($templatePathAndFilename, \TYPO3Fluid\Fluid\View\ViewInterface $view)
+    {
+        $view->getTemplatePaths()->setTemplatePathAndFilename($templatePathAndFilename);
+        return $view->render();
+    }
+
+    /**
+     * @param string $response
+     * @return string
+     */
+    protected function createResponse($response)
+    {
+        $headers = array(
+            'HTTP/1.1 200 OK',
+            'Cache-Control:no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+            'Connection:keep-alive',
+            'Content-Type:text/html;charset=utf-8',
+            'Content-Length:' . strlen($response),
+            'Pragma:no-cache'
+        );
+        return implode("\n", $headers) . "\n\n" . $response;
     }
 
 }

@@ -6,47 +6,52 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4cac55c48c6b72658b6dbfbd3008e202
 {
-    public static $prefixLengthsPsr4 = array(
-        'c' =>
-            array(
-                'chillerlan\\Traits\\' => 18,
-                'chillerlan\\QRCode\\' => 18,
-            ),
-        'T' =>
-            array(
-                'TYPO3Fluid\\Fluid\\' => 17,
-            ),
-        'P' =>
-            array(
-                'Peregrinus\\Pulpit\\' => 18,
-            ),
-        'C' =>
-            array(
-                'Composer\\Installers\\' => 20,
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'c' => 
+        array (
+            'chillerlan\\Traits\\' => 18,
+            'chillerlan\\QRCode\\' => 18,
+        ),
+        'T' => 
+        array (
+            'TYPO3Fluid\\Fluid\\' => 17,
+        ),
+        'P' => 
+        array (
+            'Peregrinus\\Pulpit\\' => 18,
+            'Peregrinus\\Potter\\' => 18,
+        ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'chillerlan\\Traits\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/chillerlan/php-traits/src',
-            ),
-        'chillerlan\\QRCode\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
-            ),
-        'TYPO3Fluid\\Fluid\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/typo3fluid/fluid/src',
-            ),
-        'Peregrinus\\Pulpit\\' =>
-            array(
-                0 => __DIR__ . '/../..' . '/Classes',
-            ),
-        'Composer\\Installers\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
-            ),
+    public static $prefixDirsPsr4 = array (
+        'chillerlan\\Traits\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-traits/src',
+        ),
+        'chillerlan\\QRCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
+        ),
+        'TYPO3Fluid\\Fluid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/typo3fluid/fluid/src',
+        ),
+        'Peregrinus\\Pulpit\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Classes',
+        ),
+        'Peregrinus\\Potter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/peregrinus/potter/Classes',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

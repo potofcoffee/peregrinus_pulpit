@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\PostTypes;
-
 
 class PostTypeFactory
 {
@@ -42,6 +40,5 @@ class PostTypeFactory
         }
         return $objects;
     }
-
 
 }

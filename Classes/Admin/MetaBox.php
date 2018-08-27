@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Admin;
-
 
 class MetaBox
 {
@@ -87,7 +85,6 @@ class MetaBox
         foreach ($this->fields as $field) {
             echo $field->render($customFieldValues);
         }
-
     }
 
     /**
@@ -100,5 +97,4 @@ class MetaBox
             $field->save($post->ID);
         }
     }
-
 }

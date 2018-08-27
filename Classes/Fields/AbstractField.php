@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\Fields;
-
 
 class AbstractField
 {
@@ -44,7 +42,6 @@ class AbstractField
      */
     public function register()
     {
-
     }
 
     /**
@@ -111,12 +108,14 @@ class AbstractField
 
     /**
      * Get value from Array
-     * @param $values Value
+     * @param array $values Value
+     * @param bool $expectArray Optional: Return an array? default: false
+     * @return mixed Value
      */
-    public function getValue($values)
+    public function getValue($values, $expectArray = false)
     {
         $value = $values[$this->getKey()];
-        if (is_array($value)) {
+        if ((!$expectArray) && (is_array($value))) {
             $value = $value[0];
         }
         return $value;
@@ -155,6 +154,4 @@ class AbstractField
     {
         return $_POST[$this->key];
     }
-
-
 }

@@ -20,9 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace Peregrinus\Pulpit\ViewHelpers\WordPress;
-
 
 use Peregrinus\Pulpit\ViewHelpers\AbstractBufferedViewHelper;
 
@@ -55,5 +53,4 @@ class DoSettingsSectionsViewHelper extends AbstractBufferedViewHelper
     {
         do_settings_sections($this->arguments['group']);
     }
-
 }

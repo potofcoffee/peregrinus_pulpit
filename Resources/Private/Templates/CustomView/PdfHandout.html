@@ -1,4 +1,6 @@
-<p:output.pdf filename="{post.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf" layout="A5" debug="1" bottommargin="5">
+<p:output.pdf
+        filename="{post.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Begleitzettel.pdf"
+        layout="A5" debug="1" bottommargin="5">
     <!DOCTYPE html>
     <html>
     <head>
@@ -14,7 +16,7 @@
         <h1>{post.post_title}
             <f:if condition="{meta.subtitle.0}"><br/>{meta.subtitle.0}</f:if>
         </h1>
-        <h2>Begleitzettel zur Predigt von Pastor Christoph Fischer am {post.post_date -> p:format.date(format:
+        <h2>Begleitzettel zur Predigt von Pfarrer Christoph Fischer am {post.post_date -> p:format.date(format:
             '%d.%m.%Y')}</h2>
         <hr/>
         <div class="row">
@@ -40,23 +42,24 @@
                     </f:if>
                 </h3>
                 <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
-                <p:format.orderedList list="{meta.key_points.0}" underlineMode="{underlineMode}" listStyle="font-size: 12pt;"/>
+                <p:format.orderedList list="{meta.key_points.0}" underlineMode="{underlineMode}"
+                                      listStyle="font-size: 12pt;"/>
             </div>
             <div class="col-xs-4">
                 <h3>Bibellese</h3>
                 <p>{meta.reference.0}</p>
                 <p class="small">
                     Wir lesen die Bibel in verschiedenen
-                        Übersetzungen? Das soll dich nicht
-                        verwirren, sondern bereichern! Vielleicht
-                        entdeckst du durch den Vergleich der
-                        Übersetzungen etwas ganz Neues.
+                    Übersetzungen? Das soll dich nicht
+                    verwirren, sondern bereichern! Vielleicht
+                    entdeckst du durch den Vergleich der
+                    Übersetzungen etwas ganz Neues.
                 </p>
                 <p class="small">
-                        Natürlich gibt es die Bibel auch als App für
-                        dein Smartphone. Mit dem folgenden Code
-                        kannst du die oben genannte Stelle in der
-                        "YouVersion"-Bibel-App direkt aufschlagen.
+                    Natürlich gibt es die Bibel auch als App für
+                    dein Smartphone. Mit dem folgenden Code
+                    kannst du die oben genannte Stelle in der
+                    "YouVersion"-Bibel-App direkt aufschlagen.
                 </p>
                 <p:qrcode data="{p:youversionLink(reference: meta.reference.0)}"/>
             </div>
@@ -67,41 +70,40 @@
             <div class="col-xs-8">
                 <f:if condition="{meta.questions.0}">
                     <h3>Fragen zur Vertiefung</h3>
-                    <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter über das
+                    <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter
+                        über das
                         Gehörte nachzudenken.
                     </p>
                     <p:format.orderedList list="{meta.questions.0}" underlineMode="none"/>
                 </f:if>
                 <f:if condition="{meta.further_reading.0}">
                     <h3>Literaturtipps</h3>
-                    <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir Folgendes weiterhelfen:</p>
+                    <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir
+                        Folgendes weiterhelfen:</p>
                     {meta.further_reading.0}
                 </f:if>
             </div>
             <div class="col-xs-4">
                 <h3>Über Christoph</h3>
-                <p>Christoph Fischer (* 1978) ist seit mehr als 15 Jahren im hauptamtlichen pastoralen Dienst, zuletzt bei der Volksmission Freudenstadt. Ab August 2018 wechselt Christoph in den Pfarrdienst der Evangelischen Landeskirche in Württemberg.</p>
-                <p>Christoph ist verheiratet mit Rebecca.
-                    Gemeinsam haben sie drei Töchter,
-                    Ann-Céline (* 2005), Emma (* 2007)
-                    und Pia (*2012).</p>
+                <p>Christoph Fischer (* 1978) ist Pfarrer der Evangelischen Landeskirche in Württemberg auf der Pfarrstelle "Erlöserkirche" in Albstadt-Tailfingen.</p>
+                <p>Christoph ist verheiratet mit Rebecca. Gemeinsam haben sie drei Töchter.</p>
                 <hr/>
-                <p>Pastor Christoph Fischer<br/>
-                    Gerhart-Hauptmann-Weg 11<br/>
-                    72250 Freudenstadt</p>
-                <p>Tel. (0 74 41) 95 06 64<br/>
+                <p>Pfarrer Christoph Fischer<br/>
+                    Liegnitzer Str. 38<br/>
+                    72461 Albstadt</p>
+                <p>Tel. (0 74 32) 37 62<br/>
                     chris@toph.de<br/>
                     http://christoph-fischer.org</p>
                 <hr/>
                 <img class="cc" src="{baseUrl}/Resources/Public/Images/cc-by-sa.png"/>
                 <p class="small">
                     Diese Predigt und alle dazu gehörigen
-                        Ressourcen (Predigtzettel, Aufnahme) sind
-                        lizenziert unter einer Creative Commons
-                        Namensnennung - Weitergabe unter
-                        gleichen Bedingungen 4.0 International
-                        Lizenz. Verwendete Bilder stehen eventuell
-                        unter eigenen Lizenzbedingungen.
+                    Ressourcen (Predigtzettel, Aufnahme) sind
+                    lizenziert unter einer Creative Commons
+                    Namensnennung - Weitergabe unter
+                    gleichen Bedingungen 4.0 International
+                    Lizenz. Verwendete Bilder stehen eventuell
+                    unter eigenen Lizenzbedingungen.
                 </p>
             </div>
         </div>

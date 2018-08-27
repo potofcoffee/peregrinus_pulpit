@@ -1,0 +1,66 @@
+<f:layout name="Page"/>
+<f:section name="Content">
+    <div class="page-sermon-archive">
+        <div class="row section-header">
+            <div class="col-sm-12 section-title">
+                <h2>Alle Predigten</h2>
+                <p>Hier findest du eine Übersicht von Christophs Predigten... </p>
+            </div>
+        </div>
+        <p>Um immer aktuelle Predigten zu hören, kannst du ganz einfach Christophs <a href="/podcast.xml">Podcast
+            abonnieren</a>.
+            Oder du kommst einfach mal in den Gottesdienst, um Christoph <a href="/live/">live zu hören</a>.</p>
+        <hr/>
+        <div class="row">
+            <f:for each="{sermons}" as="sermon" iteration="s">
+                <f:if condition="{s.cycle} < 5">
+                    <f:then>
+                        <div class="col-sm-3 col-6 portbox">
+                            <div class="hthumb">
+                                <wp:postImage post="{sermon.ID}" link="{sermon.ID -> wp:permalink()}"/>
+                            </div>
+                            <h3>
+                                <a href="{sermon.ID -> wp:permalink()}">
+                                    {sermon.title -> f:format.raw()}
+                                    <f:if condition="{sermon.subtitle}">: {sermon.subtitle -> f:format.raw()}</f:if>
+                                </a>
+                            </h3>
+                            <div class="hometa">
+                                <f:for each="{sermon.events}" as="event">
+                                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                                    ,
+                                    {event.location.title}<br/>
+                                </f:for>
+                            </div>
+                            <f:format.raw>{sermon.content.main}</f:format.raw>
+                        </div>
+
+                    </f:then>
+                    <f:else>
+                        <div class="row dotted">
+                            <div class="col-sm-2">
+                                <f:for each="{sermon.events}" as="event">
+                                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                                    <br/>
+                                </f:for>
+                            </div>
+                            <div class="col-sm-8">
+                                <a href="{sermon.ID -> wp:permalink()}">
+                                    {sermon.title -> f:format.raw()}
+                                    <f:if condition="{sermon.subtitle}">: {sermon.subtitle -> f:format.raw()}</f:if>
+                                </a>
+                            </div>
+                            <div class="col-sm-2">
+                                {sermon.reference}
+                            </div>
+                        </div>
+                    </f:else>
+                </f:if>
+                <f:if condition="{s.cycle} == 4">
+        </div>
+        <p></p>
+        </f:if>
+
+        </f:for>
+    </div>
+</f:section>

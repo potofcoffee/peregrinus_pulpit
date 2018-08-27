@@ -26,19 +26,26 @@
 
         calculateSpeechTime: function () {
             var wc = new wp.utils.WordCounter();
-            var speechTime = (wc.count(tinyMCE.activeEditor.getContent())) / 110 * 60;
-            $('#speech-length-value').html(pulpit.admin.utils.toHHMMSS(speechTime));
-        }
-    });
+            var ed = tinyMCE.activeEditor;
+
+            var text = ed.getContent();
+            var speechTime = (wc.count(text)) / 110 * 60;
+
+            $('#speech-length-value').html(this.toHHMMSS(speechTime.toString()));
+        },
+
+  });
 
 
     $(document).on('tinymce-editor-init', function (event, editor) {
-        $('td#wp-word-count').after('<td id="speech-length-message">'+pulpit_speech.speech_time + ': '+'<span id="speech-length-value"></span></td>');
-        pulpit.admin.utils.calculateSpeechTime();
-
-        window.tinymce.get('content').on('keyup', function (e) {
+        if (editor.id == 'content') {
+            $('#postdivrich td#wp-word-count').after('<td id="speech-length-message">' + pulpit_speech.speech_time + ': ' + '<span id="speech-length-value"></span></td>');
             pulpit.admin.utils.calculateSpeechTime();
-        });
+
+            window.tinymce.get('content').on('keyup', function (e) {
+                pulpit.admin.utils.calculateSpeechTime();
+            });
+        }
     });
 
 

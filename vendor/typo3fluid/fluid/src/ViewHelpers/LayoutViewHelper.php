@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3Fluid\Fluid\ViewHelpers;
 
 /*
@@ -30,18 +31,8 @@ class LayoutViewHelper extends AbstractViewHelper
 {
 
     /**
-     * Initialize arguments
-     *
-     * @return void
-     * @api
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument('name', 'string', 'Name of layout to use. If none given, "Default" is used.');
-    }
-
-    /**
-     * On the post parse event, add the "layoutName" variable to the variable container so it can be used by the TemplateView.
+     * On the post parse event, add the "layoutName" variable to the variable container so it can be used by the
+     * TemplateView.
      *
      * @param ViewHelperNode $node
      * @param array $arguments
@@ -60,6 +51,17 @@ class LayoutViewHelper extends AbstractViewHelper
         }
 
         $variableContainer->add('layoutName', $layoutNameNode);
+    }
+
+    /**
+     * Initialize arguments
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('name', 'string', 'Name of layout to use. If none given, "Default" is used.');
     }
 
     /**
