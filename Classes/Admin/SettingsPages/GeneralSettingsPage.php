@@ -136,6 +136,26 @@ class GeneralSettingsPage extends AbstractSettingsPage
         );
         $this->addTab(new SettingsTab(
                 $this,
+                'liturgy',
+                __('Liturgy', 'pulpit'),
+                [
+                    new SettingsSection(
+                        'liturgy',
+                        __('Liturgy planning', 'pulpit'),
+                        __('Here you can set up some features for liturgy planning.'),
+                        [
+                            new Setting(
+                                'agenda_instructions',
+                                __('Provide agenda instructions for', 'pulpit'),
+                                new InputField('agenda_instructions', '', $this->getOptionName())
+                            ),
+                        ]
+                    ),
+                ]
+            )
+        );
+        $this->addTab(new SettingsTab(
+                $this,
                 'setup',
                 __('Setup', 'pulpit'),
                 []
