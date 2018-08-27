@@ -1,0 +1,287 @@
+<f:layout name="Page"/>
+<f:section name="Content">
+    <div class="row">
+        <div class="col-sm-12">
+            <a class="btn btn-default" href="/predigt"><span class="glyphicon glyphicon-arrow-left"></span> Zurück
+                zur Liste der Predigten</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+
+            <header class="entry-header">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2 class="entry-title">{sermon.title}</h2>
+                        <f:if condition="{sermon.subtitle}"><p>{sermon.subtitle}</p></f:if>
+                    </div>
+                </div>
+                <div class="hometa">
+                    <f:if condition="{sermon.events}">
+                        <f:then>
+                            <f:for each="{sermon.events}" as="event">
+                                <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
+                                Uhr,
+                                {event.location.title}: {event.title}<br/>
+                            </f:for>
+                        </f:then>
+                        <f:else>
+                            Gepredigt am <span class="posted-on">{sermon.date}?></span>
+                            <f:if condition="{sermon.church}">
+                                , <a href="{sermon.churchUrl}" target="_blank">{sermon.church}</a>
+                            </f:if>
+                        </f:else>
+                    </f:if>
+                    <f:if condition="{sermon.sermonSeries}">
+                        <f:if condition="{sermon.sermonSeries -> f:count()} > 1">
+                            <f:then>Aus den Reihen:</f:then>
+                            <f:else>Aus der Reihe:</f:else>
+                        </f:if>
+                        <f:for each="{sermon.sermonSeries}" as="series" iteration="s">
+                            <a href="/reihe/{series.slug}/">{series.name}</a>
+                            <f:if condition="{s.isLast}">
+                                <f:else>,</f:else>
+                            </f:if>
+                        </f:for>
+                    </f:if>
+                </div><!-- .entry-meta -->
+                <div class="hometa">
+
+                </div><!-- .entry-meta -->
+            </header><!-- .entry-header -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <wp:postImage post="{sermon.ID}" size="large" showCaption="1"/>
+        </div>
+        <div class="col-sm-4">
+            <table class="table">
+                <f:if condition="{sermon.audiorecordingRelation.file}">
+                    <tr>
+                        <td>
+                            <a href="{sermon.audiorecordingRelation.guid}"
+                               target="_blank">
+                                <span class="glyphicon glyphicon-headphones"> </span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{sermon.audiorecordingRelation.guid}"
+                               target="_blank">
+                                Aufnahme der Predigt
+                                ({sermon.audiorecordingRelation.data.length_formatted})
+                            </a><br/>
+                            <div class="sermon-instructions">
+                                Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                und wähle "Ziel speichern ..."
+                            </div>
+                            <audio src="{sermon.audiorecordingRelation.guid}" controls></audio>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.handout}">
+                    <f:if condition="{sermon.noHandout}">
+                        <f:else>
+                            <tr>
+                                <td>
+                                    <a href="{sermon.handout}"
+                                       target="_blank">
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                    </a>
+                                </td>
+                                <td colspan="2">
+                                    <a href="{sermon.handout}"
+                                       target="_blank">
+                                        Begleitzettel zur Predigt (Originalformat)
+                                    </a>
+                                    <div class="sermon-instructions">
+                                        Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                        und wähle "Ziel speichern ..."
+                                    </div>
+                                </td>
+                            </tr>
+                        </f:else>
+                    </f:if>
+                </f:if>
+                <f:if condition="{sermon.noHandout}">
+                    <f:else>
+                        <tr>
+                            <td>
+                                <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_pdfHandout'})}">
+                                    <span class="glyphicon glyphicon-file"> </span>
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_pdfHandout'})}">
+                                    Begleitzettel zur Predigt (A5)
+                                </a>
+                                <div class="sermon-instructions">
+                                    Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                    und wähle "Ziel speichern ..."
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_pdfHandout', underlineMode: 'blank'})}">
+                                    <span class="glyphicon glyphicon-file"> </span>
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_pdfHandout', underlineMode: 'blank'})}">
+                                    Begleitzettel zur Predigt (A5, leer)
+                                </a>
+                                <div class="sermon-instructions">
+                                    Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                    und wähle "Ziel speichern ..."
+                                </div>
+                            </td>
+                        </tr>
+                    </f:else>
+                </f:if>
+                <f:if condition="{sermon.remoteUrl}">
+                    <tr>
+                        <td>
+                            <a href="{sermon.remoteUrl}"
+                               target="_blank">
+                                <span class="glyphicon glyphicon-globe"> </span>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            <a href="{sermon.remoteUrl}" target="_blank">
+                                Zur ursprünglichen Predigtseite<br/>
+                                ({sermon.events.0.location.title})
+                            </a>
+                        </td>
+                    </tr>
+
+                </f:if>
+                <f:if condition="{sermon.content.extended}">
+                    <tr>
+                        <td>
+                            <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_epub'})}">
+                                <span class="glyphicon glyphicon-book"> </span>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_epub'})}">
+                                Predigt als E-Book
+                            </a>
+                            <div class="sermon-instructions">
+                                Hier kannst du den Text der Predigt als E-Book im EPub-Format herunterladen.
+                                <f:if condition="{sermon.linkAmazon}">
+                                    Das E-Book ist auch im <a href="{sermon.linkAmazon}"
+                                                              target="_blank">Kindle-Store</a> erhältlich.
+                                </f:if>
+                                <f:if condition="{sermon.linkSmashwords}">
+                                    Außerdem erhältst du es in einer Anzahl verschieder Formate auf <a
+                                        href="{sermon.linkSmashwords}"
+                                        target="_blank">Smashwords</a>.
+                                </f:if>
+                            </div>
+                        </td>
+                    </tr>
+
+                </f:if>
+                <f:if condition="{sermon.cclicense}">
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-copyright-mark"> </span>
+                        </td>
+                        <td colspan="2">
+                            <div class="sermon-instructions">
+                                Die Predigt "{sermon.title}" von Christoph Fischer und alle dazu gehörigen
+                                Ressourcen (Predigtzettel, Aufnahme) sind lizenziert unter einer
+                                <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.de"
+                                   title="Lizenzbedingungen">
+                                    Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0
+                                    International Lizenz</a>.
+                                Verwendete Bilder stehen eventuell unter eigenen Lizenzbedingungen. Ausdrücklich von
+                                der
+                                Creative Commons-Lizenz ausgenommen sind die Logos und Namen der Gemeinde, in der
+                                die
+                                Predigt gehalten wurde
+                                <f:if condition="{sermon.church}">({sermon.church})</f:if>
+                                und ihrer Arbeitsbereiche.
+                            </div>
+
+                        </td>
+                    </tr>
+                </f:if>
+                <tr>
+                    <td></td>
+                    <td>
+                        <wp:shortcode code="[shariff]"/>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="entry-content">
+                <f:if condition="{sermon.content.extended}">
+                    <f:then>{sermon.content.extended -> f:format.raw()}</f:then>
+                    <f:else><p>{sermon.content.main -> f:format.raw()}</p></f:else>
+                </f:if>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <table class="table">
+                <tr>
+                    <td>
+                        <h4>Predigttext</h4>
+                        <p>{sermon.reference}</p>
+                    </td>
+                </tr>
+                <f:if condition="{sermon.content.extended}">
+                    <tr>
+                        <td>
+                            <h4>In Kürze</h4>
+                            <p>{sermon.content.main}</p>
+                        </td>
+                    </tr>
+                </f:if>
+                <tr>
+                    <td>
+                        <h4>Hauptpunkte der Predigt</h4>
+                        <f:if condition="{sermon.notesHeader}">
+                            <f:then><h5>{sermon.notesHeader}:</h5></f:then>
+                        </f:if>
+                        <p:format.orderedList list="{sermon.keyPoints} "/>
+                    </td>
+                </tr>
+                <f:if condition="{sermon.questions}">
+                    <tr>
+                        <td>
+                            <h4>Fragen zur Vertiefung</h4>
+                            <p class="sermon-instructions">
+                                Zu dieser Predigt hat Christoph eine Reihe von Fragen hinterlegt,
+                                die in der Kleingruppe zur Vertiefung weiter besprochen werden können:
+                            </p>
+                            <p:format.orderedList list="{sermon.questions}"/>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.furtherReading}">
+                    <tr>
+                        <td>
+                            <h4>Weiterführende Literatur</h4>
+                            <p class="sermon-instructions">
+                                Wenn du dich noch weiter informieren willst, empfiehlt Christoph
+                                folgende weiterführende Literatur:
+                            </p>
+                            <f:format.raw>{sermon.furtherReading}</f:format.raw>
+                        </td>
+                    </tr>
+                </f:if>
+            </table>
+        </div>
+    </div>
+
+</f:section>
