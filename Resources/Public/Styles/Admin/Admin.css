@@ -58,3 +58,18 @@
 .pulpit-field-preview-image {
     max-height: 100px;
 }
+
+.pulpit-agenda-items-form-single {
+    border: solid 1px #32373c;
+    border-left: solid 8px #32373c;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.pulpit-agenda-items-form-single-toggle {
+    display: inline-block !important;
+}
+
+#footer-thankyou {
+    display: none;
+}
