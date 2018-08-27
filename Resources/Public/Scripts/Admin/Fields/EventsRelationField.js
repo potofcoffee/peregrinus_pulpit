@@ -1,6 +1,6 @@
 
 function enableEventsRelationFieldsRemoveButtons() {
-    $('.events-relation-field-btn-remove').click(function(event){
+    $('.pulpit-events-relation-field-btn-remove').click(function(event){
         event.preventDefault();
         $(this).parent().remove();
     });
@@ -10,10 +10,10 @@ function enableEventsRelationFieldsRemoveButtons() {
 (function($){
 
     $(document).ready(function(){
-        $('.events-relation-field-btn-add').click(function(event){
+        $('.pulpit-events-relation-field-btn-add').click(function(event){
             event.preventDefault();
 
-            var index = $(this).parent().find('.events-relation-form-single').length;
+            var index = $(this).parent().find('.pulpit-events-relation-form-single').length;
             var code = eventRelationFormEmptyRecord[$(this).parent().data('key')];
             code = code.replace(/###INDEX###/g, index);
 

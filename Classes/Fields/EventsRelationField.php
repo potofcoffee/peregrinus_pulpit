@@ -66,7 +66,7 @@ class EventsRelationField extends AbstractField
 
     public function renderSingleForm($index, $eventId)
     {
-        $o = '<div class="events-relation-form-single">'
+        $o = '<div class="pulpit-events-relation-form-single">'
             . $this->renderLabel('event', $index, __('Event', 'pulpit'))
             . '<select id="' . $this->getFieldId($index) . '" name="'
             . $this->getFieldName($index) . '"  style="width: 100%"><option></option>';
@@ -85,7 +85,7 @@ class EventsRelationField extends AbstractField
         }
 
         $o .= '</select>'
-            .'<a class="button button-small events-relation-field-btn-remove" href="#">' . __('Remove event',
+            .'<a class="button button-small pulpit-events-relation-field-btn-remove" href="#">' . __('Remove event',
                 'pulpit') . '</a>'
             . '<hr /></div>';
         return $o;
@@ -116,7 +116,7 @@ class EventsRelationField extends AbstractField
         }
         $o = '';
 
-        $o .= '<div class="event-relation-form" data-key="' . $this->getKey() . '">';
+        $o .= '<div class="pulpit-event-relation-form" data-key="' . $this->getKey() . '">';
 
         $o .= '<script> if (eventRelationFormEmptyRecord == undefined) var eventRelationFormEmptyRecord = {}; '
             . 'eventRelationFormEmptyRecord[\'' . $this->getKey() . '\'] = \''
@@ -129,7 +129,7 @@ class EventsRelationField extends AbstractField
             }
         }
 
-        $o .= '<br /><a class="button button-small events-relation-field-btn-add" href="#">' . __('Add event',
+        $o .= '<br /><a class="button button-small pulpit-events-relation-field-btn-add" href="#">' . __('Add event',
                 'pulpit') . '</a>';
 
         $o .= '</div>';
