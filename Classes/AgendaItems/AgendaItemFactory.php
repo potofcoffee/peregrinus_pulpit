@@ -25,6 +25,12 @@ namespace Peregrinus\Pulpit\AgendaItems;
 class AgendaItemFactory
 {
 
+    public static function get($key)
+    {
+        $class = 'Peregrinus\\Pulpit\\AgendaItems\\'.ucfirst($key).'AgendaItem';
+        return new $class();
+    }
+
     /**
      * Get all AgendaItems
      * @return array Instances of each AgendaItem
@@ -48,16 +54,16 @@ class AgendaItemFactory
      * @param $value
      * @return string
      */
-    public static function selectBox($id, $name, $value) {
-
-        $o = '<select style="width: 100%" id="'.$id.'" name="'.$name.'">';
+    public static function selectBox($id, $name, $value)
+    {
+        $o = '<select style="width: 100%" id="' . $id . '" name="' . $name . '">';
 
         /** @var AbstractAgendaItem $itemType */
         foreach (self::getAll() as $itemType) {
-            $o .= '<option value="'.$itemType->getKey().'" '
-                .($itemType->getKey()==$value ? 'selected' : '').'>'
-                .$itemType->getTitle()
-                .'</option>';
+            $o .= '<option value="' . $itemType->getKey() . '" '
+                . ($itemType->getKey() == $value ? 'selected' : '') . '>'
+                . $itemType->getTitle()
+                . '</option>';
         }
 
         $o .= '</select>';

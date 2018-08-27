@@ -23,14 +23,11 @@
 namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
-use Peregrinus\Pulpit\Fields\CheckBoxField;
 use Peregrinus\Pulpit\Fields\DateInputField;
-use Peregrinus\Pulpit\Fields\FileRelationField;
+use Peregrinus\Pulpit\Fields\DetailedLiturgyField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\LocationRelationField;
 use Peregrinus\Pulpit\Fields\RTEField;
-use Peregrinus\Pulpit\Fields\SlideRelationField;
-use Peregrinus\Pulpit\Fields\TextAreaField;
 
 /**
  * Class SermonPostType
@@ -72,8 +69,8 @@ class EventPostType extends AbstractPostType
 
         add_action('pre_get_posts', [$this, 'customSortOrder']);
 
-        add_filter( 'wp_title', [$this, 'registerTitle'] );
-        add_filter( 'get_the_archive_title', [$this, 'registerTitle'] );
+        add_filter('wp_title', [$this, 'registerTitle']);
+        add_filter('get_the_archive_title', [$this, 'registerTitle']);
     }
 
     /**
@@ -81,8 +78,8 @@ class EventPostType extends AbstractPostType
      */
     public function registerCustomColumns()
     {
-        add_filter('manage_'.$this->getTypeName().'_posts_columns', [$this, 'getCustomColumns']);
-        add_action('manage_'.$this->getTypeName().'_posts_custom_column', [$this, 'renderCustomColumn'], 10, 2);
+        add_filter('manage_' . $this->getTypeName() . '_posts_columns', [$this, 'getCustomColumns']);
+        add_action('manage_' . $this->getTypeName() . '_posts_custom_column', [$this, 'renderCustomColumn'], 10, 2);
     }
 
     /**
@@ -104,7 +101,7 @@ class EventPostType extends AbstractPostType
      * Render a custom column
      * @param string $column Column name
      */
-    public function renderCustomColumn( $column, $post_id)
+    public function renderCustomColumn($column, $post_id)
     {
         $post = get_post($post_id);
         if ($post->post_type == $this->getTypeName()) {
@@ -114,10 +111,10 @@ class EventPostType extends AbstractPostType
                     echo $post->post_title;
                     break;
                 case 'event_date':
-                    echo strftime(__('%Y-%m-%d', 'pulpit'), strtotime($custom['date'][0].' '.$custom['time'][0]));
+                    echo strftime(__('%Y-%m-%d', 'pulpit'), strtotime($custom['date'][0] . ' ' . $custom['time'][0]));
                     break;
                 case 'event_time':
-                    echo strftime(__('%H:%M', 'pulpit'), strtotime($custom['date'][0].' '.$custom['time'][0]));
+                    echo strftime(__('%H:%M', 'pulpit'), strtotime($custom['date'][0] . ' ' . $custom['time'][0]));
                     break;
                 case 'location':
                     echo get_post($custom['location'][0])->post_title;
@@ -147,6 +144,11 @@ class EventPostType extends AbstractPostType
                 ]
             ),
             new MetaBox('liturgy', __('Liturgy', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new DetailedLiturgyField('liturgy', [
+                        'public_info' => __('This information may be published (e.g. in handouts)'),
+                        'responsible' => __('Responsible for this item'),
+                        'instructions_for' => __('Instructions for %s'),
+                    ]),
                 ]
             ),
             new MetaBox('officiating', __('Officiating', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
@@ -168,7 +170,7 @@ class EventPostType extends AbstractPostType
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen = \get_current_screen();
         if ('edit' == $screen->base
-            && PEREGRINUS_PULPIT.'_'.$this->getKey() == $screen->post_type
+            && PEREGRINUS_PULPIT . '_' . $this->getKey() == $screen->post_type
             && !isset($_GET['orderby'])) {
             $query->set('orderby', 'publish_date');
             $query->set('order', 'DESC');
@@ -178,7 +180,8 @@ class EventPostType extends AbstractPostType
     /**
      * Change the title of the archives page
      */
-    public function registerTitle($title) {
+    public function registerTitle($title)
+    {
         if (is_post_type_archive($this->getTypeName())) {
             $title = __('Upcoming events', 'pulpit');
         }

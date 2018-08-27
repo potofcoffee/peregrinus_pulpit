@@ -30,5 +30,9 @@ class DescriptiveAgendaItem extends AbstractAgendaItem
         $this->setTitle(__('Descriptive Item', 'pulpit'));
     }
 
+    public function renderDataForm($id, $name, $value)
+    {
+        return '';
+    }
 
 }

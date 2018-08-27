@@ -26,6 +26,7 @@ class AbstractAgendaItem
 {
 
     protected $title = '';
+    protected $_hasFields = true;
 
     public function __construct()
     {
@@ -40,8 +41,6 @@ class AbstractAgendaItem
         $tmp = explode('\\', get_class($this));
         return lcfirst(str_replace('AgendaItem', '', array_pop($tmp)));
     }
-
-
 
     /**
      * @return string
@@ -59,5 +58,13 @@ class AbstractAgendaItem
         $this->title = $title;
     }
 
+    public function renderDataForm($id, $name, $value)
+    {
+        return '<textarea style="width:100%" id="' . $id . '" name="' . $name . '">' . $value . '</textarea>';
+    }
 
+
+    public function hasFields(): bool {
+        return $this->_hasFields;
+    }
 }

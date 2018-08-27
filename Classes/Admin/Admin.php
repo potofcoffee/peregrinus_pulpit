@@ -89,4 +89,5 @@ class Admin
 //        $plugins[PEREGRINUS_PULPIT . '_speech'] = PEREGRINUS_PULPIT_BASE_PATH . 'Resources/Public/Scripts/TinyMCE/Speech.js';
         return $plugins;
     }
+
 }

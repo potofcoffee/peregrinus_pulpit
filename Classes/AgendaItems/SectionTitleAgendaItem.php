@@ -24,6 +24,9 @@ namespace Peregrinus\Pulpit\AgendaItems;
 
 class SectionTitleAgendaItem extends AbstractAgendaItem
 {
+
+    protected $_hasFields = false;
+
     public function __construct()
     {
         parent::__construct();
