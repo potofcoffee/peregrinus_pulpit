@@ -27,6 +27,7 @@ use Peregrinus\Pulpit\Admin\AjaxActions\AbstractAjaxAction;
 use Peregrinus\Pulpit\Admin\AjaxActions\AjaxActionFactory;
 use Peregrinus\Pulpit\Admin\Installer;
 use Peregrinus\Pulpit\Admin\Scheduler;
+use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
 use Peregrinus\Pulpit\CustomFormats\AbstractCustomFormat;
 use Peregrinus\Pulpit\CustomFormats\CustomFormatFactory;
 use Peregrinus\Pulpit\PostTypes\AbstractPostType;
@@ -103,6 +104,11 @@ class PulpitPlugin
             $ajaxAction->register();
         }
 
+        /** @var AbstractComponent $component */
+        foreach (ComponentFactory::getAll() as $component) {
+            $component->register();
+        }
+
         /** @var AbstractTaxonomy $taxonomy */
         foreach (TaxonomyFactory::getAll() as $taxonomy) {
             $taxonomy->register();
@@ -118,6 +124,8 @@ class PulpitPlugin
         foreach (ShortCodeFactory::getAll() as $shortcode) {
             $shortcode->register();
         }
+
+
 
         $scheduler = new Scheduler();
         $scheduler->register();

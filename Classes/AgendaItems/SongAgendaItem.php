@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\AgendaItems;
 
+use Peregrinus\Pulpit\Service\EGService;
+
 class SongAgendaItem extends AbstractAgendaItem
 {
     public function __construct()
@@ -30,5 +32,22 @@ class SongAgendaItem extends AbstractAgendaItem
         $this->setTitle(__('Song', 'pulpit'));
     }
 
+    public function renderDataForm($id, $name, $value)
+    {
+        if (!is_array($value)) $value = ['song' => $value, 'verses' => ''];
+        return EGService::getInstance()->selectBox($id.'_name', $name.'[song]', $value['song'] ?: '')
+            .'<label for="'.$name.'[verses]">'.__('Verses', 'pulpit').'</label>'
+            .'<input type="text" style="width: 100%" id="'.$id.'_verses" name="'.$name.'[verses]" value="'
+            .($value['verses'] ?: '')
+            .'" />';
+    }
+
+    public function provideData($data)
+    {
+        $title = EGService::getInstance()->get($data['song']);
+        $data['number'] = $data['song'];
+        $data['title'] = $title;
+        return $data;
+    }
 
 }

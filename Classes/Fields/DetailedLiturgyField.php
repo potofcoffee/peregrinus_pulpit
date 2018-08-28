@@ -43,6 +43,9 @@ class DetailedLiturgyField extends AbstractField
     {
         wp_enqueue_style('jquery-ui');
         wp_enqueue_script('jquery-ui-sortable');
+        wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
+        wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+            array('jquery'));
         wp_enqueue_script('detailed-liturgy-field',
             PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Fields/DetailedLiturgyField.js');
     }
@@ -81,7 +84,8 @@ class DetailedLiturgyField extends AbstractField
         $agendaItem = $item['type'] ? AgendaItemFactory::get($item['type']) : new AbstractAgendaItem();
 
         $o = '<li class="pulpit-detailed-liturgy-form-single">'
-            . '<span class="pulpit-detailed-liturgy-form-single-toggle ui-icon ui-icon-arrowthick-1-n"></span>'
+            . '<span class="pulpit-detailed-liturgy-form-single-toggle pulpit-collapse-section-icon ui-icon ui-icon-arrowthick-1-n"></span> '
+            . '<span class="pulpit-detailed-liturgy-field-btn-remove pulpit-collapse-section-icon ui-icon ui-icon-trash"></span> '
             . '<b>' . ($item['title'] ?: '###TITLE###') . '</b>'
             . '<div class="pulpit-detailed-liturgy-form-sub">'
             . $this->hiddenField($index, 'title', $item['title'])
@@ -189,7 +193,6 @@ class DetailedLiturgyField extends AbstractField
             . '\'; </script>';
 
         $o .= '<ul class="pulpit-detailed-liturgy-form" data-key="' . $this->getKey() . '">';
-
 
         if (!count($items)) {
             $o .= '<div class="pulpit-detailed-liturgy-empty">'

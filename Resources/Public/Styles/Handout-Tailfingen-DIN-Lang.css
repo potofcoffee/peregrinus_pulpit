@@ -161,3 +161,8 @@ figure {
 .address img {
 	max-width: 4cm;
 }
+
+ul.liturgy li {
+	padding: 0;
+	margin: 0;
+}

@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Domain\Model;
 
+use Peregrinus\Pulpit\AgendaItems\AbstractAgendaItem;
+use Peregrinus\Pulpit\AgendaItems\AgendaItemFactory;
 use Peregrinus\Pulpit\Domain\Repository\LocationRepository;
 
 class EventModel extends AbstractModel
@@ -43,6 +45,19 @@ class EventModel extends AbstractModel
             $location = (new LocationRepository())->findByID($location);
         }
         $this->setMetaElement('location', $location);
+    }
+
+    protected function setLiturgyMeta($liturgy) {
+        if (is_array($liturgy)) {
+            foreach ($liturgy as $key => $item) {
+                $item = maybe_unserialize($item);
+                /** @var AbstractAgendaItem $itemObject */
+                $itemObject = AgendaItemFactory::get($item['type']);
+                $item['data'] = $itemObject->provideData($item['data']);
+                $liturgy[$key] = $item;
+            }
+        }
+        $this->setMetaElement('liturgy', $liturgy);
     }
 
     /**

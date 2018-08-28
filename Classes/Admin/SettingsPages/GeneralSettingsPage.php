@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
+use Peregrinus\Pulpit\Admin\Setup\SetupSettingsSection;
 use Peregrinus\Pulpit\Fields\FileRelationField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
@@ -158,7 +159,9 @@ class GeneralSettingsPage extends AbstractSettingsPage
                 $this,
                 'setup',
                 __('Setup', 'pulpit'),
-                []
+                [
+                    new SetupSettingsSection('setup')
+                ]
             )
         );
 

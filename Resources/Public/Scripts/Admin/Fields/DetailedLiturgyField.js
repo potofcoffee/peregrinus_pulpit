@@ -13,6 +13,10 @@ function enableDetailedLiturgyFieldButtons() {
         event.preventDefault();
         $(this).parent().remove();
     });
+
+    $('.pulpit-song-selectbox').select2({
+        tags: true
+    });
 }
 
 

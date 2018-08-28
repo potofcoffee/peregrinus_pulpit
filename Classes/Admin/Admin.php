@@ -25,6 +25,8 @@ namespace Peregrinus\Pulpit\Admin;
 use Peregrinus\Pulpit\Admin\AdminMenus\AdminMenuFactory;
 use Peregrinus\Pulpit\Admin\CustomModals\CustomModalFactory;
 use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
+use Peregrinus\Pulpit\Admin\Setup\Components\AbstractComponent;
+use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
 use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 

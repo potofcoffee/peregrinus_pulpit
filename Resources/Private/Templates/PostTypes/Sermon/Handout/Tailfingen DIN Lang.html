@@ -9,6 +9,27 @@
     <body>
     <div class="column">
         <h2>Gottesdienst</h2>
+        <p:last of="{sermon.events}" as="event">
+            <ul class="liturgy">
+                <f:for each="{event.liturgy}" as="item">
+                    <f:switch expression="{item.type}">
+                        <f:case value="sectionTitle">
+                            </ul><h3>{item.title}</h3><ul class="liturgy">
+                        </f:case>
+                    <f:case value="descriptive">
+                        <li>{item.title}</li>
+                    </f:case>
+                    <f:case value="freeText">
+                        <li>{item.title}</li>
+                    </f:case>
+                    <f:case value="song">
+                        <li>Lied {item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
+                        </li>
+                    </f:case>
+                </f:switch>
+                </f:for>
+            </ul>
+        </p:last>
     </div>
     <div class="column">
         <p>Weiteres Material zu dieser Predigt finden Sie online unter:
@@ -24,9 +45,9 @@
         </p>
         <div style="height: 7.5cm;"></div>
         <div class="address">
-            <img class="logo-small" src="{baseUrl}Assets/Logos/logo_elkw.jpg"/><br />
+            <img class="logo-small" src="{baseUrl}Assets/Logos/logo_elkw.jpg"/><br/>
             <b>Kirchengemeinde Tailfingen<br/><br/>
-            Pfarrer Christoph Fischer</b><br/>
+                Pfarrer Christoph Fischer</b><br/>
             Pfarramt Erlöserkirche<br/>
             Liegnitzer Str. 38 | 72461 Albstadt<br/>
             Fon 07432 3762 | Fax 07432 171760<br/>

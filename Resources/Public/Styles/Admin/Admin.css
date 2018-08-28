@@ -61,17 +61,36 @@
 
 .pulpit-agenda-items-form-single,
 .pulpit-detailed-liturgy-form-single {
-    border: solid 1px #32373c;
-    border-left: solid 8px #32373c;
+    border: solid 1px #999999;
+    border-left: solid 8px #999999;
     padding: 5px;
     border-radius: 3px;
 }
 
 .pulpit-agenda-items-form-single-toggle,
-.pulpit-detailed-liturgy-form-single-toggle {
+.pulpit-detailed-liturgy-form-single-toggle,
+.pulpit-collapse-section-icon{
     display: inline-block !important;
 }
 
 #footer-thankyou {
     display: none;
+}
+
+.component-box {
+    width: 100%;
+    background-color: white;
+    padding: 5px 5px 5px 10px;
+}
+
+.component-box-success {
+    border-left: solid 3px green;
+}
+
+.component-box-warning {
+    border-left: solid 3px #ffb900;
+}
+
+.component-box-error {
+    border-left: solid 3px #dc3232;
 }

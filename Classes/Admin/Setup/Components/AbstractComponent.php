@@ -20,26 +20,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\Admin\Setup\Components;
 
-class AbstractAgendaItem
+class AbstractComponent
 {
-
     protected $title = '';
-    protected $_hasFields = true;
+    protected $description = '';
 
     public function __construct()
     {
     }
 
     /**
-     * Get the key for this AgendaItem
+     * Get the key for this Component
      * @return string
      */
     public function getKey()
     {
         $tmp = explode('\\', get_class($this));
-        return lcfirst(str_replace('AgendaItem', '', array_pop($tmp)));
+        return lcfirst(str_replace('Component', '', array_pop($tmp)));
+    }
+
+
+
+    public function register() {
+        add_action('wp_ajax_pulpit_component_'.$this->getKey(), [$this, 'install']);
+    }
+
+    public function isInstalled(): bool {
+
+    }
+
+    public function install() {
+        echo json_encode([
+            'success' => false,
+            'notice' => 'AbstractComponent should never be called.',
+        ]);
     }
 
     /**
@@ -58,17 +74,21 @@ class AbstractAgendaItem
         $this->title = $title;
     }
 
-    public function renderDataForm($id, $name, $value)
+    /**
+     * @return string
+     */
+    public function getDescription(): string
     {
-        return '<textarea style="width:100%" id="' . $id . '" name="' . $name . '">' . $value . '</textarea>';
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
 
-    public function hasFields(): bool {
-        return $this->_hasFields;
-    }
-
-    public function provideData($data) {
-        return $data;
-    }
 }
