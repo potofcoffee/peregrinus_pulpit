@@ -23,6 +23,7 @@
 namespace Peregrinus\Pulpit\Fields;
 
 use Peregrinus\Pulpit\Domain\Model\EventModel;
+use Peregrinus\Pulpit\Domain\Model\LocationModel;
 use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 
 class EventsRelationField extends AbstractField
@@ -78,7 +79,7 @@ class EventsRelationField extends AbstractField
                     . ($eventId == $event->getID() ? 'selected' : '')
                     .'>'
                     . $event->getFormattedDateTime(__('%Y-%m-%d %H:%M', 'pulpit')).', '
-                    . ($event->getLocation() ? $event->getLocation()->getPostTitle() : '').': '
+                    . (is_a($event->getLocation(), LocationModel::class) ? $event->getLocation()->getPostTitle() : '').': '
                     . $event->getPostTitle()
                     . '</option>';
             }
