@@ -78,4 +78,12 @@ class EventController extends AbstractController
         $this->view->assign('event', $event);
     }
 
+    public function liturgyAction($post) {
+        if (!$post) $post = get_queried_object();
+        $event = new EventModel($post);
+        $sermon = $this->sermonRepository->findOneByEventID($event->getID());
+        if ($sermon) $event->setMetaElement('sermon', $sermon);
+        $this->view->assign('event', $event);
+    }
+
 }

@@ -44,6 +44,7 @@ h2 {
 
 h3 {
 	font-size: 14pt;
+	color: #951981;
 }
 
 h1, h2, h3 {
@@ -51,6 +52,37 @@ h1, h2, h3 {
 	line-height: 1.4em;
 	font-weight: bold;
 }
+
+table.table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table.table td {
+	margin: 0;
+	padding: 0.2cm;
+}
+
+td, th {
+	border-bottom: dotted 1px darkgray !important;
+	border-bottom-width: 1px !important;
+	margin-bottom: 0.2cm !important;
+}
+
+tr:last-child td, tr:last-child th {
+	border: 0;
+	margin-bottom: 0;
+}
+
+th {
+	text-align: left;
+}
+
+td h3 {
+	text-align: left;
+}
+
+
 
 .subtitle {
 	font-weight: normal;
@@ -165,8 +197,4 @@ figure {
 ul.liturgy li {
 	padding: 0;
 	margin: 0;
-}
-
-div.keypoints li {
-	margin-bottom: 2cm;
 }

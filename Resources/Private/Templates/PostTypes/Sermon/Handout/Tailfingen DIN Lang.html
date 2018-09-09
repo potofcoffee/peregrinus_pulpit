@@ -8,14 +8,16 @@
     </head>
     <body>
     <div class="column">
-        <h2>Gottesdienst</h2>
         <p:last of="{sermon.events}" as="event">
-            <ul class="liturgy">
-                <f:for each="{event.liturgy}" as="item">
-                    <f:switch expression="{item.type}">
-                        <f:case value="sectionTitle">
-                            </ul><h3>{item.title}</h3><ul class="liturgy">
-                        </f:case>
+            <f:if condition="{event.liturgy}">
+                <f:then>
+                    <h2>Gottesdienst</h2>
+                    <ul class="liturgy">
+                        <f:for each="{event.liturgy}" as="item">
+                            <f:switch expression="{item.type}">
+                                <f:case value="sectionTitle">
+                    </ul><h3>{item.title}</h3><ul class="liturgy">
+                    </f:case>
                     <f:case value="descriptive">
                         <li>{item.title}</li>
                     </f:case>
@@ -26,9 +28,16 @@
                         <li>Lied {item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
                         </li>
                     </f:case>
-                </f:switch>
-                </f:for>
-            </ul>
+                    </f:switch>
+                    </f:for>
+                </ul>
+                </f:then>
+                <f:else>
+                    <h2>{event.title}</h2>
+                    {event.content.main -> f:format.raw()}
+                    {event.content.extended -> f:format.raw()}
+                </f:else>
+            </f:if>
         </p:last>
     </div>
     <div class="column">
@@ -82,7 +91,7 @@
         <h3>Worum geht's?</h3>
         {sermon.content.main -> f:format.raw()}
     </div>
-    <div class="column column3">
+    <div class="column column3 keypoints">
         <h2>
             <f:if condition="{sermon.notes_header}">
                 <f:then>{sermon.notes_header}</f:then>
@@ -91,7 +100,7 @@
         </h2>
         <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
         <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
-                              listStyle="font-size: 12pt;"/>
+                              listStyle="font-size: 12pt;" />
     </div>
     <div class="column">
         <f:if condition="{sermon.questions}">

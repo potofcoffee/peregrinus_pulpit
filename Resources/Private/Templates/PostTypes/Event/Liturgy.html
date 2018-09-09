@@ -1,0 +1,43 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Liturgie.pdf"
+        leftmargin="10" rightmargin="10" topmargin="10" bottommargin="10"><!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Liturgy.css"
+              media="all"/>
+    </head>
+    <body>
+    <h1>{event.title}</h1>
+<p:format.date format="d.m.Y">{event.datetime}</p:format.date>, {event.location.title}
+<hr />
+<table class="table">
+    <tbody>
+    <f:for each="{event.liturgy}" as="item">
+        <tr>
+            <f:switch expression="{item.type}">
+                <f:case value="sectionTitle">
+                    <th colspan="2"><h3>{item.title}</h3></th>
+                </f:case>
+                <f:case value="descriptive">
+                    <th>{item.title}</th>
+                    <td>{item.data}</td>
+                </f:case>
+                <f:case value="freeText">
+                    <th>{item.title}</th>
+                    <td>{item.data}</td>
+                </f:case>
+                <f:case value="song">
+                    <th>{item.title}</th>
+                    <td>{item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
+                        <f:if condition="{0: item.data.number} == {0: item.data.title}"><f:else>"{item.data.title}"</f:else></f:if>
+                    </td>
+                </f:case>
+            </f:switch>
+        </tr>
+    </f:for>
+    </tbody>
+</table>
+    </body>
+</html>
+</p:output.pdf>
