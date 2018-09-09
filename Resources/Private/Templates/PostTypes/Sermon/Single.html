@@ -226,7 +226,7 @@
         <div class="col-sm-8">
             <div class="entry-content">
                 <f:if condition="{sermon.content.extended}">
-                    <f:then>{sermon.content.extended -> f:format.raw()}</f:then>
+                    <f:then>{sermon.content.extended -> wp:autop() -> f:format.raw()}</f:then>
                     <f:else><p>{sermon.content.main -> f:format.raw()}</p></f:else>
                 </f:if>
             </div>
