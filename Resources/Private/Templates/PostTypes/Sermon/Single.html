@@ -247,15 +247,17 @@
                         </td>
                     </tr>
                 </f:if>
-                <tr>
-                    <td>
-                        <h4>Hauptpunkte der Predigt</h4>
-                        <f:if condition="{sermon.notesHeader}">
-                            <f:then><h5>{sermon.notesHeader}:</h5></f:then>
-                        </f:if>
-                        <p:format.orderedList list="{sermon.keyPoints} "/>
-                    </td>
-                </tr>
+                <f:if condition="{sermon.keyPoints}">
+                    <tr>
+                        <td>
+                            <h4>Hauptpunkte der Predigt</h4>
+                            <f:if condition="{sermon.notesHeader}">
+                                <f:then><h5>{sermon.notesHeader}:</h5></f:then>
+                            </f:if>
+                            <p:format.orderedList list="{sermon.keyPoints} "/>
+                        </td>
+                    </tr>
+                </f:if>
                 <f:if condition="{sermon.questions}">
                     <tr>
                         <td>
