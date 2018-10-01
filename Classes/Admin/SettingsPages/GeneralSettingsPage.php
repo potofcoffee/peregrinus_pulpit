@@ -23,7 +23,9 @@
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
 use Peregrinus\Pulpit\Admin\Setup\SetupSettingsSection;
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Fields\FileRelationField;
+use Peregrinus\Pulpit\Fields\HandoutFormatField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
 use Peregrinus\Pulpit\Installer\ComposerWrapper;
@@ -42,36 +44,44 @@ class GeneralSettingsPage extends AbstractSettingsPage
         $this->setPageTitle(__('Sermons', 'pulpit'));
         $this->setMenuTitle(__('Sermons', 'pulpit'));
 
+
+        $permalinksTab = new SettingsTab(
+            $this,
+            'permalinks',
+            __('Permalinks', 'pulpit'),
+            []
+        );
+
         $rewriteSettings = [];
         foreach (PostTypeFactory::getAll() as $postType) {
             $rewriteSettings[] = new Setting(
                 'slug_' . $postType->getKey(),
                 sprintf(__('Permalink for %s', 'pulpit'), __(ucfirst($postType->getKey()), 'pulpit')),
-                new InputField('slug_' . $postType->getKey(), '', $this->getOptionName())
+                new InputField(PEREGRINUS_PULPIT.'_slug_' . $postType->getKey(), '')
             );
         }
         foreach (TaxonomyFactory::getAll() as $taxonomy) {
             $rewriteSettings[] = new Setting(
                 'slug_' . $taxonomy->getKey(),
                 sprintf(__('Permalink for %s', 'pulpit'), __(ucfirst($taxonomy->getKey()), 'pulpit')),
-                new InputField('slug_' . $taxonomy->getKey(), '', $this->getOptionName())
+                new InputField(PEREGRINUS_PULPIT.'_slug_' . $taxonomy->getKey(), '')
             );
         }
 
-        $this->addTab(new SettingsTab(
-                $this,
-                'permalinks',
-                __('Permalinks', 'pulpit'),
-                [
-                    new SettingsSection(
-                        'rewrite',
-                        __('URL rewriting', 'pulpit'),
-                        __('Here you can define your own texts for the permalinks created by PULPIT:', 'pulpit'),
-                        $rewriteSettings
-                    ),
-                ]
-            )
+
+        $permalinksTab->setSections(
+            [
+                new SettingsSection(
+                    'rewrite',
+                    __('URL rewriting', 'pulpit'),
+                    __('Here you can define your own texts for the permalinks created by PULPIT:', 'pulpit'),
+                    $rewriteSettings
+                ),
+            ]
         );
+
+        $this->addTab($permalinksTab);
+
         $this->addTab(new SettingsTab(
                 $this,
                 'podcast',
@@ -85,49 +95,48 @@ class GeneralSettingsPage extends AbstractSettingsPage
                             new Setting(
                                 'podcast_title',
                                 __('Podcast title', 'pulpit'),
-                                new InputField('podcast_title', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_title', '')
                             ),
                             new Setting(
                                 'podcast_description',
                                 __('Podcast description', 'pulpit'),
-                                new TextAreaField('podcast_description', '', 5, $this->getOptionName())
+                                new TextAreaField('pulpit_podcast_description', '', 5)
                             ),
                             new Setting(
                                 'podcast_image',
                                 __('Podcast title image', 'pulpit'),
                                 new FileRelationField(
-                                    'podcast_image',
+                                    'pulpit_podcast_image',
                                     '',
                                     'image',
                                     __('Select image', 'pulpit'),
-                                    __('Select image', 'pulpit'),
-                                    $this->getOptionName()
+                                    __('Select image', 'pulpit')
                                 )
                             ),
                             new Setting(
                                 'podcast_language',
                                 __('Podcast language', 'pulpit'),
-                                new InputField('podcast_language', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_language', '')
                             ),
                             new Setting(
                                 'podcast_copyright',
                                 __('Podcast copyright', 'pulpit'),
-                                new InputField('podcast_copyright', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_copyright', '')
                             ),
                             new Setting(
                                 'podcast_author_name',
                                 __('Name of the podcast author', 'pulpit'),
-                                new InputField('podcast_author_name', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_author_name', '')
                             ),
                             new Setting(
                                 'podcast_author_email',
                                 __('Email address of the podcast author', 'pulpit'),
-                                new InputField('podcast_author_email', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_author_email', '')
                             ),
                             new Setting(
                                 'podcast_category',
                                 __('Content category', 'pulpit'),
-                                new InputField('podcast_category', '', $this->getOptionName())
+                                new InputField('pulpit_podcast_category', '')
                             ),
                         ]
                     )
@@ -148,8 +157,13 @@ class GeneralSettingsPage extends AbstractSettingsPage
                             new Setting(
                                 'agenda_instructions',
                                 __('Provide agenda instructions for', 'pulpit'),
-                                new InputField('agenda_instructions', '', $this->getOptionName())
+                                new InputField('pulpit_agenda_instructions', '')
                             ),
+                            new Setting(
+                                'default_handout_layout',
+                                __('Default handout layout', 'pulpit'),
+                                new HandoutFormatField('default_handout_layout', '')
+                            )
                         ]
                     ),
                 ]

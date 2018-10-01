@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Controllers;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\SermonModel;
 use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
 
@@ -56,6 +57,7 @@ class SermonController extends AbstractController
     public function handoutAction(SermonModel $sermon)
     {
         $layout = filter_var($_GET['template'], FILTER_SANITIZE_STRING) ?: $sermon->getHandoutFormat();
+        if ($layout == -1) $layout = get_option('default_handout_layout');
         if (isset($_GET['underlineMode'])) {
             $this->view->assign('underlineMode', filter_var($_GET['underlineMode'], FILTER_SANITIZE_STRING));
         }
