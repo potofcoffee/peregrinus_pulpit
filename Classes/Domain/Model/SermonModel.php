@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Domain\Model;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Repository\AttachmentRepository;
 use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 
@@ -33,17 +34,22 @@ class SermonModel extends AbstractModel
         $taxonomies = get_object_taxonomies($post);
         foreach ($taxonomies as $taxonomy) {
             $terms = wp_get_post_terms($post->ID, $taxonomy);
-            if (substr($taxonomy, 0,strlen(PEREGRINUS_PULPIT)+1) == PEREGRINUS_PULPIT.'_') {
+            if (substr($taxonomy, 0, strlen(PEREGRINUS_PULPIT) + 1) == PEREGRINUS_PULPIT . '_') {
                 $taxonomy = explode('_', $taxonomy)[2];
             }
-            $this->setMetaElement(str_replace(PEREGRINUS_PULPIT.'_', '', $taxonomy), $terms);
+            $this->setMetaElement(str_replace(PEREGRINUS_PULPIT . '_', '', $taxonomy), $terms);
         }
     }
 
     protected function setEventsMeta($event)
     {
-        $events = $this->meta['events'] ?: [];
-        if ($event > 0) {
+        $events = $this->meta['events'] ?: get_post_meta($this->post->ID, 'events');
+        if (is_array($event)) {
+            $events = $event;
+            foreach ($events as $key => $event) {
+                $events[$key] = (new EventRepository())->findByID($event);
+            }
+        } elseif ($event > 0) {
             $events[] = (new EventRepository())->findByID($event);
         }
         $this->setMetaElement('events', $events);
