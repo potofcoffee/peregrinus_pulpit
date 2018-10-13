@@ -159,33 +159,6 @@
                     </tr>
 
                 </f:if>
-                <f:if condition="{sermon.content.extended}">
-                    <tr>
-                        <td>
-                            <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_epub'})}">
-                                <span class="glyphicon glyphicon-book"> </span>
-                            </a>
-                        </td>
-                        <td colspan="2">
-                            <a href="{p:format.customUrl(url: post.guid, add: {format: 'pulpit_epub'})}">
-                                Predigt als E-Book
-                            </a>
-                            <div class="sermon-instructions">
-                                Hier kannst du den Text der Predigt als E-Book im EPub-Format herunterladen.
-                                <f:if condition="{sermon.linkAmazon}">
-                                    Das E-Book ist auch im <a href="{sermon.linkAmazon}"
-                                                              target="_blank">Kindle-Store</a> erhältlich.
-                                </f:if>
-                                <f:if condition="{sermon.linkSmashwords}">
-                                    Außerdem erhältst du es in einer Anzahl verschieder Formate auf <a
-                                        href="{sermon.linkSmashwords}"
-                                        target="_blank">Smashwords</a>.
-                                </f:if>
-                            </div>
-                        </td>
-                    </tr>
-
-                </f:if>
                 <f:if condition="{sermon.cclicense}">
                     <tr>
                         <td>
@@ -279,6 +252,34 @@
                                 folgende weiterführende Literatur:
                             </p>
                             <f:format.raw>{sermon.furtherReading}</f:format.raw>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.activity}">
+                    <tr>
+                        <td>
+                            <h4>Lebensbezüge</h4>
+                            <p class="sermon-instructions">
+                                Folgende Grundvollzüge glaubenden Lebens sind in dieser Predigt angesprochen:
+                            </p>
+                            <f:for each="{sermon.activity}" as="activity">
+                                <a href="{baseUrl}/pulpit-sermon-activity/{activity.slug}">#{activity.slug}</a>
+                            </f:for>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.competence}">
+                    <tr>
+                        <td>
+                            <h4>Kompetenzen</h4>
+                            <p class="sermon-instructions">
+                                Mit dieser Predigt versuche ich, folgende Kompetenzen meiner Hörer weiter zu trainieren:
+                            </p>
+                            <ul>
+                            <f:for each="{sermon.competence}" as="competence">
+                                <li><a href="{baseUrl}/pulpit-sermon-competence/{competence.slug}">{competence.name}</a></li>
+                            </f:for>
+                            </ul>
                         </td>
                     </tr>
                 </f:if>
