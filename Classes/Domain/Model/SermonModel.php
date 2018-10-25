@@ -41,7 +41,17 @@ class SermonModel extends AbstractModel
         }
     }
 
-    protected function setEventsMeta($event)
+    public function addEvent($event) {
+        if (is_numeric($event)) $event = (new EventRepository())->findByID($event);
+        $this->meta['events'][$event->ID] = $event;
+    }
+
+    public function removeEvent($event) {
+        if (is_numeric($event)) $event = (new EventRepository())->findByID($event);
+        unset($this->meta['events'][$event->ID]);
+    }
+
+    public function setEventsMeta($event)
     {
         $events = $this->meta['events'] ?: get_post_meta($this->post->ID, 'events');
         if (is_array($event)) {
@@ -50,7 +60,7 @@ class SermonModel extends AbstractModel
                 $events[$key] = (new EventRepository())->findByID($event);
             }
         } elseif ($event > 0) {
-            $events[] = (new EventRepository())->findByID($event);
+            $events = [(new EventRepository())->findByID($event)];
         }
         $this->setMetaElement('events', $events);
     }

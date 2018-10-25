@@ -64,8 +64,24 @@ class SermonController extends AbstractController
         if (isset($_GET['underlineMode'])) {
             $this->view->assign('underlineMode', filter_var($_GET['underlineMode'], FILTER_SANITIZE_STRING));
         }
+        if (isset($_GET['events'])) {
+            $events = $_GET['events'];
+            foreach ($events as $key => $val) $events[$key] = filter_var($val, FILTER_SANITIZE_NUMBER_INT);
+            $sermon->setEventsMeta($events);
+        }
         $this->view->assign('sermon', $sermon);
         $this->setAction('Handout/' . $layout);
+    }
+
+    public function configureHandoutAction(SermonModel $sermon) {
+
+        foreach (glob(PEREGRINUS_PULPIT_BASE_PATH.'Resources/Private/Templates/PostTypes/Sermon/Handout/*.html') as $file) {
+            $formats[] = pathinfo($file, PATHINFO_FILENAME);
+        }
+        $underlineMode = filter_var($_GET['underlineMode'], FILTER_SANITIZE_STRING) ?: 'blank';
+        $this->view->assign('sermon', $sermon);
+        $this->view->assign('formats', $formats);
+        $this->view->assign('underlineMode', $underlineMode);
     }
 
 }

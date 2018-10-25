@@ -1,0 +1,34 @@
+<f:layout name="Page"/>
+<f:section name="Content">
+    <h1>Handout konfigurieren</h1>
+    <form method="get" action="{sermon.ID -> wp:permalink()}">
+        <input type="hidden" name="post_type" value="pulpit_sermon"/>
+        <input type="hidden" name="p" value="{sermon.ID}"/>
+        <input type="hidden" name="format" value="handout"/>
+        <input type="hidden" name="underlineMode" value="{underlineMode}"/>
+        <p>Auf dieser Seite kannst du ein benutzerdefiniertes Handout erstellen.</p>
+        <h2>Veranstaltungen</h2>
+        <p>Welche Veranstaltungen sollen im Handout mit berücksichtigt werden? <u>Bitte beachte:</u> Die jeweils letzte
+            Veranstaltung in der Liste wird für Liturgie, Bekanntmachungen, usw. verwendet.</p>
+        <f:for each="{sermon.events}" as="event">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="events[]" value="{event.ID}" checked/>
+                    <p:format.date format="d.m.Y H:i">{event.datetime}</p:format.date>
+                    Uhr, {event.location.title}
+                </label>
+            </div>
+        </f:for>
+        <h2>Layout</h2>
+        <div class="form-element">
+            <label for="template">Vorlage</label>
+            <select class="form-control" name="template">
+                <f:for each="{formats}" as="layout">
+                    <option {f:if(condition: '{0: sermon.handout_format} == {0: layout}', then: 'selected')} value="{layout}">{layout}</option>
+                </f:for>
+            </select>
+        </div>
+        <hr/>
+        <input class="btn btn-primary" type="submit" value="Handout erstellen"/>
+    </form>
+</f:section>
