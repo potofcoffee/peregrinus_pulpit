@@ -27,9 +27,11 @@
                             </h3>
                             <div class="hometa">
                                 <f:for each="{sermon.events}" as="event">
-                                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
-                                    ,
-                                    {event.location.title}<br/>
+                                    <f:if condition="{event.datetime}">
+                                        <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                                        ,
+                                        {event.location.title}<br/>
+                                    </f:if>
                                 </f:for>
                             </div>
                             <f:format.raw>{sermon.content.main}</f:format.raw>
