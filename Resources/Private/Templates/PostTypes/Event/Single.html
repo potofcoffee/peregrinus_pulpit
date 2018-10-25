@@ -27,26 +27,32 @@
                 </header>
             </div>
         </div>
-        <h2>Der Gottesdienst</h2>
-        <div class="row">
-            <div class="col-sm-2">
-                <wp:postImage post="{event.ID}" size="large"/>
+        <f:if condition="{event.content.main}">
+            <h2>Der Gottesdienst</h2>
+            <div class="row">
+                <div class="col-sm-2">
+                    <wp:postImage post="{event.ID}" size="large"/>
+                </div>
+                <div class="col-sm-10">
+                    {event.content.main -> f:format.raw()}
+                    {event.content.extended -> f:format.raw()}
+                </div>
             </div>
-            <div class="col-sm-10">
-                {event.content.main -> f:format.raw()}
-                {event.content.extended -> f:format.raw()}
-            </div>
-        </div>
+        </f:if>
         <f:if condition="{event.sermon}">
             <h2>Die Predigt </h2>
             <div class="row">
                 <div class="col-sm-2">
-                    <wp:postImage post="{event.sermon.ID}" size="large"/>
+                    <a href="{event.sermon.ID -> wp:permalink()}">
+                        <wp:postImage post="{event.sermon.ID}" size="large"/>
+                    </a>
                 </div>
                 <div class="col-sm-10">
-                    <h3>{event.sermon.title}
-                        <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>
-                    </h3>
+                    <a href="{event.sermon.ID -> wp:permalink()}">
+                        <h3>{event.sermon.title}
+                            <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>
+                        </h3>
+                    </a>
                     <p>{event.sermon.reference}</p>
                     {event.sermon.content.main -> f:format.raw()}
                     <f:if condition="{event.sermon.prep}">
@@ -183,8 +189,11 @@
                             </f:case>
                             <f:case value="song">
                                 <th>{item.title}</th>
-                                <td>{item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
-                                    <f:if condition="{0: item.data.number} == {0: item.data.title}"><f:else>"{item.data.title}"</f:else></f:if>
+                                <td>{item.data.song}
+                                    <f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
+                                    <f:if condition="{0: item.data.number} == {0: item.data.title}">
+                                        <f:else>"{item.data.title}"</f:else>
+                                    </f:if>
                                 </td>
                             </f:case>
                         </f:switch>
