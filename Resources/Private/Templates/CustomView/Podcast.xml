@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
     <channel>
         <title>{podcast.podcast_title -> f:format.raw()}</title>
         <description>{podcast.podcast_description -> f:format.raw()}</description>
@@ -35,12 +35,14 @@
                 <title>{item.post.post_title -> f:format.raw()}</title>
                 <f:if condition="{item.meta.subtitle.0}"><itunes:subtitle>{item.meta.subtitle.0}</itunes:subtitle></f:if>
                 <itunes:image href="{item.image}" />
-                <itunes:summary><![CDATA[{item.content.main -> p:format.stripTags()}]]></itunes:summary>
+                <itunes:summary>{item.content.main -> p:format.stripTags() -> p:format.cdata()}</itunes:summary>
                 <link>{item.url}</link>
                 <guid>{item.url}</guid>
-                <description><![CDATA[{item.content.main -> p:format.stripTags()}]]></description>
+                <description>{item.content.main -> p:format.stripTags() -> p:format.cdata()}</description>
+                <f:if condition="{item.content.extended}"><content:encoded>{item.content.extended -> p:format.cdata()}</content:encoded></f:if>
                 <enclosure url="{item.audio.file.guid}" {f:if(condition:'{item.audio.meta.filesize}', then:'length="{item.audio.meta.filesize}"')} {f:if(condition:'{item.audio.meta.mime_type}', then:'type="{item.audio.meta.mime_type}"')}></enclosure>
-                <pubDate><p:format.date format="D, d M Y H:i:s O">now</p:format.date></pubDate>
+                <itunes:duration>{item.sermon.meta.audiorecording_relation.meta.data.length_formatted}</itunes:duration>
+                <pubDate><p:format.date format="D, d M Y H:i:s O"><f:if condition="{item.sermon.meta.events}"><f:then><p:last of="{item.sermon.meta.events}" as="event">{event.datetime}</p:last></f:then><f:else>{item.post.post_date}</f:else></f:if></p:format.date></pubDate>
             </item>
         </f:for>
 
