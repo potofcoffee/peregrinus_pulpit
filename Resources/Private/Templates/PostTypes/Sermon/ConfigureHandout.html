@@ -5,7 +5,6 @@
         <input type="hidden" name="post_type" value="pulpit_sermon"/>
         <input type="hidden" name="p" value="{sermon.ID}"/>
         <input type="hidden" name="format" value="handout"/>
-        <input type="hidden" name="underlineMode" value="{underlineMode}"/>
         <p>Auf dieser Seite kannst du ein benutzerdefiniertes Handout erstellen.</p>
         <h2>Veranstaltungen</h2>
         <p>Welche Veranstaltungen sollen im Handout mit berücksichtigt werden? <u>Bitte beachte:</u> Die jeweils letzte
@@ -26,6 +25,16 @@
                 <f:for each="{formats}" as="layout">
                     <option {f:if(condition: '{0: sermon.handout_format} == {0: layout}', then: 'selected')} value="{layout}">{layout}</option>
                 </f:for>
+            </select>
+        </div>
+        <div class="form-element">
+            <label for="underlineMode">
+                Lückentext
+            </label>
+            <select class="form-control" name="underlineMode">
+                <option value="html5" {f:if(condition: '{0: underlineMode} == {0: \'html5\'}', then: 'selected')}>ausgefüllt</option>
+                <option value="blank" {f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'selected')}>leer</option>
+                <option value="remove" {f:if(condition: '{0: underlineMode} == {0: \'remove\'}', then: 'selected')}>in normalen Text umwandeln</option>
             </select>
         </div>
         <hr/>
