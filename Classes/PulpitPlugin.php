@@ -30,6 +30,8 @@ use Peregrinus\Pulpit\Admin\Scheduler;
 use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
 use Peregrinus\Pulpit\CustomFormats\AbstractCustomFormat;
 use Peregrinus\Pulpit\CustomFormats\CustomFormatFactory;
+use Peregrinus\Pulpit\Hooks\AbstractHook;
+use Peregrinus\Pulpit\Hooks\HookFactory;
 use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 use Peregrinus\Pulpit\ShortCodes\ShortCodeFactory;
@@ -123,6 +125,13 @@ class PulpitPlugin
         /** @var AbstractCustomFormat $shortcode */
         foreach (ShortCodeFactory::getAll() as $shortcode) {
             $shortcode->register();
+        }
+
+
+        // load further hooks
+        /** @var AbstractHook $hook */
+        foreach (HookFactory::getAll() as $hook) {
+            $hook->register();
         }
 
 
