@@ -125,6 +125,11 @@
                                         Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
                                         und wähle "Ziel speichern ..."
                                     </div>
+                                    <wp:loggedIn>
+                                        <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout'})}">
+                                            Handout konfigurieren
+                                        </a>
+                                    </wp:loggedIn>
                                 </td>
                             </tr>
                         </f:if>
@@ -142,6 +147,11 @@
                                     Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
                                     und wähle "Ziel speichern ..."
                                 </div>
+                                <wp:loggedIn>
+                                    <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout', underlineMode: 'blank'})}">
+                                        Handout konfigurieren
+                                    </a>
+                                </wp:loggedIn>
                             </td>
                         </tr>
                     </f:else>
