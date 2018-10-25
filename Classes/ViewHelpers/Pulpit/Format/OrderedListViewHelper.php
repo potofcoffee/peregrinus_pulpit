@@ -75,7 +75,7 @@ class OrderedListViewHelper extends AbstractViewHelper
             case 'blank':
                 $this->arguments['list'] = str_replace(
                     ['[', ']'],
-                    ['<span style="color: white; border-bottom: solid 1px black">', '</span>'],
+                    ['<span style="color: white; border-bottom: solid 1px black; letter-spacing: 0.5em;">', '</span>'],
                     $this->arguments['list']
                 );
                 break;
