@@ -46,6 +46,7 @@ class SongAgendaItem extends AbstractAgendaItem
     {
         $title = EGService::getInstance()->get($data['song']);
         $data['number'] = $data['song'];
+        $data['isEG'] = is_numeric($data['song']);
         $data['title'] = $title;
         return $data;
     }
