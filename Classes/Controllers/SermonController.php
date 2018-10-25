@@ -45,6 +45,9 @@ class SermonController extends AbstractController
 
     public function singleAction(SermonModel $sermon)
     {
+
+        $this->view->assign('isPreview', (($sermon->getPost()->post_status == 'future')  || $_GET['forcePreview']) &&  !$_GET['forcePublished']);
+        $this->view->assign('isPublished', (($sermon->getPost()->post_status == 'publish') || $_GET['forcePublished']) && !$_GET['forcePreview']);
         $this->view->assign('sermon', $sermon);
     }
 
