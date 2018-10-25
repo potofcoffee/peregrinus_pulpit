@@ -47,8 +47,8 @@
                     <b>{event.location.title}</b><br/>
                     <h2><a href="{event.ID -> wp:permalink()}">{event.title}</a></h2>
                     <f:if condition="{event.sermon}">
-                                <span class="hometa">Predigt <f:if condition="{event.sermon.title}">"{event.sermon.title}
-                                    <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>"</f:if>
+                        <span class="hometa">Predigt <f:if condition="{event.sermon.title}">"<a href="{event.sermon.ID -> wp:permalink()}">{event.sermon.title}
+                            <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if></a>"</f:if>
                                     <f:if condition="{event.sermon.reference}"> zu {event.sermon.reference}</f:if></span><br/>
                     </f:if>
                     <p>{event.content.main -> f:format.raw()}</p>
