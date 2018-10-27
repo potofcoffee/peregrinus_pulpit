@@ -24,6 +24,8 @@
 
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
+use Peregrinus\Pulpit\Admin\Migrations\AbstractMigration;
+use Peregrinus\Pulpit\Admin\Migrations\MigrationFactory;
 use Peregrinus\Pulpit\Domain\Model\SermonModel;
 
 class MigrationSettingsPage extends AbstractSettingsPage
@@ -37,6 +39,32 @@ class MigrationSettingsPage extends AbstractSettingsPage
 
     public function render()
     {
+
+        if (!isset($_GET['do_migration'])) {
+
+            $migrations = MigrationFactory::getAll();
+            /** @var AbstractMigration $migration */
+
+            echo '<h1>'.__('Migrations', 'pulpit').'</h1>';
+            if (count($migrations)) {
+                echo '<table class="table" width="100%">';
+                foreach ($migrations as $migration) {
+                    echo '<tr><td><b>'.$migration->getTitle().'</b><br />'.$migration->getDescription().'</td>'
+                        .'<td><a class="button button-primary" href="?page=pulpit-settings-migration&do_migration='.$migration->getKey().'">'.__('Execute migration', 'pulpit').'</a></td>'
+                        .'</tr>';
+                }
+                echo '</table>';
+            } else {
+                echo __('No migration paths found.', 'pulpit');
+            }
+
+        } else {
+            $migrationClass='\\Peregrinus\\Pulpit\\Admin\\Migrations\\'.$_GET['do_migration'].'Migration';
+            /** @var AbstractMigration $migration */
+            $migration = new $migrationClass();
+            $migration->execute();
+        }
+
     }
 
     private function console($text, $breaks = 1)

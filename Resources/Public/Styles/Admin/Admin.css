@@ -94,3 +94,7 @@
 .component-box-error {
     border-left: solid 3px #dc3232;
 }
+
+.button.pulpit-detailed-liturgy-field-btn-remove-all {
+    color: red !important;
+}

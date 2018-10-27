@@ -28,7 +28,6 @@ use Peregrinus\Pulpit\Fields\EventsRelationField;
 use Peregrinus\Pulpit\Fields\FileRelationField;
 use Peregrinus\Pulpit\Fields\HandoutFormatField;
 use Peregrinus\Pulpit\Fields\InputField;
-use Peregrinus\Pulpit\Fields\LocationRelationField;
 use Peregrinus\Pulpit\Fields\RTEField;
 use Peregrinus\Pulpit\Fields\SlideRelationField;
 use Peregrinus\Pulpit\Fields\TextAreaField;
@@ -215,10 +214,21 @@ class SermonPostType extends AbstractPostType
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen = \get_current_screen();
         if ('edit' == $screen->base
-            && PEREGRINUS_PULPIT.'_'.$this->getKey() == $screen->post_type
+            && PEREGRINUS_PULPIT . '_' . $this->getKey() == $screen->post_type
             && !isset($_GET['orderby'])) {
             $query->set('orderby', 'publish_date');
             $query->set('order', 'DESC');
+        }
+    }
+
+    /**
+     * Allow single view for future sermons
+     * @param \WP_Query $query
+     */
+    public function preGetPostsHook(\WP_Query $query)
+    {
+        if ($query->is_singular() && ($query->query_vars['post_type'] == $this->getTypeName())) {
+            $query->set('post_status', ['future', 'publish']);
         }
     }
 

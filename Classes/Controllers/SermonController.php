@@ -78,7 +78,7 @@ class SermonController extends AbstractController
         foreach (glob(PEREGRINUS_PULPIT_BASE_PATH.'Resources/Private/Templates/PostTypes/Sermon/Handout/*.html') as $file) {
             $formats[] = pathinfo($file, PATHINFO_FILENAME);
         }
-        $underlineMode = filter_var($_GET['underlineMode'], FILTER_SANITIZE_STRING) ?: 'blank';
+        $underlineMode = filter_var($_GET['underlineMode'], FILTER_SANITIZE_STRING) ?: 'html5';
         $this->view->assign('sermon', $sermon);
         $this->view->assign('formats', $formats);
         $this->view->assign('underlineMode', $underlineMode);

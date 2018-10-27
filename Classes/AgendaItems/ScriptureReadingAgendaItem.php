@@ -33,11 +33,18 @@ class ScriptureReadingAgendaItem extends AbstractAgendaItem
     public function renderDataForm($id, $name, $value)
     {
         if (!is_array($value)) $value = ['reference' => ''];
+
+        $changeFunc = '$(\'#\'+$(this).parent().data(\'preview\')).html($(this).val());';
+
         return '<label for="'.$name.'[reference]">'.__('Reference', 'pulpit').'</label>'
             .'<input type="text" style="width: 100%" id="'.$id.'_reference" name="'.$name.'[reference]" value="'
             .($value['reference'] ?: '')
-            .'" />';
+            .'" onchange="'.$changeFunc.'"  onkeyup="'.$changeFunc.'"/>';
     }
 
+    public function renderDataPreview($data)
+    {
+        return $data['reference'];
+    }
 
 }

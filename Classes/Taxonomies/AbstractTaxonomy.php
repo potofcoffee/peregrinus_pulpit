@@ -50,10 +50,7 @@ class AbstractTaxonomy
      */
     protected function getSlug()
     {
-        $defaultSlug = $this->getKey();
-        $options = get_option(PEREGRINUS_PULPIT . '_general');
-
-        return (isset($options['slug_' . $defaultSlug]) ? $options['slug_' . $defaultSlug] : $defaultSlug);
+        return get_option(PEREGRINUS_PULPIT . '_slug_'.$this->getKey(), $this->getKey());
     }
 
     /**

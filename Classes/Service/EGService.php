@@ -70,4 +70,13 @@ class EGService
         return $this->data[$number] ?: $number;
     }
 
+    public function renderSinglePreview($number) {
+        $data = $this->data;
+        if (!isset($data[$number])) {
+            $data[$number] = $number;
+        }
+        $song = $data[$number];
+        return ($number != $song ? $number . ' ' . $song : $song);
+    }
+
 }

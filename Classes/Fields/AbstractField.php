@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Fields;
 
+use Peregrinus\Pulpit\Debugger;
+
 class AbstractField
 {
 
@@ -115,6 +117,7 @@ class AbstractField
     public function getValue($values, $expectArray = false)
     {
         $value = $values[$this->getKey()];
+
         if ((!$expectArray) && (is_array($value))) {
             $value = $value[0];
         }

@@ -22,7 +22,11 @@
 
 namespace Peregrinus\Pulpit\CustomFormats;
 
+use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\Domain\Model\SermonModel;
+use Peregrinus\Pulpit\Fluid\DynamicVariableProvider;
 use Peregrinus\Pulpit\View;
+use Symfony\Component\Debug\Debug;
 
 class PodcastCustomFormat extends AbstractCustomFormat
 {
@@ -46,11 +50,19 @@ class PodcastCustomFormat extends AbstractCustomFormat
         add_action('wp_head', [$this, 'feedLink'], 2);
     }
 
+    public function getPodcastOptions(): array {
+        $options = [];
+        foreach (['title', 'description', 'image', 'language', 'copyright', 'author_name', 'author_email', 'category'] as $key) {
+            $options['podcast_'.$key] = get_option('pulpit_podcast_'.$key);
+        }
+        return $options;
+    }
+
     public function feedLink() {
-        $options = get_option(PEREGRINUS_PULPIT.'_general');
+        // get podcast options
         echo "<!-- Podcast feed -->\r\n";
         echo '<link rel="alternate" type="application/rss+xml" title="'
-            . esc_attr( $options['podcast_title']) . '" href="'
+            . esc_attr( get_option('pulpit_podcast_title')) . '" href="'
             . get_home_url().'/podcast.xml' . "\" />\n";
     }
 
@@ -91,6 +103,7 @@ class PodcastCustomFormat extends AbstractCustomFormat
                         }
                     }
                     $items[] = [
+                        'sermon' => new SermonModel($post),
                         'post' => $post,
                         'meta' => $meta,
                         'content' => get_extended(get_post_field('post_content', $post->ID)),
@@ -106,7 +119,7 @@ class PodcastCustomFormat extends AbstractCustomFormat
             }
         }
 
-        $podcastConfig = get_option(PEREGRINUS_PULPIT . '_general');
+        $podcastConfig = $this->getPodcastOptions();
         $podcastConfig['url'] = get_home_url().'/podcast.xml';
         $podcastConfig['podcast_category'] = explode(
             '/',
@@ -120,6 +133,7 @@ class PodcastCustomFormat extends AbstractCustomFormat
 
         $view = new View();
         $context = $view->getRenderingContext();
+        $context->setVariableProvider(new DynamicVariableProvider());
         $context->getTemplatePaths()->setTemplatePathAndFilename($this->getViewFilePath());
 
         $view->assign('items', $items);

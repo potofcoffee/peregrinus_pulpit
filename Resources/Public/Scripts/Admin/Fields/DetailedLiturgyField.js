@@ -17,8 +17,11 @@ function enableDetailedLiturgyFieldButtons() {
     $('.pulpit-song-selectbox').select2({
         tags: true
     });
+    $('.pulpit-song-selectbox')
+        .on('select2:select', function(e){
+            $('#'+$(this).parent().data('preview')+' .data-preview-song').html(e.params.data.text);
+        });
 }
-
 
 (function($){
 
@@ -42,10 +45,61 @@ function enableDetailedLiturgyFieldButtons() {
             }
         }).disableSelection();
 
+
+        $('.pulpit-detailed-liturgy-field-btn-add-item').click(function(event) {
+            event.preventDefault();
+            var title = window.prompt('Please enter the title for the new item');
+            var count = $(this).parent().parent().find('li.pulpit-detailed-liturgy-form-single').length;
+            var data = {
+                'action': 'pulpit_createAgendaItemSubForm',
+                'title': title,
+                'index': count,
+                'key': $(this).data('key'),
+                'type': $(this).data('type')
+            };
+            $.post({
+                url: ajaxurl,
+                data: data,
+                context: this,
+                success: function(response) {
+                    $(this).parent().parent().find('ul').append(response);
+                    enableDetailedLiturgyFieldButtons();
+                }
+            });
+
+        });
+
+        $('.pulpit-detailed-liturgy-field-btn-import').click(function(event) {
+            event.preventDefault();
+            var count = $(this).parent().parent().find('li.pulpit-detailed-liturgy-form-single').length;
+            var data = {
+                'action': 'pulpit_importAgendaItems',
+                'index': count,
+                'source': $($(this).data('source')).val(),
+                'key': $(this).data('key')
+            };
+            $.post({
+                url: ajaxurl,
+                data: data,
+                context: this,
+                success: function(response) {
+                    $(this).parent().parent().find('ul').append(response);
+                    enableDetailedLiturgyFieldButtons();
+                }
+            });
+
+        });
+
         $('.pulpit-detailed-liturgy-btn-import').click(function(event) {
             event.preventDefault();
             $('#post').submit();
         });
+
+        $('.pulpit-detailed-liturgy-field-btn-remove-all').click(function(event) {
+            event.preventDefault();
+            $(this).parent().parent().find('li.pulpit-detailed-liturgy-form-single').remove();
+        });
+
 
         $('.pulpit-detailed-liturgy-field-btn-add').click(function(event){
             event.preventDefault();
@@ -58,8 +112,6 @@ function enableDetailedLiturgyFieldButtons() {
             enableDetailedLiturgyFieldButtons()
         });
 
-        $('.pulpit-detailed-liturgy-form-sub').toggle();
-        $('.pulpit-detailed-liturgy-form-single-toggle').removeClass('ui-icon-arrowthick-1-n').addClass('ui-icon-arrowthick-1-s');
         enableDetailedLiturgyFieldButtons();
     });
 })(jQuery);

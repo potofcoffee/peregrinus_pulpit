@@ -23,6 +23,7 @@
 namespace Peregrinus\Pulpit\Settings;
 
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
+use Peregrinus\Pulpit\Debugger;
 
 class SettingsTab
 {
@@ -38,6 +39,22 @@ class SettingsTab
         $this->setPage($page);
         $this->setKey($key);
         $this->setTitle($title);
+
+        // fix field contexts:
+        /**
+         * @var mixed $sectionKey
+         * @var SettingsSection $section
+         */
+        foreach ($sections as $sectionKey => $section) {
+            /**
+             * @var mixed $settingKey
+             * @var Setting $setting
+             */
+            foreach ($section->getSettings() as $settingKey => $setting) {
+//               $setting->getField()->setContext($this->getOptionGroupName());
+            }
+        }
+
         $this->setSections($sections);
     }
 
@@ -51,12 +68,17 @@ class SettingsTab
         }
     }
 
+    public function getOptionName() {
+        return 'pulpit_'.$this->getKey();
+    }
+
+
     /**
      * Get the slug for this tab
      * @return string Slug
      */
     public function getSlug() {
-        return $this->page->getSlug().'-'.$this->getKey();
+        return PEREGRINUS_PULPIT.'_'.$this->getKey();
     }
 
     /**
@@ -72,11 +94,15 @@ class SettingsTab
      * Render the tab content
      */
     public function render() {
-        settings_fields($this->page->getOptionGroupName());
+        settings_fields($this->getSlug());
         do_settings_sections($this->getSlug());
         submit_button();
     }
 
+
+    public function getOptionGroupName() {
+        return 'pulpit_'.$this->getKey();
+    }
 
 
     /**

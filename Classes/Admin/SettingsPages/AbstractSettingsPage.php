@@ -135,11 +135,6 @@ class AbstractSettingsPage
      */
     public function init()
     {
-        register_setting(
-            $this->getOptionGroupName(),
-            $this->getOptionName(),
-            [$this, 'sanitize']
-        );
         /** @var SettingsTab $tab */
         foreach ($this->tabs as $tab) {
             $tab->register();
@@ -152,14 +147,14 @@ class AbstractSettingsPage
      */
     public function getOptionGroupName()
     {
-        return PEREGRINUS_PULPIT . '_options';
+        return PEREGRINUS_PULPIT . '_options_'.$this->getKey();
     }
 
     /**
      * Get the option name for this SettingsPage
      * @return string Option name
      */
-    protected function getOptionName()
+    public function getOptionName()
     {
         return PEREGRINUS_PULPIT . '_' . $this->getKey();
     }

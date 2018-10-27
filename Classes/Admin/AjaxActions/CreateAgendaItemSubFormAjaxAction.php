@@ -20,20 +20,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\Admin\AjaxActions;
 
-class FreeTextAgendaItem extends AbstractAgendaItem
+use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
+use Peregrinus\Pulpit\Fields\DetailedLiturgyField;
+
+class CreateAgendaItemSubFormAjaxAction extends AbstractAjaxAction
 {
-    public function __construct()
+    public function do()
     {
-        parent::__construct();
-        $this->setTitle(__('Free Text', 'pulpit'));
+        //echo '<li>'.print_r($_POST, 1).'</li>';
+        $field = new DetailedLiturgyField($_POST['key'], [
+            'public_info' => __('This information may be published (e.g. in handouts)'),
+            'responsible' => __('Responsible for this item'),
+            'instructions_for' => __('Instructions for %s'),
+        ]);
+        echo $field->renderSingleForm($_POST['index'], ['type' => $_POST['type'], 'title' => $_POST['title']]);
+        wp_die();
     }
-
-    public function renderDataPreview($data)
-    {
-        return $data ? substr($data, 0, 80).'...' : '';
-    }
-
-
 }

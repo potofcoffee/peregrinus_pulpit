@@ -23,6 +23,7 @@
 namespace Peregrinus\Pulpit\Settings;
 
 use Peregrinus\Pulpit\Admin\SettingsPages\AbstractSettingsPage;
+use Peregrinus\Pulpit\Debugger;
 
 /**
  * Class SettingsSection

@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\Admin\Migrations;
 
-class FreeTextAgendaItem extends AbstractAgendaItem
+class MigrationFactory
 {
-    public function __construct()
+    /**
+     * Get all Migrations
+     * @return array Instances of each Migration
+     */
+    public static function getAll()
     {
-        parent::__construct();
-        $this->setTitle(__('Free Text', 'pulpit'));
+        foreach (glob(PEREGRINUS_PULPIT_CLASS_PATH . '/Admin/Migrations/*Migration.*') as $class) {
+            $baseClass = pathinfo($class, PATHINFO_FILENAME);
+            $class = 'Peregrinus\\Pulpit\\Admin\\Migrations\\' . $baseClass;
+            if (substr($baseClass, 0, 8) !== 'Abstract') {
+                $objects[] = new $class();
+            }
+        }
+        return $objects;
     }
-
-    public function renderDataPreview($data)
-    {
-        return $data ? substr($data, 0, 80).'...' : '';
-    }
-
-
 }

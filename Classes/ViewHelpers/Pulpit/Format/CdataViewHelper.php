@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Format;
 
-class FreeTextAgendaItem extends AbstractAgendaItem
+class CdataViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
-    public function __construct()
+
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
+
+
+    protected function render()
     {
-        parent::__construct();
-        $this->setTitle(__('Free Text', 'pulpit'));
+        return '<![CDATA['.$this->renderChildren().']]>';
     }
-
-    public function renderDataPreview($data)
-    {
-        return $data ? substr($data, 0, 80).'...' : '';
-    }
-
-
 }

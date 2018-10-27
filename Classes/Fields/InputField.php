@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Fields;
 
+use Peregrinus\Pulpit\Debugger;
+
 class InputField extends AbstractField
 {
 

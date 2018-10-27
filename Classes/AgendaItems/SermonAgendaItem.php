@@ -30,4 +30,15 @@ class SermonAgendaItem extends AbstractAgendaItem
         $this->setTitle(__('Sermon', 'pulpit'));
     }
 
+    public function renderDataForm($id, $name, $value)
+    {
+        return '<p><i>'.__('Sermon data will be automatically supplied.', 'pulpit').'</i></p>';
+    }
+
+    public function renderDataPreview($data)
+    {
+        return '<i>'.__('Sermon data will be automatically supplied.', 'pulpit').'</i>';
+    }
+
+
 }

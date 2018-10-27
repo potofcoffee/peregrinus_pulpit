@@ -154,6 +154,10 @@ class EventPostType extends AbstractPostType
             new MetaBox('officiating', __('Officiating', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
                 ]
             ),
+            new MetaBox('events_info', __('General information', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new RTEField('published_announcements', __('Announcements for publication', 'pulpit')),
+                ]
+            ),
         ];
     }
 

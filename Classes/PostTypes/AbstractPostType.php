@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\PostTypes;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\FrontendDispatcher;
 
 /**
@@ -49,6 +50,9 @@ class AbstractPostType
 
         // add some JS to correctly open sidebar menu:
         add_action('add_meta_boxes_'.$this->getTypeName(), [$this, 'addPostTypeSpecificJS']);
+
+        // add pre_get_posts hook
+        add_action('pre_get_posts', [$this, 'preGetPostsHook']);
     }
 
     public function addPostTypeSpecificJS() {
@@ -100,10 +104,7 @@ class AbstractPostType
      */
     protected function getSlug()
     {
-        $defaultSlug = $this->getKey();
-        $options = get_option(PEREGRINUS_PULPIT . '_general');
-
-        return (isset($options['slug_' . $defaultSlug]) ? $options['slug_' . $defaultSlug] : $defaultSlug);
+        return get_option(PEREGRINUS_PULPIT . '_slug_'.$this->getKey(), $this->getKey());
     }
 
     /**
@@ -151,5 +152,8 @@ class AbstractPostType
     public function addCustomFields()
     {
         return [];
+    }
+
+    public function preGetPostsHook($query) {
     }
 }

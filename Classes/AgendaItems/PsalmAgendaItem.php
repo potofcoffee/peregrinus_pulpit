@@ -46,5 +46,10 @@ class PsalmAgendaItem extends AbstractAgendaItem
         return $data;
     }
 
+    public function renderDataPreview($data)
+    {
+        return EGService::getInstance()->renderSinglePreview($data['song']);
+    }
+
 
 }

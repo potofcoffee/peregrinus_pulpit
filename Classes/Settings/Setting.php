@@ -29,6 +29,7 @@ class Setting
 {
     protected $id = '';
     protected $label = '';
+    /** @var AbstractField $field */
     protected $field = null;
     protected $tab = null;
 
@@ -53,6 +54,11 @@ class Setting
             $tab->getSlug(),
             $section->getId()
         );
+        register_setting(
+            $tab->getSlug(),
+            $this->getField()->getKey()
+        );
+
         $this->setTab($tab);
     }
 
@@ -94,7 +100,7 @@ class Setting
     public function render()
     {
         if ($this->getTab()) {
-            $options = $this->getTab()->getPage()->getOptions();
+            $options = [$this->getField()->getKey() => get_option($this->getField()->getKey())];
         } else {
             $options = [];
         }
@@ -118,7 +124,7 @@ class Setting
     }
 
     /**
-     * @return null
+     * @return AbstractField
      */
     public function getField()
     {

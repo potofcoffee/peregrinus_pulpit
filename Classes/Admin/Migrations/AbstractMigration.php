@@ -20,29 +20,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\Admin\Migrations;
 
-use Peregrinus\Pulpit\Debugger;
-
-class AbstractAgendaItem
+class AbstractMigration
 {
 
     protected $title = '';
-    protected $_hasFields = true;
+    protected $description = '';
 
+    /**
+     * AbstractMigration constructor.
+     */
     public function __construct()
     {
     }
 
+    public function execute() {
+        die ('Executing migration ').$this->getKey();
+    }
+
     /**
-     * Get the key for this AgendaItem
+     * Get the key for this Migration
      * @return string
      */
     public function getKey()
     {
         $tmp = explode('\\', get_class($this));
-        return lcfirst(str_replace('AgendaItem', '', array_pop($tmp)));
+        return str_replace('Migration', '', array_pop($tmp));
     }
+
+
 
     /**
      * @return string
@@ -60,29 +67,22 @@ class AbstractAgendaItem
         $this->title = $title;
     }
 
-    public function renderDataForm($id, $name, $value)
+    /**
+     * @return string
+     */
+    public function getDescription(): string
     {
-        $changeFunc = 'var text = $(this).val(); if (text != \'\') text = text.substr(0,80)+\'...\'; $(\'#\'+$(this).parent().data(\'preview\')).html(text);';
+        return $this->description;
+    }
 
-        $o = '<textarea style="width:100%" id="' . $id . '" name="' . $name . '" onchange="'.$changeFunc.'"  onkeyup="'.$changeFunc.'">' . $value . '</textarea>';
-        return $o;
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
 
-    public function hasFields(): bool {
-        return $this->_hasFields;
-    }
-
-    public function provideData($data) {
-        return $data;
-    }
-
-    public function renderTitle($title) {
-        return '<span class="pulpit-detailed-liturgy-form-single-toggle" style="width: 33%; font-weight: bold; color: #951981">' .$title.'</span>';
-    }
-
-    public function renderDataPreview($data) {
-        return print_r($data, 1);
-    }
 
 }

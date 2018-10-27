@@ -34,12 +34,17 @@ class SongAgendaItem extends AbstractAgendaItem
 
     public function renderDataForm($id, $name, $value)
     {
-        if (!is_array($value)) $value = ['song' => $value, 'verses' => ''];
-        return EGService::getInstance()->selectBox($id.'_name', $name.'[song]', $value['song'] ?: '')
-            .'<label for="'.$name.'[verses]">'.__('Verses', 'pulpit').'</label>'
-            .'<input type="text" style="width: 100%" id="'.$id.'_verses" name="'.$name.'[verses]" value="'
-            .($value['verses'] ?: '')
-            .'" />';
+        if (!is_array($value)) {
+            $value = ['song' => $value, 'verses' => ''];
+        }
+
+        $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val());';
+
+        return EGService::getInstance()->selectBox($id . '_name', $name . '[song]', $value['song'] ?: '')
+            . '<label for="' . $name . '[verses]">' . __('Verses', 'pulpit') . '</label>'
+            . '<input type="text" style="width: 100%" id="' . $id . '_verses" name="' . $name . '[verses]" value="'
+            . ($value['verses'] ?: '')
+            . '" onchange="' . $changeFunc2 . '" onkeyup="' . $changeFunc2 . '" onclick="' . $changeFunc2 . '"/>';
     }
 
     public function provideData($data)
@@ -49,6 +54,16 @@ class SongAgendaItem extends AbstractAgendaItem
         $data['isEG'] = is_numeric($data['song']);
         $data['title'] = $title;
         return $data;
+    }
+
+    public function renderDataPreview($data)
+    {
+        return '<span class="data-preview-song">'
+            . EGService::getInstance()->renderSinglePreview($data['song'])
+            . '</span> ('
+            . '<span class="data-preview-verses">'
+            . $data['verses']
+            . '</span>)';
     }
 
 }

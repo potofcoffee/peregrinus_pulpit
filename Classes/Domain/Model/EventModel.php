@@ -24,6 +24,7 @@ namespace Peregrinus\Pulpit\Domain\Model;
 
 use Peregrinus\Pulpit\AgendaItems\AbstractAgendaItem;
 use Peregrinus\Pulpit\AgendaItems\AgendaItemFactory;
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Repository\LocationRepository;
 
 class EventModel extends AbstractModel

@@ -24,8 +24,10 @@ namespace Peregrinus\Pulpit\Fields;
 
 use Peregrinus\Pulpit\AgendaItems\AbstractAgendaItem;
 use Peregrinus\Pulpit\AgendaItems\AgendaItemFactory;
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\AgendaModel;
 use Peregrinus\Pulpit\Domain\Repository\AgendaRepository;
+use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 
 class DetailedLiturgyField extends AbstractField
 {
@@ -84,10 +86,14 @@ class DetailedLiturgyField extends AbstractField
         $agendaItem = $item['type'] ? AgendaItemFactory::get($item['type']) : new AbstractAgendaItem();
 
         $o = '<li class="pulpit-detailed-liturgy-form-single">'
-            . '<span class="pulpit-detailed-liturgy-form-single-toggle pulpit-collapse-section-icon ui-icon ui-icon-arrowthick-1-n"></span> '
             . '<span class="pulpit-detailed-liturgy-field-btn-remove pulpit-collapse-section-icon ui-icon ui-icon-trash"></span> '
-            . '<b>' . ($item['title'] ?: '###TITLE###') . '</b>'
-            . '<div class="pulpit-detailed-liturgy-form-sub">'
+            . $agendaItem->renderTitle($item['title'] ?: '###TITLE###')
+            . '<span class="pulpit-detailed-liturgy-form-data-preview" id="' . $this->getFieldId($index,
+                'data-preview') . '">'
+            . $agendaItem->renderDataPreview($item['data'])
+            . '</span>'
+            . '<div class="pulpit-detailed-liturgy-form-sub" style="display:none;" data-preview="' . $this->getFieldId($index,
+                'data-preview') . '">'
             . $this->hiddenField($index, 'title', $item['title'])
             . $this->hiddenField($index, 'type', $item['type'])
             . $this->hiddenField($index, 'description', $item['description'])
@@ -118,9 +124,7 @@ class DetailedLiturgyField extends AbstractField
             }
         }
 
-        $o .= '<br />'
-            . '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove" href="#">' . __('Remove agenda item',
-                'pulpit') . '</a></div>'
+        $o .= '</div>'
             . '</li>';
         return $o;
     }
@@ -136,33 +140,47 @@ class DetailedLiturgyField extends AbstractField
     protected function renderAgendaSelect(): string
     {
         $agendas = (new AgendaRepository())->get();
-        $o = '<select style="width: 100%" id="' . $this->getFieldId('', 'import') . '" name="'
-            . ($this->getContext() ? $this->getContext() . '[' . $this->getKey() . ']' : $this->getKey()) . '[0][import]">';
+        $o = '<select style="height:24px; line-height: 22px;" id="' . $this->getFieldId('', 'import') . '">';
+        $o .= '<optgroup label="'.__('Agendas', 'pulpit').'">';
         /** @var AgendaModel $agenda */
         foreach ($agendas as $agenda) {
-            $o .= '<option value="' . $agenda->getID() . '">' . $agenda->getTitle() . '</option>';
+            $o .= '<option value="a:' . $agenda->getID() . '">' . $agenda->getTitle() . '</option>';
         }
+        $o .= '</optgroup>';
+
+        $o .= '<optgroup label="'.__('Events', 'pulpit').'">';
+        /** @var AgendaModel $agenda */
+        foreach ((new EventRepository())->get() as $event) {
+            $o .= '<option value="e:' . $event->getID() . '">' . $event->getDate().' '.$event->getTime().' '.$event->getTitle() . '</option>';
+        }
+        $o .= '</optgroup>';
+
         $o .= '</select>';
         return $o;
     }
 
     protected function import($id): array
     {
-        /** @var AgendaModel $agenda */
-        $agenda = (new AgendaRepository())->findByID($id);
-        $items = [];
-        foreach ($agenda->getAgendaItems() as $item) {
-            $item = maybe_unserialize($item);
-            $item['optional'] = $item['optional'] ? 1 : 0;
-            $item['data'] = '';
-            $item['public_info'] = false;
-            $item['responsible'] = '';
-            foreach ($this->instructionsFor as $recipient) {
-                $item['instructions'][$recipient] = '';
-            }
-            $items[] = $item;
+        return [];
+    }
+
+    protected function toolBar()
+    {
+        $o = '<div class="pulpit-detailed-liturgy-field-toolbar">';
+        /** @var AbstractAgendaItem $item */
+        foreach (AgendaItemFactory::getAll() as $item) {
+            $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-add-item" href="#" data-type="'
+                . $item->getKey() . '" data-key="'.$this->key.'">'
+                . sprintf(__('Add %s', 'pulpit'), $item->getTitle()) . '</a>&nbsp;';
         }
-        return $items;
+        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove-all" href="#">' . __('Remove all',
+                'pulpit') . '</a>';
+        $o .= '<br />';
+        $o .= __('Import items from', 'pulpit').': '.$this->renderAgendaSelect();
+        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-import" href="#" data-source="#'.$this->getFieldId('', 'import').'"  data-key="'.$this->key.'">' . __('Import',
+                'pulpit') . '</a>';
+        $o .= '<hr /></div>';
+        return $o;
     }
 
     /**
@@ -180,9 +198,7 @@ class DetailedLiturgyField extends AbstractField
 
         if (isset($items[0])) {
             $items[0] = maybe_unserialize($items[0]);
-            if (isset($items[0]['import'])) {
-                $items = $this->import($items[0]['import']);
-            }
+            if (isset($items[0]['import'])) unset($items[0]);
         }
 
         $o = '';
@@ -192,27 +208,16 @@ class DetailedLiturgyField extends AbstractField
             . $this->renderSingleForm('###INDEX###', $this->getEmptyRecord())
             . '\'; </script>';
 
+        $o .= $this->toolBar();
+
         $o .= '<ul class="pulpit-detailed-liturgy-form" data-key="' . $this->getKey() . '">';
 
-        if (!count($items)) {
-            $o .= '<div class="pulpit-detailed-liturgy-empty">'
-                . __('There is no liturgy for this event yet. You can start planning by importing items from a pre-defined agenda.',
-                    'pulpit') . '<br />'
-                . $this->renderAgendaSelect()
-                . '<a class="button button-small pulpit-detailed-liturgy-btn-import" href="#">' . __('Import items from agenda',
-                    'pulpit') . '</a>'
-                . '</div>';
-        } else {
-            foreach ($items as $index => $item) {
-                $item = maybe_unserialize($item);
-                $o .= $this->renderSingleForm($index, $item);
-            }
-
-            $o .= '<br /><a class="button button-small pulpit-detailed-liturgy-field-btn-add" href="#">' . __('Add item',
-                    'pulpit') . '</a>';
+        foreach ($items as $index => $item) {
+            $item = maybe_unserialize($item);
+            $o .= $this->renderSingleForm($index, $item);
         }
 
-        $o .= '</div>';
+        $o .= '</ul></div>';
 
         return $o;
     }
