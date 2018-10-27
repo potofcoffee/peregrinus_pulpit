@@ -171,6 +171,18 @@
         </div>
         <wp:loggedIn>
             <hr/>
+            <h3>Lieder für den Gottesdienst</h3>
+            <ul>
+            <f:for each="{event.liturgy}" as="item">
+                <f:if condition="{0: item.type} == {0: 'song'}">
+                    <li><f:if condition="{item.data.isEG}"><f:then><b>{item.title}:</b> {item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if> "{item.data.title}"</f:then><f:else><b>{item.title}:</b> "{item.data.title}" <f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></li>
+                </f:if>
+                <f:if condition="{0: item.type} == {0: 'psalm'}">
+                    <li><b>{item.title}:</b> {item.data.number} {item.data.title}</li>
+                </f:if>
+            </f:for>
+            </ul>
+            <hr/>
             <table class="table">
                 <tbody>
                 <f:for each="{event.liturgy}" as="item">
