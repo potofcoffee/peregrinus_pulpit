@@ -9,34 +9,11 @@
     <body>
     <div class="column">
         <p:last of="{sermon.events}" as="event">
-            <f:if condition="{event.liturgy}">
-                <f:then>
-                    <h2>Gottesdienst</h2>
-                    <ul class="liturgy">
-                        <f:for each="{event.liturgy}" as="item">
-                            <f:switch expression="{item.type}">
-                                <f:case value="sectionTitle">
-                    </ul><h3>{item.title}</h3><ul class="liturgy">
-                    </f:case>
-                    <f:case value="descriptive">
-                        <li>{item.title}</li>
-                    </f:case>
-                    <f:case value="freeText">
-                        <li>{item.title}</li>
-                    </f:case>
-                    <f:case value="song">
-                        <li>Lied {item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
-                        </li>
-                    </f:case>
-                    </f:switch>
-                    </f:for>
-                </ul>
-                </f:then>
-                <f:else>
-                    <h2>{event.title}</h2>
-                    {event.content.main -> f:format.raw()}
-                    {event.content.extended -> f:format.raw()}
-                </f:else>
+            <f:if condition="{event.published_announcements}">
+                <h2>Aus unserer Gemeinde</h2>
+                <div class="announcements">
+                    {event.published_announcements -> wp:autop()}
+                </div>
             </f:if>
         </p:last>
     </div>
@@ -64,6 +41,7 @@
         </div>
     </div>
     <div class="column1">
+
         <img class="logo logo-top img-responsive" src="{baseUrl}Assets/Logos/logo_tailfingen.jpg"/>
         <div class="column1-container">
             <h1>{sermon.post_title}
@@ -82,14 +60,46 @@
     </div>
     <div class="column">
         <p:last of="{sermon.events}" as="event">
-            <h2>{event.dayTitle}</h2>
-            {event.day_description -> f:format.raw()}
-            <p></p>
+            <f:if condition="{event.liturgy}">
+                <f:then>
+                    <h2>Gottesdienst</h2>
+                    <ul class="liturgy">
+                        <f:for each="{event.liturgy}" as="item">
+                            <f:switch expression="{item.type}">
+                                <f:case value="sectionTitle">
+                    </ul>
+                    <h3 class="liturgy">{item.title}</h3>
+                    <ul class="liturgy">
+                        </f:case>
+                        <f:case value="descriptive">
+                            <li><b>{item.title}</b></li>
+                        </f:case>
+                        <f:case value="freeText">
+                            <li><b>{item.title}</b></li>
+                        </f:case>
+                        <f:case value="song">
+                            <li><f:if condition="{item.data.isEG}"><f:then><b>Lied:</b> "{item.data.title}" ({item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>)</f:then><f:else><b>Lied:</b> "{item.data.title}" <f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></li>
+                        </f:case>
+                        <f:case value="psalm">
+                            <li><f:if condition="{item.data.isEG}"><f:then><b>Psalmgebet:</b> {item.data.song}</f:then><f:else><b>{item.data.title}</b> ({item.data.song})</f:else></f:if></li>
+                        </f:case>
+                        <f:case value="sermon">
+                            <li><b>Predigt:</b> "{sermon.title}<f:if condition="{sermon.subtitle}">: {sermon.subtitle}</f:if>" ({sermon.reference})</li>
+                        </f:case>
+                        <f:case value="scriptureReading">
+                            <li><b>Schriftlesung<f:if condition="{item.data.reference}">:</f:if></b><f:if condition="{item.data.reference}"> {item.data.reference}</f:if></li>
+                        </f:case>
+                        </f:switch>
+                        </f:for>
+                    </ul>
+                </f:then>
+                <f:else>
+                    <h2>{event.title}</h2>
+                    {event.content.main -> f:format.raw()}
+                    {event.content.extended -> f:format.raw()}
+                </f:else>
+            </f:if>
         </p:last>
-        <h3>Bibellese</h3>
-        <p>{sermon.reference}</p>
-        <h3>Worum geht's?</h3>
-        {sermon.content.main -> f:format.raw()}
     </div>
     <div class="column column3 keypoints">
         <h2>
@@ -100,13 +110,17 @@
         </h2>
         <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
         <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
-                              listStyle="font-size: 12pt;" />
+                              listStyle="font-size: 12pt;"/>
     </div>
     <div class="column">
+        <h3>Predigttext</h3>
+        <p>{sermon.reference}</p>
+        <h3>Worum geht's?</h3>
+        {sermon.content.main -> wp:autop()}
         <f:if condition="{sermon.questions}">
             <div class="row" style="height: 7cm">
-                <div class="col-xs-12">
-                    <h2>Fragen zur Vertiefung</h2>
+                <div class="col-xs-12 questions">
+                    <h3>Fragen zur Vertiefung</h3>
                     <p class="small">Die folgenden Fragen sollen dir helfen, zu Hause oder in deiner Kleingruppe weiter
                         über das
                         Gehörte nachzudenken.
@@ -118,7 +132,7 @@
         <f:if condition="{sermon.further_reading}">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2>Literaturtipps</h2>
+                    <h3>Literaturtipps</h3>
                     <p class="small">Wenn du dich noch intensiver mit dem Thema beschäftigen möchtest, könnte dir
                         Folgendes weiterhelfen:</p>
                     {sermon.further_reading}

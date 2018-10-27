@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 body {
 	line-height: 1.2em;
-	font-size: 12pt;
+	font-size: 11pt;
 	font-family: 'Helvetica Condensed', sans-serif;
 }
 
@@ -50,6 +50,7 @@ h1, h2, h3 {
     margin: 0;
 	line-height: 1.4em;
 	font-weight: bold;
+	color: #951981;
 }
 
 .subtitle {
@@ -109,8 +110,8 @@ div.column1 {
 
 figcaption.image-copyrights, figcaption.image-copyrights a {
 	text-decoration: none;
-	font-size: 7pt;
-	color: darkgray;
+	font-size: 6pt;
+	color: #777777;
 }
 
 
@@ -149,7 +150,7 @@ figure {
 }
 
 .small {
-	color: darkgray;
+	color: #333333;
 	font-size: 10pt;
 }
 
@@ -162,11 +163,39 @@ figure {
 	max-width: 4cm;
 }
 
+h3.liturgy {
+	color: #951981;
+}
+
+ul.liturgy {
+	list-style: none !important;
+	list-style-type: none !important;
+	padding-left: 1em;
+}
+
+ul.liturgy li::before {
+	content: "▪";
+	color: #951981;
+	display: inline-block; width: 1em;
+	margin-left: -1em
+}
+
+
 ul.liturgy li {
 	padding: 0;
 	margin: 0;
+	list-style-type: none !important;
 }
 
 div.keypoints li {
 	margin-bottom: 2cm;
+}
+
+div.announcements {
+	font-size: 8pt;
+	line-height: 100%;
+}
+
+div.questions ol {
+	padding-left: 1.5em;
 }
