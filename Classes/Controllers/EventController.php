@@ -22,7 +22,6 @@
 
 namespace Peregrinus\Pulpit\Controllers;
 
-use Composer\Script\Event;
 use Peregrinus\Pulpit\Domain\Model\EventModel;
 use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
@@ -47,9 +46,9 @@ class EventController extends AbstractController
     public function archiveAction()
     {
         $events = $this->eventRepository->get([
-            'meta_key'    => 'date',
-            'orderby'     => 'meta_value',
-            'order'       => 'asc',
+            'meta_key' => 'date',
+            'orderby' => 'meta_value',
+            'order' => 'asc',
             'meta_query' => [
                 'relation' => 'OR',
                 [
@@ -66,23 +65,41 @@ class EventController extends AbstractController
          */
         foreach ($events as $key => $event) {
             $sermon = $this->sermonRepository->findOneByEventID($event->getID());
-            if ($sermon) $event->setMetaElement('sermon', $sermon);
+            if ($sermon) {
+                $event->setMetaElement('sermon', $sermon);
+            }
         }
         $this->view->assign('events', $events);
     }
 
-    public function singleAction($post) {
+    private function getEventDataFromPost($post)
+    {
+        if (!$post) {
+            $post = get_queried_object();
+        }
         $event = new EventModel($post);
         $sermon = $this->sermonRepository->findOneByEventID($event->getID());
-        if ($sermon) $event->setMetaElement('sermon', $sermon);
+        if ($sermon) {
+            $event->setMetaElement('sermon', $sermon);
+        }
         $this->view->assign('event', $event);
     }
 
-    public function liturgyAction($post) {
-        if (!$post) $post = get_queried_object();
-        $event = new EventModel($post);
-        $sermon = $this->sermonRepository->findOneByEventID($event->getID());
-        if ($sermon) $event->setMetaElement('sermon', $sermon);
+    public function singleAction($post)
+    {
+        $event = $this->getEventDataFromPost($post);
+        $this->view->assign('event', $event);
+    }
+
+    public function liturgyAction($post)
+    {
+        $event = $this->getEventDataFromPost($post);
+        $this->view->assign('event', $event);
+    }
+
+    public function preacherNotesAction($post)
+    {
+        $event = $this->getEventDataFromPost($post);
         $this->view->assign('event', $event);
     }
 
