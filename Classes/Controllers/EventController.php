@@ -83,6 +83,7 @@ class EventController extends AbstractController
             $event->setMetaElement('sermon', $sermon);
         }
         $this->view->assign('event', $event);
+        return $event;
     }
 
     public function singleAction($post)

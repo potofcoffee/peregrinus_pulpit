@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Service;
 
+use Peregrinus\Pulpit\Debugger;
+
 class EGService
 {
 
@@ -35,7 +37,7 @@ class EGService
      */
     public function __construct()
     {
-        $this->data = yaml_parse_file(PEREGRINUS_PULPIT_BASE_PATH . 'Assets/EG/EG.yaml');
+        $this->data = yaml_parse_file(PEREGRINUS_PULPIT_BASE_PATH . 'Assets/Songbooks/EG.yaml');
     }
 
     public static function getInstance(): EGService
@@ -57,9 +59,9 @@ class EGService
         $o = '<select class="pulpit-song-selectbox" style="width: 100%;" name="' . $name . '" id="' . $id . '">';
         foreach ($data as $number => $song) {
             $o .= '<option'
-                . ($number != $song ? ' value="' . $number . '"' : '')
+                . ($number != $song['title'] ? ' value="' . $number . '"' : '')
                 . ($value == $number ? ' selected' : '') . '>'
-                . ($number != $song ? $number . ' ' . $song : $song)
+                . ($number != $song['title'] ? $number . ' ' . $song['title'] : $song['title'])
                 . '</option>';
         }
         $o .= '</select>';
@@ -76,7 +78,7 @@ class EGService
             $data[$number] = $number;
         }
         $song = $data[$number];
-        return ($number != $song ? $number . ' ' . $song : $song);
+        return (is_array($song) ? $number . ' ' . $song['title'] : $song);
     }
 
 }

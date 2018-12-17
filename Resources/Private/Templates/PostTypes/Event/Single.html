@@ -171,48 +171,21 @@
         </div>
         <wp:loggedIn>
             <hr/>
-            <h3>Lieder für den Gottesdienst</h3>
-            <ul>
-            <f:for each="{event.liturgy}" as="item">
-                <f:if condition="{0: item.type} == {0: 'song'}">
-                    <li><f:if condition="{item.data.isEG}"><f:then><b>{item.title}:</b> {item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if> "{item.data.title}"</f:then><f:else><b>{item.title}:</b> "{item.data.title}" <f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></li>
-                </f:if>
-                <f:if condition="{0: item.type} == {0: 'psalm'}">
-                    <li><b>{item.title}:</b> {item.data.number} {item.data.title}</li>
-                </f:if>
-            </f:for>
-            </ul>
-            <hr/>
-            <table class="table">
-                <tbody>
-                <f:for each="{event.liturgy}" as="item">
-                    <tr>
-                        <f:switch expression="{item.type}">
-                            <f:case value="sectionTitle">
-                                <th colspan="2"><h3>{item.title}</h3></th>
-                            </f:case>
-                            <f:case value="descriptive">
-                                <th>{item.title}</th>
-                                <td>{item.data}</td>
-                            </f:case>
-                            <f:case value="freeText">
-                                <th>{item.title}</th>
-                                <td>{item.data}</td>
-                            </f:case>
-                            <f:case value="song">
-                                <th>{item.title}</th>
-                                <td>{item.data.song}
-                                    <f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
-                                    <f:if condition="{0: item.data.number} == {0: item.data.title}">
-                                        <f:else>"{item.data.title}"</f:else>
-                                    </f:if>
-                                </td>
-                            </f:case>
-                        </f:switch>
-                    </tr>
-                </f:for>
-                </tbody>
-            </table>
+            <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'liturgy'})}"><span class="fa fa-file-pdf"></span> Liturgieblatt (.pdf)</a>
+            <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'preacherNotes'})}"><span class="fa fa-file-word"></span> Kompletter Gottesdienst (.docx)</a>
+            <p:output.mailto class="btn btn-default" prependSpan="fa fa-envelope" linkTitle="E-Mail mit Liedern" subject="Gottesdienst am {event.datetime -> p:format.date(format: 'd.m.Y')} ({event.location.title})">Ihr Lieben,
+
+Hier meine Liederliste für den Gottesdienst am {event.datetime -> p:format.date(format: 'd.m.Y')} ({event.location.title}):
+<f:for each="{event.liturgy}" as="item"><f:if condition="{0: item.type} == {0: 'song'}">
+    - <f:if condition="{item.data.isEG}"><f:then>{item.title}: {item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if> "{item.data.title}"</f:then><f:else><b>{item.title}:</b> "{item.data.title}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></f:if><f:if condition="{0: item.type} == {0: 'psalm'}">
+    - {item.title}: {item.data.number} {item.data.title}</f:if></f:for>
+
+Wie immer bin ich für alle Hinweise auf lokale Traditionen, usw. dankbar. Herzlichen Dank schon im Voraus für eure Hilfe!
+
+Gottes Segen,
+Christoph Fischer
+            </p:output.mailto>
+            <hr />
         </wp:loggedIn>
     </div>
 </f:section>
