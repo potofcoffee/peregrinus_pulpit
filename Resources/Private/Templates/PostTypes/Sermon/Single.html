@@ -21,13 +21,14 @@
                     <f:if condition="{sermon.events}">
                         <f:then>
                             <f:for each="{sermon.events}" as="event">
+                                <a href="{p:format.customUrl(url: event.ID)}">
                                 <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
                                 Uhr,
-                                {event.location.title}: {event.title}<br/>
+                                {event.location.title}: {event.title}</a><br/>
                             </f:for>
                         </f:then>
                         <f:else>
-                            Gepredigt am <span class="posted-on">{sermon.date}?></span>
+                            Gepredigt am <span class="posted-on">{sermon.date}</span>
                             <f:if condition="{sermon.church}">
                                 , <a href="{sermon.churchUrl}" target="_blank">{sermon.church}</a>
                             </f:if>
