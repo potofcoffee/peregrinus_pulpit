@@ -29,6 +29,12 @@
             var ed = tinyMCE.activeEditor;
 
             var text = ed.getContent();
+
+            // if the <!--more--> tag is present, only consider text after this tag
+            var moreOffset = text.indexOf('<!--more-->');
+            if (moreOffset > -1) {
+                text = text.substr(moreOffset+11);
+            }
             var speechTime = (wc.count(text)) / 110 * 60;
 
             $('#speech-length-value').html(this.toHHMMSS(speechTime.toString()));
