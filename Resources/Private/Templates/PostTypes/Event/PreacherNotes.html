@@ -1,0 +1,42 @@
+<p:output.word filename="{event.sermon.post_date -> p:format.date(format: '%Y%m%d')} Gottesdienst -  {event.sermon.title}.docx" debug="0" defaultFont="Helvetica Condensed" defaultFontSize="11">
+    <p:output.word.styles.title depth="1" font="{bold: 'true', name: 'Helvetica Condensed', size: 20}"/>
+    <p:output.word.styles.title depth="2" font="{bold: 'true', name: 'Helvetica Condensed', size: 16}"/>
+    <p:output.word.styles.title depth="3" font="{bold: 'true', name: 'Helvetica Condensed', size: 14}"/>
+    <p:output.word.html>
+        <f:for each="{event.liturgy}" as="item">
+            <f:switch expression="{item.type}">
+                <f:case value="sectionTitle">
+                    <h1 class="liturgy"><b>{item.title}</b></h1>
+                </f:case>
+                <f:case value="descriptive">
+                    <h2><b>{item.title}</b></h2>
+                </f:case>
+                <f:case value="freeText">
+                    <h2><b>{item.title}</b></h2>
+                    {item.data -> wp:autop()}
+                </f:case>
+                <f:case value="song">
+                    <f:if condition="{item.data.isEG}">
+                        <f:then><h2><b>{item.title}</b></h2><p>"{item.data.title}" ({item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>)</p>
+                        </f:then>
+                        <f:else><h2><b>{item.title}</b></h2><p>"{item.data.title}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
+                    </f:if>
+                    <p:content.song song="{item.data}" />
+                </f:case>
+                <f:case value="psalm">
+                    <h2><b>{item.title}</b></h2><p>{item.data.title}, {item.data.song}</p>
+                </f:case>
+                <f:case value="sermon">
+                    <h2><b>{item.title}</b></h2>
+                    {event.sermon.content.extended -> wp:autop() -> f:format.raw()}
+                </f:case>
+                <f:case value="scriptureReading">
+                    <h2><b>Schriftlesung</b></h2>
+                    <p>{item.data.reference}</p>
+                </f:case>
+            </f:switch>
+        </f:for>
+    </p:output.word.html>
+
+
+</p:output.word>

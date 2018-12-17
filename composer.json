@@ -18,7 +18,8 @@
     "php": ">=7.2",
     "typo3fluid/fluid": "2.3.1",
     "chillerlan/php-qrcode": "dev-master",
-    "peregrinus/potter": "dev-master"
+    "peregrinus/potter": "dev-master",
+    "phpoffice/phpword": "dev-master"
   },
   "extra": {
     "installer-name": "peregrinus-pulpit"
