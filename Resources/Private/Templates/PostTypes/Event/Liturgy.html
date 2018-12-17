@@ -1,5 +1,5 @@
 <p:output.pdf
-        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-{f:if(condition: '{0: underlineMode} == {0: \'blank\'}', then: 'Leerer-')}Liturgie.pdf"
+        filename="{event.datetime -> p:format.date(format: 'Ymd')} Liturgie - {event.sermon.title}.pdf"
         leftmargin="10" rightmargin="10" topmargin="10" bottommargin="10"><!DOCTYPE html>
     <html lang="de">
     <head>
@@ -32,6 +32,18 @@
                     <td>{item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
                         <f:if condition="{0: item.data.number} == {0: item.data.title}"><f:else>"{item.data.title}"</f:else></f:if>
                     </td>
+                </f:case>
+                <f:case value="psalm">
+                    <th>Psalmgebet:</th>
+                    <td>{item.data.song}</td>
+                </f:case>
+                <f:case value="scriptureReading">
+                    <th>{item.title}</th>
+                    <td>{item.data.reference}</td>
+                </f:case>
+                <f:case value="sermon">
+                    <th>{item.title}</th>
+                    <td><f:if condition="{event.sermon.title}">"{event.sermon.title}<f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>"<f:if condition="{event.sermon.reference}"> ({event.sermon.reference})</f:if></f:if></td>
                 </f:case>
             </f:switch>
         </tr>
