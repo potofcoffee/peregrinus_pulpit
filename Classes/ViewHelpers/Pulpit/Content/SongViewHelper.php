@@ -22,8 +22,6 @@
 
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Content;
 
-use Peregrinus\Pulpit\Debugger;
-
 class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
@@ -42,24 +40,38 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
     public function initializeArguments()
     {
         $this->registerArgument('song', 'array', 'Song');
+        $this->registerArgument('numbered', 'bool', 'Number verses?', false, true);
     }
 
     protected function render()
     {
         $verses = [];
-        foreach (explode(',', str_replace('+', ',', $this->arguments['song']['verses'])) as $verseRange) {
-            $verseRange = trim($verseRange);
-            $range = explode('-',$verseRange);
-            if (!isset($range[1])) $range[1] = $range[0];
-            for ($i=$range[0]; $i<= $range[1]; $i++) {
-                $verses[] = $i;
-            }
 
+        if ($this->arguments['song']['verses']) {
+            foreach (explode(',', str_replace('+', ',', $this->arguments['song']['verses'])) as $verseRange) {
+                $verseRange = trim($verseRange);
+                $range = explode('-', $verseRange);
+                if (!isset($range[1])) {
+                    $range[1] = $range[0];
+                }
+                for ($i = $range[0]; $i <= $range[1]; $i++) {
+                    $verses[] = $i;
+                }
+            }
+        } else {
+            // no verses indicated? Take all of them.
+            foreach ($this->arguments['song']['fulltext'] as $verseNo => $verse) {
+                $verses[] = $verseNo;
+            }
         }
 
         $o = '';
         foreach ($verses as $verse) {
-            $o .= '<p>'.$verse.'. '.nl2br($this->arguments['song']['fulltext'][$verse]).'</p>';
+            $o .= '<p>'
+                . ($this->arguments['numbered'] ? $verse . '. ' : '')
+                . nl2br(strtr($this->arguments['song']['fulltext'][$verse],
+                    ['|' => "\n", '>>' => "\t"]))
+                . '</p>';
         }
 
         return $o;
