@@ -24,8 +24,12 @@ namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Output\Word;
 
 use PhpOffice\PhpWord\Shared\Html;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use PhpOffice\PhpWord\PhpWord;
 
+/**
+ * Class HtmlViewHelper
+ * Provides a ViewHelper to render a HTML block into a PHPWord document
+ * @package Peregrinus\Pulpit\ViewHelpers\Pulpit\Output\Word
+ */
 class HtmlViewHelper extends AbstractViewHelper
 {
 
@@ -39,18 +43,23 @@ class HtmlViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @return void
+     * Render this ViewHelper
      */
-    public function initializeArguments()
-    {
-    }
-
     protected function render()
     {
         /** @var \PhpOffice\PhpWord\Element\Section $section */
         $section = $this->renderingContext->getVariableProvider()->get('__PhpWord_Section');
-        Html::addHtml($section, $this->renderChildren(), false, false);
-        return '';
-    }
 
+        $html = $this->renderChildren();
+
+        // fix for blockquote
+        // @TODO: provide a better, more configurable fix here that also takes care of other tags
+        // and uses a stylesheet. This might be tricky, giben the nature of PHPWord's default HTML parser
+        $html = strtr($html, [
+            '<blockquote>' => '<span style="font-style: italic; font-size: 11pt; text-align: center;">',
+            '</blockquote>' => '</span>'
+        ]);
+
+        Html::addHtml($section, $html, false, false);
+    }
 }
