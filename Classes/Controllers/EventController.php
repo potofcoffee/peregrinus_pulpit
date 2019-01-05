@@ -26,6 +26,10 @@ use Peregrinus\Pulpit\Domain\Model\EventModel;
 use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
 
+/**
+ * Class EventController
+ * @package Peregrinus\Pulpit\Controllers
+ */
 class EventController extends AbstractController
 {
 
@@ -43,6 +47,9 @@ class EventController extends AbstractController
         $this->sermonRepository->setIncludepostStatus(['publish', 'future']);
     }
 
+    /**
+     * Show a list of upcoming events
+     */
     public function archiveAction()
     {
         $events = $this->eventRepository->get([
@@ -54,7 +61,7 @@ class EventController extends AbstractController
                 [
                     'key' => 'date',
                     'value' => date('Y-m-d'),
-                    'compare' => '>',
+                    'compare' => '>=',
                     'type' => 'DATE'
                 ]
             ]
@@ -72,7 +79,12 @@ class EventController extends AbstractController
         $this->view->assign('events', $events);
     }
 
-    private function getEventDataFromPost($post)
+    /**
+     * Get the event data model from the requested WP_Post object
+     * @param \WP_Post $post Requested Post
+     * @return EventModel Event data model
+     */
+    private function getEventDataFromPost(\WP_Post $post)
     {
         if (!$post) {
             $post = get_queried_object();
@@ -86,19 +98,41 @@ class EventController extends AbstractController
         return $event;
     }
 
-    public function singleAction($post)
+    /**
+     * Show the details view for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function singleAction(\WP_Post $post)
     {
         $event = $this->getEventDataFromPost($post);
         $this->view->assign('event', $event);
     }
 
-    public function liturgyAction($post)
+    /**
+     * Create a liturgy sheet for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function liturgyAction(\WP_Post $post)
     {
         $event = $this->getEventDataFromPost($post);
         $this->view->assign('event', $event);
     }
 
-    public function preacherNotesAction($post)
+    /**
+     * Create preacher's notes for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function preacherNotesAction(\WP_Post $post)
+    {
+        $event = $this->getEventDataFromPost($post);
+        $this->view->assign('event', $event);
+    }
+
+    /**
+     * Create a large-scale song list for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function publicSongListAction(\WP_Post $post)
     {
         $event = $this->getEventDataFromPost($post);
         $this->view->assign('event', $event);
