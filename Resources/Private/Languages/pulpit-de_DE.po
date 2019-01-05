@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PULPIT\n"
 "Report-Msgid-Bugs-To: http://www.peregrinus.de/pulpit\n"
 "POT-Creation-Date: 2019-01-05 09:24+0100\n"
-"PO-Revision-Date: 2019-01-05 10:25+0100\n"
+"PO-Revision-Date: 2019-01-05 10:36+0100\n"
 "Last-Translator: Christoph Fischer <chris@toph.de>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -21,19 +21,19 @@ msgstr "Gute Nachricht! Alle notwendigen Updates wurden installiert."
 #: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:35
 #: Classes/PostTypes/EventPostType.php:148
 msgid "This information may be published (e.g. in handouts)"
-msgstr ""
+msgstr "Diese Informationen darf (z.B. in Handouts) veröffentlicht werden."
 
 #: Classes/Admin/AjaxActions/CreateAgendaItemSubFormAjaxAction.php:35
 #: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:36
 #: Classes/PostTypes/EventPostType.php:149
 msgid "Responsible for this item"
-msgstr ""
+msgstr "Verantwortlich für diesen Programmpunkt"
 
 #: Classes/Admin/AjaxActions/CreateAgendaItemSubFormAjaxAction.php:36
 #: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:37
 #: Classes/PostTypes/EventPostType.php:150
 msgid "Instructions for %s"
-msgstr ""
+msgstr "Anweisungen für %s"
 
 #: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:37
 msgid "Delete"
@@ -59,10 +59,8 @@ msgid "Sermons"
 msgstr "Predigten"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:51
-#, fuzzy
-#| msgid "Permalink for %s"
 msgid "Permalinks"
-msgstr "Permalink für %s"
+msgstr "Permalinks"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:59
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:66
@@ -81,10 +79,8 @@ msgstr ""
 "definieren:"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:88
-#, fuzzy
-#| msgid "Podcast title"
 msgid "Podcast"
-msgstr "Titel des Podcasts"
+msgstr "Podcast"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:92
 msgid "Podcast settings"
@@ -135,29 +131,29 @@ msgstr "Inhaltskategorie"
 #: Classes/PostTypes/AgendaPostType.php:121
 #: Classes/PostTypes/EventPostType.php:146
 msgid "Liturgy"
-msgstr ""
+msgstr "Liturgie"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:154
 msgid "Liturgy planning"
-msgstr ""
+msgstr "Planung der Liturgie"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:155
-#, fuzzy
-#| msgid "Here you can set up the required information for your podcast"
 msgid "Here you can set up some features for liturgy planning."
-msgstr "Hier kannst du die nötigen Informationen für deinen Podcast eingeben:"
+msgstr ""
+"Hier kannst du die nötigen Einstellungen zur Planung deiner Liturgien "
+"treffen."
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:159
 msgid "Provide agenda instructions for"
-msgstr ""
+msgstr "Anweisungen für folgende Rollen mit einschließen"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:164
 msgid "Default handout layout"
-msgstr ""
+msgstr "Standardlayout für das Handout"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:175
 msgid "Setup"
-msgstr ""
+msgstr "Setup"
 
 #: Classes/Admin/SettingsPages/GeneralSettingsPage.php:193
 msgid "Updating external components..."
@@ -184,58 +180,48 @@ msgid "Sermons: Migrations"
 msgstr "Predigten: Migrationstools"
 
 #: Classes/Admin/SettingsPages/MigrationSettingsPage.php:48
-#, fuzzy
-#| msgid "Sermons: Migrations"
 msgid "Migrations"
-msgstr "Predigten: Migrationstools"
+msgstr "Migrationen"
 
 #: Classes/Admin/SettingsPages/MigrationSettingsPage.php:53
 msgid "Execute migration"
-msgstr ""
+msgstr "Migration ausführen"
 
 #: Classes/Admin/SettingsPages/MigrationSettingsPage.php:58
-#, fuzzy
-#| msgid "No locations found"
 msgid "No migration paths found."
-msgstr "Keine Veranstaltungsorte gefunden."
+msgstr "Keine Migrationspfade gefunden"
 
 #: Classes/Admin/Setup/SetupSettingsSection.php:52
 msgid "Components"
-msgstr ""
+msgstr "Komponenten"
 
 #: Classes/Admin/Setup/SetupSettingsSection.php:63
 msgid "Install now"
-msgstr ""
+msgstr "Jetzt installieren"
 
 #: Classes/AgendaItems/DescriptiveAgendaItem.php:30
 msgid "Descriptive Item"
-msgstr ""
+msgstr "Beschreibung"
 
 #: Classes/AgendaItems/FreeTextAgendaItem.php:30
 msgid "Free Text"
-msgstr ""
+msgstr "Freier Text"
 
 #: Classes/AgendaItems/PsalmAgendaItem.php:32
 msgid "Psalm"
-msgstr ""
+msgstr "Psalm"
 
 #: Classes/AgendaItems/ScriptureReadingAgendaItem.php:30
-#, fuzzy
-#| msgid "Further reading"
 msgid "Scripture reading"
-msgstr "Weiterführende Literatur"
+msgstr "Schriftlesung"
 
 #: Classes/AgendaItems/ScriptureReadingAgendaItem.php:39
-#, fuzzy
-#| msgid "Bible reference"
 msgid "Reference"
 msgstr "Bibelstelle"
 
 #: Classes/AgendaItems/SectionTitleAgendaItem.php:33
-#, fuzzy
-#| msgid "Podcast title"
 msgid "Section title"
-msgstr "Titel des Podcasts"
+msgstr "Abschnitt"
 
 #: Classes/AgendaItems/SermonAgendaItem.php:30
 #: Classes/PostTypes/SermonPostType.php:47
@@ -245,32 +231,28 @@ msgstr "Predigt"
 #: Classes/AgendaItems/SermonAgendaItem.php:35
 #: Classes/AgendaItems/SermonAgendaItem.php:40
 msgid "Sermon data will be automatically supplied."
-msgstr ""
+msgstr "Predigtdaten werden automatisch eingefügt."
 
 #: Classes/AgendaItems/SongAgendaItem.php:32
 msgid "Song"
-msgstr ""
+msgstr "Lied"
 
 #: Classes/AgendaItems/SongAgendaItem.php:44
 msgid "Verses"
-msgstr ""
+msgstr "Strophen"
 
 #: Classes/Fields/AgendaItemsField.php:88
-#, fuzzy
-#| msgid "Remove event"
 msgid "Remove agenda item"
-msgstr "Veranstaltung entfernen"
+msgstr "Programmpunkt entfernen"
 
 #: Classes/Fields/AgendaItemsField.php:127
-#, fuzzy
-#| msgid "Add New"
 msgid "Add item"
-msgstr "Neu"
+msgstr "Neuer Programmpunkt"
 
 #: Classes/Fields/DetailedLiturgyField.php:144
 #: Classes/PostTypes/AgendaPostType.php:39
 msgid "Agendas"
-msgstr ""
+msgstr "Agenden"
 
 #: Classes/Fields/DetailedLiturgyField.php:151
 #: Classes/PostTypes/EventPostType.php:43
@@ -279,24 +261,20 @@ msgid "Events"
 msgstr "Veranstaltungen"
 
 #: Classes/Fields/DetailedLiturgyField.php:174
-#, fuzzy
-#| msgid "Add New"
 msgid "Add %s"
-msgstr "Neu"
+msgstr "%s hinzufügen"
 
 #: Classes/Fields/DetailedLiturgyField.php:176
-#, fuzzy
-#| msgid "Remove event"
 msgid "Remove all"
-msgstr "Veranstaltung entfernen"
+msgstr "Alle entfernen"
 
 #: Classes/Fields/DetailedLiturgyField.php:179
 msgid "Import items from"
-msgstr ""
+msgstr "Programmpunkte importieren von"
 
 #: Classes/Fields/DetailedLiturgyField.php:180
 msgid "Import"
-msgstr ""
+msgstr "Importieren"
 
 #: Classes/Fields/EventsRelationField.php:71
 #: Classes/PostTypes/EventPostType.php:44
@@ -322,7 +300,7 @@ msgstr "Neue Predigtfolie hinzufügen"
 
 #: Classes/PostTypes/AgendaPostType.php:40
 msgid "Agenda"
-msgstr ""
+msgstr "Agende"
 
 #: Classes/PostTypes/AgendaPostType.php:41
 #: Classes/PostTypes/EventPostType.php:45
@@ -333,28 +311,20 @@ msgid "Add New"
 msgstr "Neu"
 
 #: Classes/PostTypes/AgendaPostType.php:42
-#, fuzzy
-#| msgid "Add New Event"
 msgid "Add New Agenda"
-msgstr "Neue Veranstaltung"
+msgstr "Neue Agende"
 
 #: Classes/PostTypes/AgendaPostType.php:43
-#, fuzzy
-#| msgid "Edit Event"
 msgid "Edit Agenda"
-msgstr "Veranstaltung bearbeiten"
+msgstr "Agende bearbeiten"
 
 #: Classes/PostTypes/AgendaPostType.php:44
-#, fuzzy
-#| msgid "New Event"
 msgid "New Agenda"
-msgstr "Neue Veranstaltung"
+msgstr "Neue Agende"
 
 #: Classes/PostTypes/AgendaPostType.php:45
-#, fuzzy
-#| msgid "View Event"
 msgid "View Agenda"
-msgstr "Veranstaltung ansehen"
+msgstr "Agende anzeigen"
 
 #: Classes/PostTypes/AgendaPostType.php:46
 #: Classes/PostTypes/LocationPostType.php:51
@@ -387,17 +357,15 @@ msgstr "Titel"
 
 #: Classes/PostTypes/AgendaPostType.php:126
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: Classes/PostTypes/AgendaPostType.php:127
-#, fuzzy
-#| msgid "Podcast description"
 msgid "Description"
-msgstr "Beschreibung des Podcasts"
+msgstr "Beschreibung"
 
 #: Classes/PostTypes/AgendaPostType.php:128
 msgid "This item is optional."
-msgstr ""
+msgstr "Dieser Programmpunkt ist optional."
 
 #: Classes/PostTypes/EventPostType.php:46
 msgid "Add New Event"
@@ -461,29 +429,27 @@ msgstr "Allgemein"
 
 #: Classes/PostTypes/EventPostType.php:141
 msgid "Church calendar"
-msgstr ""
+msgstr "Kirchenjahr"
 
 #: Classes/PostTypes/EventPostType.php:142
 msgid "Title of the day"
-msgstr ""
+msgstr "Titel des (Fest-)Tags"
 
 #: Classes/PostTypes/EventPostType.php:143
-#, fuzzy
-#| msgid "Podcast description"
 msgid "description"
-msgstr "Beschreibung des Podcasts"
+msgstr "Beschreibung"
 
 #: Classes/PostTypes/EventPostType.php:154
 msgid "Officiating"
-msgstr ""
+msgstr "Mitwirkende"
 
 #: Classes/PostTypes/EventPostType.php:157
 msgid "General information"
-msgstr ""
+msgstr "Allgemeine Informationen"
 
 #: Classes/PostTypes/EventPostType.php:158
 msgid "Announcements for publication"
-msgstr ""
+msgstr "Bekanntmachungen"
 
 #: Classes/PostTypes/EventPostType.php:190
 msgid "Upcoming events"
@@ -655,10 +621,8 @@ msgid "Don't show links to handout"
 msgstr "Keine Links zum Begleitzettel zeigen"
 
 #: Classes/PostTypes/SermonPostType.php:167
-#, fuzzy
-#| msgid "Handout"
 msgid "Handout layout"
-msgstr "Begleitzettel"
+msgstr "Layout des Begleitzettels"
 
 #: Classes/PostTypes/SermonPostType.php:168
 msgid "Title image"
@@ -783,132 +747,100 @@ msgstr "Gottesdienste"
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:44
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitäten"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:43
 msgid "Activity"
-msgstr ""
+msgstr "Aktivität"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:45
-#, fuzzy
-#| msgid "Search events"
 msgid "Search activities"
-msgstr "Veranstaltungen durchsuchen"
+msgstr "Aktivitäten durchsuchen"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:46
-#, fuzzy
-#| msgid "Most frequent preachers"
 msgid "Most frequent activities"
-msgstr "Am häufigsten verwendete Prediger"
+msgstr "Am häufigsten verwendete Aktivitäten"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:47
 msgid "All activities"
-msgstr ""
+msgstr "Alle Aktivitäten"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:48
-#, fuzzy
-#| msgid "Edit Location"
 msgid "Edit activity"
-msgstr "Veranstaltungsort bearbeiten"
+msgstr "Aktivität bearbeiten"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:49
 msgid "Update activity"
-msgstr ""
+msgstr "Aktivität aktualisieren"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:50
-#, fuzzy
-#| msgid "Add new preacher"
 msgid "Add new activity"
-msgstr "Neuen Prediger hinzufügen"
+msgstr "Neuen Aktivität hinzufügen"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:51
 msgid "New actitvity"
-msgstr ""
+msgstr "Neue Aktivität"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:52
-#, fuzzy
-#| msgid "Separate multiple preachers with commas"
 msgid "Separate multiple activities with commas"
-msgstr "Trenne mehrere Prediger mit Kommas"
+msgstr "Trenne mehrere Aktivitäten mit Kommas"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:53
-#, fuzzy
-#| msgid "Add or remove preachers"
 msgid "Add or remove activities"
-msgstr "Prediger hinzufügen oder entfernen"
+msgstr "Aktivitäten hinzufügen oder entfernen"
 
 #: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:54
-#, fuzzy
-#| msgid "Choose from most frequent preachers"
 msgid "Choose from most frequent activities"
-msgstr "Wähle aus den am häufigsten verwendeten Predigern"
+msgstr "Wähle aus den am häufigsten verwendeten Aktivitäten"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:44
 msgid "Competences"
-msgstr ""
+msgstr "Kompetenzen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:43
 msgid "Competence"
-msgstr ""
+msgstr "Kompetenz"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:45
-#, fuzzy
-#| msgid "Search events"
 msgid "Search competences"
-msgstr "Veranstaltungen durchsuchen"
+msgstr "Kompetenzen durchsuchen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:46
-#, fuzzy
-#| msgid "Most frequent preachers"
 msgid "Most frequent competences"
-msgstr "Am häufigsten verwendete Prediger"
+msgstr "Am häufigsten verwendete Kompetenzen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:47
-#, fuzzy
-#| msgid "All preachers"
 msgid "All competences"
-msgstr "Alle Prediger"
+msgstr "Alle Kompetenzen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:48
-#, fuzzy
-#| msgid "Edit preachers"
 msgid "Edit competence"
-msgstr "Prediger bearbeiten"
+msgstr "Kompetenz bearbeiten"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:49
-#, fuzzy
-#| msgid "Update preachers"
 msgid "Update competence"
-msgstr "Prediger aktualisieren"
+msgstr "Kompetenz aktualisieren"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:50
-#, fuzzy
-#| msgid "Add new preacher"
 msgid "Add new competence"
-msgstr "Neuen Prediger hinzufügen"
+msgstr "Neuen Kompetenz hinzufügen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:51
 msgid "New competence"
-msgstr ""
+msgstr "Neue Kompetenz"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:52
-#, fuzzy
-#| msgid "Separate multiple preachers with commas"
 msgid "Separate multiple competences with commas"
-msgstr "Trenne mehrere Prediger mit Kommas"
+msgstr "Trenne mehrere Kompetenzen mit Kommas"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:53
-#, fuzzy
-#| msgid "Add or remove preachers"
 msgid "Add or remove competences"
-msgstr "Prediger hinzufügen oder entfernen"
+msgstr "Kompetenzen hinzufügen oder entfernen"
 
 #: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:54
-#, fuzzy
-#| msgid "Choose from most frequent preachers"
 msgid "Choose from most frequent competences"
-msgstr "Wähle aus den am häufigsten verwendeten Predigern"
+msgstr "Wähle aus den am häufigsten verwendeten Kompetenzen"
 
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
