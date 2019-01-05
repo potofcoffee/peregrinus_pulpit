@@ -23,6 +23,8 @@
 namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
+use Peregrinus\Pulpit\Domain\Model\EventModel;
+use Peregrinus\Pulpit\Domain\Model\SermonModel;
 use Peregrinus\Pulpit\Fields\CheckBoxField;
 use Peregrinus\Pulpit\Fields\EventsRelationField;
 use Peregrinus\Pulpit\Fields\FileRelationField;
@@ -94,22 +96,23 @@ class SermonPostType extends AbstractPostType
      */
     public function registerCustomColumns()
     {
-        add_action("manage_posts_custom_column", [$this, 'getCustomColumns']);
-        add_filter("manage_edit-portfolio_columns", [$this, 'renderCustomColumn']);
+        add_action("manage_pulpit_sermon_posts_columns", [$this, 'getCustomColumns']);
+        add_filter("manage_pulpit_sermon_posts_custom_column", [$this, 'renderCustomColumn']);
     }
 
     /**
      * Custom columns for admin view
      * @return array Columns
      */
-    public function getCustomColumns()
+    public function getCustomColumns($columns)
     {
         return [
             'cb' => '<input type="checkbox">',
-            'date' => __('Preached', 'pulpit'),
+            'date' => __('Published'),
             'title' => __('Title', 'pulpit'),
+            'subtitle' => __('Subtitle', 'pulpit'),
+            'events' => __('Events', 'pulpit'),
             'series' => __('Series', 'pulpit'),
-            'preacher' => __('Preacher', 'pulpit'),
         ];
     }
 
@@ -120,11 +123,25 @@ class SermonPostType extends AbstractPostType
     public function renderCustomColumn($column)
     {
         global $post;
-        $custom = get_post_custom();
+        $sermon = new SermonModel($post);
         switch ($column) {
             case 'title':
                 \the_title();
-                echo '<br />' . $custom['subtitle'];
+                echo '<br />' . $meta['subtitle'][0];
+                break;
+            case 'subtitle':
+                echo $sermon->getSubtitle();
+                break;
+            case 'events':
+                $events = [];
+                /** @var EventModel $event */
+                foreach ($sermon->getEvents() as $event) {
+                    $events[] = '<a href="' . get_permalink($event->ID) . '">'
+                        . (new \DateTime($event->getDate() . ' ' . $event->getTime()))->format(__('d.m.Y, H:i',
+                            'pulpit')) . ' ' . $event->getLocation()->getTitle()
+                        . '</a>';
+                }
+                echo join(', ', $events);
                 break;
             case 'date':
                 \the_date('Y-m-d');
