@@ -22,10 +22,16 @@
 
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Output;
 
-use Peregrinus\Pulpit\Debugger;
+use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\Style\Language;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use PhpOffice\PhpWord\PhpWord;
 
+/**
+ * Class WordViewHelper
+ * Provides a ViewHelper that renders content as Microsoft Word document, using PhpWord
+ * @package Peregrinus\Pulpit\ViewHelpers\Pulpit\Output
+ */
 class WordViewHelper extends AbstractViewHelper
 {
 
@@ -39,6 +45,7 @@ class WordViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
+     * Register all available arguments
      * @return void
      */
     public function initializeArguments()
@@ -47,13 +54,20 @@ class WordViewHelper extends AbstractViewHelper
         $this->registerArgument('debug', 'bool', 'Debug mode');
         $this->registerArgument('defaultFont', 'string', '');
         $this->registerArgument('defaultFontSize', 'string', '');
+        $this->registerArgument('language', 'string', '');
     }
 
+    /**
+     * Render this ViewHelper
+     */
     protected function render()
     {
-        // if ($this->arguments['debug']) return $this->renderChildren();
-
         $phpWord = new PhpWord();
+
+        // set document default language
+        if ($this->arguments['language']) {
+            $phpWord->getSettings()->setThemeFontLang(new Language($this->arguments['language']));
+        }
 
         if ($this->arguments['defaultFont']) $phpWord->setDefaultFontName($this->arguments['defaultFont']);
         if ($this->arguments['defaultFontSize']) $phpWord->setDefaultFontSize($this->arguments['defaultFontSize']);
@@ -68,9 +82,12 @@ class WordViewHelper extends AbstractViewHelper
 
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment;filename="'.$this->arguments['filename'].'"');
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('php://output');
-
+        try {
+            $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter->save('php://output');
+        } catch (Exception $exception) {
+            return '<b>Error creating the Word document:</b> '.$exception->getMessage();
+        }
     }
 
 }
