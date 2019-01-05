@@ -153,10 +153,10 @@ class PulpitPlugin
 
     public function adminMenu() {
         add_menu_page(
-            __( 'Sermons', 'pulpit' ),
-            __( 'Sermons', 'pulpit' ),
+            __( 'Church services', 'pulpit' ),
+            __( 'Church services', 'pulpit' ),
             'edit_posts',
-            'edit.php?post_type=pulpit_sermon',
+            'edit.php?post_type=pulpit_event',
             '',
             PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Images/PostTypes/Sermon.svg',
             6
@@ -166,7 +166,7 @@ class PulpitPlugin
         /** @var AbstractTaxonomy $taxonomy */
         foreach (TaxonomyFactory::getAll() as $taxonomy) {
             add_submenu_page(
-                'edit.php?post_type=pulpit_sermon',
+                'edit.php?post_type=pulpit_event',
                 $taxonomy->labels['name'],
                 $taxonomy->labels['name'],
                 'edit_posts',
@@ -178,9 +178,9 @@ class PulpitPlugin
 
         /** @var AbstractPostType $postType */
         foreach (PostTypeFactory::getAll() as $postType) {
-            if ($postType->getKey() !== 'sermon') {
+            if ($postType->getKey() !== 'event') {
                 add_submenu_page(
-                    'edit.php?post_type=pulpit_sermon',
+                    'edit.php?post_type=pulpit_event',
                     $postType->labels['name'],
                     $postType->labels['name'],
                     'edit_posts',

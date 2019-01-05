@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PULPIT\n"
 "Report-Msgid-Bugs-To: http://www.peregrinus.de/pulpit\n"
-"POT-Creation-Date: 2018-08-23 17:01+0100\n"
-"PO-Revision-Date: 2018-08-23 19:07+0200\n"
+"POT-Creation-Date: 2019-01-05 09:24+0100\n"
+"PO-Revision-Date: 2019-01-05 10:25+0100\n"
 "Last-Translator: Christoph Fischer <chris@toph.de>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,11 +11,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: Classes/Admin/AjaxActions/ComposerUpdateAjaxAction.php:49
 msgid "Good news! All necessary updates have been installed."
 msgstr "Gute Nachricht! Alle notwendigen Updates wurden installiert."
+
+#: Classes/Admin/AjaxActions/CreateAgendaItemSubFormAjaxAction.php:34
+#: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:35
+#: Classes/PostTypes/EventPostType.php:148
+msgid "This information may be published (e.g. in handouts)"
+msgstr ""
+
+#: Classes/Admin/AjaxActions/CreateAgendaItemSubFormAjaxAction.php:35
+#: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:36
+#: Classes/PostTypes/EventPostType.php:149
+msgid "Responsible for this item"
+msgstr ""
+
+#: Classes/Admin/AjaxActions/CreateAgendaItemSubFormAjaxAction.php:36
+#: Classes/Admin/AjaxActions/ImportAgendaItemsAjaxAction.php:37
+#: Classes/PostTypes/EventPostType.php:150
+msgid "Instructions for %s"
+msgstr ""
 
 #: Classes/Admin/FieldPreviews/SlidesFieldPreview.php:37
 msgid "Delete"
@@ -29,84 +47,123 @@ msgstr "Bearbeiten"
 msgid "Every minute"
 msgstr "Jede Minute"
 
-#: Classes/Admin/SettingsPages/AbstractSettingsPage.php:170
+#: Classes/Admin/SettingsPages/AbstractSettingsPage.php:172
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:40
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:41
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:44
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:45
 #: Classes/PostTypes/SermonPostType.php:46
-#: Classes/PostTypes/SermonPostType.php:56 Classes/PulpitPlugin.php:139
-#: Classes/PulpitPlugin.php:140
+#: Classes/PostTypes/SermonPostType.php:56
 msgid "Sermons"
 msgstr "Predigten"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:47
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:54
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:51
+#, fuzzy
+#| msgid "Permalink for %s"
+msgid "Permalinks"
+msgstr "Permalink für %s"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:59
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:66
 msgid "Permalink for %s"
 msgstr "Permalink für %s"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:62
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:76
 msgid "URL rewriting"
 msgstr "Permalinks"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:63
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:77
 msgid ""
 "Here you can define your own texts for the permalinks created by PULPIT:"
 msgstr ""
 "Hier kannst du eigene URL-Abschnitte für die von PULPIT erzeugten Permalinks "
 "definieren:"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:68
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:88
+#, fuzzy
+#| msgid "Podcast title"
+msgid "Podcast"
+msgstr "Titel des Podcasts"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:92
 msgid "Podcast settings"
 msgstr "Einstellungen für den Podcast"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:69
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:93
 msgid "Here you can set up the required information for your podcast"
 msgstr "Hier kannst du die nötigen Informationen für deinen Podcast eingeben:"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:73
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:97
 msgid "Podcast title"
 msgstr "Titel des Podcasts"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:78
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:102
 msgid "Podcast description"
 msgstr "Beschreibung des Podcasts"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:83
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:107
 msgid "Podcast title image"
 msgstr "Titelbild des Podcasts"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:88
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:89
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:112
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:113
 msgid "Select image"
 msgstr "Bild auswählen"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:95
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:118
 msgid "Podcast language"
 msgstr "Sprache des Podcasts"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:100
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:123
 msgid "Podcast copyright"
 msgstr "Copyrights für den Podcast"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:105
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:128
 msgid "Name of the podcast author"
 msgstr "Name des Autors"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:110
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:133
 msgid "Email address of the podcast author"
 msgstr "E-Mailadresse des Autors"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:115
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:138
 msgid "Content category"
 msgstr "Inhaltskategorie"
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:132
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:150
+#: Classes/PostTypes/AgendaPostType.php:121
+#: Classes/PostTypes/EventPostType.php:146
+msgid "Liturgy"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:154
+msgid "Liturgy planning"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:155
+#, fuzzy
+#| msgid "Here you can set up the required information for your podcast"
+msgid "Here you can set up some features for liturgy planning."
+msgstr "Hier kannst du die nötigen Informationen für deinen Podcast eingeben:"
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:159
+msgid "Provide agenda instructions for"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:164
+msgid "Default handout layout"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:175
+msgid "Setup"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:193
 msgid "Updating external components..."
 msgstr "Externe Komponenten werden aktualisiert..."
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:143
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:204
 msgid ""
 "It looks like some of the external components PULPIT uses need to be "
 "updated. <a href=\"%s\">Click here</a> to load all necessary updates."
@@ -115,32 +172,147 @@ msgstr ""
 "Komponenten aktualisiert werden. <a href=\"%s\">Klicke hier</a>, um alle "
 "Updates zu installieren."
 
-#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:149
+#: Classes/Admin/SettingsPages/GeneralSettingsPage.php:211
 msgid "Good news: All external components for PULPIT are up to date."
 msgstr ""
 "Gute Nachricht: Alle externen Komponenten, die PULPIT nutzt, sind auf dem "
 "aktuellsten Stand."
 
-#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:34
-#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:35
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:36
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:37
 msgid "Sermons: Migrations"
 msgstr "Predigten: Migrationstools"
 
-#: Classes/Fields/EventsRelationField.php:70
-#: Classes/PostTypes/EventPostType.php:47
-#: Classes/PostTypes/SermonPostType.php:189
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:48
+#, fuzzy
+#| msgid "Sermons: Migrations"
+msgid "Migrations"
+msgstr "Predigten: Migrationstools"
+
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:53
+msgid "Execute migration"
+msgstr ""
+
+#: Classes/Admin/SettingsPages/MigrationSettingsPage.php:58
+#, fuzzy
+#| msgid "No locations found"
+msgid "No migration paths found."
+msgstr "Keine Veranstaltungsorte gefunden."
+
+#: Classes/Admin/Setup/SetupSettingsSection.php:52
+msgid "Components"
+msgstr ""
+
+#: Classes/Admin/Setup/SetupSettingsSection.php:63
+msgid "Install now"
+msgstr ""
+
+#: Classes/AgendaItems/DescriptiveAgendaItem.php:30
+msgid "Descriptive Item"
+msgstr ""
+
+#: Classes/AgendaItems/FreeTextAgendaItem.php:30
+msgid "Free Text"
+msgstr ""
+
+#: Classes/AgendaItems/PsalmAgendaItem.php:32
+msgid "Psalm"
+msgstr ""
+
+#: Classes/AgendaItems/ScriptureReadingAgendaItem.php:30
+#, fuzzy
+#| msgid "Further reading"
+msgid "Scripture reading"
+msgstr "Weiterführende Literatur"
+
+#: Classes/AgendaItems/ScriptureReadingAgendaItem.php:39
+#, fuzzy
+#| msgid "Bible reference"
+msgid "Reference"
+msgstr "Bibelstelle"
+
+#: Classes/AgendaItems/SectionTitleAgendaItem.php:33
+#, fuzzy
+#| msgid "Podcast title"
+msgid "Section title"
+msgstr "Titel des Podcasts"
+
+#: Classes/AgendaItems/SermonAgendaItem.php:30
+#: Classes/PostTypes/SermonPostType.php:47
+msgid "Sermon"
+msgstr "Predigt"
+
+#: Classes/AgendaItems/SermonAgendaItem.php:35
+#: Classes/AgendaItems/SermonAgendaItem.php:40
+msgid "Sermon data will be automatically supplied."
+msgstr ""
+
+#: Classes/AgendaItems/SongAgendaItem.php:32
+msgid "Song"
+msgstr ""
+
+#: Classes/AgendaItems/SongAgendaItem.php:44
+msgid "Verses"
+msgstr ""
+
+#: Classes/Fields/AgendaItemsField.php:88
+#, fuzzy
+#| msgid "Remove event"
+msgid "Remove agenda item"
+msgstr "Veranstaltung entfernen"
+
+#: Classes/Fields/AgendaItemsField.php:127
+#, fuzzy
+#| msgid "Add New"
+msgid "Add item"
+msgstr "Neu"
+
+#: Classes/Fields/DetailedLiturgyField.php:144
+#: Classes/PostTypes/AgendaPostType.php:39
+msgid "Agendas"
+msgstr ""
+
+#: Classes/Fields/DetailedLiturgyField.php:151
+#: Classes/PostTypes/EventPostType.php:43
+#: Classes/PostTypes/EventPostType.php:53
+msgid "Events"
+msgstr "Veranstaltungen"
+
+#: Classes/Fields/DetailedLiturgyField.php:174
+#, fuzzy
+#| msgid "Add New"
+msgid "Add %s"
+msgstr "Neu"
+
+#: Classes/Fields/DetailedLiturgyField.php:176
+#, fuzzy
+#| msgid "Remove event"
+msgid "Remove all"
+msgstr "Veranstaltung entfernen"
+
+#: Classes/Fields/DetailedLiturgyField.php:179
+msgid "Import items from"
+msgstr ""
+
+#: Classes/Fields/DetailedLiturgyField.php:180
+msgid "Import"
+msgstr ""
+
+#: Classes/Fields/EventsRelationField.php:71
+#: Classes/PostTypes/EventPostType.php:44
+#: Classes/PostTypes/SermonPostType.php:190
 msgid "Event"
 msgstr "Veranstaltung"
 
-#: Classes/Fields/EventsRelationField.php:80
+#: Classes/Fields/EventsRelationField.php:81
 msgid "%Y-%m-%d %H:%M"
 msgstr "%d.%m.%Y, %H:%M"
 
-#: Classes/Fields/EventsRelationField.php:88
+#: Classes/Fields/EventsRelationField.php:89
 msgid "Remove event"
 msgstr "Veranstaltung entfernen"
 
-#: Classes/Fields/EventsRelationField.php:132
+#: Classes/Fields/EventsRelationField.php:133
 msgid "Add event"
 msgstr "Neue Veranstaltung"
 
@@ -148,77 +320,138 @@ msgstr "Neue Veranstaltung"
 msgid "Add new slide"
 msgstr "Neue Predigtfolie hinzufügen"
 
-#: Classes/PostTypes/EventPostType.php:46
-#: Classes/PostTypes/EventPostType.php:56
-msgid "Events"
-msgstr "Veranstaltungen"
+#: Classes/PostTypes/AgendaPostType.php:40
+msgid "Agenda"
+msgstr ""
 
-#: Classes/PostTypes/EventPostType.php:48
+#: Classes/PostTypes/AgendaPostType.php:41
+#: Classes/PostTypes/EventPostType.php:45
 #: Classes/PostTypes/LocationPostType.php:46
 #: Classes/PostTypes/SermonPostType.php:48
 #: Classes/PostTypes/SlidePostType.php:41
 msgid "Add New"
 msgstr "Neu"
 
-#: Classes/PostTypes/EventPostType.php:49
-msgid "Add New Event"
+#: Classes/PostTypes/AgendaPostType.php:42
+#, fuzzy
+#| msgid "Add New Event"
+msgid "Add New Agenda"
 msgstr "Neue Veranstaltung"
 
-#: Classes/PostTypes/EventPostType.php:50
-msgid "Edit Event"
+#: Classes/PostTypes/AgendaPostType.php:43
+#, fuzzy
+#| msgid "Edit Event"
+msgid "Edit Agenda"
 msgstr "Veranstaltung bearbeiten"
 
-#: Classes/PostTypes/EventPostType.php:51
-msgid "New Event"
+#: Classes/PostTypes/AgendaPostType.php:44
+#, fuzzy
+#| msgid "New Event"
+msgid "New Agenda"
 msgstr "Neue Veranstaltung"
 
-#: Classes/PostTypes/EventPostType.php:52
-msgid "View Event"
+#: Classes/PostTypes/AgendaPostType.php:45
+#, fuzzy
+#| msgid "View Event"
+msgid "View Agenda"
 msgstr "Veranstaltung ansehen"
 
-#: Classes/PostTypes/EventPostType.php:53
-msgid "Search events"
-msgstr "Veranstaltungen durchsuchen"
+#: Classes/PostTypes/AgendaPostType.php:46
+#: Classes/PostTypes/LocationPostType.php:51
+msgid "Search locations"
+msgstr "Veranstaltungsorte durchsuchen"
 
-#: Classes/PostTypes/EventPostType.php:54
-msgid "No events found"
-msgstr "Keine Veranstaltungen gefunden."
+#: Classes/PostTypes/AgendaPostType.php:47
+#: Classes/PostTypes/LocationPostType.php:52
+msgid "No locations found"
+msgstr "Keine Veranstaltungsorte gefunden."
 
-#: Classes/PostTypes/EventPostType.php:55
-msgid "No events found in Trash"
-msgstr "Im Papierkorb wurden keine Veranstaltungen gefunden."
+#: Classes/PostTypes/AgendaPostType.php:48
+#: Classes/PostTypes/LocationPostType.php:53
+msgid "No locations found in Trash"
+msgstr "Im Papierkorb wurden keine Veranstaltungsorte gefunden."
 
-#: Classes/PostTypes/EventPostType.php:96
+#: Classes/PostTypes/AgendaPostType.php:49
+#: Classes/PostTypes/LocationPostType.php:44
+#: Classes/PostTypes/LocationPostType.php:54
+msgid "Locations"
+msgstr "Veranstaltungsorte"
+
+#: Classes/PostTypes/AgendaPostType.php:86
+#: Classes/PostTypes/AgendaPostType.php:125
+#: Classes/PostTypes/EventPostType.php:93
 #: Classes/PostTypes/LocationPostType.php:91
 #: Classes/PostTypes/SermonPostType.php:110
 msgid "Title"
 msgstr "Titel"
 
-#: Classes/PostTypes/EventPostType.php:97
-#: Classes/PostTypes/EventPostType.php:139
+#: Classes/PostTypes/AgendaPostType.php:126
+msgid "Type"
+msgstr ""
+
+#: Classes/PostTypes/AgendaPostType.php:127
+#, fuzzy
+#| msgid "Podcast description"
+msgid "Description"
+msgstr "Beschreibung des Podcasts"
+
+#: Classes/PostTypes/AgendaPostType.php:128
+msgid "This item is optional."
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:46
+msgid "Add New Event"
+msgstr "Neue Veranstaltung"
+
+#: Classes/PostTypes/EventPostType.php:47
+msgid "Edit Event"
+msgstr "Veranstaltung bearbeiten"
+
+#: Classes/PostTypes/EventPostType.php:48
+msgid "New Event"
+msgstr "Neue Veranstaltung"
+
+#: Classes/PostTypes/EventPostType.php:49
+msgid "View Event"
+msgstr "Veranstaltung ansehen"
+
+#: Classes/PostTypes/EventPostType.php:50
+msgid "Search events"
+msgstr "Veranstaltungen durchsuchen"
+
+#: Classes/PostTypes/EventPostType.php:51
+msgid "No events found"
+msgstr "Keine Veranstaltungen gefunden."
+
+#: Classes/PostTypes/EventPostType.php:52
+msgid "No events found in Trash"
+msgstr "Im Papierkorb wurden keine Veranstaltungen gefunden."
+
+#: Classes/PostTypes/EventPostType.php:94
+#: Classes/PostTypes/EventPostType.php:136
 msgid "Date"
 msgstr "Datum"
 
-#: Classes/PostTypes/EventPostType.php:98
-#: Classes/PostTypes/EventPostType.php:140
+#: Classes/PostTypes/EventPostType.php:95
+#: Classes/PostTypes/EventPostType.php:137
 msgid "Time"
 msgstr "Zeit"
 
-#: Classes/PostTypes/EventPostType.php:99
-#: Classes/PostTypes/EventPostType.php:141
+#: Classes/PostTypes/EventPostType.php:96
+#: Classes/PostTypes/EventPostType.php:138
 #: Classes/PostTypes/LocationPostType.php:45
 msgid "Location"
 msgstr "Ort"
 
-#: Classes/PostTypes/EventPostType.php:117
+#: Classes/PostTypes/EventPostType.php:114
 msgid "%Y-%m-%d"
 msgstr "%d.%m.%Y"
 
-#: Classes/PostTypes/EventPostType.php:120
+#: Classes/PostTypes/EventPostType.php:117
 msgid "%H:%M"
 msgstr "%H:%M Uhr"
 
-#: Classes/PostTypes/EventPostType.php:138
+#: Classes/PostTypes/EventPostType.php:135
 #: Classes/PostTypes/LocationPostType.php:126
 #: Classes/PostTypes/LocationPostType.php:135
 #: Classes/PostTypes/LocationPostType.php:141
@@ -226,14 +459,35 @@ msgstr "%H:%M Uhr"
 msgid "General"
 msgstr "Allgemein"
 
-#: Classes/PostTypes/EventPostType.php:172
+#: Classes/PostTypes/EventPostType.php:141
+msgid "Church calendar"
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:142
+msgid "Title of the day"
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:143
+#, fuzzy
+#| msgid "Podcast description"
+msgid "description"
+msgstr "Beschreibung des Podcasts"
+
+#: Classes/PostTypes/EventPostType.php:154
+msgid "Officiating"
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:157
+msgid "General information"
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:158
+msgid "Announcements for publication"
+msgstr ""
+
+#: Classes/PostTypes/EventPostType.php:190
 msgid "Upcoming events"
 msgstr "Zukünftige Veranstaltungen"
-
-#: Classes/PostTypes/LocationPostType.php:44
-#: Classes/PostTypes/LocationPostType.php:54
-msgid "Locations"
-msgstr "Veranstaltungsorte"
 
 #: Classes/PostTypes/LocationPostType.php:47
 msgid "Add New Location"
@@ -250,18 +504,6 @@ msgstr "Neuer Veranstaltungsort"
 #: Classes/PostTypes/LocationPostType.php:50
 msgid "View Location"
 msgstr "Veranstaltungsort ansehen"
-
-#: Classes/PostTypes/LocationPostType.php:51
-msgid "Search locations"
-msgstr "Veranstaltungsorte durchsuchen"
-
-#: Classes/PostTypes/LocationPostType.php:52
-msgid "No locations found"
-msgstr "Keine Veranstaltungsorte gefunden."
-
-#: Classes/PostTypes/LocationPostType.php:53
-msgid "No locations found in Trash"
-msgstr "Im Papierkorb wurden keine Veranstaltungsorte gefunden."
 
 #: Classes/PostTypes/LocationPostType.php:127
 msgid "Adress"
@@ -310,10 +552,6 @@ msgstr "Einrichtungen für Eltern mit kleinen Kindern"
 #: Classes/PostTypes/LocationPostType.php:144
 msgid "Has an elevator"
 msgstr "Aufzug vorhanden"
-
-#: Classes/PostTypes/SermonPostType.php:47
-msgid "Sermon"
-msgstr "Predigt"
 
 #: Classes/PostTypes/SermonPostType.php:49
 msgid "Add New Sermon"
@@ -417,74 +655,80 @@ msgid "Don't show links to handout"
 msgstr "Keine Links zum Begleitzettel zeigen"
 
 #: Classes/PostTypes/SermonPostType.php:167
+#, fuzzy
+#| msgid "Handout"
+msgid "Handout layout"
+msgstr "Begleitzettel"
+
+#: Classes/PostTypes/SermonPostType.php:168
 msgid "Title image"
 msgstr "Titelbild"
 
-#: Classes/PostTypes/SermonPostType.php:168
+#: Classes/PostTypes/SermonPostType.php:169
 msgid "Preview image"
 msgstr "Vorschaubild"
 
-#: Classes/PostTypes/SermonPostType.php:169
+#: Classes/PostTypes/SermonPostType.php:170
 msgid "Image credits"
 msgstr "Bildquelle"
 
-#: Classes/PostTypes/SermonPostType.php:171
+#: Classes/PostTypes/SermonPostType.php:172
 msgid "Audio recording <b>REL!</b>"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:173
 #: Classes/PostTypes/SermonPostType.php:174
+#: Classes/PostTypes/SermonPostType.php:175
 msgid "Select audio file"
 msgstr "Audiodatei auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:176
+#: Classes/PostTypes/SermonPostType.php:177
 msgid "Audio recording"
 msgstr "Aufnahme der Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:177
+#: Classes/PostTypes/SermonPostType.php:178
 msgid "Remote audio file"
 msgstr "Externe Aufnahme"
 
-#: Classes/PostTypes/SermonPostType.php:178
+#: Classes/PostTypes/SermonPostType.php:179
 msgid "Video recording"
 msgstr "Video zur Predigt"
 
-#: Classes/PostTypes/SermonPostType.php:180
+#: Classes/PostTypes/SermonPostType.php:181
 msgid "Slideshow"
 msgstr "Präsentation"
 
-#: Classes/PostTypes/SermonPostType.php:182
+#: Classes/PostTypes/SermonPostType.php:183
 #: Classes/PostTypes/SlidePostType.php:39
 #: Classes/PostTypes/SlidePostType.php:49
 msgid "Slides"
 msgstr "Folien"
 
-#: Classes/PostTypes/SermonPostType.php:184
 #: Classes/PostTypes/SermonPostType.php:185
+#: Classes/PostTypes/SermonPostType.php:186
 msgid "Select slide"
 msgstr "Folie auswählen"
 
-#: Classes/PostTypes/SermonPostType.php:188
+#: Classes/PostTypes/SermonPostType.php:189
 msgid "Associated events"
 msgstr "Zugehörige Veranstaltungen"
 
-#: Classes/PostTypes/SermonPostType.php:192
+#: Classes/PostTypes/SermonPostType.php:193
 msgid "E-book"
 msgstr "E-Book"
 
-#: Classes/PostTypes/SermonPostType.php:193
+#: Classes/PostTypes/SermonPostType.php:194
 msgid "Amazon link"
 msgstr "Link zu Amazon"
 
-#: Classes/PostTypes/SermonPostType.php:194
+#: Classes/PostTypes/SermonPostType.php:195
 msgid "Smashwords link"
 msgstr "Link zu Smashwords"
 
-#: Classes/PostTypes/SermonPostType.php:196
+#: Classes/PostTypes/SermonPostType.php:197
 msgid "Synchronization"
 msgstr "Synchronisierung"
 
-#: Classes/PostTypes/SermonPostType.php:197
+#: Classes/PostTypes/SermonPostType.php:198
 msgid "Remote URL"
 msgstr "Externe URL"
 
@@ -531,6 +775,140 @@ msgstr "Folieneinstellungen"
 #: Classes/PostTypes/SlidePostType.php:120
 msgid "Suppress title on exported slide"
 msgstr "Titel auf dieser Folie nicht anzeigen"
+
+#: Classes/PulpitPlugin.php:156 Classes/PulpitPlugin.php:157
+msgid "Church services"
+msgstr "Gottesdienste"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:42
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:44
+msgid "Activities"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:43
+msgid "Activity"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:45
+#, fuzzy
+#| msgid "Search events"
+msgid "Search activities"
+msgstr "Veranstaltungen durchsuchen"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:46
+#, fuzzy
+#| msgid "Most frequent preachers"
+msgid "Most frequent activities"
+msgstr "Am häufigsten verwendete Prediger"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:47
+msgid "All activities"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:48
+#, fuzzy
+#| msgid "Edit Location"
+msgid "Edit activity"
+msgstr "Veranstaltungsort bearbeiten"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:49
+msgid "Update activity"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:50
+#, fuzzy
+#| msgid "Add new preacher"
+msgid "Add new activity"
+msgstr "Neuen Prediger hinzufügen"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:51
+msgid "New actitvity"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:52
+#, fuzzy
+#| msgid "Separate multiple preachers with commas"
+msgid "Separate multiple activities with commas"
+msgstr "Trenne mehrere Prediger mit Kommas"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:53
+#, fuzzy
+#| msgid "Add or remove preachers"
+msgid "Add or remove activities"
+msgstr "Prediger hinzufügen oder entfernen"
+
+#: Classes/Taxonomies/Sermon/ActivityTaxonomy.php:54
+#, fuzzy
+#| msgid "Choose from most frequent preachers"
+msgid "Choose from most frequent activities"
+msgstr "Wähle aus den am häufigsten verwendeten Predigern"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:42
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:44
+msgid "Competences"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:43
+msgid "Competence"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:45
+#, fuzzy
+#| msgid "Search events"
+msgid "Search competences"
+msgstr "Veranstaltungen durchsuchen"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:46
+#, fuzzy
+#| msgid "Most frequent preachers"
+msgid "Most frequent competences"
+msgstr "Am häufigsten verwendete Prediger"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:47
+#, fuzzy
+#| msgid "All preachers"
+msgid "All competences"
+msgstr "Alle Prediger"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:48
+#, fuzzy
+#| msgid "Edit preachers"
+msgid "Edit competence"
+msgstr "Prediger bearbeiten"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:49
+#, fuzzy
+#| msgid "Update preachers"
+msgid "Update competence"
+msgstr "Prediger aktualisieren"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:50
+#, fuzzy
+#| msgid "Add new preacher"
+msgid "Add new competence"
+msgstr "Neuen Prediger hinzufügen"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:51
+msgid "New competence"
+msgstr ""
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:52
+#, fuzzy
+#| msgid "Separate multiple preachers with commas"
+msgid "Separate multiple competences with commas"
+msgstr "Trenne mehrere Prediger mit Kommas"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:53
+#, fuzzy
+#| msgid "Add or remove preachers"
+msgid "Add or remove competences"
+msgstr "Prediger hinzufügen oder entfernen"
+
+#: Classes/Taxonomies/Sermon/CompetenceTaxonomy.php:54
+#, fuzzy
+#| msgid "Choose from most frequent preachers"
+msgid "Choose from most frequent competences"
+msgstr "Wähle aus den am häufigsten verwendeten Predigern"
 
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:42
 #: Classes/Taxonomies/Sermon/PreacherTaxonomy.php:44
@@ -632,7 +1010,7 @@ msgstr "Lizenz"
 msgid "See original image"
 msgstr "Zum Originalbild"
 
-#: Classes/ViewHelpers/WordPress/PostImageViewHelper.php:77
+#: Classes/ViewHelpers/WordPress/PostImageViewHelper.php:92
 msgid "Image"
 msgstr "Bild"
 
