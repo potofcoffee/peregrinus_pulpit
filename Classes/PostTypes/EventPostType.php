@@ -162,7 +162,7 @@ class EventPostType extends AbstractPostType
     }
 
     /**
-     * Custom sort order for get_posts(): newest sermons first
+     * Custom sort order for get_posts(): newest events first
      * @param $query Query
      */
     public function customSortOrder($query)
@@ -176,7 +176,8 @@ class EventPostType extends AbstractPostType
         if ('edit' == $screen->base
             && PEREGRINUS_PULPIT . '_' . $this->getKey() == $screen->post_type
             && !isset($_GET['orderby'])) {
-            $query->set('orderby', 'publish_date');
+            $query->set('meta_key', 'date');
+            $query->set('orderby', 'meta_value');
             $query->set('order', 'DESC');
         }
     }
