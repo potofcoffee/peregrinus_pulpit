@@ -37,7 +37,15 @@ class PsalmAgendaItem extends AbstractAgendaItem
     public function renderDataForm($id, $name, $value)
     {
         if (!is_array($value)) $value = ['song' => $value];
-        return EGService::getInstance()->selectBox($id.'_name', $name.'[song]', $value['song'] ?: '');
+
+        $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val());';
+
+        return EGService::getInstance()->selectBox(
+            $id.'_name',
+            $name.'[song]',
+            $value['song'] ?: '',
+            $changeFunc2
+        );
     }
 
     public function provideData($data)
@@ -52,7 +60,10 @@ class PsalmAgendaItem extends AbstractAgendaItem
 
     public function renderDataPreview($data)
     {
-        return EGService::getInstance()->renderSinglePreview($data['song']);
+
+        return '<span class="data-preview-song">'
+            . EGService::getInstance()->renderSinglePreview($data['song'])
+            . '</span>';
     }
 
 
