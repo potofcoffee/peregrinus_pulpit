@@ -24,6 +24,8 @@ namespace Peregrinus\Pulpit\AgendaItems;
 
 class FreeTextAgendaItem extends AbstractAgendaItem
 {
+    protected $buttonStyle = 'fa fa-file-alt';
+
     public function __construct()
     {
         parent::__construct();

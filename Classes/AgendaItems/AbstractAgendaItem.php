@@ -29,6 +29,7 @@ class AbstractAgendaItem
 
     protected $title = '';
     protected $_hasFields = true;
+    protected $buttonStyle = 'fa fa-plus-circle';
 
     public function __construct()
     {
@@ -83,6 +84,15 @@ class AbstractAgendaItem
 
     public function renderDataPreview($data) {
         return print_r($data, 1);
+    }
+
+    public function renderToolBarButton($key) {
+        return '<a class="button button-small pulpit-detailed-liturgy-field-btn-add-item" href="#" data-type="'
+            . $this->getKey() . '" data-key="'.$key.'" title="'
+            . sprintf(__('Add %s', 'pulpit'), $this->getTitle()).'">'
+            .'<span class="'.$this->buttonStyle.'"></span>'
+            . '</a>&nbsp;';
+
     }
 
 }

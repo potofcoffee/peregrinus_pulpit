@@ -25,6 +25,8 @@ namespace Peregrinus\Pulpit\AgendaItems;
 class SectionTitleAgendaItem extends AbstractAgendaItem
 {
 
+    protected $buttonStyle = 'fa fa-paragraph';
+
     protected $_hasFields = false;
 
     public function __construct()

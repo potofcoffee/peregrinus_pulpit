@@ -24,6 +24,9 @@ namespace Peregrinus\Pulpit\AgendaItems;
 
 class SermonAgendaItem extends AbstractAgendaItem
 {
+
+    protected $buttonStyle = 'fa fa-microphone-alt';
+
     public function __construct()
     {
         parent::__construct();

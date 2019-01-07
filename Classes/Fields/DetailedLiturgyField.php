@@ -169,16 +169,17 @@ class DetailedLiturgyField extends AbstractField
         $o = '<div class="pulpit-detailed-liturgy-field-toolbar">';
         /** @var AbstractAgendaItem $item */
         foreach (AgendaItemFactory::getAll() as $item) {
-            $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-add-item" href="#" data-type="'
-                . $item->getKey() . '" data-key="'.$this->key.'">'
-                . sprintf(__('Add %s', 'pulpit'), $item->getTitle()) . '</a>&nbsp;';
+            $o .= $item->renderToolBarButton($this->key);
         }
-        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove-all" href="#">' . __('Remove all',
-                'pulpit') . '</a>';
-        $o .= '<br />';
-        $o .= __('Import items from', 'pulpit').': '.$this->renderAgendaSelect();
-        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-import" href="#" data-source="#'.$this->getFieldId('', 'import').'"  data-key="'.$this->key.'">' . __('Import',
-                'pulpit') . '</a>';
+        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove-all" href="#" title="'
+            . __('Remove all', 'pulpit')
+            .'"><span class="fa fa-trash"></span></a>';
+        $o .= $this->renderAgendaSelect();
+        $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-import" href="#" data-source="#'
+            .$this->getFieldId('', 'import').'"  data-key="'.$this->key.'" title="'.__('Import', 'pulpit')
+            .'">'
+            .'<span class="fa fa-file-import"></span>'
+            . '</a>';
         $o .= '<hr /></div>';
         return $o;
     }
