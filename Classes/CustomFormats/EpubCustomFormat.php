@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\CustomFormats;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\SermonModel;
 use Peregrinus\Pulpit\Utility\UUIDUtility;
 use Peregrinus\Pulpit\View;
@@ -42,7 +43,7 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         preg_match_all('/<h3>(.*)<\/h3>/m', $text, $tmp);
 
         // do we have a beginning without heading?
-        if (strpos($text, $tmp[0][0]) > 0) {
+        if ((!count($tmp[0])) || (strpos($text, $tmp[0][0]) > 0)) {
             array_unshift($tmp[1], $sermon->getTitle());
             array_unshift($tmp[0], '<h3>'.$sermon->getTitle().'</h3>');
             $text = '<h3>'.$sermon->getTitle().'</h3>'.$text;
