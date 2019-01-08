@@ -155,30 +155,6 @@
                                 </wp:loggedIn>
                             </td>
                         </tr>
-                        <f:if condition="{sermon.content.extended}">
-                            <tr>
-                                <td>
-                                    <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
-                                        <span class="fa fa-book"> </span>
-                                    </a>
-                                </td>
-                                <td colspan="2">
-                                    <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
-                                        Predigt als E-Book
-                                    </a>
-                                    <div class="sermon-instructions">
-                                        Du kannst den Text dieser Predigt auch als E-Book im EPub-Format lesen.
-                                        Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
-                                        und wähle "Ziel speichern ..."
-                                    </div>
-                                    <wp:loggedIn>
-                                        <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub', smashwords: 1})}">
-                                            E-Book im SmashWords-Format
-                                        </a>
-                                    </wp:loggedIn>
-                                </td>
-                            </tr>
-                        </f:if>
                     </f:else>
                 </f:if>
                 <f:if condition="{sermon.remoteUrl}">
@@ -197,6 +173,30 @@
                         </td>
                     </tr>
 
+                </f:if>
+                <f:if condition="{sermon.content.extended}">
+                    <tr>
+                        <td>
+                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                <span class="fa fa-book"> </span>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                Predigt als E-Book
+                            </a>
+                            <div class="sermon-instructions">
+                                Du kannst den Text dieser Predigt auch als E-Book im EPub-Format lesen.
+                                Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                und wähle "Ziel speichern ..."
+                            </div>
+                            <wp:loggedIn>
+                                <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub', smashwords: 1})}">
+                                    E-Book im SmashWords-Format
+                                </a>
+                            </wp:loggedIn>
+                        </td>
+                    </tr>
                 </f:if>
                 <f:if condition="{sermon.cclicense}">
                     <tr>
