@@ -12,19 +12,26 @@
 <body dir="ltr" class="calibre">
 <h3 lang="de-DE" class="c" xml:lang="de-DE">{post.post_title}<f:if condition="{meta.subtitle.0}"><br class="calibre1"/>{meta.subtitle.0}</f:if></h3>
 <p lang="de-DE" class="c1" xml:lang="de-DE"> <br class="calibre1"/></p>
-<p lang="de-DE" class="c2" xml:lang="de-DE">Predigt vom {post.post_date -> p:format.date(format: '%d.%m.%Y')}<br class="calibre1"/>
-    {meta.church.0}</p>
+<p lang="de-DE" class="c2" xml:lang="de-DE">
+<f:for each="{sermon.events}" as="event" iteration="i">
+    <p:format.date format="%d.%m.%Y, %H:%M Uhr">{event.date} {event.time}</p:format.date>, {event.location.title}<f:if condition="{i.isLast}"><f:else><br /></f:else></f:if>
+</f:for>
+</p>
 <p lang="de-DE" class="western" xml:lang="de-DE"> <br class="calibre1"/></p>
 <p lang="de-DE" class="c2" xml:lang="de-DE">Copyright © {post.post_date -> p:format.date(format: '%Y')}
     Christoph Fischer</p>
-<p lang="de-DE" class="c2" xml:lang="de-DE">Published by Christoph
-    Fischer at Smashwords</p>
+<f:if condition="{smashwords}"><p lang="de-DE" class="c2" xml:lang="de-DE">Published by Christoph
+    Fischer at Smashwords</p></f:if>
 <p lang="de-DE" class="c1" xml:lang="de-DE"> <br class="calibre1"/></p>
 <p lang="de-DE" class="c1" xml:lang="de-DE"> <br class="calibre1"/></p>
 <p lang="de-DE" class="c1" xml:lang="de-DE"> <br class="calibre1"/></p>
 <f:if condition="{meta.cclicense.0}">
-<p lang="de-DE" class="c3" xml:lang="de-DE">Smashwords Edition
-    License Notes</p>
+<p lang="de-DE" class="c3" xml:lang="de-DE">
+    <f:if condition="{smashwords}">
+        <f:then>Smashwords Edition License Notes</f:then>
+        <f:else>Lizenz</f:else>
+    </f:if>
+    </p>
 <p lang="de-DE" class="c2" xml:lang="de-DE">Diese Predigt und alle
     dazu gehörigen Ressourcen (Predigtzettel, Aufnahme) sind lizenziert
     unter einer <span class="c4"><a class="western1" href="http://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative

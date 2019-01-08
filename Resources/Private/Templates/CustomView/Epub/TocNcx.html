@@ -17,7 +17,7 @@
         <f:for each="{slides}" as="slide" iteration="i">
         <navPoint playOrder="{i.cycle}" id="slide{slide.ID}">
             <navLabel>
-                <text>{slide.post_title}</text>
+                <text>{slide.title}</text>
             </navLabel>
             <content src="slide_{slide.ID}.xhtml"/>
         </navPoint>

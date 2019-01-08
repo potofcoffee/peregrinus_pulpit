@@ -22,24 +22,81 @@
 
 namespace Peregrinus\Pulpit\CustomFormats;
 
+use Peregrinus\Pulpit\Domain\Model\SermonModel;
 use Peregrinus\Pulpit\Utility\UUIDUtility;
 use Peregrinus\Pulpit\View;
+use Peregrinus\Pulpit\Fluid\DynamicVariableProvider;
 
 class EpubCustomFormat extends AbstractPackagedCustomFormat
 {
     protected $viewName = 'epub';
 
+    /**
+     * Split the sermon text into chapters
+     * @param SermonModel $sermon Sermon
+     * @return array Chapters and titles
+     */
+    protected function splitChapters(SermonModel $sermon) {
+        $text = $sermon->getContent()['extended'];
+
+        preg_match_all('/<h3>(.*)<\/h3>/m', $text, $tmp);
+
+        // do we have a beginning without heading?
+        if (strpos($text, $tmp[0][0]) > 0) {
+            array_unshift($tmp[1], $sermon->getTitle());
+            array_unshift($tmp[0], '<h3>'.$sermon->getTitle().'</h3>');
+            $text = '<h3>'.$sermon->getTitle().'</h3>'.$text;
+        }
+
+        foreach ($tmp[1] as $index => $title) {
+            // cut off heading
+            $text = substr($text, strlen($tmp[0][$index]));
+
+            // get the text
+            if ($index == count($tmp[1])-1) {
+                $chapter = $text;
+            } else {
+                $nextMatch = $tmp[0][$index+1];
+                $chapter = substr($text, 0, strpos($text, $tmp[0][$index+1]));
+            }
+
+            $chapters[] = [
+                'title' => $title,
+                'chapter' => $chapter,
+                'ID' => $index,
+            ];
+
+            // cut off chapter
+            $text = substr($text, strlen($chapter));
+        }
+        $chapters[0]['isFirst'] = true;
+        $chapters[count($chapters) - 1]['isLast'] = true;
+
+        return $chapters;
+    }
+
+
     public function render()
     {
         $post = $this->getPost();
+        $sermon = new SermonModel($post);
+
+        $smashwords = filter_var($_GET['smashwords'], FILTER_SANITIZE_NUMBER_INT) ?: 0;
+
+
         $view = new View();
+        $context = $view->getRenderingContext();
+        $context->setVariableProvider(new DynamicVariableProvider());
         $this->prepareView($post, $view);
 
-        $slides = $this->getSlides($post);
+//        $slides = $this->getSlides($post);
+        $slides = $this->splitChapters($sermon);
         $uuid = UUIDUtility::v4();
 
         $view->assign('slides', $slides);
+        $view->assign('sermon', $sermon);
         $view->assign('uuid', $uuid);
+        $view->assign('smashwords', $smashwords);
 
         $this->createContainer($this->tempKey . '.epub');
 
@@ -72,7 +129,7 @@ class EpubCustomFormat extends AbstractPackagedCustomFormat
         $this->renderViewToFile($view, 'Epub/Nav', 'nav.xhtml');
 
         // chapters
-        foreach ($slides as $slide) {
+        foreach ($slides as $index => $slide) {
             $view->assign('slide', $slide);
             $this->renderViewToFile($view, 'Epub/Chapter', 'slide_' . $slide['ID'] . '.xhtml');
         }

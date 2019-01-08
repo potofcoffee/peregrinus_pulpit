@@ -64,7 +64,7 @@
                         <td>
                             <a href="{sermon.audiorecordingRelation.guid}"
                                target="_blank">
-                                <span class="glyphicon glyphicon-headphones"> </span>
+                                <span class="fa fa-headphones"> </span>
                             </a>
                         </td>
                         <td>
@@ -91,7 +91,7 @@
                                     <td>
                                         <a href="{sermon.handout}"
                                            target="_blank">
-                                            <span class="glyphicon glyphicon-file"> </span>
+                                            <span class="fa fa-book-open"> </span>
                                         </a>
                                     </td>
                                     <td colspan="2">
@@ -115,7 +115,7 @@
                             <tr>
                                 <td>
                                     <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'handout'})}">
-                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <span class="fa fa-book-open"> </span>
                                     </a>
                                 </td>
                                 <td colspan="2">
@@ -137,7 +137,7 @@
                         <tr>
                             <td>
                                 <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'handout', underlineMode: 'blank'})}">
-                                    <span class="glyphicon glyphicon-file"> </span>
+                                    <span class="fa fa-book-open"> </span>
                                 </a>
                             </td>
                             <td colspan="2">
@@ -155,6 +155,30 @@
                                 </wp:loggedIn>
                             </td>
                         </tr>
+                        <f:if condition="{sermon.content.extended}">
+                            <tr>
+                                <td>
+                                    <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                        <span class="fa fa-book"> </span>
+                                    </a>
+                                </td>
+                                <td colspan="2">
+                                    <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                        Predigt als E-Book
+                                    </a>
+                                    <div class="sermon-instructions">
+                                        Du kannst den Text dieser Predigt auch als E-Book im EPub-Format lesen.
+                                        Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                        und wähle "Ziel speichern ..."
+                                    </div>
+                                    <wp:loggedIn>
+                                        <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub', smashwords: 1})}">
+                                            E-Book im SmashWords-Format
+                                        </a>
+                                    </wp:loggedIn>
+                                </td>
+                            </tr>
+                        </f:if>
                     </f:else>
                 </f:if>
                 <f:if condition="{sermon.remoteUrl}">
@@ -162,7 +186,7 @@
                         <td>
                             <a href="{sermon.remoteUrl}"
                                target="_blank">
-                                <span class="glyphicon glyphicon-globe"> </span>
+                                <span class="fa fa-globe"> </span>
                             </a>
                         </td>
                         <td colspan="2">
@@ -177,7 +201,7 @@
                 <f:if condition="{sermon.cclicense}">
                     <tr>
                         <td>
-                            <span class="glyphicon glyphicon-copyright-mark"> </span>
+                            <span class="fa fa-copyright"> </span>
                         </td>
                         <td colspan="2">
                             <div class="sermon-instructions">

@@ -14,8 +14,8 @@
         <meta refines="#{author.user_login}" property="role" scheme="marc:relators">aut</meta>
         <dc:title xml:lang="de">{post.post_title}<f:if condition="{meta.subtitle.0}">: {meta.subtitle.0}</f:if></dc:title>
         <meta name="cover" content="cover"/>
-        <dc:contributor id="smashwords">Smashwords, Inc.</dc:contributor>
-        <meta refines="#smashwords" property="role" scheme="marc:relators">bkp</meta>
+        <f:if condition="{smashwords}"><dc:contributor id="smashwords">Smashwords, Inc.</dc:contributor>
+            <meta refines="#smashwords" property="role" scheme="marc:relators">bkp</meta></f:if>
         <meta property="identifier-type" refines="#Id">UUID</meta>
         <!-- Zeitraum der Erstellung des Buches -->
         <meta property="dcterms:created">{post.post_date -> p:format.date(format: '%Y-%m-%d')}</meta>
