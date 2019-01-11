@@ -63,7 +63,7 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
             }
         } else {
             // no verses indicated? 1. eliminate "verse 0"
-            unset($this->arguments['song']['fulltext'][0]);
+            if (is_array($this->arguments['song']['fulltext'])) unset($this->arguments['song']['fulltext'][0]);
             // if only one verse exists, no numbering is needed:
             if (count($this->arguments['song']['fulltext'])==1) $this->arguments['numbered'] = false;
             // take all verses:

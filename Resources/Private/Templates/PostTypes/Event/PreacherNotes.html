@@ -35,6 +35,10 @@
                     <h2><b>Schriftlesung</b></h2>
                     <p>{item.data.reference}</p>
                 </f:case>
+                <f:case value="textBlock">
+                    <h2><b>{item.title}</b></h2>
+                    {item.data -> wp:autop()}
+                </f:case>
             </f:switch>
         </f:for>
     </p:output.word.html>
