@@ -28,7 +28,7 @@ class AgendaItemFactory
     public static function get($key)
     {
         $class = 'Peregrinus\\Pulpit\\AgendaItems\\'.ucfirst($key).'AgendaItem';
-        return new $class();
+        if (class_exists($class)) return new $class(); else return null;
     }
 
     /**

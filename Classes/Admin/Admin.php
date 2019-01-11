@@ -28,6 +28,7 @@ use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
 use Peregrinus\Pulpit\Admin\Setup\Components\AbstractComponent;
 use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
 use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 
 /**
@@ -44,6 +45,7 @@ class Admin
     public function init()
     {
         // add meta boxes for all post types
+        /** @var AbstractPostType $postType */
         foreach (PostTypeFactory::getAll() as $postType) {
             $postType->addMetaBox();
             $postType->registerCustomColumns();

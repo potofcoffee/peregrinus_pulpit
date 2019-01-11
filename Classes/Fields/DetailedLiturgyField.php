@@ -48,8 +48,15 @@ class DetailedLiturgyField extends AbstractField
         wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
         wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
             array('jquery'));
-        wp_enqueue_script('detailed-liturgy-field',
-            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Fields/DetailedLiturgyField.js');
+        wp_enqueue_script(
+            'rangyinputs',
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/vendor/timdown/rangyinputs/rangyinputs-jquery.min.js',
+            array('jquery')
+        );
+        wp_enqueue_script(
+            'detailed-liturgy-field',
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Fields/DetailedLiturgyField.js'
+        );
     }
 
     /**
@@ -84,49 +91,49 @@ class DetailedLiturgyField extends AbstractField
 
         /** @var AbstractAgendaItem $agendaItem */
         $agendaItem = $item['type'] ? AgendaItemFactory::get($item['type']) : new AbstractAgendaItem();
-
-        $o = '<li class="pulpit-detailed-liturgy-form-single">'
-            . '<span class="pulpit-detailed-liturgy-field-btn-remove pulpit-collapse-section-icon ui-icon ui-icon-trash"></span> '
-            . $agendaItem->renderTitle($item['title'] ?: '###TITLE###')
-            . '<span class="pulpit-detailed-liturgy-form-data-preview" id="' . $this->getFieldId($index,
-                'data-preview') . '">'
-            . $agendaItem->renderDataPreview($item['data'])
-            . '</span>'
-            . '<div class="pulpit-detailed-liturgy-form-sub" style="display:none;" data-preview="' . $this->getFieldId($index,
-                'data-preview') . '">'
-            . $this->hiddenField($index, 'title', $item['title'])
-            . $this->hiddenField($index, 'type', $item['type'])
-            . $this->hiddenField($index, 'description', $item['description'])
-            . $this->hiddenField($index, 'optional', $item['optional']);
-        if ($agendaItem->hasFields()) {
-            $o .= $agendaItem->renderDataForm(
+        if (null !== $agendaItem) {
+            $o = '<li class="pulpit-detailed-liturgy-form-single">'
+                .'<span class="pulpit-detailed-liturgy-form-single-icon '.$agendaItem->buttonStyle.'"></span>'
+                . $agendaItem->renderTitle($item['title'] ?: '###TITLE###')
+                . '<span class="pulpit-detailed-liturgy-form-data-preview" id="' . $this->getFieldId($index,
+                    'data-preview') . '">'
+                . $agendaItem->renderDataPreview($item['data'])
+                . '</span>'
+                . '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove pulpit-collapse-section-icon" style="float: right;" href="#">'
+                . '<span class="fa fa-trash"></span>'
+                . '</a>'
+                . '<div class="pulpit-detailed-liturgy-form-sub" data-preview="' . $this->getFieldId($index,
+                    'data-preview') . '">'
+                . $this->hiddenField($index, 'title', $item['title'])
+                . $this->hiddenField($index, 'type', $item['type'])
+                . $this->hiddenField($index, 'description', $item['description'])
+                . $this->hiddenField($index, 'optional', $item['optional']);
+            if ($agendaItem->hasFields()) {
+                $o .= $agendaItem->renderDataForm(
                     $this->getFieldId($index, 'data'),
                     $this->getFieldName($index, 'data'),
                     $item['data']
-                )
-                . '<input type="checkbox" id="' . $this->getFieldId($index,
-                    'public_info') . '" name="' . $this->getFieldName($index,
-                    'public_info') . '" ' . ($item['public_info'] ? 'checked' : '') . ' />'
-                . $this->renderLabel($index, 'public_info') . '<br />'
-                . $this->renderLabel($index, 'responsible')
-                . '<input style="width:100%" type="text" id="' . $this->getFieldId($index,
-                    'responsible') . '" name="' . $this->getFieldName($index,
-                    'responsible') . '" value="' . $item['responsible'] . '" />';
-
+                );
+            }
             foreach ($this->instructionsFor as $recipient) {
+                $recipient = $recipient[0];
                 $recipientKey = 'instructions][' . $recipient;
                 $o .= '<label for="' . $this->key . '[' . $index . '][instructions][' . $recipient . ']">'
                     . sprintf($this->label['instructions_for'], $recipient)
                     . '</label>'
-                    . '<textarea style="width:100%" id="' . $this->getFieldId($index,
-                        $recipientKey) . '" name="' . $this->getFieldName($index,
-                        $recipientKey) . '">' . $item[$recipientKey] . '</textarea>';
+                    . '<textarea style="width:100%" class=" id="'
+                    . $this->getFieldId($index, str_replace('][', '_', $recipientKey))
+                    . '" name="' . $this->getFieldName($index, $recipientKey) . '">'
+                    . $item['instructions'][$recipient]
+                    . '</textarea>';
             }
-        }
 
-        $o .= '</div>'
-            . '</li>';
-        return $o;
+            $o .= '</div>'
+                . '</li>';
+            return $o;
+        } else {
+            Debugger::dumpAndDie($item);
+        }
     }
 
     /**
@@ -140,18 +147,19 @@ class DetailedLiturgyField extends AbstractField
     protected function renderAgendaSelect(): string
     {
         $agendas = (new AgendaRepository())->get();
-        $o = '<select style="height:24px; line-height: 22px;" id="' . $this->getFieldId('', 'import') . '">';
-        $o .= '<optgroup label="'.__('Agendas', 'pulpit').'">';
+        $o = '<select style="height:24px; line-height: 22px;" id="' . $this->getFieldId('',
+                'import') . '" class="pulpit-detailed-liturgy-extended-select">';
+        $o .= '<optgroup label="' . __('Agendas', 'pulpit') . '">';
         /** @var AgendaModel $agenda */
         foreach ($agendas as $agenda) {
             $o .= '<option value="a:' . $agenda->getID() . '">' . $agenda->getTitle() . '</option>';
         }
         $o .= '</optgroup>';
 
-        $o .= '<optgroup label="'.__('Events', 'pulpit').'">';
+        $o .= '<optgroup label="' . __('Events', 'pulpit') . '">';
         /** @var AgendaModel $agenda */
         foreach ((new EventRepository())->get() as $event) {
-            $o .= '<option value="e:' . $event->getID() . '">' . $event->getDate().' '.$event->getTime().' '.$event->getTitle() . '</option>';
+            $o .= '<option value="e:' . $event->getID() . '">' . $event->getDate() . ' ' . $event->getTime() . ' ' . $event->getTitle() . '</option>';
         }
         $o .= '</optgroup>';
 
@@ -166,6 +174,14 @@ class DetailedLiturgyField extends AbstractField
 
     protected function toolBar()
     {
+        // get all text blocks
+        $textBlocks = get_posts([
+            'post_type' => 'pulpit_textblock',
+            'posts_per_page' => -1,
+            'order_by' => 'post_title',
+            'order' => 'DESC'
+        ]);
+
         $o = '<div class="pulpit-detailed-liturgy-field-toolbar">';
         /** @var AbstractAgendaItem $item */
         foreach (AgendaItemFactory::getAll() as $item) {
@@ -173,14 +189,22 @@ class DetailedLiturgyField extends AbstractField
         }
         $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-remove-all" href="#" title="'
             . __('Remove all', 'pulpit')
-            .'"><span class="fa fa-trash"></span></a>';
+            . '"><span class="fa fa-trash"></span></a>';
         $o .= $this->renderAgendaSelect();
         $o .= '<a class="button button-small pulpit-detailed-liturgy-field-btn-import" href="#" data-source="#'
-            .$this->getFieldId('', 'import').'"  data-key="'.$this->key.'" title="'.__('Import', 'pulpit')
-            .'">'
-            .'<span class="fa fa-file-import"></span>'
-            . '</a>';
-        $o .= '<hr /></div>';
+            . $this->getFieldId('', 'import') . '"  data-key="' . $this->key . '" title="' . __('Import', 'pulpit')
+            . '">'
+            . '<span class="fa fa-file-import"></span>'
+            . '</a><span>'
+            . '<select style="height:24px; line-height: 22px;" id="' . $this->getFieldId('',
+                'import_textblock') . '" class="pulpit-detailed-liturgy-extended-select">';
+        /** @var \WP_Post $block */
+        foreach ($textBlocks as $block) {
+            $o .= '<option value="' . $block->ID . '">' . $block->post_title . '</option>';
+        }
+        $o .= '</select>'
+            . '<a class="button button-small pulpit-detailed-liturgy-field-btn-paste-template" href="#"><span class="fa fa-paste"></span></a></div>';
+        $o .= '<hr /></span>';
         return $o;
     }
 
@@ -193,13 +217,22 @@ class DetailedLiturgyField extends AbstractField
      */
     public function render($values)
     {
-        $this->instructionsFor = explode(',', get_option(PEREGRINUS_PULPIT . '_general')['agenda_instructions']);
+        $tmp = explode("\n", $values['officiating'][0]);
+        $this->instructionsFor = [];
+        foreach ($tmp as $line) {
+            if (trim($line)) {
+                $this->instructionsFor[] = explode(':', str_replace(': ', ':', $line));
+            }
+        }
+        array_unshift($this->instructionsFor, [__('Preacher', 'pulpit'), '###PREACHER###']);
 
         $items = $this->getValue($values, true) ?: $this->getEmptyRecord();
 
         if (isset($items[0])) {
             $items[0] = maybe_unserialize($items[0]);
-            if (isset($items[0]['import'])) unset($items[0]);
+            if (isset($items[0]['import'])) {
+                unset($items[0]);
+            }
         }
 
         $o = '';

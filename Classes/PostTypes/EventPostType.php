@@ -28,6 +28,7 @@ use Peregrinus\Pulpit\Fields\DetailedLiturgyField;
 use Peregrinus\Pulpit\Fields\InputField;
 use Peregrinus\Pulpit\Fields\LocationRelationField;
 use Peregrinus\Pulpit\Fields\RTEField;
+use Peregrinus\Pulpit\Fields\TextAreaField;
 
 /**
  * Class SermonPostType
@@ -152,6 +153,7 @@ class EventPostType extends AbstractPostType
                 ]
             ),
             new MetaBox('officiating', __('Officiating', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                    new TextAreaField('officiating', __('List participants (one per line, format: "role: name"). Do not include the preacher.', 'pulpit'))
                 ]
             ),
             new MetaBox('events_info', __('General information', 'pulpit'), $this->getTypeName(), 'normal', 'high', [

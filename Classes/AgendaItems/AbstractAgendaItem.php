@@ -29,7 +29,7 @@ class AbstractAgendaItem
 
     protected $title = '';
     protected $_hasFields = true;
-    protected $buttonStyle = 'fa fa-plus-circle';
+    public $buttonStyle = 'fa fa-plus-circle';
 
     public function __construct()
     {
@@ -79,7 +79,7 @@ class AbstractAgendaItem
     }
 
     public function renderTitle($title) {
-        return '<span class="pulpit-detailed-liturgy-form-single-toggle" style="width: 33%; font-weight: bold; color: #951981">' .$title.'</span>';
+        return '<span class="pulpit-detailed-liturgy-form-single-toggle">' .$title.'</span>';
     }
 
     public function renderDataPreview($data) {

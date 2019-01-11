@@ -61,10 +61,20 @@
 
 .pulpit-agenda-items-form-single,
 .pulpit-detailed-liturgy-form-single {
-    border: solid 1px #999999;
-    border-left: solid 8px #999999;
+    border: solid 1px rgb(221, 221, 221);
+    border-left: solid 8px rgb(221, 221, 221);
     padding: 5px;
     border-radius: 3px;
+    min-height: 23px;
+    background-color: #f7f7f7;
+    cursor: move;
+}
+
+.pulpit-detailed-liturgy-form-single-icon {
+    padding: 0 5px;
+    width: 18px;
+    max-width: 18px;
+    min-width: 18px;
 }
 
 .pulpit-agenda-items-form-single-toggle,
@@ -97,4 +107,33 @@
 
 .button.pulpit-detailed-liturgy-field-btn-remove-all {
     color: red !important;
+}
+
+.pulpit-detailed-liturgy-field-toolbar {
+    width: 100%;
+    background-color: #f7f7f7;
+    padding: 3px;
+}
+
+.pulpit-detailed-liturgy-field-toolbar a.button {
+    font-size: 16px !important;
+    border-color: transparent;
+    box-shadow: none;
+    padding: 8px;
+}
+.pulpit-detailed-liturgy-field-toolbar a.button:hover {
+    box-shadow: 0 1px 0 #ccc;
+    border-color: #ccc;
+}
+
+
+.pulpit-detailed-liturgy-form-single-toggle {
+    width: 40%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pulpit-detailed-liturgy-form-sub {
+    margin-top: 20px;
+    display: none;
 }

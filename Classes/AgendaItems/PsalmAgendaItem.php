@@ -26,7 +26,7 @@ use Peregrinus\Pulpit\Service\EGService;
 
 class PsalmAgendaItem extends AbstractAgendaItem
 {
-    protected $buttonStyle = 'fa fa-praying-hands';
+    public $buttonStyle = 'fa fa-praying-hands';
 
     public function __construct()
     {

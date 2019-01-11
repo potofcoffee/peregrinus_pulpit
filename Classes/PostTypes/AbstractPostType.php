@@ -91,7 +91,7 @@ class AbstractPostType
     public function getKey()
     {
         $tmp = explode('\\', get_class($this));
-        return lcfirst(str_replace('PostType', '', array_pop($tmp)));
+        return strtolower(str_replace('PostType', '', array_pop($tmp)));
     }
 
     /**

@@ -24,7 +24,7 @@ namespace Peregrinus\Pulpit\AgendaItems;
 
 class ScriptureReadingAgendaItem extends AbstractAgendaItem
 {
-    protected $buttonStyle = 'fa fa-bible';
+    public $buttonStyle = 'fa fa-bible';
 
     public function __construct()
     {

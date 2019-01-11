@@ -1,4 +1,6 @@
 
+var activeInput;
+
 function enableDetailedLiturgyFieldButtons() {
     $('.pulpit-detailed-liturgy-form-single-toggle').click(function(){
         $(this).parent().find('.pulpit-detailed-liturgy-form-sub').toggle();
@@ -21,30 +23,61 @@ function enableDetailedLiturgyFieldButtons() {
         .on('select2:select', function(e){
             $('#'+$(this).parent().data('preview')+' .data-preview-song').html(e.params.data.text);
         });
+
+
+    $('.pulpit-detailed-liturgy-form-single textarea').on('focus', function(){
+        activeInput = this;
+    });
+
+
+    $('.pulpit-detailed-liturgy-field-btn-paste-template').click(function(event){
+        event.preventDefault();
+
+        $.post({
+            url: ajaxurl,
+            data: {
+                'action': 'pulpit_renderTextBlock',
+                'id': $(this).parent().find('select').first().val(),
+            },
+            context: this,
+            success: function(response) {
+                $(activeInput).replaceSelectedText(response);
+                $(activeInput).trigger('change');
+            }
+        });
+
+
+
+    });
+
+    $('.pulpit-detailed-liturgy-extended-select').select2({});
+
+}
+
+
+function createSortableList() {
+    $('.pulpit-detailed-liturgy-form').sortable({
+        placeholder: "ui-state-highlight",
+        update: function(event, ui) {
+            // reorder indices
+            $(this).find('.pulpit-detailed-liturgy-form-single').each(function(index, linkElement){
+                $(linkElement).find('input,select,textarea').each(function(subIndex, inputElement){
+                    $(inputElement).attr('name', $(this).attr('name').replace(/(\d+)/g, index));
+                    $(inputElement).attr('id', $(this).attr('id').replace(/(\d+)/g, index));
+                });
+                $(linkElement).find('label').each(function(subIndex, labelElement) {
+                    $(labelElement).attr('for', $(this).attr('for').replace(/(\d+)/g, index));
+                });
+            });
+        }
+    }).disableSelection();
 }
 
 (function($){
 
     $(document).ready(function(){
 
-        $('.pulpit-detailed-liturgy-form').sortable({
-            placeholder: "ui-state-highlight",
-            update: function(event, ui) {
-                // reorder indices
-                var index = 0;
-                $(this).find('.pulpit-detailed-liturgy-form-single').each(function(){
-                    $(this).find('input,select,textarea').each(function(){
-                        $(this).attr('name', $(this).attr('name').replace(/(\d+)/g, index));
-                        $(this).attr('id', $(this).attr('id').replace(/(\d+)/g, index));
-                    });
-                    $(this).find('label').each(function() {
-                        $(this).attr('for', $(this).attr('for').replace(/(\d+)/g, index));
-                    });
-                    index++;
-                });
-            }
-        }).disableSelection();
-
+        createSortableList();
 
         $('.pulpit-detailed-liturgy-field-btn-add-item').click(function(event) {
             event.preventDefault();
@@ -66,7 +99,7 @@ function enableDetailedLiturgyFieldButtons() {
                     enableDetailedLiturgyFieldButtons();
                 }
             });
-
+            createSortableList();
         });
 
         $('.pulpit-detailed-liturgy-field-btn-import').click(function(event) {
@@ -85,6 +118,7 @@ function enableDetailedLiturgyFieldButtons() {
                 success: function(response) {
                     $(this).parent().parent().find('ul').append(response);
                     enableDetailedLiturgyFieldButtons();
+                    createSortableList();
                 }
             });
 
@@ -109,9 +143,11 @@ function enableDetailedLiturgyFieldButtons() {
             code = code.replace(/###INDEX###/g, index);
 
             $(this).before($(code));
-            enableDetailedLiturgyFieldButtons()
+            enableDetailedLiturgyFieldButtons();
+            createSortableList();
         });
 
         enableDetailedLiturgyFieldButtons();
+        createSortableList();
     });
 })(jQuery);

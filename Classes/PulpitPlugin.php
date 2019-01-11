@@ -142,6 +142,7 @@ class PulpitPlugin
 
     public function addCSS()
     {
+        wp_enqueue_style('pulpit-admin-fontawesom', 'https://use.fontawesome.com/releases/v5.6.3/css/all.css');
         wp_enqueue_style('pulpit-admin-styles', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Styles/Admin/Admin.css');
         wp_enqueue_style('thickbox'); //Provides the styles needed for this window.
     }

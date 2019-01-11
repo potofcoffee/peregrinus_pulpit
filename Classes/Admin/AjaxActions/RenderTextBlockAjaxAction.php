@@ -20,28 +20,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\AgendaItems;
+namespace Peregrinus\Pulpit\Admin\AjaxActions;
 
-class SermonAgendaItem extends AbstractAgendaItem
+use Peregrinus\Pulpit\Admin\FieldPreviewRenderer;
+use Peregrinus\Pulpit\Fields\DetailedLiturgyField;
+
+class RenderTextBlockAjaxAction extends AbstractAjaxAction
 {
-
-    public $buttonStyle = 'fa fa-microphone-alt';
-
-    public function __construct()
+    public function do()
     {
-        parent::__construct();
-        $this->setTitle(__('Sermon', 'pulpit'));
+        $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
+        if ($post = get_post($id)) {
+            echo $post->post_content;
+        }
+        wp_die();
     }
-
-    public function renderDataForm($id, $name, $value)
-    {
-        return '<p><i>'.__('Sermon data will be automatically supplied.', 'pulpit').'</i></p>';
-    }
-
-    public function renderDataPreview($data)
-    {
-        return '<i>'.__('Sermon data will be automatically supplied.', 'pulpit').'</i>';
-    }
-
-
 }

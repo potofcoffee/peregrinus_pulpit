@@ -1,0 +1,35 @@
+<p:output.pdf
+        filename="{event.datetime -> p:format.date(format: 'Ymd')} Liedanzeiger.pdf"
+        leftmargin="10" rightmargin="10" topmargin="10" bottommargin="10" orientation="landscape"><!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/PublicSongList.css"
+              media="all"/>
+    </head>
+    <body>
+    <p:math.counter name="idx" />
+    <f:for each="{event.liturgy}" as="item" iteration="i">
+        <f:switch expression="{item.type}">
+            <f:case value="song">
+                <p>
+                    <p:math.counter name="idx" add="1" />
+                    <span class="counter">{idx}</span>
+                    <f:if condition="{item.data.isEG}">
+                        <f:then>{item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
+                        <f:else>"{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else>
+                    </f:if>
+                </p>
+            </f:case>
+            <f:case value="psalm">
+                <p>
+                    <p:math.counter name="idx" add="1" />
+                    <span class="counter">{idx}</span>
+                        {item.data.number} {item.data.title}
+                </p>
+            </f:case>
+        </f:switch>
+    </f:for>
+    </body>
+    </html>
+</p:output.pdf>

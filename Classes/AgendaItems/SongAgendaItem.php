@@ -27,7 +27,7 @@ use Peregrinus\Pulpit\Service\EGService;
 class SongAgendaItem extends AbstractAgendaItem
 {
 
-    protected $buttonStyle = 'fa fa-music';
+    public $buttonStyle = 'fa fa-music';
 
     public function __construct()
     {
