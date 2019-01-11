@@ -138,4 +138,31 @@ class EventController extends AbstractController
         $this->view->assign('event', $event);
     }
 
+
+    protected function setAppView(string $appAction) {
+        $this->action = 'app/'.ucfirst($appAction);
+    }
+
+
+    public function appAction(\WP_Post $post) {
+        $event = $this->getEventDataFromPost($post);
+
+        $appSection = filter_var($_GET['app'], FILTER_SANITIZE_STRING) ?: 'liturgy';
+        $this->setAppView($appSection);
+
+        // get a hierarchical array for liturgy
+        $liturgy = [];
+        $currentLiturgySection = '';
+        foreach ($event->getLiturgy() as $item) {
+            if ($item['type'] == 'sectionTitle') {
+                $currentLiturgySection = $item['title'];
+                $liturgy[$currentLiturgySection]['heading'] = $item;
+            } else {
+                $liturgy[$currentLiturgySection]['items'][] = $item;
+            }
+        }
+
+        $this->view->assign('event', $event);
+        $this->view->assign('liturgy', $liturgy);
+    }
 }

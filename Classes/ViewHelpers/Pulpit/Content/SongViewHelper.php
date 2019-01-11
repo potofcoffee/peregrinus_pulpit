@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Content;
 
+use Peregrinus\Pulpit\Debugger;
+
 class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
@@ -41,6 +43,7 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
     {
         $this->registerArgument('song', 'array', 'Song');
         $this->registerArgument('numbered', 'bool', 'Number verses?', false, true);
+        $this->registerArgument('tab', 'string', 'Tab string (for indentation)', false, "\t");
     }
 
     protected function render()
@@ -59,7 +62,11 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
                 }
             }
         } else {
-            // no verses indicated? Take all of them.
+            // no verses indicated? 1. eliminate "verse 0"
+            unset($this->arguments['song']['fulltext'][0]);
+            // if only one verse exists, no numbering is needed:
+            if (count($this->arguments['song']['fulltext'])==1) $this->arguments['numbered'] = false;
+            // take all verses:
             foreach ($this->arguments['song']['fulltext'] as $verseNo => $verse) {
                 $verses[] = $verseNo;
             }
@@ -67,11 +74,17 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
 
         $o = '';
         foreach ($verses as $verse) {
-            $o .= '<p>'
-                . ($this->arguments['numbered'] ? $verse . '. ' : '')
-                . nl2br(strtr($this->arguments['song']['fulltext'][$verse],
-                    ['|' => "\n", '>>' => "\t"]))
-                . '</p>';
+            if ($this->arguments['tab'] == "\t") {
+                $o .= '<p>'
+                    . ($this->arguments['numbered'] ? $verse . '. ' : '')
+                    . nl2br(strtr($this->arguments['song']['fulltext'][$verse],
+                        ['|' => "\n", '>>' => "\t"]))
+                    . '</p>';
+            } else {
+                $text = nl2br(strtr($this->arguments['song']['fulltext'][$verse], ['|' => "\n", '>>' => '']));
+                $o .= '<p style="margin-left: '.$this->arguments['tab']
+                    .'; text-indent: -'.$this->arguments['tab'].'">'.$text.'</p>';
+            }
         }
 
         return $o;

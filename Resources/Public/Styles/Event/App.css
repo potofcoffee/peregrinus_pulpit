@@ -1,0 +1,26 @@
+body {
+    font-family: "Helvetica Condensed";
+}
+
+figcaption, figcaption a, figcaption a:hover {
+    font-size: 8px;
+    color: darkgray;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+h2 {
+    color: #951981;
+}
+
+a.btn.btn-primary {
+    background-color: #951981;
+    border-color: #951981;
+}
+
+a.btn.btn-primary:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+}
