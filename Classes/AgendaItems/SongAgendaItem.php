@@ -41,7 +41,7 @@ class SongAgendaItem extends AbstractAgendaItem
             $value = ['song' => $value, 'verses' => ''];
         }
 
-        $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val());';
+        $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val() ? \'(\' + $(this).val() + \')\' : \'\');';
 
         return EGService::getInstance()->selectBox($id . '_name', $name . '[song]', $value['song'] ?: '')
             . '<label for="' . $name . '[verses]">' . __('Verses', 'pulpit') . '</label>'
@@ -64,10 +64,10 @@ class SongAgendaItem extends AbstractAgendaItem
     {
         return '<span class="data-preview-song">'
             . EGService::getInstance()->renderSinglePreview($data['song'])
-            . '</span> ('
+            . '</span> '
             . '<span class="data-preview-verses">'
-            . $data['verses']
-            . '</span>)';
+            . ($data['verses'] ? '('.$data['verses'].')' : '')
+            . '</span>';
     }
 
 }
