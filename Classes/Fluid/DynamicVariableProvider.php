@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Fluid;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\AbstractModel;
 use TYPO3Fluid\Fluid\Core\Variables\StandardVariableProvider;
 use TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface;
@@ -41,23 +42,27 @@ class DynamicVariableProvider extends StandardVariableProvider implements Variab
     public function getByPath($path, array $accessors = [])
     {
         // get first path element
-        $tmp = explode('.', $path);
-        $topObject = $this->variables[$tmp[0]];
-        unset($tmp[0]);
-        if (is_subclass_of($topObject, AbstractModel::class)) {
-            $result = $topObject;
-            foreach ($tmp as $element) {
-                if (is_object($result)) {
-                    $getter = 'get'.ucfirst($element);
-                    $result = $result->$getter();
-                } elseif (is_array($result)) {
-                    $result = $result[$element];
-                }
+        $elements = explode('.', $path);
+        $object = $this->variables[$elements[0]];
+        $lastElement = $elements[0];
+        $debug = [];
+        unset($elements[0]);
+
+        // traverse path
+        foreach ($elements as $element) {
+            if (is_object($object)) {
+                $getter = 'get' . ucfirst($element);
+                $object = $object->$getter();
+                $debug[$element] = $lastElement.'->'.$getter.'()';
+            } elseif (is_array($object)) {
+                $object = $object[$element];
+                $debug[$element] = $lastElement.'['.$element.']';
+            } else {
+                $object = '';
             }
-            return $result;
-        } else {
-            return parent::getByPath($path);
+            $lastElement = $element;
         }
+        return $object;
     }
 
     /**
