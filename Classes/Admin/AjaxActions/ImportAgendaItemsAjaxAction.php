@@ -37,17 +37,9 @@ class ImportAgendaItemsAjaxAction extends AbstractAjaxAction
             'instructions_for' => __('Instructions for %s'),
         ]);
 
-        list ($sourceType, $sourceId) = explode(':', $_POST['source']);
-        switch ($sourceType) {
-            case 'e':
-                $items = $this->getItemsFromEvent($sourceId);
-                break;
-            case 'a':
-                $items = $this->getItemsFromAgenda($sourceId);
-                break;
-        }
+        $items = get_post_meta(filter_var($_POST['source'], FILTER_SANITIZE_NUMBER_INT), 'liturgy');
 
-        $index = $_POST['index'];
+        $index = filter_var($_POST['index'], FILTER_SANITIZE_NUMBER_INT);
         foreach ($items as $item) {
             echo $field->renderSingleForm($index, $item);
             $index++;
@@ -57,27 +49,4 @@ class ImportAgendaItemsAjaxAction extends AbstractAjaxAction
         wp_die();
     }
 
-    protected function getItemsFromEvent($source)
-    {
-        $event = (new EventRepository())->findByID($source);
-        return $event->getLiturgy();
-    }
-
-    protected function getItemsFromAgenda($source)
-    {
-        $agenda = (new AgendaRepository())->findByID($source);
-        $items = [];
-        foreach ($agenda->getAgendaItems() as $item) {
-            $item = maybe_unserialize($item);
-            $item['optional'] = $item['optional'] ? 1 : 0;
-            $item['data'] = '';
-            $item['public_info'] = false;
-            $item['responsible'] = '';
-            foreach ($this->instructionsFor as $recipient) {
-                $item['instructions'][$recipient] = '';
-            }
-            $items[] = $item;
-        }
-        return $items;
-    }
 }

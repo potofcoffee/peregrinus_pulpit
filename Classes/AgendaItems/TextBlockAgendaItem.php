@@ -70,9 +70,7 @@ class TextBlockAgendaItem extends AbstractAgendaItem
 
     public function renderDataPreview($data)
     {
-        return '<span class="data-preview-block">'
-            . EGService::getInstance()->renderSinglePreview($data['song'])
-            . '</span>';
+        return '<span class="data-preview-block">'. get_post($data)->post_title. '</span>';
     }
 
 }

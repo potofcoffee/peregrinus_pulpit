@@ -17,6 +17,8 @@ function enableDetailedLiturgyFieldButtons() {
     });
 
     $('.pulpit-song-selectbox').select2({
+        allowClear: true,
+        placeholder: '',
         tags: true
     });
     $('.pulpit-song-selectbox')

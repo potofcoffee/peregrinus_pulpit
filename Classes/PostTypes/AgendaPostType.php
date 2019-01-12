@@ -23,7 +23,7 @@
 namespace Peregrinus\Pulpit\PostTypes;
 
 use Peregrinus\Pulpit\Admin\MetaBox;
-use Peregrinus\Pulpit\Fields\AgendaItemsField;
+use Peregrinus\Pulpit\Fields\DetailedLiturgyField;
 
 /**
  * Class SermonPostType
@@ -62,55 +62,8 @@ class AgendaPostType extends AbstractPostType
         ];
 
         parent::__construct();
-
-        add_action('pre_get_posts', [$this, 'customSortOrder']);
     }
 
-    /**
-     * Register custom columns
-     */
-    public function registerCustomColumns()
-    {
-        add_action("manage_posts_custom_column", [$this, 'getCustomColumns']);
-        add_filter("manage_edit-portfolio_columns", [$this, 'renderCustomColumn']);
-    }
-
-    /**
-     * Custom columns for admin view
-     * @return array Columns
-     */
-    public function getCustomColumns()
-    {
-        return [
-            'cb' => '<input type="checkbox">',
-            'title' => __('Title', 'pulpit'),
-        ];
-    }
-
-    /**
-     * Render a custom column
-     * @param string $column Column name
-     */
-    public function renderCustomColumn($column)
-    {
-        global $post;
-        $custom = get_post_custom();
-        switch ($column) {
-            case 'title':
-                \the_title();
-                echo '<br />' . $custom['subtitle'];
-                break;
-            case 'date':
-                \the_date('Y-m-d');
-                break;
-            case 'series':
-                echo \get_the_term_list($post->ID, PEREGRINUS_PULPIT . '_sermon_series', '', ', ', '');
-                break;
-            case 'preacher':
-                echo \get_the_term_list($post->ID, PEREGRINUS_PULPIT . '_sermon_preacher', '', ', ', '');
-                break;
-        }
-    }
 
     /**
      * Add the custom fields for this post type
@@ -119,37 +72,18 @@ class AgendaPostType extends AbstractPostType
     {
         return [
             new MetaBox('liturgy', __('Liturgy', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
-                    new AgendaItemsField(
-                        'agenda_items',
-                        [
-                            'title' => __('Title', 'pulpit'),
-                            'type' => __('Type', 'pulpit'),
-                            'description' => __('Description', 'pulpit'),
-                            'optional' => __('This item is optional.', 'pulpit'),
-                        ])
+                    new MetaBox('liturgy', __('Liturgy', 'pulpit'), $this->getTypeName(), 'normal', 'high', [
+                            new DetailedLiturgyField('liturgy', [
+                                'public_info' => __('This information may be published (e.g. in handouts)'),
+                                'responsible' => __('Responsible for this item'),
+                                'instructions_for' => __('Instructions for %s'),
+                            ]),
+                        ]
+                    ),
                 ]
             ),
         ];
     }
 
-    /**
-     * Custom sort order for get_posts(): newest sermons first
-     * @param $query Query
-     */
-    public function customSortOrder($query)
-    {
-        if (!is_admin()) {
-            return;
-        }
-
-        require_once(ABSPATH . 'wp-admin/includes/screen.php');
-        $screen = \get_current_screen();
-        if ('edit' == $screen->base
-            && PEREGRINUS_PULPIT . '_' . $this->getKey() == $screen->post_type
-            && !isset($_GET['orderby'])) {
-            $query->set('orderby', 'publish_date');
-            $query->set('order', 'DESC');
-        }
-    }
 
 }

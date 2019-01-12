@@ -131,8 +131,6 @@ class DetailedLiturgyField extends AbstractField
             $o .= '</div>'
                 . '</li>';
             return $o;
-        } else {
-            Debugger::dumpAndDie($item);
         }
     }
 
@@ -149,17 +147,20 @@ class DetailedLiturgyField extends AbstractField
         $agendas = (new AgendaRepository())->get();
         $o = '<select style="height:24px; line-height: 22px;" id="' . $this->getFieldId('',
                 'import') . '" class="pulpit-detailed-liturgy-extended-select">';
+
+
+
         $o .= '<optgroup label="' . __('Agendas', 'pulpit') . '">';
         /** @var AgendaModel $agenda */
         foreach ($agendas as $agenda) {
-            $o .= '<option value="a:' . $agenda->getID() . '">' . $agenda->getTitle() . '</option>';
+            $o .= '<option value="' . $agenda->getID() . '">' . $agenda->getTitle() . '</option>';
         }
         $o .= '</optgroup>';
 
         $o .= '<optgroup label="' . __('Events', 'pulpit') . '">';
         /** @var AgendaModel $agenda */
         foreach ((new EventRepository())->get() as $event) {
-            $o .= '<option value="e:' . $event->getID() . '">' . $event->getDate() . ' ' . $event->getTime() . ' ' . $event->getTitle() . '</option>';
+            $o .= '<option value="' . $event->getID() . '">' . $event->getDate() . ' ' . $event->getTime() . ' ' . $event->getTitle() . '</option>';
         }
         $o .= '</optgroup>';
 

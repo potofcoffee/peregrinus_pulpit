@@ -54,6 +54,7 @@ class EventModel extends AbstractModel
                 $item = maybe_unserialize($item);
                 /** @var AbstractAgendaItem $itemObject */
                 $itemObject = AgendaItemFactory::get($item['type']);
+                if ($itemObject === null) Debugger::dumpAndDie([$item['type'], $item, $liturgy, $this]);
                 $item['data'] = $itemObject->provideData($item['data']);
                 $liturgy[$key] = $item;
             }
