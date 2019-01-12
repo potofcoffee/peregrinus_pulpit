@@ -23,24 +23,28 @@
 namespace Peregrinus\Pulpit\Service;
 
 use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\Domain\Model\SongModel;
 
-class EGService
+class SongService
 {
 
-    /** @var EGService */
+    /** @var SongService */
     protected static $instance = null;
 
     protected $data = [];
 
     /**
-     * EGService constructor.
+     * SongService constructor.
      */
     public function __construct()
     {
-        $this->data = yaml_parse_file(PEREGRINUS_PULPIT_BASE_PATH . 'Assets/Songbooks/EG.yaml');
+        foreach (get_posts(['post_type' => 'pulpit_song', 'posts_per_page' => -1]) as $post) {
+            $song = new SongModel($post);
+            $this->data[$song->getID()] = $song;
+        }
     }
 
-    public static function getInstance(): EGService
+    public static function getInstance(): SongService
     {
         if (null === self::$instance) {
             self::$instance = new self();
@@ -57,12 +61,19 @@ class EGService
         }
 
         $o = '<select class="pulpit-song-selectbox" style="width: 100%;" name="' . $name . '" id="' . $id . '">';
-        foreach ($data as $number => $song) {
-            $o .= '<option'
-                . ($number != $song['title'] ? ' value="' . $number . '"' : '')
-                . ($value == $number ? ' selected' : '') . '>'
-                . ($number != $song['title'] ? $number . ' ' . $song['title'] : $song['title'])
-                . '</option>';
+        /**
+         * @var int $number
+         * @var SongModel $song
+         */
+        foreach ($data as $id => $song) {
+            if (is_string($song)) {
+                $o .= '<option '.($song == $value ? ' selected' : '').'>'.$song.'</option>';
+            } else {
+                $o .= '<option value="' . $id . '" '
+                    . ($value == $id ? ' selected' : '') . '>'
+                    . $song->getNameAndNumber()
+                    . '</option>';
+            }
         }
         $o .= '</select>';
         return $o;
@@ -72,13 +83,8 @@ class EGService
         return $this->data[$number] ?: $number;
     }
 
-    public function renderSinglePreview($number) {
-        $data = $this->data;
-        if (!isset($data[$number])) {
-            $data[$number] = $number;
-        }
-        $song = $data[$number];
-        return (is_array($song) ? $number . ' ' . $song['title'] : $song);
+    public function renderSinglePreview($value) {
+        return isset($this->data[$value]) ? $this->data[$value]->getNameAndNumber() : $value;
     }
 
 }

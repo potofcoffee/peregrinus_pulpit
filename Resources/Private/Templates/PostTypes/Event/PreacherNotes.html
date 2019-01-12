@@ -16,16 +16,18 @@
                     {item.data -> wp:autop()}
                 </f:case>
                 <f:case value="song">
-                    <f:if condition="{item.data.isEG}">
-                        <f:then><h2><b>{item.title}</b></h2><p>"{item.data.title}" ({item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>)</p>
+                    <f:if condition="{item.data.song.fromSongbook}">
+                        <f:then><h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
+                            <p:content.song song="{item.data}" />
                         </f:then>
-                        <f:else><h2><b>{item.title}</b></h2><p>"{item.data.title}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
+                        <f:else><h2><b>{item.title}</b></h2><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
                     </f:if>
-                    <p:content.song song="{item.data}" />
                 </f:case>
                 <f:case value="psalm">
-                    <h2><b>{item.title}</b></h2><p>{item.data.title}, {item.data.song}</p>
+                    <h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}</p>
+                    <f:if condition="{item.data.song.fromSongbook}">
                     <p:content.song song="{item.data}" numbered="0" />
+                    </f:if>
                 </f:case>
                 <f:case value="sermon">
                     <h2><b>{item.title}</b></h2>

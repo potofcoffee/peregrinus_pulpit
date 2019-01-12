@@ -22,6 +22,9 @@
 
 namespace Peregrinus\Pulpit\Taxonomies;
 
+use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\Fields\AbstractField;
+
 /**
  * Class AbstractTaxonomy
  * Provides basic functionality for a custom taxonomy. All custom taxonomies should extend this class.
@@ -33,11 +36,14 @@ class AbstractTaxonomy
     public $labels = [];
     protected $configuration = [];
     protected $postType = '';
+    protected $customFields = [];
 
     public function __construct()
     {
         $this->configuration['labels'] = $this->labels;
         $this->configuration['rewrite'] = $this->getSlug();
+
+        $this->customFields = $this->addCustomFields();
     }
 
     /**
@@ -50,7 +56,7 @@ class AbstractTaxonomy
      */
     protected function getSlug()
     {
-        return get_option(PEREGRINUS_PULPIT . '_slug_'.$this->getKey(), $this->getKey());
+        return get_option(PEREGRINUS_PULPIT . '_slug_' . $this->getKey(), $this->getKey());
     }
 
     /**
@@ -72,6 +78,10 @@ class AbstractTaxonomy
             PEREGRINUS_PULPIT . '_' . $this->postType,
             $this->configuration
         );
+
+        // register custom fields
+        add_action($this->getName() . '_edit_form_fields', [$this, 'renderCustomFields'], 10, 2);
+        add_action( 'edited_'.$this->getName(), [$this, 'save'], 10, 2 );
     }
 
     /**
@@ -83,4 +93,52 @@ class AbstractTaxonomy
         return PEREGRINUS_PULPIT . '_' . $this->postType . '_' . $this->getKey();
     }
 
+    protected function getOptionName(object $tag)
+    {
+        return $this->getName() . '_term_' . $tag->term_id;
+    }
+
+    public function getMeta(object $tag): array
+    {
+        return get_option($this->getOptionName($tag)) ?: [];
+    }
+
+    public function setMeta(object $tag, array $meta)
+    {
+        update_option($this->getOptionName($tag), $meta);
+    }
+
+    protected function addCustomFields()
+    {
+    }
+
+    /**
+     * Render custom fields for this taxonomy
+     * @param object $tag Tag to be edited
+     * @param string $taxonomy Taxonomy name
+     */
+    public function renderCustomFields(object $tag, string $taxonomy)
+    {
+        $values = $this->getMeta($tag);
+
+        /** @var AbstractField $field */
+        foreach ($this->customFields as $field) {
+            echo '<tr class="form-field">';
+            echo '<th scope="row" valign="top">'.$field->renderLabel().'</th>';
+            $field->setLabel('');
+            echo '<td>'.$field->render($values).'</td>';
+            echo '</tr>';
+        }
+    }
+
+    public function save($termId, $taxonomyTermId) {
+        $term = get_term($termId);
+        $values = [];
+        /** @var AbstractField $field */
+        foreach ($this->customFields as $field) {
+            $values[$field->getKey()] = $field->getValueFromPOST();
+            unset($_POST[$field->getKey()]);
+        }
+        $this->setMeta($term, $values);
+    }
 }

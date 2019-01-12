@@ -22,8 +22,6 @@
 
 namespace Peregrinus\Pulpit\AgendaItems;
 
-use Peregrinus\Pulpit\Service\EGService;
-
 class TextBlockAgendaItem extends AbstractAgendaItem
 {
 

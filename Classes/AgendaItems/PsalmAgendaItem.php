@@ -22,7 +22,7 @@
 
 namespace Peregrinus\Pulpit\AgendaItems;
 
-use Peregrinus\Pulpit\Service\EGService;
+use Peregrinus\Pulpit\Service\SongService;
 
 class PsalmAgendaItem extends AbstractAgendaItem
 {
@@ -40,7 +40,7 @@ class PsalmAgendaItem extends AbstractAgendaItem
 
         $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val());';
 
-        return EGService::getInstance()->selectBox(
+        return SongService::getInstance()->selectBox(
             $id.'_name',
             $name.'[song]',
             $value['song'] ?: '',
@@ -50,19 +50,14 @@ class PsalmAgendaItem extends AbstractAgendaItem
 
     public function provideData($data)
     {
-        $song = EGService::getInstance()->get($data['song']);
-        $data['number'] = $data['song'];
-        $data['isEG'] = is_numeric($data['song']);
-        $data['title'] = $song['title'];
-        $data['fulltext'] = $song['verses'];
-        return $data;
+        return ['song' => SongService::getInstance()->get($data['song'])];
     }
 
     public function renderDataPreview($data)
     {
 
         return '<span class="data-preview-song">'
-            . EGService::getInstance()->renderSinglePreview($data['song'])
+            . SongService::getInstance()->renderSinglePreview($data['song'])
             . '</span>';
     }
 

@@ -15,8 +15,8 @@
                 <p>
                     <p:math.counter name="idx" add="1" />
                     <span class="counter">{idx}</span>
-                    <f:if condition="{item.data.isEG}">
-                        <f:then>{item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
+                    <f:if condition="{item.data.song.fromSongBook}">
+                        <f:then>{item.data.song.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
                         <f:else>"{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else>
                     </f:if>
                 </p>
@@ -25,7 +25,7 @@
                 <p>
                     <p:math.counter name="idx" add="1" />
                     <span class="counter">{idx}</span>
-                        {item.data.number} {item.data.title}
+                        {item.data.song.number} {item.data.song.title}
                 </p>
             </f:case>
         </f:switch>

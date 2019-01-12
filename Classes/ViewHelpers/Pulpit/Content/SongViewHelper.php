@@ -23,6 +23,8 @@
 namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Content;
 
 use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\Domain\Model\SongModel;
+use Symfony\Component\Debug\Debug;
 
 class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
@@ -41,13 +43,17 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
      */
     public function initializeArguments()
     {
-        $this->registerArgument('song', 'array', 'Song');
+        $this->registerArgument('song', 'mixed', 'Song');
         $this->registerArgument('numbered', 'bool', 'Number verses?', false, true);
         $this->registerArgument('tab', 'string', 'Tab string (for indentation)', false, "\t");
     }
 
     protected function render()
     {
+        /** @var SongModel $song */
+        $song = $this->arguments['song']['song'];
+        Debugger::dump($song);
+
         $verses = [];
 
         if ($this->arguments['song']['verses']) {
@@ -62,14 +68,9 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
                 }
             }
         } else {
-            // no verses indicated? 1. eliminate "verse 0"
-            if (is_array($this->arguments['song']['fulltext'])) unset($this->arguments['song']['fulltext'][0]);
-            // if only one verse exists, no numbering is needed:
-            if (count($this->arguments['song']['fulltext'])==1) $this->arguments['numbered'] = false;
-            // take all verses:
-            foreach ($this->arguments['song']['fulltext'] as $verseNo => $verse) {
-                $verses[] = $verseNo;
-            }
+            $verses = array_keys($song->getVerses());
+            if (is_array($verses)) unset($verses[0]);
+            if (count($verses)==1) $this->arguments['numbered'] = false;
         }
 
         $o = '';
@@ -77,11 +78,11 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
             if ($this->arguments['tab'] == "\t") {
                 $o .= '<p>'
                     . ($this->arguments['numbered'] ? $verse . '. ' : '')
-                    . nl2br(strtr($this->arguments['song']['fulltext'][$verse],
+                    . nl2br(strtr($song->getVerses()[$verse],
                         ['|' => "\n", '>>' => "\t"]))
                     . '</p>';
             } else {
-                $text = nl2br(strtr($this->arguments['song']['fulltext'][$verse], ['|' => "\n", '>>' => '']));
+                $text = nl2br(strtr($song->getVerses()[$verse], ['|' => "\n", '>>' => '']));
                 $o .= '<p style="margin-left: '.$this->arguments['tab']
                     .'; text-indent: -'.$this->arguments['tab'].'">'.$text.'</p>';
             }

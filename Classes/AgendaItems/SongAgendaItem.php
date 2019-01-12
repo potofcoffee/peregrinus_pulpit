@@ -22,7 +22,8 @@
 
 namespace Peregrinus\Pulpit\AgendaItems;
 
-use Peregrinus\Pulpit\Service\EGService;
+use Peregrinus\Pulpit\Debugger;
+use Peregrinus\Pulpit\Service\SongService;
 
 class SongAgendaItem extends AbstractAgendaItem
 {
@@ -43,7 +44,7 @@ class SongAgendaItem extends AbstractAgendaItem
 
         $changeFunc2 = '$(\'#\'+$(this).parent().data(\'preview\')+\' .data-preview-verses\').html($(this).val() ? \'(\' + $(this).val() + \')\' : \'\');';
 
-        return EGService::getInstance()->selectBox($id . '_name', $name . '[song]', $value['song'] ?: '')
+        return SongService::getInstance()->selectBox($id . '_name', $name . '[song]', $value['song'] ?: '')
             . '<label for="' . $name . '[verses]">' . __('Verses', 'pulpit') . '</label>'
             . '<input type="text" style="width: 100%" id="' . $id . '_verses" name="' . $name . '[verses]" value="'
             . ($value['verses'] ?: '')
@@ -52,18 +53,13 @@ class SongAgendaItem extends AbstractAgendaItem
 
     public function provideData($data)
     {
-        $song = EGService::getInstance()->get($data['song']);
-        $data['number'] = $data['song'];
-        $data['isEG'] = is_numeric($data['song']);
-        $data['title'] = $song['title'];
-        $data['fulltext'] = $song['verses'];
-        return $data;
+        return ['song' => SongService::getInstance()->get($data['song']), 'verses' => $data['verses']];
     }
 
     public function renderDataPreview($data)
     {
         return '<span class="data-preview-song">'
-            . EGService::getInstance()->renderSinglePreview($data['song'])
+            . SongService::getInstance()->renderSinglePreview($data['song'])
             . '</span> '
             . '<span class="data-preview-verses">'
             . ($data['verses'] ? '('.$data['verses'].')' : '')

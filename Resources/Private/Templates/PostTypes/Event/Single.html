@@ -178,8 +178,8 @@
 
 Hier meine Liederliste für den Gottesdienst am {event.datetime -> p:format.date(format: 'd.m.Y')} ({event.location.title}):
 <f:for each="{event.liturgy}" as="item"><f:if condition="{0: item.type} == {0: 'song'}">
-    - <f:if condition="{item.data.isEG}"><f:then>{item.title}: {item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if> "{item.data.title}"</f:then><f:else><b>{item.title}:</b> "{item.data.title}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></f:if><f:if condition="{0: item.type} == {0: 'psalm'}">
-    - {item.title}: {item.data.number} {item.data.title}</f:if></f:for>
+    - <f:if condition="{item.data.song.fromSongBook}"><f:then>{item.title}: {item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then><f:else><b>{item.title}:</b> "{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></f:if><f:if condition="{0: item.type} == {0: 'psalm'}">
+    - {item.title}: {item.data.song.number} {item.data.song.title}</f:if></f:for>
 
 Wie immer bin ich für alle Hinweise auf lokale Traditionen, usw. dankbar. Herzlichen Dank schon im Voraus für eure Hilfe!
 

@@ -78,10 +78,22 @@
                             <li><b>{item.title}</b></li>
                         </f:case>
                         <f:case value="song">
-                            <li><f:if condition="{item.data.isEG}"><f:then><b>Lied:</b> "{item.data.title}" ({item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>)</f:then><f:else><b>Lied:</b> "{item.data.title}" <f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else></f:if></li>
+                            <li>
+                                <b>Lied:</b>
+                                <f:if condition="{item.data.song.fromSongBook}">
+                                    <f:then>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
+                                    <f:else>"{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else>
+                                </f:if>
+                            </li>
                         </f:case>
                         <f:case value="psalm">
-                            <li><f:if condition="{item.data.isEG}"><f:then><b>Psalmgebet:</b> {item.data.song}</f:then><f:else><b>Psalmgebet:</b> {item.data.song}</f:else></f:if></li>
+                            <li>
+                                <b>Psalmgebet:</b>
+                                <f:if condition="{item.data.song.fromSongBook}">
+                                    <f:then>{item.data.song.nameAndNumber}</f:then>
+                                    <f:else>{item.data.song}</f:else>
+                                </f:if>
+                            </li>
                         </f:case>
                         <f:case value="sermon">
                             <li><b>Predigt:</b> "{sermon.title}<f:if condition="{sermon.subtitle}">: {sermon.subtitle}</f:if>" ({sermon.reference})</li>
