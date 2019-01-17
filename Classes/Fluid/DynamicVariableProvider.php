@@ -51,9 +51,14 @@ class DynamicVariableProvider extends StandardVariableProvider implements Variab
         // traverse path
         foreach ($elements as $element) {
             if (is_object($object)) {
-                $getter = 'get' . ucfirst($element);
-                $object = $object->$getter();
-                $debug[$element] = $lastElement.'->'.$getter.'()';
+                if (property_exists($object, $element)) {
+                    $object = $object->$element;
+                    $debug[$element] = $lastElement.'->'.$element;
+                } else {
+                    $getter = 'get' . ucfirst($element);
+                    $object = $object->$getter();
+                    $debug[$element] = $lastElement.'->'.$getter.'()';
+                }
             } elseif (is_array($object)) {
                 $object = $object[$element];
                 $debug[$element] = $lastElement.'['.$element.']';
