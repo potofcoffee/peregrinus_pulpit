@@ -24,7 +24,6 @@ namespace Peregrinus\Pulpit\ViewHelpers\Pulpit\Content;
 
 use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\SongModel;
-use Symfony\Component\Debug\Debug;
 
 class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
@@ -46,6 +45,7 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
         $this->registerArgument('song', 'mixed', 'Song');
         $this->registerArgument('numbered', 'bool', 'Number verses?', false, true);
         $this->registerArgument('tab', 'string', 'Tab string (for indentation)', false, "\t");
+        $this->registerArgument('psalm', 'bool', 'Is this a psalm?', false, false);
     }
 
     protected function render()
@@ -68,8 +68,12 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
             }
         } else {
             $verses = array_keys($song->getVerses());
-            if (is_array($verses)) unset($verses[0]);
-            if (count($verses)==1) $this->arguments['numbered'] = false;
+            if (is_array($verses)) {
+                unset($verses[0]);
+            }
+            if (count($verses) == 1) {
+                $this->arguments['numbered'] = false;
+            }
         }
 
         $o = '';
@@ -78,12 +82,12 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
                 $o .= '<p>'
                     . ($this->arguments['numbered'] ? $verse . '. ' : '')
                     . nl2br(strtr($song->getVerses()[$verse],
-                        ['|' => "\n", '>>' => "\t"]))
+                        ['|' => "\n", '>>' => "\t", '&gt;&gt;' => "\t"]))
                     . '</p>';
             } else {
-                $text = nl2br(strtr($song->getVerses()[$verse], ['|' => "\n", '>>' => '']));
-                $o .= '<p style="margin-left: '.$this->arguments['tab']
-                    .'; text-indent: -'.$this->arguments['tab'].'">'.$text.'</p>';
+                $text = nl2br(strtr($song->getVerses()[$verse], ['|' => "\n", '>>' => '', '&gt;&gt;' => '']));
+                $o .= '<p style="margin-left: ' . $this->arguments['tab']
+                    . '; text-indent: -' . $this->arguments['tab'] . '">' . $text . '</p>';
             }
         }
 
