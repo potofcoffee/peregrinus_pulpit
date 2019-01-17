@@ -52,7 +52,6 @@ class SongViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelpe
     {
         /** @var SongModel $song */
         $song = $this->arguments['song']['song'];
-        Debugger::dump($song);
 
         $verses = [];
 
