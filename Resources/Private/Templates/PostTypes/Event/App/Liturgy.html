@@ -78,23 +78,18 @@
                         {item.data -> wp:autop()}
                     </f:case>
                     <f:case value="song">
-                        <f:if condition="{item.data.isEG}">
-                            <f:then><h3><b>{item.title}</b></h3>
-                                <p>"{item.data.title}" ({item.data.number}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if>)</p>
+                        <f:if condition="{item.data.song.fromSongbook}">
+                            <f:then><h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
+                                <p:content.song song="{item.data}" />
                             </f:then>
-                            <f:else><h3><b>{item.title}</b></h3>
-                                <p>"{item.data.title}"
-                                    <f:if condition="{item.data.verses}">({item.data.verses})</f:if>
-                                </p>
-                            </f:else>
+                            <f:else><h2><b>{item.title}</b></h2><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
                         </f:if>
-                        <f:if condition="{item.data.isEG}"><img class="img img-fluid" style="width: 100%" src="{baseUrl}Assets/Songbooks/EG/Images/{item.data.number}.png" /></f:if>
-                        <p:content.song song="{item.data}"/>
                     </f:case>
                     <f:case value="psalm">
-                        <h3><b>{item.title}</b></h3>
-                        <p>{item.data.title}, {item.data.song}</p>
-                        <p:content.song song="{item.data}" numbered="0" tab="50px"/>
+                        <h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}</p>
+                        <f:if condition="{item.data.song.fromSongbook}">
+                            <p:content.song song="{item.data}" numbered="0" tab="50px" psalm="1"/>
+                        </f:if>
                     </f:case>
                     <f:case value="sermon">
                         <h3>Predigt: "{event.sermon.title}<f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>"</h3>
@@ -115,6 +110,10 @@
                     <f:case value="scriptureReading">
                         <h3><b>Schriftlesung</b></h3>
                         <p>{item.data.reference}</p>
+                    </f:case>
+                    <f:case value="textBlock">
+                        <h2><b>{item.title}</b></h2>
+                        {item.data -> wp:autop()}
                     </f:case>
                 </f:switch>
 

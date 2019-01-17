@@ -3,6 +3,7 @@
         orientation="landscape" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0"><!DOCTYPE html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout-Tailfingen-DIN-Lang.css"
               media="all"/>
     </head>
@@ -20,6 +21,14 @@
     <div class="column">
         <p>Weiteres Material zu dieser Predigt findest du online unter:
             https://christoph-fischer.org</p>
+        <p>Die Aufnahme dieser Predigt wird auf Spotify und iTunes unter "Christoph predigt" veröffentlicht.</p>
+        <p:last of="{sermon.events}" as="event">
+            <div style="border: solid 1px black; padding: 0.3cm;">
+                <div style="text-align: center"><p:qrcode data="https://godi.cf/{event.ID}" /></div>
+                <b>NEU:</b> Folge dem Gottesdienst mit deinem Smartphone! Lieder, Texte, Liturgie online unter
+                https://godi.cf/{event.ID}
+            </div>
+        </p:last>
         <p class="small">
             Diese Predigt und alle dazu gehörigen
             Ressourcen (Predigtzettel, Aufnahme) sind
