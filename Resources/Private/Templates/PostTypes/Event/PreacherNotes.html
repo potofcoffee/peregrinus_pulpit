@@ -35,7 +35,7 @@
                 </f:case>
                 <f:case value="scriptureReading">
                     <h2><b>Schriftlesung</b></h2>
-                    <p>{item.data.reference}</p>
+{item.data.reference}<br /><f:for each="{item.data.reference -> p:content.bible()}" as="section" iteration="s"><f:for each="{section.text}" as="verse" iteration="v"><f:if condition="{v.total} == 1 && {s.total} == 1"><f:else>[{verse.verse}] </f:else></f:if>{verse.text}<f:if condition="{br}"><br /></f:if></f:for></f:for>
                 </f:case>
                 <f:case value="textBlock">
                     <h2><b>{item.title}</b></h2>
