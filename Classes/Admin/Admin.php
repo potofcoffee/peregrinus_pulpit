@@ -24,6 +24,8 @@ namespace Peregrinus\Pulpit\Admin;
 
 use Peregrinus\Pulpit\Admin\AdminMenus\AdminMenuFactory;
 use Peregrinus\Pulpit\Admin\CustomModals\CustomModalFactory;
+use Peregrinus\Pulpit\Admin\DashboardPanels\AbstractDashboardPanel;
+use Peregrinus\Pulpit\Admin\DashboardPanels\DashboardPanelFactory;
 use Peregrinus\Pulpit\Admin\SettingsPages\SettingsPageFactory;
 use Peregrinus\Pulpit\Admin\Setup\Components\AbstractComponent;
 use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
@@ -57,6 +59,14 @@ class Admin
         }
         //foreach ( AdminMenuFactory::getAll() as $adminMenu) $adminMenu->adminInit();
 
+        add_action('wp_dashboard_setup', [self::class, 'registerDashboardPanels']);
+    }
+
+    public function registerDashboardPanels() {
+        /** @var AbstractDashboardPanel $dashboardPanel */
+        foreach (DashboardPanelFactory::getAll() as $dashboardPanel) {
+            $dashboardPanel->register();
+        }
     }
 
     /**
