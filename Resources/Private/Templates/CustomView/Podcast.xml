@@ -32,8 +32,8 @@
 
         <f:for each="{items}" as="item">
             <item>
-                <title>{item.post.post_title -> f:format.raw()}</title>
-                <f:if condition="{item.meta.subtitle.0}"><itunes:subtitle>{item.meta.subtitle.0}</itunes:subtitle></f:if>
+                <title>{item.sermon.title -> f:format.raw()}</title>
+                <f:if condition="{item.sermon.subtitle}"><itunes:subtitle>{item.sermon.subtitle}</itunes:subtitle></f:if>
                 <itunes:image href="{item.image}" />
                 <itunes:summary>{item.content.main -> p:format.stripTags() -> p:format.cdata()}</itunes:summary>
                 <link>{item.url}</link>
@@ -41,8 +41,8 @@
                 <description>{item.content.main -> p:format.stripTags() -> p:format.cdata()}</description>
                 <f:if condition="{item.content.extended}"><content:encoded>{item.content.extended -> p:format.cdata()}</content:encoded></f:if>
                 <enclosure url="{item.audio.file.guid}" {f:if(condition:'{item.audio.meta.filesize}', then:'length="{item.audio.meta.filesize}"')} {f:if(condition:'{item.audio.meta.mime_type}', then:'type="{item.audio.meta.mime_type}"')}></enclosure>
-                <itunes:duration>{item.sermon.meta.audiorecording_relation.meta.data.length_formatted}</itunes:duration>
-                <pubDate><p:format.date format="D, d M Y H:i:s O"><f:if condition="{item.sermon.meta.events}"><f:then><p:last of="{item.sermon.meta.events}" as="event">{event.datetime}</p:last></f:then><f:else>{item.post.post_date}</f:else></f:if></p:format.date></pubDate>
+                <itunes:duration>{item.sermon.audiorecording_relation.data.length_formatted}</itunes:duration>
+                <pubDate><p:format.date format="D, d M Y H:i:s O"><f:if condition="{item.sermon.events}"><f:then><p:last of="{item.sermon.events}" as="event">{event.datetime}</p:last></f:then><f:else>{item.post.post_date}</f:else></f:if></p:format.date></pubDate>
             </item>
         </f:for>
 
