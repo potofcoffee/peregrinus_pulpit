@@ -39,7 +39,9 @@ class EventsDashboardPanel extends AbstractDashboardPanel
     {
         $this->setTitle(__('Church services', 'pulpit'));
         $this->eventRepository = new EventRepository();
+        $this->eventRepository->setIncludepostStatus(['publish', 'future', 'draft']);
         $this->sermonRepository = new SermonRepository();
+        $this->sermonRepository->setIncludepostStatus(['publish', 'future', 'draft']);
     }
 
 
