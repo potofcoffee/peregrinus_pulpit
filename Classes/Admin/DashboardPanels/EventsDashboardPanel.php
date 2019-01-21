@@ -60,6 +60,10 @@ class EventsDashboardPanel extends AbstractDashboardPanel
                 echo '<br />'.__('Sermon', 'pulpit').': <a href="'
                     .get_edit_post_link($sermon->getID()).'">'.$sermon->getTitle()
                     .'</a><br />';
+            } else {
+                echo '<br /><a class="button button-small" href="'
+                    .admin_url('post-new.php?post_type=pulpit_sermon').'">'
+                    .__('New Sermon', 'pulpit').'</a><br />';
             }
             echo '</li>';
         }
@@ -70,6 +74,8 @@ class EventsDashboardPanel extends AbstractDashboardPanel
     {
         $this->renderList($this->eventRepository->getNext(5), __('Next events', 'pulpit'));
         $this->renderList($this->eventRepository->getLast(5), __('Last events', 'pulpit'));
+        echo '<hr /><a class="button button-small" href="'.admin_url('post-new.php?post_type=pulpit_event').'">'
+            .__('New Event', 'pulpit').'</a>';
     }
 
 }
