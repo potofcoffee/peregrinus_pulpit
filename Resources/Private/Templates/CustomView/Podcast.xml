@@ -41,7 +41,7 @@
                 <description>{item.content.main -> p:format.stripTags() -> p:format.cdata()}</description>
                 <f:if condition="{item.content.extended}"><content:encoded>{item.content.extended -> p:format.cdata()}</content:encoded></f:if>
                 <enclosure url="{item.audio.file.guid}" {f:if(condition:'{item.audio.meta.filesize}', then:'length="{item.audio.meta.filesize}"')} {f:if(condition:'{item.audio.meta.mime_type}', then:'type="{item.audio.meta.mime_type}"')}></enclosure>
-                <itunes:duration>{item.sermon.audiorecording_relation.data.length_formatted}</itunes:duration>
+                <itunes:duration>{item.sermon.audiorecording_relation.ddata.length_formatted}</itunes:duration>
                 <pubDate><p:format.date format="D, d M Y H:i:s O"><f:if condition="{item.sermon.events}"><f:then><p:last of="{item.sermon.events}" as="event">{event.datetime}</p:last></f:then><f:else>{item.post.post_date}</f:else></f:if></p:format.date></pubDate>
             </item>
         </f:for>
