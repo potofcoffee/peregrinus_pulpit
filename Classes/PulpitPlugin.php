@@ -32,6 +32,8 @@ use Peregrinus\Pulpit\CustomFormats\AbstractCustomFormat;
 use Peregrinus\Pulpit\CustomFormats\CustomFormatFactory;
 use Peregrinus\Pulpit\Hooks\AbstractHook;
 use Peregrinus\Pulpit\Hooks\HookFactory;
+use Peregrinus\Pulpit\PostStatuses\AbstractPostStatus;
+use Peregrinus\Pulpit\PostStatuses\PostStatusFactory;
 use Peregrinus\Pulpit\PostTypes\AbstractPostType;
 use Peregrinus\Pulpit\PostTypes\PostTypeFactory;
 use Peregrinus\Pulpit\ShortCodes\ShortCodeFactory;
@@ -127,6 +129,11 @@ class PulpitPlugin
             $shortcode->register();
         }
 
+
+        /** @var AbstractPostStatus $postStatus */
+        foreach (PostStatusFactory::getAll() as $postStatus) {
+            $postStatus->register();
+        }
 
         // load further hooks
         /** @var AbstractHook $hook */
