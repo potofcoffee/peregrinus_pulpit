@@ -82,7 +82,6 @@ class AbstractPostStatus extends AbstractObject
 jQuery(document).ready(function($){
 '.($complete ? '$("#post-status-display").html(\''.$this->label.'\'); ' : '').' 
 $("select#post_status").append("<option value=\"'.PEREGRINUS_PULPIT.'_'.$this->getKey().'\" '.$complete.'>'.$this->label.'</option>");
-$(".misc-pub-section label").append("'.$label.'"); 
 $("#publish").attr("name","save");
 });
 </script>
