@@ -80,8 +80,8 @@ class SermonPostType extends AbstractPostType
         parent::addPostTypeSpecificJS();
         wp_enqueue_script('media-upload'); //Provides all the functions needed to upload, validate and give format to files.
         wp_enqueue_script('thickbox'); //Responsible for managing the modal window.
-        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js');
-        wp_enqueue_script('pulpit-speech', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Speech.js');
+        wp_enqueue_script('pulpit-uploader', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Uploader.js', null, null, true);
+        wp_enqueue_script('pulpit-speech', PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Speech.js', null, null, true);
         wp_localize_script(
             'pulpit-speech',
             'pulpit_speech',
