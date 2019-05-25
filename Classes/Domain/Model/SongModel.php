@@ -45,11 +45,11 @@ class SongModel extends AbstractModel
 
         // add verses to meta
         if (false !== strpos($post->post_content, '</li>')) {
-            preg_match_all('/<li>(.*?)<\/li>/', $post->post_content, $rawVerses);
+            preg_match_all('/<li>(.*?)<\/li>/is', $post->post_content, $rawVerses);
             array_unshift($rawVerses[1], '');
             $this->setMetaElement('verses', $rawVerses[1]);
         } else {
-            $this->setMetaElement('verses', [$post->post_content]);
+            $this->setMetaElement('verses', [ 0 => $post->post_content]);
         }
     }
 
