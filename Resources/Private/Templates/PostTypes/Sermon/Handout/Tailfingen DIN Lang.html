@@ -38,7 +38,7 @@
             Lizenz. Verwendete Bilder stehen eventuell
             unter eigenen Lizenzbedingungen.
         </p>
-        <div style="height: 7.5cm;"></div>
+        <div style="height: 2.5cm;"></div>
         <div class="address">
             <img class="logo-small" src="{baseUrl}Assets/Logos/logo_elkw.jpg"/><br/>
             <b>Kirchengemeinde Tailfingen<br/><br/>
@@ -86,18 +86,19 @@
                         <f:case value="freeText">
                             <li><b>{item.title}</b></li>
                         </f:case>
+                        <f:case value="textBlock">
+                            <li><b>{item.title}</b></li>
+                        </f:case>
                         <f:case value="song">
-                            <li>
-                                <b>Lied:</b>
+                            <li><b>Lied:</b>
                                 <f:if condition="{item.data.song.fromSongBook}">
                                     <f:then>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
-                                    <f:else>"{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else>
+                                    <f:else>{item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:else>
                                 </f:if>
                             </li>
                         </f:case>
                         <f:case value="psalm">
-                            <li>
-                                <b>Psalmgebet:</b>
+                            <li><b>Psalmgebet:</b>
                                 <f:if condition="{item.data.song.fromSongBook}">
                                     <f:then>{item.data.song.nameAndNumber}</f:then>
                                     <f:else>{item.data.song}</f:else>
@@ -130,8 +131,10 @@
             </f:if>
         </h2>
         <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
-        <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
-                              listStyle="font-size: 12pt;"/>
+        <f:if condition="{sermon.key_points}">
+            <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
+                                  listStyle="font-size: 12pt;"/>
+        </f:if>
     </div>
     <div class="column">
         <h3>Predigttext</h3>
