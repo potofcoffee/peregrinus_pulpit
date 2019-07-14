@@ -82,12 +82,12 @@ class PodcastCustomFormat extends AbstractCustomFormat
      */
     public function render()
     {
-        $posts = get_posts(['post_type' => 'pulpit_sermon', 'numberposts' => -1]);
+        $posts = get_posts(['post_type' => 'pulpit_sermon', 'numberposts' => -1, 'post_status' => 'publish']);
         $items = [];
         /** @var \WP_Post $post */
         foreach ($posts as $post) {
             $meta = get_post_meta($post->ID);
-            if ($meta['audiorecording_relation'][0]) {
+            if (((string)$meta['audiorecording_relation'][0] != '') && ($post->post_status != 'pulpit_hidden')) {
                 $audioFile = get_post($meta['audiorecording_relation'][0]);
                 if (basename($audioFile->guid) !== basename(get_home_url())) {
                     $audioMeta = wp_get_attachment_metadata($meta['audiorecording_relation'][0]);
@@ -103,6 +103,7 @@ class PodcastCustomFormat extends AbstractCustomFormat
                         }
                     }
                     $items[] = [
+                        'status' => $post->post_status,
                         'sermon' => new SermonModel($post),
                         'post' => $post,
                         'meta' => $meta,
@@ -138,6 +139,7 @@ class PodcastCustomFormat extends AbstractCustomFormat
 
         $view->assign('items', $items);
         $view->assign('podcast', $podcastConfig);
+
 
         header('Content-Type: application/rss+xml');
         echo $view->render($this->viewName);
