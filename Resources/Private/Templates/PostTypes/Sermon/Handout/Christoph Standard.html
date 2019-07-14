@@ -37,15 +37,6 @@
             <div class="col-xs-8">
                 <h3>Darum geht es</h3>
                 {sermon.content.main}
-                <h3>
-                    <f:if condition="{sermon.notes_header}">
-                        <f:then>{sermon.notes_header}</f:then>
-                        <f:else>Notizen zur Predigt</f:else>
-                    </f:if>
-                </h3>
-                <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
-                <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
-                                      listStyle="font-size: 12pt;"/>
             </div>
             <div class="col-xs-4">
                 <h3>Bibellese</h3>
@@ -57,18 +48,26 @@
                     entdeckst du durch den Vergleich der
                     Übersetzungen etwas ganz Neues.
                 </p>
-                <p class="small">
-                    Natürlich gibt es die Bibel auch als App für
-                    dein Smartphone. Mit dem folgenden Code
-                    kannst du die oben genannte Stelle in der
-                    "YouVersion"-Bibel-App direkt aufschlagen.
-                </p>
-                <p:qrcode data="{p:youversionLink(reference: sermon.reference)}"/>
             </div>
 
         </div>
-        <div style="page-break-before: always;"></div>
         <div class="row">
+            <div class="col-xs-12">
+                <h3>
+                    <f:if condition="{sermon.notes_header}">
+                        <f:then>{sermon.notes_header}</f:then>
+                        <f:else>Notizen zur Predigt</f:else>
+                    </f:if>
+                </h3>
+                <p class="small">Hier kannst du während der Predigt die wichtigsten Punkte mitschreiben:</p>
+                <f:if condition="{sermon.key_points">
+                    <p:format.orderedList list="{sermon.key_points}" underlineMode="{underlineMode}"
+                                          listStyle="font-size: 11pt;"/>
+                </f:if>
+
+            </div>
+        </div>
+        <div class="row" style="page-break-before: always;">
             <div class="col-xs-8">
                 <f:if condition="{sermon.questions}">
                     <h3>Fragen zur Vertiefung</h3>
