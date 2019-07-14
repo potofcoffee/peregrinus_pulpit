@@ -70,6 +70,9 @@ class OrderedListViewHelper extends AbstractViewHelper
         if (!$this->arguments['list']) {
             $this->arguments['list'] = $this->renderChildren();
         }
+        if (trim($this->arguments['list']) == '') {
+            return '';
+        }
         $this->arguments['list'] = str_replace(['<u>', '</u>'], ['[', ']'], $this->arguments['list']);
         switch ($underlineMode) {
             case 'blank':
