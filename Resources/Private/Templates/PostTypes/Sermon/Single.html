@@ -1,12 +1,12 @@
 <f:layout name="Page"/>
 <f:section name="Content">
-    <div class="row">
+    <div class="row hidden-print">
         <div class="col-sm-12">
             <a class="btn btn-default" href="/predigt"><span class="glyphicon glyphicon-arrow-left"></span> Zurück
                 zur Liste der Predigten</a>
         </div>
     </div>
-    <div class="row">
+    <div class="row hidden-print">
         <div class="col-sm-12">
 
 
@@ -17,14 +17,14 @@
                         <f:if condition="{sermon.subtitle}"><p>{sermon.subtitle}</p></f:if>
                     </div>
                 </div>
-                <div class="hometa">
+                <div class="hometa hidden-print">
                     <f:if condition="{sermon.events}">
                         <f:then>
                             <f:for each="{sermon.events}" as="event">
                                 <a href="{p:format.customUrl(url: event.ID)}">
-                                <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
-                                Uhr,
-                                {event.location.title}: {event.title}</a><br/>
+                                    <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
+                                    Uhr,
+                                    {event.location.title}: {event.title}</a><br/>
                             </f:for>
                         </f:then>
                         <f:else>
@@ -53,7 +53,7 @@
             </header><!-- .entry-header -->
         </div>
     </div>
-    <div class="row">
+    <div class="row hidden-print">
         <div class="col-sm-8">
             <wp:postImage post="{sermon.ID}" size="large" showCaption="1"/>
         </div>
@@ -77,7 +77,19 @@
                                 Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
                                 und wähle "Ziel speichern ..."
                             </div>
-                            <audio src="{sermon.audiorecordingRelation.guid}" controls></audio>
+                            <audio id="sermonAudioPlayer" src="{sermon.audiorecordingRelation.guid}" controls></audio>
+                            <script>
+                                var sermonTitle = '{sermon.title -> f:format.raw()}';
+                                $('document').ready(function(){
+                                    _paq.push(['trackEvent', 'SermonPlay', sermonTitle]);
+                                });
+                            </script>
+                            <f:for each="{players}" as="player">
+                                <a href="{player.url}" target="_blank">
+                                    <img src="{player.badge}"
+                                         width="95" height="35">
+                                </a>
+                            </f:for>
                         </td>
                         <td>
                         </td>
@@ -127,7 +139,8 @@
                                         und wähle "Ziel speichern ..."
                                     </div>
                                     <wp:loggedIn>
-                                        <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout'})}">
+                                        <a class="btn btn-default"
+                                           href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout'})}">
                                             Handout konfigurieren
                                         </a>
                                     </wp:loggedIn>
@@ -149,13 +162,30 @@
                                     und wähle "Ziel speichern ..."
                                 </div>
                                 <wp:loggedIn>
-                                    <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout', underlineMode: 'blank'})}">
+                                    <a class="btn btn-default"
+                                       href="{p:format.customUrl(url: sermon.ID, add: {format: 'configureHandout', underlineMode: 'blank'})}">
                                         Handout konfigurieren
                                     </a>
                                 </wp:loggedIn>
                             </td>
                         </tr>
                     </f:else>
+                </f:if>
+                <f:if condition="{sermon.content.extended}">
+                    <f:if condition="{isPublished}">
+                    <tr>
+                        <td>
+                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
+                                <span class="fa fa-print"> </span>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
+                                Druckbare Version des Predigttexts
+                            </a>
+                        </td>
+                    </tr>
+                    </f:if>
                 </f:if>
                 <f:if condition="{sermon.remoteUrl}">
                     <tr>
@@ -175,28 +205,31 @@
 
                 </f:if>
                 <f:if condition="{sermon.content.extended}">
-                    <tr>
-                        <td>
-                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
-                                <span class="fa fa-book"> </span>
-                            </a>
-                        </td>
-                        <td colspan="2">
-                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
-                                Predigt als E-Book
-                            </a>
-                            <div class="sermon-instructions">
-                                Du kannst den Text dieser Predigt auch als E-Book im EPub-Format lesen.
-                                Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
-                                und wähle "Ziel speichern ..."
-                            </div>
-                            <wp:loggedIn>
-                                <a class="btn btn-default" href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub', smashwords: 1})}">
-                                    E-Book im SmashWords-Format
+                    <f:if condition="{isPublished}">
+                        <tr>
+                            <td>
+                                <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                    <span class="fa fa-book"> </span>
                                 </a>
-                            </wp:loggedIn>
-                        </td>
-                    </tr>
+                            </td>
+                            <td colspan="2">
+                                <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub'})}">
+                                    Predigt als E-Book
+                                </a>
+                                <div class="sermon-instructions">
+                                    Du kannst den Text dieser Predigt auch als E-Book im EPub-Format lesen.
+                                    Um die Datei zu speichern, klicke mit der rechten Maustaste auf den Link
+                                    und wähle "Ziel speichern ..."
+                                </div>
+                                <wp:loggedIn>
+                                    <a class="btn btn-default"
+                                       href="{p:format.customUrl(url: sermon.ID, add: {format: 'pulpit_epub', smashwords: 1})}">
+                                        E-Book im SmashWords-Format
+                                    </a>
+                                </wp:loggedIn>
+                            </td>
+                        </tr>
+                    </f:if>
                 </f:if>
                 <f:if condition="{sermon.cclicense}">
                     <tr>
@@ -246,7 +279,7 @@
                     </f:then>
                     <f:else>
                         <h4>In aller Kürze</h4>
-                        <p>{sermon.content.main -> f:format.raw()}</p>
+                        <p>{sermon.content.main -> wp:autop() -> f:format.raw()}</p>
                         <h4>Predigttext</h4>
                         <p>{sermon.reference}</p>
                         <f:if condition="{sermon.prep}">
@@ -269,8 +302,8 @@
                     <f:if condition="{sermon.content.extended}">
                         <tr>
                             <td>
-                                <h4>In Kürze</h4>
-                                <p>{sermon.content.main}</p>
+                                <h4>In aller Kürze</h4>
+                                <p>{sermon.content.main -> f:format.raw()}</p>
                             </td>
                         </tr>
                     </f:if>
