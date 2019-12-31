@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow');
+
+@font-face {
+    font-face-name: 'Helvetica Condensed';
+    src: url(file:///home/peregrinus/wordpress/wp-content/plugins/peregrinus-pulpit/Assets/Fonts/Helvetica_Condensed.ttf);
+}
+
+
+body {
+    font-family: 'Helvetica Condensed', sans-serif;
+    font-size: 8pt;
+}
+
+h1, h2 {
+    margin: 0 0 5px 0;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-size: 13.5pt;
+    font-weight: bold;
+    color: #951981;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 8pt;
+    color: gray;
+}
+
+h3 {
+    font-size: 10.5pt;
+    font-weight: bold;
+}
+
+hr {
+    margin: 5px 0;
+}
+

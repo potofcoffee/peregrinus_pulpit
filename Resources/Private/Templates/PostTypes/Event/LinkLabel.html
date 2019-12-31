@@ -1,0 +1,19 @@
+<p:output.pdf
+        filename="{event.datetime -> p:format.date(format: 'Ymd')} Etikett mit Link.pdf"
+        leftmargin="5" rightmargin="5" topmargin="5" bottommargin="5" layout="62x50"><!DOCTYPE
+    html>
+    <html lang="de">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/LinkLabel.css"
+              media="all"/>
+    </head>
+    <body>
+    <div style="text-align: center; width: 100%;">
+        <div style="font-weight: bold; margin-bottom: 4mm;">Meine Predigt finden Sie online unter folgender Adresse:</div>
+        <div style="margin-bottom: 4mm; font-family: 'Courier New';">https://predigt.cf/{event.sermon.ID}</div>
+        <div style="font-size: .7em; line-height: 1em;">Die Predigt kann nur aufgerufen werden, wenn man den Link kennt. Selbstverständlich dürfen Sie diesen weitergeben.</div>
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

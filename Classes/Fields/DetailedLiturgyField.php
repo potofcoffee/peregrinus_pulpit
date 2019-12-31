@@ -218,14 +218,7 @@ class DetailedLiturgyField extends AbstractField
      */
     public function render($values)
     {
-        $tmp = explode("\n", $values['officiating'][0]);
-        $this->instructionsFor = [];
-        foreach ($tmp as $line) {
-            if (trim($line)) {
-                $this->instructionsFor[] = explode(':', str_replace(': ', ':', $line));
-            }
-        }
-        array_unshift($this->instructionsFor, [__('Preacher', 'pulpit'), '###PREACHER###']);
+        $this->setInstructionsForFromText($values['officiating'][0]);
 
         $items = $this->getValue($values, true) ?: $this->getEmptyRecord();
 
@@ -264,5 +257,34 @@ class DetailedLiturgyField extends AbstractField
             add_post_meta($postId, $this->key, $meta, false);
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getInstructionsFor(): array
+    {
+        return $this->instructionsFor;
+    }
+
+    /**
+     * @param array $instructionsFor
+     */
+    public function setInstructionsFor(array $instructionsFor): void
+    {
+        $this->instructionsFor = $instructionsFor;
+    }
+
+
+    public function setInstructionsForFromText($text) {
+        $tmp = explode("\n", $text);
+        $this->instructionsFor = [];
+        foreach ($tmp as $line) {
+            if (trim($line)) {
+                $this->instructionsFor[] = explode(':', str_replace(': ', ':', $line));
+            }
+        }
+        array_unshift($this->instructionsFor, [__('Preacher', 'pulpit'), '###PREACHER###']);
+    }
+
 
 }

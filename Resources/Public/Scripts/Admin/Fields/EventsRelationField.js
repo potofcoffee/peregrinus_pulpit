@@ -1,5 +1,6 @@
 
 function enableEventsRelationFieldsRemoveButtons() {
+    $('.eventRelationFieldSelect').select2({});
     $('.pulpit-events-relation-field-btn-remove').click(function(event){
         event.preventDefault();
         $(this).parent().remove();

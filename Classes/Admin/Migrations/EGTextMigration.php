@@ -71,17 +71,39 @@ class EGTextMigration extends AbstractMigration
         $tax = new SongbookTaxonomy();
 
 
-            /** @var \WP_Post $post */
-        foreach (get_posts(['post_type' => 'pulpit_song', 'posts_per_page' => -1]) as $post) {
-            $result = wp_set_post_terms($post->ID, ['Evangelisches Gesangbuch'], $tax->getName());
-            if (is_a($result, 'WP_Error')) {
-                /** @var \WP_Error $result */
-                echo $result->get_error_message().'<br />';
-            }
-            echo '<a href="'.get_the_permalink($post->ID).'" target="blank">'.$post->post_title.'</a><br />';
+        $psalms = yaml_parse_file(PEREGRINUS_PULPIT_BASE_PATH.'Assets/psalms.yaml');
 
+        foreach ($psalms as $number => $psalm) {
+
+            $content = '<ol>';
+            foreach ($psalm['verses'] as $verse) {
+                $content .= '<li>'.$verse.'</li>';
+            }
+            $content .= '</ol>';
+
+
+            $postId = wp_insert_post([
+                'post_type' => 'pulpit_song',
+                'post_status' => 'publish',
+                'post_title' => $psalm['title'],
+                'post_content' => $content,
+            ]);
+
+            if (($postId > 0) && (!is_a($postId, 'WP_Error'))) {
+                $post = get_post($postId);
+                add_post_meta($post->ID, 'number', $number);
+
+                $result = wp_set_post_terms($post->ID, ['Evangelisches Gesangbuch'], $tax->getName());
+                if (is_a($result, 'WP_Error')) {
+                    /** @var \WP_Error $result */
+                    echo $result->get_error_message().'<br />';
+                }
+                echo '<a href="'.get_the_permalink($post->ID).'" target="blank">'.$post->post_title.'</a><br />';
+            }
 
         }
+
+
     }
 
 }

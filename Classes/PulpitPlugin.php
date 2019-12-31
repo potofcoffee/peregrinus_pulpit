@@ -25,6 +25,9 @@ namespace Peregrinus\Pulpit;
 use Peregrinus\Pulpit\Admin\Admin;
 use Peregrinus\Pulpit\Admin\AjaxActions\AbstractAjaxAction;
 use Peregrinus\Pulpit\Admin\AjaxActions\AjaxActionFactory;
+use Peregrinus\Pulpit\Admin\ExternalPlayers\AbstractExternalPlayer;
+use Peregrinus\Pulpit\Admin\ExternalPlayers\ExternalPlayerFactory;
+use Peregrinus\Pulpit\Admin\Importer;
 use Peregrinus\Pulpit\Admin\Installer;
 use Peregrinus\Pulpit\Admin\Scheduler;
 use Peregrinus\Pulpit\Admin\Setup\Components\ComponentFactory;
@@ -135,6 +138,11 @@ class PulpitPlugin
             $postStatus->register();
         }
 
+        /** @var AbstractExternalPlayer $player */
+        foreach (ExternalPlayerFactory::getAll() as $player) {
+            $player->register();
+        }
+
         // load further hooks
         /** @var AbstractHook $hook */
         foreach (HookFactory::getAll() as $hook) {
@@ -199,5 +207,15 @@ class PulpitPlugin
 
             }
         }
+
+        // add import page
+        add_submenu_page(
+            null,
+            __('Import', 'pulpit'),
+            __('Import', 'pulpit'),
+            'manage_options',
+            PEREGRINUS_PULPIT.'_import',
+            [Importer::class, 'page']
+        );
     }
 }

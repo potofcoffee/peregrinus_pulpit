@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Admin\SettingsPages;
 
+use Peregrinus\Pulpit\Admin\ExternalPlayers\AbstractExternalPlayer;
+use Peregrinus\Pulpit\Admin\ExternalPlayers\ExternalPlayerFactory;
 use Peregrinus\Pulpit\Admin\Setup\SetupSettingsSection;
 use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Fields\FileRelationField;
@@ -82,6 +84,66 @@ class GeneralSettingsPage extends AbstractSettingsPage
 
         $this->addTab($permalinksTab);
 
+        $podcastSettings =                         [
+            new Setting(
+                'podcast_title',
+                __('Podcast title', 'pulpit'),
+                new InputField('pulpit_podcast_title', '')
+            ),
+            new Setting(
+                'podcast_description',
+                __('Podcast description', 'pulpit'),
+                new TextAreaField('pulpit_podcast_description', '', 5)
+            ),
+            new Setting(
+                'podcast_image',
+                __('Podcast title image', 'pulpit'),
+                new FileRelationField(
+                    'pulpit_podcast_image',
+                    '',
+                    'image',
+                    __('Select image', 'pulpit'),
+                    __('Select image', 'pulpit')
+                )
+            ),
+            new Setting(
+                'podcast_language',
+                __('Podcast language', 'pulpit'),
+                new InputField('pulpit_podcast_language', '')
+            ),
+            new Setting(
+                'podcast_copyright',
+                __('Podcast copyright', 'pulpit'),
+                new InputField('pulpit_podcast_copyright', '')
+            ),
+            new Setting(
+                'podcast_author_name',
+                __('Name of the podcast author', 'pulpit'),
+                new InputField('pulpit_podcast_author_name', '')
+            ),
+            new Setting(
+                'podcast_author_email',
+                __('Email address of the podcast author', 'pulpit'),
+                new InputField('pulpit_podcast_author_email', '')
+            ),
+            new Setting(
+                'podcast_category',
+                __('Content category', 'pulpit'),
+                new InputField('pulpit_podcast_category', '')
+            ),
+            new Setting(
+                'podcast_external',
+                __('External sites for this podcast', 'pulpit'),
+                new TextAreaField('pulpit_podcast_external', '')
+            ),
+        ];
+
+        /** @var AbstractExternalPlayer $player */
+        foreach (ExternalPlayerFactory::getAll() as $player) {
+            $podcastSettings = array_merge($podcastSettings, $player->registerSettings());
+        }
+
+
         $this->addTab(new SettingsTab(
                 $this,
                 'podcast',
@@ -91,54 +153,7 @@ class GeneralSettingsPage extends AbstractSettingsPage
                         'podcast',
                         __('Podcast settings', 'pulpit'),
                         __('Here you can set up the required information for your podcast'),
-                        [
-                            new Setting(
-                                'podcast_title',
-                                __('Podcast title', 'pulpit'),
-                                new InputField('pulpit_podcast_title', '')
-                            ),
-                            new Setting(
-                                'podcast_description',
-                                __('Podcast description', 'pulpit'),
-                                new TextAreaField('pulpit_podcast_description', '', 5)
-                            ),
-                            new Setting(
-                                'podcast_image',
-                                __('Podcast title image', 'pulpit'),
-                                new FileRelationField(
-                                    'pulpit_podcast_image',
-                                    '',
-                                    'image',
-                                    __('Select image', 'pulpit'),
-                                    __('Select image', 'pulpit')
-                                )
-                            ),
-                            new Setting(
-                                'podcast_language',
-                                __('Podcast language', 'pulpit'),
-                                new InputField('pulpit_podcast_language', '')
-                            ),
-                            new Setting(
-                                'podcast_copyright',
-                                __('Podcast copyright', 'pulpit'),
-                                new InputField('pulpit_podcast_copyright', '')
-                            ),
-                            new Setting(
-                                'podcast_author_name',
-                                __('Name of the podcast author', 'pulpit'),
-                                new InputField('pulpit_podcast_author_name', '')
-                            ),
-                            new Setting(
-                                'podcast_author_email',
-                                __('Email address of the podcast author', 'pulpit'),
-                                new InputField('pulpit_podcast_author_email', '')
-                            ),
-                            new Setting(
-                                'podcast_category',
-                                __('Content category', 'pulpit'),
-                                new InputField('pulpit_podcast_category', '')
-                            ),
-                        ]
+                        $podcastSettings
                     )
 
                 ]

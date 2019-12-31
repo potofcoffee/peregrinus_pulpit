@@ -1,47 +1,26 @@
-<p:output.word filename="{event.sermon.post_date -> p:format.date(format: '%Y%m%d')} Gottesdienst -  {event.sermon.title}.docx" debug="0" defaultFont="Helvetica Condensed" defaultFontSize="11" language="de-DE">
+<p:output.word filename="{event.sermon.post_date -> p:format.date(format: '%Y%m%d')} Gottesdienst -  {event.sermon.title}.docx" debug="1" defaultFont="Helvetica Condensed" defaultFontSize="11" language="de-DE">
     <p:output.word.styles.title depth="1" font="{bold: 'true', name: 'Helvetica Condensed', size: 20}"/>
     <p:output.word.styles.title depth="2" font="{bold: 'true', name: 'Helvetica Condensed', size: 16}"/>
     <p:output.word.styles.title depth="3" font="{bold: 'true', name: 'Helvetica Condensed', size: 14}"/>
     <p:output.word.html>
         <f:for each="{event.liturgy}" as="item">
-            <f:switch expression="{item.type}">
-                <f:case value="sectionTitle">
-                    <h1 class="liturgy"><b>{item.title}</b></h1>
-                </f:case>
-                <f:case value="descriptive">
-                    <h2><b>{item.title}</b></h2>
-                </f:case>
-                <f:case value="freeText">
-                    <h2><b>{item.title}</b></h2>
-                    {item.data -> wp:autop()}
-                </f:case>
-                <f:case value="song">
-                    <f:if condition="{item.data.song.fromSongbook}">
-                        <f:then><h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
-                            <p:content.song song="{item.data}" />
+            <f:if condition="{0: item.type} == {0: 'descriptive'}"><f:then><h1><b><u>{item.title}</u></b></h1></f:then><f:else><h2><b>{item.title}</b></h2></f:else></f:if>
+            <f:if condition="{item.instructions.Prediger}">
+                <f:then>
+                    <f:if condition="{item.data}">
+                        <f:then>
+                            <i>{item.instructions.Prediger -> wp:autop()}</i><br /><br />
+                            <f:render partial="Liturgy/PreacherNotesItem" arguments="{item: item, event: event, sermon: event.sermon}" />
                         </f:then>
-                        <f:else><h2><b>{item.title}</b></h2><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
+                        <f:else>
+                            {item.instructions.Prediger -> wp:autop()}
+                        </f:else>
                     </f:if>
-                </f:case>
-                <f:case value="psalm">
-                    <h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}</p>
-                    <f:if condition="{item.data.song.fromSongbook}">
-                    <p:content.song song="{item.data}" numbered="0" />
-                    </f:if>
-                </f:case>
-                <f:case value="sermon">
-                    <h2><b>{item.title}</b></h2>
-                    {event.sermon.content.extended -> wp:autop() -> f:format.raw()}
-                </f:case>
-                <f:case value="scriptureReading">
-                    <h2><b>Schriftlesung</b></h2>
-{item.data.reference}<br /><f:for each="{item.data.reference -> p:content.bible()}" as="section" iteration="s"><f:for each="{section.text}" as="verse" iteration="v"><f:if condition="{v.total} == 1 && {s.total} == 1"><f:else>[{verse.verse}] </f:else></f:if>{verse.text}<f:if condition="{br}"><br /></f:if></f:for></f:for>
-                </f:case>
-                <f:case value="textBlock">
-                    <h2><b>{item.title}</b></h2>
-                    {item.data -> wp:autop()}
-                </f:case>
-            </f:switch>
+                </f:then>
+                <f:else>
+                    <f:render partial="Liturgy/PreacherNotesItem" arguments="{item: item, event: event, sermon: event.sermon}" />
+                </f:else>
+            </f:if>
         </f:for>
     </p:output.word.html>
 

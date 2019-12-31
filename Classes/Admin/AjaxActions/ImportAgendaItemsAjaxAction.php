@@ -40,6 +40,10 @@ class ImportAgendaItemsAjaxAction extends AbstractAjaxAction
         $items = get_post_meta(filter_var($_POST['source'], FILTER_SANITIZE_NUMBER_INT), 'liturgy');
 
         $index = filter_var($_POST['index'], FILTER_SANITIZE_NUMBER_INT);
+
+        $officiating = filter_var($_POST['officiating'], FILTER_SANITIZE_STRING);
+        $field->setInstructionsForFromText($officiating);
+
         foreach ($items as $item) {
             echo $field->renderSingleForm($index, $item);
             $index++;

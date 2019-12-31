@@ -82,7 +82,13 @@ class PdfViewHelper extends AbstractViewHelper
         }
 
         if (isset($this->arguments['layout'])) {
-            $options['page-size'] = $this->arguments['layout'];
+            if (strpos($this->arguments['layout'], 'x') !== false) {
+                $tmp = explode('x', $this->arguments['layout']);
+                $options['page-width'] = $tmp[0].'mm';
+                $options['page-height'] = $tmp[1].'mm';
+            } else {
+                $options['page-size'] = $this->arguments['layout'];
+            }
         }
 
         // create command
@@ -95,8 +101,12 @@ class PdfViewHelper extends AbstractViewHelper
 
         exec($command . ' 2>&1', $debugOutput);
         file_put_contents($debugFile, $command . PHP_EOL . PHP_EOL . PHP_EOL . print_r($debugOutput, 1));
+        header("Content-Description: File Transfer");
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $this->arguments['filename'] . '"');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
         //header( 'Content-Disposition: attachment; filename="' . basename( $outputFilePath ) . '"' );
         echo file_get_contents($outputFilePath);
 

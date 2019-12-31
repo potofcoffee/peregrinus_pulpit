@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2019 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\Domain\Repository;
+namespace Peregrinus\Pulpit\Admin\ExternalPlayers;
 
-class SermonRepository extends AbstractRepository
+use Peregrinus\Pulpit\AbstractFactory;
+
+class ExternalPlayerFactory extends AbstractFactory
 {
-
-    public function findOneByEventID($eventId)
-    {
-        $sermons = $this->get([
-            'post_status' => ['publish', 'future', 'draft', 'private', 'pulpit_hidden'],
-            'meta_query' => [
-                'relation' => 'OR',
-                [
-                    'key' => 'events',
-                    'value' => $eventId,
-                ],
-            ]
-        ]);
-        if (is_array($sermons)) return $sermons[0];
-    }
-
 }

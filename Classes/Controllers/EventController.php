@@ -138,6 +138,16 @@ class EventController extends AbstractController
         $this->view->assign('event', $event);
     }
 
+    /**
+     * Create a link label for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function linkLabelAction(\WP_Post $post)
+    {
+        $event = $this->getEventDataFromPost($post);
+        $this->view->assign('event', $event);
+    }
+
 
     protected function setAppView(string $appAction) {
         $this->action = 'app/'.ucfirst($appAction);

@@ -41,13 +41,19 @@ class SermonModel extends AbstractModel
         }
     }
 
-    public function addEvent($event) {
-        if (is_numeric($event)) $event = (new EventRepository())->findByID($event);
+    public function addEvent($event)
+    {
+        if (is_numeric($event)) {
+            $event = (new EventRepository())->findByID($event);
+        }
         $this->meta['events'][$event->ID] = $event;
     }
 
-    public function removeEvent($event) {
-        if (is_numeric($event)) $event = (new EventRepository())->findByID($event);
+    public function removeEvent($event)
+    {
+        if (is_numeric($event)) {
+            $event = (new EventRepository())->findByID($event);
+        }
         unset($this->meta['events'][$event->ID]);
     }
 
@@ -74,7 +80,7 @@ class SermonModel extends AbstractModel
         }
     }
 
-    protected function getSermonSeries()
+    public function getSermonSeries()
     {
         return get_the_terms($this->post->ID, PEREGRINUS_PULPIT . '_sermon_series');
     }

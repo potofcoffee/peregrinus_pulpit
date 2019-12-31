@@ -29,41 +29,56 @@ use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
 
 class EventsDashboardPanel extends AbstractDashboardPanel
 {
-    /** @var EventRepository $eventRepository  */
+    /** @var EventRepository $eventRepository */
     protected $eventRepository = null;
 
-    /** @var SermonRepository $sermonRepository  */
+    /** @var SermonRepository $sermonRepository */
     protected $sermonRepository = null;
 
     public function __construct()
     {
         $this->setTitle(__('Church services', 'pulpit'));
         $this->eventRepository = new EventRepository();
-        $this->eventRepository->setIncludepostStatus(['publish', 'future', 'draft']);
+        $this->eventRepository->setIncludepostStatus(['publish', 'future', 'draft', 'private', 'pulpit_hidden']);
         $this->sermonRepository = new SermonRepository();
-        $this->sermonRepository->setIncludepostStatus(['publish', 'future', 'draft']);
+        $this->sermonRepository->setIncludepostStatus(['publish', 'future', 'draft', 'private', 'pulpit_hidden']);
     }
 
 
-    protected function renderList($events, $title) {
+    protected function renderList($events, $title)
+    {
         /** @var EventModel $event */
 
-        echo '<h3>'.$title.'</h3>';
+        echo '<h3>' . $title . '</h3>';
 
         echo '<ul>';
         foreach ($events as $event) {
-            echo '<li>'
-                .'<span>'.$event->getDateTime()->format(__('d.m.Y, H:i', 'pulpit')).'</span> '
-                .'<a href="'.get_edit_post_link($event->getID()).'">'.$event->getTitle().'</a>';
             $sermon = $this->sermonRepository->findOneByEventID($event->getID());
+            echo '<li>'
+                . '<span>' . $event->getDateTime()->format(__('d.m.Y, H:i', 'pulpit')) . '</span> '
+                . $event->getTitle();
+            if ($sermon)
+                echo '<br />' . __('Sermon', 'pulpit') . ': '
+                    . $sermon->getTitle();
+            echo '<br />'
+                . '<a class="button button-small" href="'
+                . get_edit_post_link($event->getID()) . '">'
+                . __('Edit event', 'pulpit')
+                . '</a>'
+                . ' <a class="button button-small" target="_blank" href="'
+                . get_permalink($event->getID()) . '">'.__('Event page', 'pulpit').'</a>';
             if ($sermon) {
-                echo '<br />'.__('Sermon', 'pulpit').': <a href="'
-                    .get_edit_post_link($sermon->getID()).'">'.$sermon->getTitle()
-                    .'</a><br />';
+                echo ' | <a class="button button-small" href="'
+                    . get_edit_post_link($sermon->getID()) . '">'
+                    . __('Edit')
+                    . '</a>'
+                    . ' <a class="button button-small" target="_blank" href="'
+                    . get_permalink($sermon->getID()) . '">'.__('Sermon page', 'pulpit').'</a>'
+                    . '<br />';
             } else {
-                echo '<br /><a class="button button-small" href="'
-                    .admin_url('post-new.php?post_type=pulpit_sermon').'">'
-                    .__('New Sermon', 'pulpit').'</a><br />';
+                echo ' | <a class="button button-small" href="'
+                    . admin_url('post-new.php?post_type=pulpit_sermon') . '">'
+                    . __('New Sermon', 'pulpit') . '</a><br />';
             }
             echo '</li>';
         }
@@ -74,8 +89,9 @@ class EventsDashboardPanel extends AbstractDashboardPanel
     {
         $this->renderList($this->eventRepository->getNext(5), __('Next events', 'pulpit'));
         $this->renderList($this->eventRepository->getLast(5), __('Last events', 'pulpit'));
-        echo '<hr /><a class="button button-small" href="'.admin_url('post-new.php?post_type=pulpit_event').'">'
-            .__('New Event', 'pulpit').'</a>';
+        echo '<hr /><a class="button button-small" href="' . admin_url('post-new.php?post_type=pulpit_event') . '">'
+            . __('New Event', 'pulpit') . '</a> <a class="button button-small" href="' . admin_url('admin.php?page=pulpit_import') . '">'
+            .__('Import', 'pulpit').'</a>';
     }
 
 }

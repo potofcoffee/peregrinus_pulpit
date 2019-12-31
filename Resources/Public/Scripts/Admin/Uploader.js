@@ -92,7 +92,7 @@ pulpit.admin.uploader = {
  * Install click handlers
  */
 jQuery(document).ready(function () {
-    jQuery('.pulpit-hide-on-load').hide();
+    jQuery('.Uppulpit-hide-on-load').hide();
 
     /**
      * Handle delete button

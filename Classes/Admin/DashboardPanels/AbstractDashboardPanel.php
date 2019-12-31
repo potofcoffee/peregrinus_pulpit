@@ -41,6 +41,11 @@ class AbstractDashboardPanel extends AbstractObject
             $this->getTitle(),
             [$this, 'render']
         );
+        $this->scripts();
+    }
+
+    public function scripts() {
+
     }
 
 

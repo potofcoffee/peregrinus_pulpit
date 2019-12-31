@@ -54,7 +54,7 @@ class SongModel extends AbstractModel
     }
 
     public function getNameAndNumber(): string {
-        return isset($this->getSongbooks()[0]) ? $this->getSongbooks()[0]['abbreviation'].' '.$this->getNumber().' '.$this->getTitle() : '';
+        return isset($this->getSongbooks()[0]) ? $this->getSongbooks()[0]['abbreviation'].' '.$this->getNumber().' '.$this->getTitle() : $this->getTitle();
     }
 
 

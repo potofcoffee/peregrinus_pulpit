@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Controllers;
 
+use Peregrinus\Pulpit\Admin\ExternalPlayers\AbstractExternalPlayer;
+use Peregrinus\Pulpit\Admin\ExternalPlayers\ExternalPlayerFactory;
 use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\SermonModel;
 use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
@@ -45,11 +47,38 @@ class SermonController extends AbstractController
 
     public function singleAction(SermonModel $sermon)
     {
+        wp_enqueue_style('pulpit-sermon-single', PEREGRINUS_PULPIT_BASE_URL.'Resources/Public/Styles/Sermon/Single.css');
+
+        $players = [];
+
+        /** @var AbstractExternalPlayer $player */
+        foreach (ExternalPlayerFactory::getAll() as $player) {
+            if ($player->isEnabled()) {
+                if ($data = $player->getPlayerData($sermon)) $players[] = $data;
+            }
+        }
 
         $this->view->assign('isPreview', (($sermon->getPost()->post_status == 'future')  || $_GET['forcePreview']) &&  !$_GET['forcePublished']);
         $this->view->assign('isPublished', (($sermon->getPost()->post_status == 'publish') || $_GET['forcePublished']) && !$_GET['forcePreview']);
+
+        if ($sermon->getPost()->post_status == 'pulpit_hidden') {
+            $this->view->assign('isPublished', true);
+            $this->view->assign('isHidden', true);
+        } else {
+            $this->view->assign('isHidden', false);
+            $this->view->assign('players', $players);
+        }
+
         $this->view->assign('sermon', $sermon);
     }
+
+    public function printAction(SermonModel $sermon)
+    {
+
+        $this->view->assign('sermon', $sermon);
+    }
+
+
 
     public function archiveAction()
     {
@@ -71,6 +100,12 @@ class SermonController extends AbstractController
         }
         $this->view->assign('sermon', $sermon);
         $this->setAction('Handout/' . $layout);
+    }
+
+    public function urlCardAction(SermonModel $sermon) {
+        $hidden = ($sermon->getPost()->post_status == PEREGRINUS_PULPIT.'_hidden');
+        $this->view->assign('hidden', $hidden);
+        $this->view->assign('sermon', $sermon);
     }
 
     public function configureHandoutAction(SermonModel $sermon) {

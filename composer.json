@@ -19,7 +19,8 @@
     "typo3fluid/fluid": "2.3.1",
     "chillerlan/php-qrcode": "dev-master",
     "peregrinus/potter": "dev-master",
-    "phpoffice/phpword": "dev-master"
+    "phpoffice/phpword": "dev-master",
+    "electrolinux/phpquery": "0.9.6"
   },
   "extra": {
     "installer-name": "peregrinus-pulpit"

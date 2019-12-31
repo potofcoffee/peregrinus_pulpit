@@ -18,44 +18,6 @@
             Gottesdienste
             vorbei:</p>
         <f:for each="{events}" as="event" iteration="eventCtr">
-            <f:if condition="{eventCtr.cycle} < 3">
-                <f:then>
-                    <f:if condition="{eventCtr.cycle} == 1"><div class="row"></f:if>
-                        <div class="col-sm-6">
-                            <f:if condition="{event.sermon.thumbnail}">
-                                <f:then>
-                                    <wp:postImage post="{event.sermon.ID}" link="{event.ID -> wp:permalink()}"/>
-                                </f:then>
-                                <f:else>
-                                    <f:if condition="{event.thumbnail}">
-                                        <f:then>
-                                            <wp:postImage post="{event.ID}" link="{event.ID -> wp:permalink()}"/>
-                                        </f:then>
-                                        <f:else>
-                                            <f:if condition="{event.location.thumbnail}">
-                                                <wp:postImage post="{event.location.ID}" link="{event.ID -> wp:permalink()}"/>
-                                            </f:if>
-                                        </f:else>
-                                    </f:if>
-                                </f:else>
-                            </f:if>
-                            <b>
-                                <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
-                                ,
-                                <p:format.date format="H:i">{event.datetime}</p:format.date>
-                                Uhr</b>,
-                            <b>{event.location.title}</b><br/>
-                            <h2><a href="{event.ID -> wp:permalink()}">{event.title}</a></h2>
-                            <f:if condition="{event.sermon}">
-                        <span class="hometa">Predigt <f:if condition="{event.sermon.title}">"<a href="{event.sermon.ID -> wp:permalink()}">{event.sermon.title}
-                            <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if></a>"</f:if>
-                                    <f:if condition="{event.sermon.reference}"> zu {event.sermon.reference}</f:if></span><br/>
-                            </f:if>
-                            <p>{event.content.main -> f:format.raw()}</p>
-                        </div>
-                    <f:if condition="{eventCtr.cycle} == 2"></div></f:if>
-                </f:then>
-                <f:else>
                     <div class="row dotted">
                         <div class="col-sm-1">
                             <b>
@@ -79,8 +41,6 @@
                             </f:if>
                         </div>
                     </div>
-                </f:else>
-            </f:if>
         </f:for>
     </div>
 </f:section>

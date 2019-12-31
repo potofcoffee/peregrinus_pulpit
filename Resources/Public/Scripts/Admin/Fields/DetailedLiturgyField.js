@@ -111,7 +111,8 @@ function createSortableList() {
                 'action': 'pulpit_importAgendaItems',
                 'index': count,
                 'source': $($(this).data('source')).val(),
-                'key': $(this).data('key')
+                'key': $(this).data('key'),
+                'officiating': $('#officiating').val(),
             };
             $.post({
                 url: ajaxurl,

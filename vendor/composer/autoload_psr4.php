@@ -8,7 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'chillerlan\\Traits\\' => array($vendorDir . '/chillerlan/php-traits/src'),
     'chillerlan\\QRCode\\' => array($vendorDir . '/chillerlan/php-qrcode/src'),
+    'Zend\\Escaper\\' => array($vendorDir . '/zendframework/zend-escaper/src'),
     'TYPO3Fluid\\Fluid\\' => array($vendorDir . '/typo3fluid/fluid/src'),
+    'PhpOffice\\PhpWord\\' => array($vendorDir . '/phpoffice/phpword/src/PhpWord'),
+    'PhpOffice\\Common\\' => array($vendorDir . '/phpoffice/common/src/Common'),
     'Peregrinus\\Pulpit\\' => array($baseDir . '/Classes'),
     'Peregrinus\\Potter\\' => array($vendorDir . '/peregrinus/potter/Classes'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),

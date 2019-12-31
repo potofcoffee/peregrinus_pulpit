@@ -1,0 +1,48 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}.pdf"
+        layout="A4" debug="1" bottommargin="5">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Print.css" media="all"/>
+    </head>
+    <body>
+    <div class="container">
+        <h1>{sermon.post_title}
+        </h1>
+        <f:if condition="{sermon.subtitle}"><h2>{sermon.subtitle}</h2></f:if>
+        <b>Von Christoph Fischer</b><hr />
+        <f:if condition="{sermon.content.extended}">
+            <f:then>{sermon.content.extended -> wp:autop() -> f:format.raw()}</f:then>
+            <f:else><p>{sermon.content.main -> f:format.raw()}</p></f:else>
+        </f:if>
+        <f:if condition="{sermon.cclicense}">
+            <hr />
+            <div class="sermon-instructions">
+                Die Predigt "{sermon.title}" von Christoph Fischer und alle dazu gehörigen
+                Ressourcen (Predigtzettel, Aufnahme) sind lizenziert unter einer
+                <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.de"
+                   title="Lizenzbedingungen">
+                    Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0
+                    International Lizenz</a>.
+                Verwendete Bilder stehen eventuell unter eigenen Lizenzbedingungen. Ausdrücklich von
+                der
+                Creative Commons-Lizenz ausgenommen sind die Logos und Namen der Gemeinde, in der
+                die
+                Predigt gehalten wurde
+                <f:if condition="{sermon.church}">({sermon.church})</f:if>
+                und ihrer Arbeitsbereiche.
+            </div>
+        </f:if>
+        <hr />
+        <p>Weitere Informationen zu dieser Predigt findest du online unter https://predigt.cf/{sermon.ID}.</p>
+
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

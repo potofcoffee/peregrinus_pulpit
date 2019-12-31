@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Domain\Model;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Utility\StringUtility;
 
 class AbstractModel
@@ -37,8 +38,12 @@ class AbstractModel
         '_thumbnail_id' => 'thumbnail'
     ];
 
+    /** @var array $additionalGetters Stores additional getters set by external services */
+    protected $additionalGetters = [];
+
     public function __construct(\WP_Post $post)
     {
+        $this->additionalGetters = apply_filters(PEREGRINUS_PULPIT.'_'.$this->getKey().'_getters', []);
         $this->post = $post;
         $meta = get_post_meta($post->ID, null, true);
         foreach ($meta as $key => $val) {
@@ -54,6 +59,12 @@ class AbstractModel
             }
         }
         $this->setMetaElement('content', get_extended($this->post->post_content));
+    }
+
+    public function getKey()
+    {
+        $tmp = explode('\\', get_class($this));
+        return strtolower(str_replace('Model', '', array_pop($tmp)));
     }
 
     /**
@@ -72,7 +83,11 @@ class AbstractModel
             if ($property == 'i_d') {
                 $property = 'ID';
             }
-            if (isset($this->meta[($property)])) {
+            if (isset($this->additionalGetters[$property])) {
+                // call an additional getter registered through the filter
+                array_unshift($args, $this);
+                return call_user_func_array($this->additionalGetters[$property], $args);
+            } elseif (isset($this->meta[($property)])) {
                 return maybe_unserialize($this->meta[$property]);
             } elseif (property_exists($this->post, $property)) {
                 return $this->post->$property;

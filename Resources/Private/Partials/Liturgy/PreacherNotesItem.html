@@ -1,0 +1,32 @@
+
+<f:switch expression="{item.type}">
+    <f:case value="sectionTitle">
+    </f:case>
+    <f:case value="descriptive">
+    </f:case>
+    <f:case value="freeText">
+        {item.data -> wp:autop()}
+    </f:case>
+    <f:case value="song">
+        <f:if condition="{item.data.song.fromSongbook}">
+            <f:then><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
+                <p:content.song song="{item.data}" />
+            </f:then>
+            <f:else><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
+        </f:if>
+    </f:case>
+    <f:case value="psalm">
+        <p>{item.data.song.nameAndNumber}</p>
+        <f:if condition="{item.data.song.fromSongbook}">
+            <p:content.song song="{item.data}" numbered="0" />
+        </f:if>
+    </f:case>
+    <f:case value="sermon">
+        {sermon.content.extended -> wp:autop() -> f:format.raw()}
+    </f:case>
+    <f:case value="scriptureReading">{item.data.reference}<br /><f:for each="{item.data.reference -> p:content.bible()}" as="section" iteration="s"><f:for each="{section.text}" as="verse" iteration="v"><f:if condition="{v.total} == 1 && {s.total} == 1"><f:else>[{verse.verse}] </f:else></f:if>{verse.text}<f:if condition="{br}"><br /></f:if></f:for></f:for>
+    </f:case>
+    <f:case value="textBlock">
+        {item.data -> wp:autop()}
+    </f:case>
+</f:switch>

@@ -62,6 +62,7 @@ class WordViewHelper extends AbstractViewHelper
      */
     protected function render()
     {
+
         $phpWord = new PhpWord();
 
         // set document default language
@@ -80,8 +81,13 @@ class WordViewHelper extends AbstractViewHelper
 
         $this->renderChildren();
 
-        header('Content-Type: application/octet-stream');
+
+        header("Content-Description: File Transfer");
         header('Content-Disposition: attachment;filename="'.$this->arguments['filename'].'"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
         try {
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             $objWriter->save('php://output');

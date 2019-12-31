@@ -22,6 +22,8 @@
 
 namespace Peregrinus\Pulpit\Domain\Repository;
 
+use Peregrinus\Pulpit\Debugger;
+
 class AbstractRepository
 {
 

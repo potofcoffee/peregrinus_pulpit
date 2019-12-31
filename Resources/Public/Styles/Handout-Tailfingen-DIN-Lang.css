@@ -166,12 +166,14 @@ figure {
 
 h3.liturgy {
 	color: #951981;
+	font-size: 10pt;
 }
 
 ul.liturgy {
 	list-style: none !important;
 	list-style-type: none !important;
 	padding-left: 1em;
+	font-size: 10pt;
 }
 
 ul.liturgy li::before {
@@ -194,7 +196,7 @@ div.keypoints li {
 
 div.announcements {
 	font-size: 8pt;
-	line-height: 100%;
+	line-height: 10pt;
 }
 
 div.questions ol {

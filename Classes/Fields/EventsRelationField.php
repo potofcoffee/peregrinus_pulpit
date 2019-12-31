@@ -69,7 +69,7 @@ class EventsRelationField extends AbstractField
     {
         $o = '<div class="pulpit-events-relation-form-single">'
             . $this->renderLabel('event', $index, __('Event', 'pulpit'))
-            . '<select id="' . $this->getFieldId($index) . '" name="'
+            . '<select class="eventRelationFieldSelect" id="' . $this->getFieldId($index) . '" name="'
             . $this->getFieldName($index) . '"  style="width: 100%"><option></option>';
 
         /** @var EventModel $event */
@@ -113,7 +113,25 @@ class EventsRelationField extends AbstractField
         $events = maybe_unserialize($this->getValue($values, true)) ?: $this->getEmptyRecord();
 
         if (!count($this->allEvents)) {
-            $this->allEvents = (new EventRepository())->get();
+            $eventRepository = new EventRepository();
+            $eventRepository->setIncludepostStatus(['publish', 'future', 'draft', 'private', 'pulpit_hidden']);
+            $this->allEvents = $eventRepository->get([
+                'meta_query' => [
+                    'relation' => 'OR',
+                    'custom_order_clause1' => [
+                        'key' => 'date',
+                        'compare' => 'LIKE',
+                    ],
+                    'custom_order_clause2' => [
+                        'key' => 'time',
+                        'compare' => 'LIKE',
+                    ],
+                ],
+                'orderby' => [
+                    'custom_order_clause1' => 'DESC',
+                    'custom_order_clause2' => 'DESC',
+                ]
+            ]);
         }
         $o = '';
 

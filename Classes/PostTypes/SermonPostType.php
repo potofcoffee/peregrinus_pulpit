@@ -245,7 +245,7 @@ class SermonPostType extends AbstractPostType
     public function preGetPostsHook(\WP_Query $query)
     {
         if ($query->is_singular() && ($query->query_vars['post_type'] == $this->getTypeName())) {
-            $query->set('post_status', ['future', 'publish']);
+            $query->set('post_status', ['future', 'publish', 'pulpit_hidden']);
         }
     }
 

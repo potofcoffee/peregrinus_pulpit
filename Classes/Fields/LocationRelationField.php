@@ -24,6 +24,23 @@ namespace Peregrinus\Pulpit\Fields;
 
 class LocationRelationField extends AbstractField
 {
+
+    public function __construct($key, $label = '', $context = '')
+    {
+        parent::__construct($key, $label, $context);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueResources']);
+    }
+
+    public function enqueueResources()
+    {
+        wp_enqueue_style( 'jquery-ui' );
+        wp_enqueue_script( 'jquery-ui-sortable' );
+        wp_enqueue_script('agenda-item-field',
+            PEREGRINUS_PULPIT_BASE_URL . 'Resources/Public/Scripts/Admin/Fields/LocationRelationField.js');
+    }
+
+
+
     public function render($values)
     {
         $value = $this->getValue($values);
@@ -31,7 +48,7 @@ class LocationRelationField extends AbstractField
 
         $locations = get_posts(['post_type' => PEREGRINUS_PULPIT.'_location', 'posts_per_page' => -1]);
 
-        $o = $this->renderLabel() . '<select id="' . $this->getKey() . '" name="' . $this->getFieldName(). '" style="width: 100%">';
+        $o = $this->renderLabel() . '<select class="locationRelationField" id="' . $this->getKey() . '" name="' . $this->getFieldName(). '" style="width: 100%">';
         $o .= '<option value="-1"></option>';
         foreach ($locations as $location) {
             $o .= '<option value="'.$location->ID.'" '

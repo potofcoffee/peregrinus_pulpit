@@ -9,7 +9,7 @@
     </head>
     <body>
     <h1>{event.title}</h1>
-<p:format.date format="d.m.Y">{event.datetime}</p:format.date>, {event.location.title}
+<p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date> Uhr, {event.location.title}
 <hr />
 <table class="table">
     <tbody>
@@ -20,6 +20,10 @@
                     <th colspan="2" valign="top"><h3>{item.title}</h3></th>
                 </f:case>
                 <f:case value="descriptive">
+                    <th valign="top">{item.title}</th>
+                    <td valign="top"></td>
+                </f:case>
+                <f:case value="textBlock">
                     <th valign="top">{item.title}</th>
                     <td valign="top"></td>
                 </f:case>
@@ -37,7 +41,7 @@
                     </td>
                 </f:case>
                 <f:case value="psalm">
-                    <th valign="top">Psalmgebet:</th>
+                    <th valign="top">{item.title}</th>
                     <td valign="top">
                         <f:if condition="{item.data.song.fromSongBook}">
                             <f:then>{item.data.song.nameAndNumber}</f:then>
@@ -58,6 +62,49 @@
     </f:for>
     </tbody>
 </table>
+    <f:for each="{event.officiating -> p:format.explode()}" as="participant">
+        <h1 style="page-break-before: always;">{event.title}</h1>
+        <p:format.date format="d.m.Y">{event.datetime}</p:format.date>, {event.location.title} <br />
+        Plan für {participant}
+        <hr />
+        <table class="table">
+            <tbody>
+            <f:for each="{event.liturgy}" as="item">
+                <tr>
+                    <f:if condition="{0: item.type} ==  {0: 'sectionTitle'}">
+                        <f:then><th colspan="2" valign="top"><h3>{item.title}</h3></th></f:then>
+                        <f:else>
+                            <th valign="top">{item.title}</th>
+                            <td valign="top">
+                                <f:switch expression="{item.type}">
+                                    <f:case value="song">
+                                        <f:if condition="{item.data.song.fromSongBook}">
+                                            <f:then>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
+                                            <f:else>"{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></f:else>
+                                        </f:if>
+                                    </f:case>
+                                    <f:case value="psalm">
+                                        <f:if condition="{item.data.song.fromSongBook}">
+                                            <f:then>{item.data.song.nameAndNumber}</f:then>
+                                            <f:else>{item.data.song}</f:else>
+                                        </f:if>
+                                    </f:case>
+                                    <f:case value="scriptureReading">
+                                        {item.data.reference}
+                                    </f:case>
+                                    <f:case value="sermon">
+                                        <f:if condition="{event.sermon.title}">"{event.sermon.title}<f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if>"<f:if condition="{event.sermon.reference}"> ({event.sermon.reference})</f:if></f:if>
+                                    </f:case>
+                                </f:switch>
+                                <f:if condition="{item.instructions -> p:nested(index: '{participant -> p:format.explode(separator: \':\', index: 0)}')}"><p><i style="font-size: 0.7em;"><p:format.nl2br>{item.instructions -> p:nested(index: '{participant -> p:format.explode(separator: \':\', index: 0)}')}</p:format.nl2br></i></p></f:if>
+                            </td>
+                        </f:else>
+                    </f:if>
+                </tr>
+            </f:for>
+            </tbody>
+        </table>
+    </f:for>
     </body>
 </html>
 </p:output.pdf>

@@ -79,14 +79,14 @@
                     </f:case>
                     <f:case value="song">
                         <f:if condition="{item.data.song.fromSongbook}">
-                            <f:then><h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
+                            <f:then><h3><b>{item.title}</b></h3><p>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></p>
                                 <p:content.song song="{item.data}" />
                             </f:then>
-                            <f:else><h2><b>{item.title}</b></h2><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
+                            <f:else><h3><b>{item.title}</b></h3><p>{item.data.song}"<f:if condition="{item.data.verses}">({item.data.verses})</f:if></p></f:else>
                         </f:if>
                     </f:case>
                     <f:case value="psalm">
-                        <h2><b>{item.title}</b></h2><p>{item.data.song.nameAndNumber}</p>
+                        <h3><b>{item.title}</b></h3><p>{item.data.song.nameAndNumber}</p>
                         <f:if condition="{item.data.song.fromSongbook}">
                             <p:content.song song="{item.data}" numbered="0" tab="50px" psalm="1"/>
                         </f:if>
@@ -96,7 +96,14 @@
                         <h4>Darum geht's</h4>
                         {event.sermon.content.main -> wp:autop() -> f:format.raw()}
                         <h4>Predigttext: {event.sermon.reference}</h4>
+                        <f:if condition="{event.sermon.bible_text}">
+                            <f:then>
                         {event.sermon.bible_text -> wp:autop() -> f:format.raw()}
+                            </f:then>
+                            <f:else>
+                                <f:for each="{event.sermon.reference -> p:content.bible()}" as="section" iteration="s"><f:for each="{section.text}" as="verse" iteration="v"><f:if condition="{v.total} == 1 && {s.total} == 1"><f:else>[{verse.verse}] </f:else></f:if>{verse.text}<f:if condition="{br}"><br /></f:if></f:for></f:for>
+                            </f:else>
+                        </f:if>
                         <f:if condition="{event.sermon.key_points}">
                             <h4>
                                 <f:if condition="{event.sermon.notes_header}">
@@ -110,9 +117,10 @@
                     <f:case value="scriptureReading">
                         <h3><b>Schriftlesung</b></h3>
                         <p>{item.data.reference}</p>
+                        <f:for each="{item.data.reference -> p:content.bible()}" as="section" iteration="s"><f:for each="{section.text}" as="verse" iteration="v"><f:if condition="{v.total} == 1 && {s.total} == 1"><f:else>[{verse.verse}] </f:else></f:if>{verse.text}<f:if condition="{br}"><br /></f:if></f:for></f:for>
                     </f:case>
                     <f:case value="textBlock">
-                        <h2><b>{item.title}</b></h2>
+                        <h3><b>{item.title}</b></h3>
                         {item.data -> wp:autop()}
                     </f:case>
                 </f:switch>

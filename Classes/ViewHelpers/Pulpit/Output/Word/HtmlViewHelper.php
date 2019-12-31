@@ -56,9 +56,13 @@ class HtmlViewHelper extends AbstractViewHelper
         // @TODO: provide a better, more configurable fix here that also takes care of other tags
         // and uses a stylesheet. This might be tricky, giben the nature of PHPWord's default HTML parser
         $html = strtr($html, [
+            '& ' => '&amp;amp; ', // double escape to work around a PHPWord bug, @see https://github.com/PHPOffice/PHPWord/issues/514#issue-65008002
+            "\v" => ' ',
             '<blockquote>' => '<span style="font-style: italic; font-size: 11pt; text-align: center;">',
             '</blockquote>' => '</span>'
         ]);
+
+        if (isset($_GET['HTML_DEBUG'])) die($html);
 
         Html::addHtml($section, $html, false, false);
     }

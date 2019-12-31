@@ -1,0 +1,65 @@
+<p:output.pdf
+        filename="{sermon.post_date -> p:format.date(format: '%Y%m%d')}-URL_Karte.pdf"
+        layout="A6" debug="1" bottommargin="5">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{baseUrl}/Resources/Public/Styles/Handout.css" media="all"/>
+    </head>
+    <body>
+    <div class="container">
+        <h2>
+        <f:if condition="{sermon.events}">
+            <f:then>
+                <f:for each="{sermon.events}" as="event">
+
+                        <p:format.date format="d.m.Y, H:i">{event.datetime}</p:format.date>
+                        Uhr<br />
+                        {event.location.title}<br />{event.title}<br/>
+                </f:for>
+            </f:then>
+            <f:else>
+                Gepredigt am <span class="posted-on">{sermon.date}</span>
+                <f:if condition="{sermon.church}">
+                    , {sermon.church}
+                </f:if>
+            </f:else>
+        </f:if>
+        </h2>
+        <hr />
+        <p style="min-height: 1cm;">&nbsp;</p>
+        <h1>{sermon.post_title}
+            <f:if condition="{sermon.subtitle}"><br/><span style="font-size: 0.7em;">{sermon.subtitle}</span></f:if>
+        </h1>
+        <f:if condition="{sermon.sermonSeries}">
+            <f:if condition="{sermon.sermonSeries -> f:count()} > 1">
+                <f:then>Aus den Reihen:</f:then>
+                <f:else>Aus der Reihe:</f:else>
+            </f:if>
+            <f:for each="{sermon.sermonSeries}" as="series" iteration="s">
+                <a href="/reihe/{series.slug}/">{series.name}</a>
+                <f:if condition="{s.isLast}">
+                    <f:else>,</f:else>
+                </f:if>
+            </f:for>
+        </f:if>
+        <hr/>
+        <f:if condition="{sermon.thumbnail}">
+            <wp:postImage post="{sermon.ID}"/>
+        </f:if>
+        <p></p>
+        <p>Diese Predigt gibt es online unter folgendem Link:
+            <b><wp:permalink id="{sermon.ID}"/></b>
+        </p>
+        <f:if condition="{hidden}">
+            <small>Die Predigt ist nur zugänglich, wenn man diesen Link kennt.</small>
+        </f:if>
+    </div>
+    </body>
+    </html>
+</p:output.pdf>

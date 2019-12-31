@@ -3,7 +3,7 @@
  * PULPIT
  * A sermon plugin for WordPress
  *
- * Copyright (c) 2018 Christoph Fischer, http://www.peregrinus.de
+ * Copyright (c) 2017 Christoph Fischer, http://www.peregrinus.de
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Peregrinus\Pulpit\Domain\Repository;
+namespace Peregrinus\Pulpit\ViewHelpers\Pulpit;
 
-class SermonRepository extends AbstractRepository
+use Peregrinus\Pulpit\Debugger;
+
+class NestedViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
-    public function findOneByEventID($eventId)
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = false;
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = false;
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
     {
-        $sermons = $this->get([
-            'post_status' => ['publish', 'future', 'draft', 'private', 'pulpit_hidden'],
-            'meta_query' => [
-                'relation' => 'OR',
-                [
-                    'key' => 'events',
-                    'value' => $eventId,
-                ],
-            ]
-        ]);
-        if (is_array($sermons)) return $sermons[0];
+        $this->registerArgument('index', 'integer', 'index', false);
     }
 
+    protected function render()
+    {
+        $data = $this->renderChildren();
+        if (is_array($data)) {
+            return $data[$this->arguments['index']] ?: '';
+        } else {
+            return '';
+        }
+    }
 }
