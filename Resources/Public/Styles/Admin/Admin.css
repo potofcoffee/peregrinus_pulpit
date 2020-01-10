@@ -62,7 +62,7 @@
 .pulpit-agenda-items-form-single,
 .pulpit-detailed-liturgy-form-single {
     border: solid 1px rgb(221, 221, 221);
-    border-left: solid 8px rgb(221, 221, 221);
+    border-left: solid 8px #016087;
     padding: 5px;
     border-radius: 3px;
     min-height: 23px;
