@@ -1,22 +1,24 @@
 
-function enableAgendaItemsFieldButtons() {
-    $('.pulpit-agenda-items-form-single-toggle').click(function(){
-        $(this).parent().find('.pulpit-agenda-items-form-sub').toggle();
-        if ($(this).hasClass('ui-icon-arrowthick-1-s')) {
-            $(this).removeClass('ui-icon-arrowthick-1-s').addClass('ui-icon-arrowthick-1-n');
-        } else {
-            $(this).removeClass('ui-icon-arrowthick-1-n').addClass('ui-icon-arrowthick-1-s');
-        }
-    });
-
-    $('.pulpit-agenda-items-field-btn-remove').click(function(event){
-        event.preventDefault();
-        $(this).parent().remove();
-    });
-}
-
 
 (function($){
+
+    function enableAgendaItemsFieldButtons() {
+        $('.pulpit-agenda-items-form-single-toggle').click(function(){
+            $(this).parent().find('.pulpit-agenda-items-form-sub').toggle();
+            if ($(this).hasClass('ui-icon-arrowthick-1-s')) {
+                $(this).removeClass('ui-icon-arrowthick-1-s').addClass('ui-icon-arrowthick-1-n');
+            } else {
+                $(this).removeClass('ui-icon-arrowthick-1-n').addClass('ui-icon-arrowthick-1-s');
+            }
+        });
+
+        $('.pulpit-agenda-items-field-btn-remove').click(function(event){
+            event.preventDefault();
+            $(this).parent().remove();
+        });
+    }
+
+
 
     $(document).ready(function(){
 

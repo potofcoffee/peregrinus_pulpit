@@ -1,14 +1,16 @@
 
-function enableEventsRelationFieldsRemoveButtons() {
-    $('.eventRelationFieldSelect').select2({});
-    $('.pulpit-events-relation-field-btn-remove').click(function(event){
-        event.preventDefault();
-        $(this).parent().remove();
-    });
-}
-
 
 (function($){
+
+    function enableEventsRelationFieldsRemoveButtons() {
+        $('.eventRelationFieldSelect').select2({});
+        $('.pulpit-events-relation-field-btn-remove').click(function(event){
+            event.preventDefault();
+            $(this).parent().remove();
+        });
+    }
+
+
 
     $(document).ready(function(){
         $('.pulpit-events-relation-field-btn-add').click(function(event){
