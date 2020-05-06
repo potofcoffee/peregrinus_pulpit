@@ -1,14 +1,8 @@
 <f:layout name="Page"/>
 <f:section name="Content">
     <div class="row hidden-print">
-        <div class="col-sm-12">
-            <a class="btn btn-default" href="/predigt"><span class="glyphicon glyphicon-arrow-left"></span> Zurück
-                zur Liste der Predigten</a>
-        </div>
-    </div>
-    <div class="row hidden-print">
-        <div class="col-sm-12">
-
+        <div class="col-sm-9">
+            <wp:postImage post="{sermon.ID}" size="large" showCaption="1"/>
 
             <header class="entry-header">
                 <div class="section-header">
@@ -52,12 +46,7 @@
                 </div><!-- .entry-meta -->
             </header><!-- .entry-header -->
         </div>
-    </div>
-    <div class="row hidden-print">
-        <div class="col-sm-8">
-            <wp:postImage post="{sermon.ID}" size="large" showCaption="1"/>
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <table class="table">
                 <f:if condition="{sermon.audiorecordingRelation.file}">
                     <tr>
@@ -80,7 +69,7 @@
                             <audio id="sermonAudioPlayer" src="{sermon.audiorecordingRelation.guid}" controls></audio>
                             <script>
                                 var sermonTitle = '{sermon.title -> f:format.raw()}';
-                                $('document').ready(function(){
+                                $('document').ready(function () {
                                     _paq.push(['trackEvent', 'SermonPlay', sermonTitle]);
                                 });
                             </script>
@@ -173,18 +162,18 @@
                 </f:if>
                 <f:if condition="{sermon.content.extended}">
                     <f:if condition="{isPublished}">
-                    <tr>
-                        <td>
-                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
-                                <span class="fa fa-print"> </span>
-                            </a>
-                        </td>
-                        <td colspan="2">
-                            <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
-                                Druckbare Version des Predigttexts
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
+                                    <span class="fa fa-print"> </span>
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{p:format.customUrl(url: sermon.ID, add: {format: 'print'})}">
+                                    Druckbare Version des Predigttexts
+                                </a>
+                            </td>
+                        </tr>
                     </f:if>
                 </f:if>
                 <f:if condition="{sermon.remoteUrl}">
@@ -257,18 +246,97 @@
                     </tr>
                 </f:if>
                 <tr>
-                    <td></td>
-                    <td>
+                    <td colspan="2">
                         <wp:shortcode code="[shariff]"/>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4>Predigttext</h4>
+                        <p>{sermon.reference}</p>
+                    </td>
+                </tr>
+                <f:if condition="{sermon.content.extended}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>In aller Kürze</h4>
+                            <p>{sermon.content.main -> f:format.raw()}</p>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.keyPoints}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>Hauptpunkte der Predigt</h4>
+                            <f:if condition="{sermon.notesHeader}">
+                                <f:then><h5>{sermon.notesHeader}:</h5></f:then>
+                            </f:if>
+                            <p:format.orderedList list="{sermon.keyPoints} "/>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.questions}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>Fragen zur Vertiefung</h4>
+                            <p class="sermon-instructions">
+                                Zu dieser Predigt hat Christoph eine Reihe von Fragen hinterlegt,
+                                die in der Kleingruppe zur Vertiefung weiter besprochen werden können:
+                            </p>
+                            <p:format.orderedList list="{sermon.questions}"/>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.furtherReading}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>Weiterführende Literatur</h4>
+                            <p class="sermon-instructions">
+                                Wenn du dich noch weiter informieren willst, empfiehlt Christoph
+                                folgende weiterführende Literatur:
+                            </p>
+                            <f:format.raw>{sermon.furtherReading}</f:format.raw>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.activity}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>Lebensbezüge</h4>
+                            <p class="sermon-instructions">
+                                Folgende Grundvollzüge glaubenden Lebens sind in dieser Predigt angesprochen:
+                            </p>
+                            <f:for each="{sermon.activity}" as="activity">
+                                <a href="{baseUrl}/pulpit-sermon-activity/{activity.slug}">#{activity.slug}</a>
+                            </f:for>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{sermon.competence}">
+                    <tr>
+                        <td colspan="2">
+                            <h4>Kompetenzen</h4>
+                            <p class="sermon-instructions">
+                                Mit dieser Predigt versuche ich, folgende Kompetenzen meiner Hörer weiter zu
+                                trainieren:
+                            </p>
+                            <ul>
+                                <f:for each="{sermon.competence}" as="competence">
+                                    <li>
+                                        <a href="{baseUrl}/pulpit-sermon-competence/{competence.slug}">{competence.name}</a>
+                                    </li>
+                                </f:for>
+                            </ul>
+                        </td>
+                    </tr>
+                </f:if>
 
 
             </table>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <div class="entry-content">
                 <f:if condition="{isPublished}">
                     <f:then>
@@ -290,92 +358,6 @@
                 </f:if>
             </div>
         </div>
-        <f:if condition="{isPublished}">
-            <div class="col-sm-4">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <h4>Predigttext</h4>
-                            <p>{sermon.reference}</p>
-                        </td>
-                    </tr>
-                    <f:if condition="{sermon.content.extended}">
-                        <tr>
-                            <td>
-                                <h4>In aller Kürze</h4>
-                                <p>{sermon.content.main -> f:format.raw()}</p>
-                            </td>
-                        </tr>
-                    </f:if>
-                    <f:if condition="{sermon.keyPoints}">
-                        <tr>
-                            <td>
-                                <h4>Hauptpunkte der Predigt</h4>
-                                <f:if condition="{sermon.notesHeader}">
-                                    <f:then><h5>{sermon.notesHeader}:</h5></f:then>
-                                </f:if>
-                                <p:format.orderedList list="{sermon.keyPoints} "/>
-                            </td>
-                        </tr>
-                    </f:if>
-                    <f:if condition="{sermon.questions}">
-                        <tr>
-                            <td>
-                                <h4>Fragen zur Vertiefung</h4>
-                                <p class="sermon-instructions">
-                                    Zu dieser Predigt hat Christoph eine Reihe von Fragen hinterlegt,
-                                    die in der Kleingruppe zur Vertiefung weiter besprochen werden können:
-                                </p>
-                                <p:format.orderedList list="{sermon.questions}"/>
-                            </td>
-                        </tr>
-                    </f:if>
-                    <f:if condition="{sermon.furtherReading}">
-                        <tr>
-                            <td>
-                                <h4>Weiterführende Literatur</h4>
-                                <p class="sermon-instructions">
-                                    Wenn du dich noch weiter informieren willst, empfiehlt Christoph
-                                    folgende weiterführende Literatur:
-                                </p>
-                                <f:format.raw>{sermon.furtherReading}</f:format.raw>
-                            </td>
-                        </tr>
-                    </f:if>
-                    <f:if condition="{sermon.activity}">
-                        <tr>
-                            <td>
-                                <h4>Lebensbezüge</h4>
-                                <p class="sermon-instructions">
-                                    Folgende Grundvollzüge glaubenden Lebens sind in dieser Predigt angesprochen:
-                                </p>
-                                <f:for each="{sermon.activity}" as="activity">
-                                    <a href="{baseUrl}/pulpit-sermon-activity/{activity.slug}">#{activity.slug}</a>
-                                </f:for>
-                            </td>
-                        </tr>
-                    </f:if>
-                    <f:if condition="{sermon.competence}">
-                        <tr>
-                            <td>
-                                <h4>Kompetenzen</h4>
-                                <p class="sermon-instructions">
-                                    Mit dieser Predigt versuche ich, folgende Kompetenzen meiner Hörer weiter zu
-                                    trainieren:
-                                </p>
-                                <ul>
-                                    <f:for each="{sermon.competence}" as="competence">
-                                        <li>
-                                            <a href="{baseUrl}/pulpit-sermon-competence/{competence.slug}">{competence.name}</a>
-                                        </li>
-                                    </f:for>
-                                </ul>
-                            </td>
-                        </tr>
-                    </f:if>
-                </table>
-            </div>
-        </f:if>
     </div>
 
 </f:section>
