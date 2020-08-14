@@ -1,0 +1,14 @@
+<f:switch expression="{item.type}">
+    <f:case value="song">
+        <h2><b>{item.data.song.nameAndNumber}</b></h2>
+        <f:if condition="{item.data.song.fromSongbook}">
+            <f:then><p:content.song song="{item.data}" /></f:then>
+        </f:if>
+    </f:case>
+    <f:case value="psalm">
+        <h2><b>{item.data.song.nameAndNumber}</b></h2>
+        <f:if condition="{item.data.song.fromSongbook}">
+            <p:content.song song="{item.data}" numbered="0" />
+        </f:if>
+    </f:case>
+</f:switch>

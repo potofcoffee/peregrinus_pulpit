@@ -1,0 +1,13 @@
+<p:output.word filename="{event.datetime -> p:format.date(format: 'Ymd_Hi')} Liedblatt.docx" debug="1" defaultFont="Helvetica Condensed" defaultFontSize="11" language="de-DE">
+    <p:output.word.styles.title depth="1" font="{bold: 'true', name: 'Helvetica Condensed', size: 20}"/>
+    <p:output.word.styles.title depth="2" font="{bold: 'true', name: 'Helvetica Condensed', size: 16}"/>
+    <p:output.word.styles.title depth="3" font="{bold: 'true', name: 'Helvetica Condensed', size: 14}"/>
+    <p:output.word.html>
+        <h1><b>Lieder und Texte zum Gottesdienst am {event.datetime -> p:format.date(format: 'd.m.Y')}</b></h1>
+        <f:for each="{event.liturgy}" as="item">
+            <f:render partial="Liturgy/SongsheetItem" arguments="{item: item, event: event, sermon: event.sermon}" />
+        </f:for>
+    </p:output.word.html>
+
+
+</p:output.word>

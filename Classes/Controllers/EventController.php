@@ -22,6 +22,7 @@
 
 namespace Peregrinus\Pulpit\Controllers;
 
+use Peregrinus\Pulpit\Debugger;
 use Peregrinus\Pulpit\Domain\Model\EventModel;
 use Peregrinus\Pulpit\Domain\Repository\EventRepository;
 use Peregrinus\Pulpit\Domain\Repository\SermonRepository;
@@ -52,6 +53,8 @@ class EventController extends AbstractController
      */
     public function archiveAction()
     {
+        $ppEvents = json_decode($this->getUrl('https://www.pfarrplaner.de/api/user/1/services'), true)['services'];
+
         $events = $this->eventRepository->get([
             'meta_key' => 'date',
             'orderby' => 'meta_value',
@@ -66,6 +69,10 @@ class EventController extends AbstractController
                 ]
             ]
         ]);
+
+
+        $finalEvents = [];
+
         /**
          * @var  $key
          * @var EventModel $event
@@ -76,7 +83,21 @@ class EventController extends AbstractController
                 $event->setMetaElement('sermon', $sermon);
             }
         }
-        $this->view->assign('events', $events);
+        $finalEvents[$event->getDateTime()->format('YmdHi')] = $event;
+
+
+
+        foreach ($ppEvents as $ppEvent) {
+            if ((count($ppEvent['funerals']) == 0) && (count($ppEvent['weddings']) == 0)) {
+                $dt = new \DateTime(substr($ppEvent['day']['date'],0, 10).' '.$ppEvent['time']);
+                if (!isset($finalEvents[$dt->format('YmdHi')])) {
+                    $finalEvents[$dt->format('YmdHi')] = $ppEvent;
+                };
+            }
+        }
+
+        ksort ($finalEvents);
+        $this->view->assign('events', $finalEvents);
     }
 
     /**
@@ -129,6 +150,16 @@ class EventController extends AbstractController
     }
 
     /**
+     * Create songsheet for the requested post
+     * @param \WP_Post $post Requested post
+     */
+    public function songsheetAction(\WP_Post $post)
+    {
+        $event = $this->getEventDataFromPost($post);
+        $this->view->assign('event', $event);
+    }
+
+    /**
      * Create a large-scale song list for the requested post
      * @param \WP_Post $post Requested post
      */
@@ -175,4 +206,17 @@ class EventController extends AbstractController
         $this->view->assign('event', $event);
         $this->view->assign('liturgy', $liturgy);
     }
+
+
+    protected function getUrl(string $url): string
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
+    }
+
 }
