@@ -3,7 +3,9 @@
         orientation="landscape" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0" debug="1"><!DOCTYPE html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+              crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{baseUrl}Resources/Public/Styles/Handout-Tailfingen-DIN-Lang.css"
               media="all"/>
     </head>
@@ -21,7 +23,8 @@
     <div class="column">
         <p>Weiteres Material zu dieser Predigt findest du online unter:
             https://christoph-fischer.org</p>
-        <p>Die Aufnahme dieser Predigt wird auf Spotify, iTunes und Deezer unter "Christoph predigt", sowie unter "Tailfinger Predigten" veröffentlicht.</p>
+        <p>Die Aufnahme dieser Predigt wird auf Spotify, iTunes und Deezer unter "Christoph predigt", sowie unter
+            "Tailfinger Predigten" veröffentlicht.</p>
         <p class="small">
             Diese Predigt und alle dazu gehörigen
             Ressourcen (Predigtzettel, Aufnahme) sind
@@ -30,6 +33,14 @@
             gleichen Bedingungen 4.0 International
             Lizenz. Verwendete Bilder stehen eventuell
             unter eigenen Lizenzbedingungen.
+        </p>
+        <p style="font-size: 8pt;">
+            <p:last of="{sermon.events}" as="event">
+                <f:if condition="{event.officiating}">
+                    <h3>Mitwirkende</h3>
+                    <p:format.unorderedList list="{event.officiating}" listStyle="font-size: 12pt;"/>
+                </f:if>
+            </p:last>
         </p>
         <div style="height: 2.5cm;"></div>
         <div class="address">
@@ -54,7 +65,8 @@
             </div>
             <p class="date-and-preacher">Predigt von Pfarrer Christoph Fischer<br/>
                 <f:for each="{sermon.events}" as="event">
-                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>, {event.location.title}<br/>
+                    <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
+                    , {event.location.title}<br/>
                 </f:for>
             </p>
         </div>
@@ -85,8 +97,12 @@
                         <f:case value="song">
                             <li><b>Lied:</b>
                                 <f:if condition="{item.data.song.fromSongBook}">
-                                    <f:then>{item.data.song.nameAndNumber}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:then>
-                                    <f:else>{item.data.song}<f:if condition="{item.data.verses}">, {item.data.verses}</f:if></f:else>
+                                    <f:then>{item.data.song.nameAndNumber}
+                                        <f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
+                                    </f:then>
+                                    <f:else>{item.data.song}
+                                        <f:if condition="{item.data.verses}">, {item.data.verses}</f:if>
+                                    </f:else>
                                 </f:if>
                             </li>
                         </f:case>
@@ -99,10 +115,17 @@
                             </li>
                         </f:case>
                         <f:case value="sermon">
-                            <li><b>Predigt:</b> "{sermon.title}<f:if condition="{sermon.subtitle}">: {sermon.subtitle}</f:if>" ({sermon.reference})</li>
+                            <li><b>Predigt:</b> "{sermon.title}
+                                <f:if condition="{sermon.subtitle}">: {sermon.subtitle}</f:if>
+                                " ({sermon.reference})
+                            </li>
                         </f:case>
                         <f:case value="scriptureReading">
-                            <li><b>Schriftlesung<f:if condition="{item.data.reference}">:</f:if></b><f:if condition="{item.data.reference}"> {item.data.reference}</f:if></li>
+                            <li><b>Schriftlesung
+                                <f:if condition="{item.data.reference}">:</f:if>
+                            </b>
+                                <f:if condition="{item.data.reference}"> {item.data.reference}</f:if>
+                            </li>
                         </f:case>
                         </f:switch>
                         </f:for>

@@ -44,7 +44,7 @@ class Admin
     /**
      * Initialize all functions for admin mode
      */
-    public function init()
+    public static function init()
     {
         // add meta boxes for all post types
         /** @var AbstractPostType $postType */

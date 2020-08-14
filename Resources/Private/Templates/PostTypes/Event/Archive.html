@@ -18,7 +18,27 @@
             Gottesdienste
             vorbei:</p>
         <f:for each="{events}" as="event" iteration="eventCtr">
-                    <div class="row dotted">
+            <div class="row dotted">
+                <f:if condition="{event.id}">
+                    <f:then>
+                        <div class="col-sm-1">
+                            <b>
+                                <p:format.date format="d.m.Y">{event.day.date}</p:format.date>
+                            </b>
+                        </div>
+                        <div class="col-sm-2">
+                            <b>
+                                <p:format.date format="H:i">{event.time}</p:format.date>
+                                Uhr</b>
+                        </div>
+                        <div class="col-sm-3">
+                            <b><f:if condition="{event.special_location}"><f:then>{event.special_location}</f:then><f:else>{event.location.name}</f:else></f:if></b><br/>
+                        </div>
+                        <div class="col-sm-6">
+                            <b><f:if condition="{event.title}"><f:then>{event.title}</f:then><f:else>Gottesdienst</f:else></f:if></b>
+                        </div>
+                    </f:then>
+                    <f:else>
                         <div class="col-sm-1">
                             <b>
                                 <p:format.date format="d.m.Y">{event.datetime}</p:format.date>
@@ -29,18 +49,21 @@
                                 <p:format.date format="H:i">{event.datetime}</p:format.date>
                                 Uhr</b>
                         </div>
-                            <div class="col-sm-3">
+                        <div class="col-sm-3">
                             <b>{event.location.title}</b><br/>
                         </div>
                         <div class="col-sm-6">
                             <b><a href="{event.ID -> wp:permalink()}">{event.title}</a></b>
                             <f:if condition="{event.sermon}">
-                        <span class="hometa">Predigt <f:if condition="{event.sermon.title}">"<a href="{event.sermon.ID -> wp:permalink()}">{event.sermon.title}
+                        <span class="hometa">Predigt <f:if condition="{event.sermon.title}">"<a
+                                href="{event.sermon.ID -> wp:permalink()}">{event.sermon.title}
                             <f:if condition="{event.sermon.subtitle}">: {event.sermon.subtitle}</f:if></a>"</f:if>
                                     <f:if condition="{event.sermon.reference}"> zu {event.sermon.reference}</f:if></span><br/>
                             </f:if>
                         </div>
-                    </div>
+                    </f:else>
+                </f:if>
+            </div>
         </f:for>
     </div>
 </f:section>

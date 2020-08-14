@@ -68,6 +68,7 @@ class SermonPostType extends AbstractPostType
             'has_archive' => true,
             'hierarchical' => true,
             'supports' => ['title', 'editor', 'comments', 'thumbnail', 'entry-views'],
+            'show_in_rest' => false,
         ];
 
         parent::__construct();
